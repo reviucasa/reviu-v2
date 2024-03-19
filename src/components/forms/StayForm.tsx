@@ -1,95 +1,122 @@
-import { FieldError } from '@/components/atoms/FieldError'
-import { ReviewFormLayout } from '@/components/layouts/ReviewFormLayout'
-import { RadioInput } from '@/components/molecules/RadioInput'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { useTranslation } from 'next-i18next'
-import { useRouter } from 'next/router'
-import padlock from 'public/padlock.png'
-import { useEffect } from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
-import { MdDone } from 'react-icons/md'
-import { range } from 'src/helpers/generateRange'
-import { getUrlReview } from 'src/helpers/stepper'
-import { useReview } from 'src/hooks/swr/useReview'
-import { useStep } from 'src/hooks/useStep'
-import { useSubmitReview } from 'src/hooks/useSubmitReview'
-import * as yup from 'yup'
-import { Back } from '../atoms/Back'
-import { Button } from '../atoms/Button'
+import { FieldError } from "@/components/atoms/FieldError";
+import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
+import { RadioInput } from "@/components/molecules/RadioInput";
+import { yupResolver } from "@hookform/resolvers/yup";
+import padlock from "public/padlock.png";
+import { useEffect } from "react";
+import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import { MdDone } from "react-icons/md";
+import * as yup from "yup";
+import { Back } from "../atoms/Back";
+import { Button } from "../atoms/Button";
+import { useReview } from "@/hooks/swr/useReview";
+import { useSubmitReview } from "@/hooks/useSubmitReview";
+import { useRouter } from "next/navigation";
+import { useStep } from "@/hooks/useStep";
+import { useTranslations } from "next-intl";
+import { getUrlReview } from "@/helpers/stepper";
+import { range } from "@/helpers/generateRange";
 
 export const StayForm = () => {
-  const { review } = useReview()
-  const { onSubmitReview } = useSubmitReview('stay')
-  const router = useRouter()
-  const { nextStepReview } = useStep()
-  const { t } = useTranslation()
+  const { review } = useReview();
+  const { onSubmitReview } = useSubmitReview("stay");
+  const router = useRouter();
+  const { nextStepReview } = useStep();
+  const t = useTranslations();
 
   const schema = yup.object({
-    current_residence: yup.boolean().required(),
-    start_month: yup.string().when(['current_residence'], {
+    currentResidence: yup.boolean().required(),
+    startMonth: yup.string() /* .when(["currentResidence"], {
       is: (current_residence: boolean) => current_residence === true,
-      then: yup.string().required(t('common:seleccionaMes', 'Debes seleccionar un mes')),
+      then: yup
+        .string()
+        .required(t("common.seleccionaMes")),
       otherwise: yup
         .string()
-        .required(t('common:seleccionaMes', 'Debes seleccionar un mes'))
-        .test('validStartMonth', t("common.mesInicio",'El mes de inicio no puede ser posterior al mes actual'), function (value) {
-          const { current_residence, start_year } = this.parent
-          if (current_residence === true && value) {
-            const currentYear = new Date().getFullYear()
-            const currentMonth = new Date().getMonth() + 1
-            const startYear = parseInt(start_year)
-            const startMonth = parseInt(value)
-            if (startYear > currentYear) {
-              return false
+        .required(t("common.seleccionaMes"))
+        .test(
+          "validStartMonth",
+          t(
+            "common.mesInicio",
+          ),
+          function (value) {
+            const { current_residence, start_year } = this.parent;
+            if (current_residence === true && value) {
+              const currentYear = new Date().getFullYear();
+              const currentMonth = new Date().getMonth() + 1;
+              const startYear = parseInt(start_year);
+              const startMonth = parseInt(value);
+              if (startYear > currentYear) {
+                return false;
+              }
+              if (startYear === currentYear && startMonth > currentMonth) {
+                return false;
+              }
             }
-            if (startYear === currentYear && startMonth > currentMonth) {
-              return false
-            }
+            return true;
           }
-          return true
-        })
-    }),
-    start_year: yup.string().required(t('common:seleccionaAño', 'Debes seleccionar un año')),
-    end_year: yup.string().when(['current_residence', 'start_year'], {
+        ),
+    }) */,
+    startYear: yup.string().required(t("common.seleccionaAño")),
+    endYear: yup.string() /* .when(["currentResidence", "startYear"], {
       is: (current_residence: boolean) => current_residence === false,
       then: yup
         .string()
-        .required(t('common:seleccionaAño', 'Debes seleccionar un año'))
-        .test('validYear', t('common:añoSalida','El año de salida no puede ser anterior al año de inicio'), function (value) {
-          const { start_year } = this.parent
-          if (!start_year || !value) {
-            return true
+        .required(t("common.seleccionaAño", "Debes seleccionar un año"))
+        .test(
+          "validYear",
+          t(
+            "common.añoSalida",
+            "El año de salida no puede ser anterior al año de inicio"
+          ),
+          function (value) {
+            const { start_year } = this.parent;
+            if (!start_year || !value) {
+              return true;
+            }
+            const startYear = parseInt(start_year);
+            const endYear = parseInt(value);
+            return endYear >= startYear;
           }
-          const startYear = parseInt(start_year)
-          const endYear = parseInt(value)
-          return endYear >= startYear
-        })
-    }),
-    end_month: yup.string().when(['current_residence', 'start_year', 'start_month'], {
-      is: (current_residence: boolean) => current_residence === false,
-      then: yup
-        .string()
-        .required(t('common:seleccionaMes', 'Debes seleccionar un mes'))
-        .test('validEndMonth', t('common:mesSalida','El mes de salida no puede ser posterior al mes de inicio'), function (value) {
-          const { start_year, start_month, end_year } = this.parent
-          if (!start_year || !start_month || !value) {
-            return true
-          }
-          const startYear = parseInt(start_year)
-          const endYear = parseInt(end_year)
-          const startMonth = parseInt(start_month)
-          const endMonth = parseInt(value)
-          if (startYear === endYear) {
-            return endMonth >= startMonth
-          }
-          return true
-        })
-    }),
-    start_price: yup.string().required(t('common:seleccionaPrecio','Debes seleccionar un precio')),
-    end_price: yup.string().when('current_residence', (current_residence, schema) => {
-      return current_residence === false ? schema.required(t('common:seleccionaPrecio','Debes seleccionar un precio')) : schema
-    })
-  })
+        ),
+    }) */,
+    endMonth: yup.string(),
+    /* .when(["current_residence", "start_year", "start_month"], {
+        is: (current_residence: boolean) => current_residence === false,
+        then: yup
+          .string()
+          .required(t("common.seleccionaMes", "Debes seleccionar un mes"))
+          .test(
+            "validEndMonth",
+            t(
+              "common.mesSalida",
+              "El mes de salida no puede ser posterior al mes de inicio"
+            ),
+            function (value) {
+              const { start_year, start_month, endYear } = this.parent;
+              if (!start_year || !start_month || !value) {
+                return true;
+              }
+              const startYear = parseInt(start_year);
+              const endYear = parseInt(endYear);
+              const startMonth = parseInt(start_month);
+              const endMonth = parseInt(value);
+              if (startYear === endYear) {
+                return endMonth >= startMonth;
+              }
+              return true;
+            }
+          ),
+      }) */ start_price: yup.string().required(t("common.seleccionaPrecio")),
+    end_price: yup.string(),
+    /* .when("currentResidence", (current_residence, schema) => {
+        return currentResidence === false
+          ? schema.required(
+              t("common.seleccionaPrecio")
+            )
+          : schema;
+      }) */
+  });
 
   const {
     formState: { isDirty, isValid, errors, isSubmitSuccessful },
@@ -97,132 +124,155 @@ export const StayForm = () => {
     handleSubmit,
     control,
     watch,
-    reset
+    reset,
   } = useForm<FormData>({
     resolver: yupResolver(schema),
-    reValidateMode: 'onChange',
-    defaultValues: review?.review.stay
-  })
+    reValidateMode: "onChange",
+    defaultValues: review?.review.stay,
+  });
 
-  const isFormCompleted = isValid && !isDirty
+  const isFormCompleted = isValid && !isDirty;
 
   const handleRouteChange = () => {
     if (isDirty) {
-      const resultado = confirm(
-        t(
-          'common:withSaving',
-          '¡Tienes cambios sin guardar!\nVas a perder los cambios si no guardas los cambios realizados antes de cambiar de sección.'
-        )
-      )
+      const resultado = confirm(t("common.withSaving"));
       if (!resultado) {
-        router.events.emit('routeChangeError', 'routeChange aborted', '', { shallow: false }) //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
-        throw 'routeChange aborted.'
+        /* router.events.emit("routeChangeError", "routeChange aborted", "", {
+          shallow: false,
+        }); */ //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
+        throw "routeChange aborted.";
       }
     }
-  }
+  };
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview))
-  }, [isSubmitSuccessful])
+    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
+  }, [isSubmitSuccessful]);
+
+  /* useEffect(() => {
+    router.events.on("routeChangeStart", handleRouteChange);
+    return () => router.events.off("routeChangeStart", handleRouteChange);
+  }, [isDirty]); */
 
   useEffect(() => {
-    router.events.on('routeChangeStart', handleRouteChange)
-    return () => router.events.off('routeChangeStart', handleRouteChange)
-  }, [isDirty])
+    reset(review?.review.stay);
+  }, [review?.review.stay]);
 
-  useEffect(() => {
-    reset(review?.review.stay)
-  }, [review?.review.stay])
+  type FormData = yup.InferType<typeof schema>;
 
-  type FormData = yup.InferType<typeof schema>
+  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data)
-
-  const watchcurrent_residence = watch('current_residence')
+  const watchcurrent_residence = watch("currentResidence");
   return (
     <ReviewFormLayout
-      title={t('stayReview:estancia', 'Estancia')}
+      title={t("stayReview.estancia")}
       image={padlock}
       imageAlt="Padlock"
-      commentTitle={t('stayReview:opinionAnonima')}
-      comment={t('stayReview:informacionAnonima')}
+      commentTitle={t("stayReview.opinionAnonima")}
+      comment={t("stayReview.informacionAnonima")}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col">
           <label htmlFor="current_residence">
-            {t('stayReview:residesActualmente', '¿Resides actualmente en esta dirección?')}
+            {t("stayReview.residesActualmente")}
           </label>
           <Controller
-            name="current_residence"
+            name="currentResidence"
             control={control}
             render={({ field }) => (
               <RadioInput
-                ariaInvalid={!!errors.current_residence}
+                ariaInvalid={!!errors.currentResidence}
                 {...field}
                 options={[
-                  { label: t('common:si', 'Si'), value: true },
-                  { label: t('common:no', 'No'), value: false }
+                  { label: t("common.si"), value: true },
+                  { label: t("common.no"), value: false },
                 ]}
               />
             )}
           />
 
-          {errors.current_residence && <FieldError>{errors.current_residence.message}</FieldError>}
+          {errors.currentResidence && (
+            <FieldError>{errors.currentResidence.message}</FieldError>
+          )}
         </div>
         {watchcurrent_residence !== undefined && (
           <div className="flex flex-col">
-            <label>{t('stayReview:cuandoEmpezasteVivir', '¿Cuándo empezaste a vivir?')}</label>
+            <label>{t("stayReview.cuandoEmpezasteVivir")}</label>
             <div className="flex gap-3">
               <div className="w-full">
-                <select aria-invalid={!!errors.start_month} className="w-full" {...register('start_month')}>
-                  <option value="">{t('common:mes', 'Mes')}</option>
+                <select
+                  aria-invalid={!!errors.startMonth}
+                  className="w-full"
+                  {...register("startMonth")}
+                >
+                  <option value="">{t("common.mes")}</option>
                   {range(1, 12).map((month) => (
                     <option key={month} value={month}>
                       {month}
                     </option>
                   ))}
                 </select>
-                {errors.start_month && <FieldError>{errors.start_month.message}</FieldError>}
+                {errors.startMonth && (
+                  <FieldError>{errors.startMonth.message}</FieldError>
+                )}
               </div>
               <div className="w-full">
-                <select aria-invalid={!!errors.start_year} className="w-full" {...register('start_year')}>
-                  <option value="">{t('common:año', 'Año')}</option>
+                <select
+                  aria-invalid={!!errors.startYear}
+                  className="w-full"
+                  {...register("startYear")}
+                >
+                  <option value="">{t("common.año")}</option>
                   {range(2023, 1980, -1).map((year) => (
                     <option key={year} value={year}>
                       {year}
                     </option>
                   ))}
                 </select>
-                {errors.start_year && <FieldError>{errors.start_year.message}</FieldError>}
+                {errors.startYear && (
+                  <FieldError>{errors.startYear.message}</FieldError>
+                )}
               </div>
             </div>
           </div>
         )}
         {watchcurrent_residence?.valueOf() === false && (
           <div className="flex flex-col">
-            <label>{t('stayReview:cuandoDejasteVivir', '¿Cuándo dejaste de vivir?')}</label>
+            <label>{t("stayReview.cuandoDejasteVivir")}</label>
 
             <div className="flex gap-3">
               <div className="w-full">
-                <select aria-invalid={!!errors.end_month} className="w-full" {...register('end_month')}>
-                  <option value="">{t('common:mes', 'Mes')}</option>
+                <select
+                  aria-invalid={!!errors.endMonth}
+                  className="w-full"
+                  {...register("endMonth")}
+                >
+                  <option value="">{t("common.mes")}</option>
                   {range(1, 12).map((month) => (
                     <option key={month} value={month}>
                       {month}
                     </option>
                   ))}
                 </select>
-                {errors.end_month && <FieldError>{errors.end_month.message}</FieldError>}
+                {errors.endMonth && (
+                  <FieldError>{errors.endMonth.message}</FieldError>
+                )}
               </div>
               <div className="w-full">
-                <select aria-invalid={!!errors.end_year} className="w-full" {...register('end_year')}>
-                  <option value="">{t('common:año', 'Año')}</option>
+                <select
+                  aria-invalid={!!errors.endYear}
+                  className="w-full"
+                  {...register("endYear")}
+                >
+                  <option value="">{t("common.año")}</option>
                   {range(2023, 1980, -1).map((year) => (
                     <option key={year} value={year}>
                       {year}
                     </option>
                   ))}
                 </select>
-                {errors.end_year && <FieldError>{errors.end_year.message}</FieldError>}
+                {errors.endYear && (
+                  <FieldError>{errors.endYear.message}</FieldError>
+                )}
               </div>
             </div>
           </div>
@@ -231,30 +281,36 @@ export const StayForm = () => {
         {watchcurrent_residence !== undefined && (
           <div className="flex flex-col">
             <label htmlFor="start_price">
-              {t('stayReview:quePrecioTeniaEntrar', '¿Qué precio tenia cuando entraste?')}
+              {t("stayReview.quePrecioTeniaEntrar")}
             </label>
             <input
               aria-invalid={!!errors.start_price}
               type="number"
               className="w-full"
-              placeholder={t('stayReview:precioVivienda', 'Precio de la vivienda')}
-              {...register('start_price')}
+              placeholder={t("stayReview.precioVivienda")}
+              {...register("start_price")}
             />
-            {errors.start_price && <FieldError>{errors.start_price.message}</FieldError>}
+            {errors.start_price && (
+              <FieldError>{errors.start_price.message}</FieldError>
+            )}
           </div>
         )}
 
         {watchcurrent_residence === false && (
           <div className="flex flex-col">
-            <label htmlFor="end_price">{t('stayReview:quePrecioTeniaSalir', '¿Qué precio tenia te fuiste?')}</label>
+            <label htmlFor="end_price">
+              {t("stayReview.quePrecioTeniaSalir")}
+            </label>
             <input
               aria-invalid={!!errors.end_price}
               type="number"
               className="w-full"
-              placeholder={t('stayReview:precioVivienda', 'Precio de la vivienda')}
-              {...register('end_price')}
+              placeholder={t("stayReview.precioVivienda")}
+              {...register("end_price")}
             />
-            {errors.end_price && <FieldError>{errors.end_price.message}</FieldError>}
+            {errors.end_price && (
+              <FieldError>{errors.end_price.message}</FieldError>
+            )}
           </div>
         )}
         {watchcurrent_residence !== undefined && (
@@ -263,15 +319,19 @@ export const StayForm = () => {
               <Back className="lg:hidden" />
             </div>
             <Button
-              buttonClassName={isFormCompleted ? 'btn-primary-transparent font-semibold' : 'btn-primary-500'}
+              buttonClassName={
+                isFormCompleted
+                  ? "btn-primary-transparent font-semibold"
+                  : "btn-primary-500"
+              }
               disabled={isFormCompleted}
             >
-              {isFormCompleted ? t('common:guardado', 'Guardado') : t('common:guardar', 'Guardar')}
+              {isFormCompleted ? t("common.guardado") : t("common.guardar")}
               {isFormCompleted && <MdDone size={22} />}
             </Button>
           </div>
         )}
       </form>
     </ReviewFormLayout>
-  )
-}
+  );
+};
