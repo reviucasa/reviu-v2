@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
 import { AreaCard } from "../molecules/AreaCard";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 
 type AreaValuation = {
   reviews: Array<ReviewData>;

@@ -12,7 +12,7 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 
 export const OpinionCard = ({
   review,

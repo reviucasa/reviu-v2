@@ -1,5 +1,5 @@
 import { CommunityCard } from "@/components/molecules/CommunityCard";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 import { useTranslations } from "next-intl";
 
 type CommunityValuation = {

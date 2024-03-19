@@ -1,5 +1,5 @@
 "use client";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { BounceLoader } from "react-spinners";

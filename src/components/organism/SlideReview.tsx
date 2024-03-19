@@ -6,7 +6,7 @@ import arrowLeft from "../../../public/arrowLeft.svg";
 import arrowRigth from "../../../public/arrowRigth.svg";
 import { Button } from "../atoms/Button";
 import { OpinionCardSmall } from "../molecules/OpinionCardSmall";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 
 export const SlideReview = ({
   title,

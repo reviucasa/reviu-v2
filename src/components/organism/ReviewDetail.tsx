@@ -13,7 +13,7 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
 import { useConfig } from "@/hooks/swr/useConfig";
-import { Config, ReviewData } from "@/models/types";
+import { Config, ReviewData } from "@/models/review";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
 
 export const ReviewDetail = ({

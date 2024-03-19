@@ -1,5 +1,5 @@
 import { OpinionCard } from "@/components/molecules/OpinionCard";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 import { useTranslations } from "next-intl";
 
 type FloorValuationProps = {

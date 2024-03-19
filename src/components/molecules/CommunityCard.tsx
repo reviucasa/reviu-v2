@@ -7,7 +7,8 @@ import { Label } from "../atoms/Label";
 import { ModalInfo } from "./ModalInfo";
 import { useConfig } from "@/hooks/swr/useConfig";
 import { useTranslations } from "next-intl";
-import { Config, ConfigValue, ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
+import { Config, ConfigValue } from "@/models/types";
 
 export const CommunityCard = ({
   review,

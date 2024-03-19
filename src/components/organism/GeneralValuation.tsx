@@ -1,7 +1,7 @@
 import { CommunityCard } from "@/components/molecules/CommunityCard";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
 
