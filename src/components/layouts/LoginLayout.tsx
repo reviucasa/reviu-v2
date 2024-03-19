@@ -34,7 +34,7 @@ export const LoginLayout = ({
           quality={100}
           alt="Home review"
           className="object-contain cursor-pointer h-auto"
-          width={140}
+          width={120}
           onClick={() => {
             router.push("/");
           }}

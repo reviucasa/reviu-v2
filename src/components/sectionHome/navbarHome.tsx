@@ -66,8 +66,8 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           quality={100}
           src={Logo}
           alt="Reviu Casa"
-          width={140}
-          className="object-contain pb-2 cursor-pointer h-auto"
+          width={120}
+          className="object-contain  cursor-pointer h-auto"
           onClick={() => {
             router.push("/");
           }}

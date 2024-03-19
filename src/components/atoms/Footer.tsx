@@ -89,7 +89,7 @@ export function Footer() {
           alt="home review"
           className="grayscale h-auto"
           quality={100}
-          width={150}
+          width={120}
         />
         <div className="flex items-center lg:justify-between justify-evenly my-10 gap-3 xs:gap-5 xs:flex-col">
           <div className="flex gap-3">
