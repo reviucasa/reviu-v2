@@ -7,12 +7,12 @@ type ReturnSubmitReview = {
 }
 
 export function useSubmitReview(formName: string): ReturnSubmitReview {
-  const { updateReview } = useReview()
+  /* const { updateReview } = useReview() */
   const { nextStepReview } = useStep()
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     try {
-      await updateReview({ review: { [formName]: data, step: nextStepReview } })
+      /* await updateReview({ review: { [formName]: data, step: nextStepReview } }) */
     } catch (error) {
       console.log(error)
     }
