@@ -5,7 +5,7 @@ import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../../public/reviuLogo.svg";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BounceLoader } from "react-spinners";
 import { mutate } from "swr";
@@ -51,7 +51,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   };
 
   return (
-    <>
+    <Suspense>
       {loading && (
         <div className="flex justify-center items-center fixed  w-full h-full z-50 bg-white opacity-90">
           <BounceLoader color="#d8b4fe" size={140} />
@@ -218,6 +218,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           </Menu>
         </div>
       </div>
-    </>
+    </Suspense>
   );
 }

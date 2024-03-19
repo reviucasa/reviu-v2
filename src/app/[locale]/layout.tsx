@@ -5,6 +5,7 @@ import { NextIntlClientProvider, useMessages } from "next-intl";
 import getRequestConfig from "../../i18n";
 import { Providers } from "@/context";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { Suspense } from "react";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -51,7 +52,9 @@ export default async function RootLayout({
     <html lang={locale} className={space_grotesk.className}>
       <body>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <Providers>{children}</Providers>
+          <Suspense>
+            <Providers>{children}</Providers>
+          </Suspense>
         </NextIntlClientProvider>
       </body>
     </html>
