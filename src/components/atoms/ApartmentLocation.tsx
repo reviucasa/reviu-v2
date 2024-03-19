@@ -1,4 +1,4 @@
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
 import { PiCalendarBlank } from "react-icons/pi";
@@ -20,8 +20,8 @@ export const ApartmentLocation = ({
   return (
     <div className={className}>
       <span className="font-bold text-sm md:text-base">
-        {review?.apartment?.stair} {review?.apartment?.floor}{" "}
-        {review?.apartment?.door}
+        {/* {review?.apartment?.stair} {review?.apartment?.floor}{" "}
+        {review?.apartment?.door} */}
         <p className="text-xs md:text-base font-normal flex ">
           {review.address}
         </p>

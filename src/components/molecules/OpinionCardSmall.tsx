@@ -9,7 +9,7 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
-import { ReviewData } from "@/models/types";
+import { ReviewData } from "@/models/review";
 
 export const OpinionCardSmall = ({
   review,
@@ -44,9 +44,9 @@ export const OpinionCardSmall = ({
             <div className="flex-1 flex flex-col  items-start justify-center ">
               <p>
                 {review.address}
-                {review?.apartment?.floor}
+                {/* {review?.apartment?.floor} */}
               </p>
-              <p className="font-bold">{review?.apartment?.floor}</p>
+              <p className="font-bold">{/* {review?.apartment?.floor} */}</p>
             </div>
             <Chip
               className={`text-xs flex items-center gap-3 rounded-2xl h-10 w-10 px-2 py-2 ${
@@ -64,7 +64,7 @@ export const OpinionCardSmall = ({
           </div>
           <div className="flex h-full pb-4 justify-start">
             <p className="font-bold text-xl text-ellipsis	">
-              {review.review.opinion.title}
+              {/* {review.review.opinion.title} */}
             </p>
           </div>
         </div>

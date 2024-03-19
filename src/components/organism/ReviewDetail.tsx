@@ -6,7 +6,7 @@ import { useContext, useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
 import comillas from "../../../public/comillas.png";
 import GreenHouse from "../../../public/green_house.png";
-import { ApartmentLocation } from "../atoms/AparmentLocation";
+import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { Chip } from "../atoms/Chip";
 import { Label } from "../atoms/Label";
 import { Report } from "../atoms/Report";

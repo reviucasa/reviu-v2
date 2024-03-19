@@ -7,7 +7,7 @@ import { useState } from "react";
 import points from "../../../public/3points.png";
 import thumbDown from "../../../public/thumbDown.svg";
 import thumbUp from "../../../public/thumbUp.svg";
-import { ApartmentLocation } from "../atoms/AparmentLocation";
+import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";

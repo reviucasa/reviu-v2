@@ -9,7 +9,6 @@ import {
   updateDoc,
   setDoc,
 } from "firebase/firestore";
-import { Apartment } from "./types";
 
 export type ReviewData = {
   address: string;
