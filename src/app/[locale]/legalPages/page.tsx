@@ -3,9 +3,7 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { ConditionsUseComponent } from "@/components/sectionLegalPages/conditionsUse";
 import { LegalNoticeComponent } from "@/components/sectionLegalPages/legalNoticeComponent";
-import { useTranslations } from "next-intl";
 import { useEffect } from "react";
-import PrivacyPolicy from "../privacyPolicy/page";
 import { PrivacyPolicyComponent } from "@/components/sectionLegalPages/privacyPolicyComponent";
 
 export default function LegalPages() {

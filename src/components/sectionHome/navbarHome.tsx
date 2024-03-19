@@ -65,7 +65,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
         <Image
           quality={100}
           src={Logo}
-          alt="Fue mi casa"
+          alt="Reviu Casa"
           width={140}
           className="object-contain pb-2 cursor-pointer h-auto"
           onClick={() => {

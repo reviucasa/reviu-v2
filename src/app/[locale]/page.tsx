@@ -6,11 +6,9 @@ import { SectionBannerOpinion } from "@/components/sectionHome/sectionBannerOpin
 import { SectionFaq } from "@/components/sectionHome/sectionFaq";
 import { SectionHeader } from "@/components/sectionHome/sectionHeader";
 import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestReviews";
-import { useAuth } from "@/context/auth";
 import { verifyEmailLinkAndAuthenticate } from "@/firebase/auth";
-import { auth } from "@/firebase/config";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Home() {
   const router = useRouter();
