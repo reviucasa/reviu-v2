@@ -1,4 +1,4 @@
-import { ReviewData } from '@/models/types'
+import { ReviewData } from '@/models/review'
 import { DialogDrawer } from '../atoms/DialogDrawer'
 import { ReviewDetail } from '../organism/ReviewDetail'
 
