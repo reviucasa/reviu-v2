@@ -1,9 +1,6 @@
 import { auth } from "@/firebase/config";
 import { ReviewData, getReview } from "@/models/review";
-import { ReviewRequest } from "@/models/types";
 import { useQuery } from "@tanstack/react-query";
-import useSWR, { useSWRConfig } from "swr";
-import useSWRImmutable from "swr/immutable";
 
 const useReview = () => {
   const queryFn = async (): Promise<ReviewData | undefined> => {

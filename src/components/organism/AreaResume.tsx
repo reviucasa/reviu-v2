@@ -6,7 +6,8 @@ import { AreaResumeCardService } from "../molecules/AreaResumeCardServices";
 import { MiniAreaPorcent } from "../molecules/MiniAreaPorcent";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
 import { useTranslations } from "next-intl";
-import { ReviewData, Stat } from "@/models/types";
+import {  Stat } from "@/models/types";
+import { ReviewData } from "@/models/review";
 
 type AreaResume = {
   reviews: Array<ReviewData>;
