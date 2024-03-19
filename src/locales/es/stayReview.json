@@ -1,0 +1,11 @@
+{
+  "estancia": "Estancia",
+  "opinionAnonima": "¡Tu opinión es anónima!",
+  "informacionAnonima": "La información que compartas, incluyendo la fecha de estancia no se mostrará de forma exacta. Nadie sabrá quién eres",
+  "residesActualmente": "¿Resides actualmente en esta dirección?",
+  "cuandoEmpezasteVivir": "¿Cuándo empezaste a vivir en esta vivienda?",
+  "cuandoDejasteVivir": "¿Cuándo dejaste de vivir en esta vivienda?",
+  "quePrecioTeniaEntrar": "¿Qué precio tenía cuando entraste?",
+  "precioVivienda": "Precio de la vivienda",
+  "quePrecioTeniaSalir": "¿Qué precio tenía cuando te fuiste?"
+}

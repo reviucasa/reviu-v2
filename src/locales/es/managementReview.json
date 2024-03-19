@@ -1,0 +1,16 @@
+{
+  "gestion": "Gestión",
+  "seAmable": "Sé amable y constructivo",
+  "feedback": "El feedback positivo es la mejor manera de comunicar y ser escuchado.",
+  "gestionadoInmobiliaria" : "¿Has alquilado el piso a través de una inmobiliaria?",
+  "queInmobiliaria" : "¿Qué inmobiliaria lleva o ha llevado la gestión del piso?",
+  "escribeInmobiliaria" : "Escribe el nombre de la inmobiliaria",
+  "tratoInmobiliaria" : "¿Cómo ha sido el trato de la inmobiliaria?",
+  "tratoCasero" : "¿Cómo ha sido el trato del casero?",
+  "respuestaProblema" : "¿Y la respuesta cuando surgió un problema?",
+  "fianza" : "¿Te devolvieron la fianza?",
+  "consejosInmobiliaria" : "¿Qué consejos le darías a la inmobiliaria?",
+  "feedbackPositivo" : "Apórtales feedback constructivo",
+  "consejosCasero" : "¿Qué consejos le darías al casero?"
+  
+}

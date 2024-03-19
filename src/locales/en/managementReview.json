@@ -1,0 +1,16 @@
+{
+  "gestion": "Management",
+  "seAmable": "Be kind and constructive",
+  "feedback": "Positive feedback is the best way of communicating and being heard",
+  "gestionadoInmobiliaria" : "¿Have you managed the apartment through a real estate agent?",
+  "queInmobiliaria" : "Which real estate agent has managed the apartment?",
+  "escribeInmobiliaria" : "Type in the name of the real estate agency",
+  "tratoInmobiliaria" : "How did the real estate agent treat you?",
+  "tratoCasero" : "How did the landlord treat you?",
+  "respuestaProblema" : "What was the response when you reported a problem?",
+  "fianza" : "Was the deposit returned?",
+  "consejosInmobiliaria" : "What advice would you give to the real estate agent?",
+  "feedbackPositivo" : "Give them constructive feedback ",
+  "consejosCasero" : "What advice would you give to the landlord?"
+  
+}

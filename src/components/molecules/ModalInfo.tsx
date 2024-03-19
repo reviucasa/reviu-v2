@@ -1,0 +1,24 @@
+import { ReviewData } from '@/models/types'
+import { DialogDrawer } from '../atoms/DialogDrawer'
+import { ReviewDetail } from '../organism/ReviewDetail'
+
+export const ModalInfo = ({
+  review,
+  openMoreInfo,
+  setOpenMoreInfo
+}: {
+  review: ReviewData
+  openMoreInfo: boolean
+  setOpenMoreInfo: (value: boolean) => void
+}) => {
+  return (
+    <DialogDrawer
+      iconClose
+      isOpen={openMoreInfo}
+      setIsOpen={setOpenMoreInfo}
+      className="h-full absolute right-0 lg:w-3/4 w-full rounded-none"
+    >
+      <ReviewDetail review={review} openMoreInfo={openMoreInfo} setOpenMoreInfo={setOpenMoreInfo} />
+    </DialogDrawer>
+  )
+}

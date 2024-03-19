@@ -1,0 +1,17 @@
+{
+  "account": "Compte",
+  "textCardUser": "Si has de modificar el teu correu electrònic, si us plau", 
+  "contactUs": "Contacta amb nosaltres",
+  "protectIdentity": "Protegim la teva identitat",
+  "dataNoVisible": "Aquestes dades no seran visibles per la resta d’usuaris i en cap moment es publicaran com a part de les teves opinions.",
+  "notification": "Notificacions",
+  "activateNotification": "Activa les notificacions per assabentar-te del que els altres portals no expliquen",
+  "personalInformation": "Informació personal",
+  "country": "País/Regió",
+  "textDataStatsFirstPart": "Aquestes dades s'utilitzaran amb finalitat estadística. Pots consultar la nostra",
+  "textDataStatsSecondPart": "Si tens algun dubte, escriu-nos a info@fuemicasa.com",
+  "gestionaTusDatos": "Gestiona les teves dades",
+  "eliminarCuenta": "Suprimir compte",
+  "tuCuentaSeBorrara": "Si ho fas, el teu compte i les teves dades s'esborraran permanentment, d'acord amb la legislació aplicable",
+  "inicioSesion": "Iniciar sessió"
+}

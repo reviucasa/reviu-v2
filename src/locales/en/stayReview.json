@@ -1,0 +1,12 @@
+{
+  "estancia": "Stay",
+  "opinionAnonima": "Your review is anonymous.",
+  "informacionAnonima": "The information you share including the dates will not be displayed accurately. No one will know who you are.", 
+  "residesActualmente": "Are you currently living in this home?",
+  "cuandoEmpezasteVivir":"Since when have you been living here",
+  "cuandoDejasteVivir": "When did you stop living here?",
+  "quePrecioTeniaEntrar": "What was its price when you moved in?",
+  "precioVivienda": "Price",
+  "quePrecioTeniaSalir": "What was its price when you moved out?"
+
+}

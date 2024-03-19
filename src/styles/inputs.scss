@@ -1,0 +1,51 @@
+input:not([type='checkbox']),
+select,
+textarea {
+  @apply rounded-lg border border-gray-400 border-solid h-12;
+  &:focus {
+    @apply border-secondary-500;
+    box-shadow: 0 0 0 0.125rem #9e80f750;
+  }
+  &[aria-invalid='true'] {
+    @apply border-red-500;
+  }
+  &:focus[aria-invalid='true'] {
+    box-shadow: 0 0 0 0.125rem #d9320850;
+  }
+  &:disabled {
+    @apply bg-gray-200 text-gray-500 cursor-not-allowed;
+  }
+}
+a{
+  &:hover {
+    text-decoration: underline  
+  }
+}
+
+
+input[type='text'],
+input[type='date'],
+textarea {
+  @apply p-4;
+}
+
+input[type='checkbox'] {
+  @apply form-checkbox h-5 w-5 text-primary-500 rounded-sm;
+  ~ label {
+    @apply ml-2 font-normal;
+  }
+  &:focus {
+    box-shadow: none;
+  }
+  &[aria-invalid='true'] {
+    @apply border-red-500;
+  }
+}
+
+select {
+  @apply px-4;
+}
+
+label {
+  @apply font-bold mb-2 flex items-center;
+}

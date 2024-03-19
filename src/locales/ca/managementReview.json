@@ -1,0 +1,16 @@
+{
+  "gestion": "Gestió",
+  "seAmable": "Sigues amable i constructiu",
+  "feedback": "El feedback positiu és la millor manera de comunicar i ser escoltat",
+  "gestionadoInmobiliaria" : "Has llogat el pis a través d'una immobiliària?",
+  "queInmobiliaria" : "Quina immobiliària gestiona el pis?",
+  "escribeInmobiliaria" : "Escriu el nom de la immobiliària",
+  "tratoInmobiliaria" : "Com valores el tracte per part de la immobiliària?",
+  "tratoCasero" : "Com valores el tracte per part del propietari del pis?",
+  "respuestaProblema" : "I la resposta quan ha sorgit un problema?",
+  "fianza" : "Et van tornar la fiança?",
+  "consejosInmobiliaria" : "Quins consells donaries a la immobiliària?",
+  "feedbackPositivo" : "Aporta un feedback constructiu",
+  "consejosCasero" : "Quins consells donaries al propietari del pis?"
+  
+}
