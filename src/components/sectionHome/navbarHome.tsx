@@ -4,7 +4,7 @@ import { Button } from "@/components/atoms/Button";
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "../../../public/fuemicasaLogo.svg";
+import Logo from "../../../public/reviuLogo.svg";
 import { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BounceLoader } from "react-spinners";
@@ -66,7 +66,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           quality={100}
           src={Logo}
           alt="Fue mi casa"
-          width={193}
+          width={140}
           className="object-contain pb-2 cursor-pointer h-auto"
           onClick={() => {
             router.push("/");
@@ -137,7 +137,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                             className={`p-2 hover:no-underline ${
                               active && "bg-secondary-200"
                             }`}
-                            href="mailto:info@fuemicasa.com"
+                            href="mailto:info@reviucasa.com"
                           >
                             {t("common.soporte")}
                           </Link>

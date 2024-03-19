@@ -1,6 +1,6 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
-import Logo from "../../../public/fuemicasaLogo.svg";
+import Logo from "../../../public/reviuLogo.svg";
 import { useRouter } from "next/navigation";
 
 export const LoginLayout = ({
@@ -34,7 +34,7 @@ export const LoginLayout = ({
           quality={100}
           alt="Home review"
           className="object-contain cursor-pointer h-auto"
-          width={193}
+          width={140}
           onClick={() => {
             router.push("/");
           }}

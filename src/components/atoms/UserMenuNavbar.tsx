@@ -71,7 +71,7 @@ export const UserMenuNavbar = () => {
                       className={`p-2 hover:no-underline ${
                         active && "bg-secondary-200"
                       }`}
-                      href="mailto:info@fuemicasa.com"
+                      href="mailto:info@reviucasa.com"
                     >
                       {t("common.soporte")}
                     </Link>

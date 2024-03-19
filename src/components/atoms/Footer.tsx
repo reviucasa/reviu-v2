@@ -4,7 +4,7 @@ import Link from "next/link";
 import Instagram from "../../../public/IconInstagram.svg";
 import TikTok from "../../../public/IconTikTok.svg";
 import Twitter from "../../../public/IconTwitter.svg";
-import HomeReview from "../../../public/fuemicasaLogoBlanco.svg";
+import LogoWhite from "../../../public/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -85,16 +85,16 @@ export function Footer() {
       </div>
       <div className="flex lg:flex-row lg:justify-between flex-col items-center mt-12 ">
         <Image
-          src={HomeReview}
+          src={LogoWhite}
           alt="home review"
           className="grayscale h-auto"
           quality={100}
-          width={200}
+          width={150}
         />
         <div className="flex items-center lg:justify-between justify-evenly my-10 gap-3 xs:gap-5 xs:flex-col">
           <div className="flex gap-3">
             <Link
-              href=" https://www.instagram.com/fuemicasa"
+              href=" https://www.instagram.com/reviucasa"
               target="_blank"
               rel="no-follow noreferrer"
             >
@@ -108,7 +108,7 @@ export function Footer() {
               </div>
             </Link>
             <Link
-              href="https://twitter.com/fuemicasa"
+              href="https://twitter.com/reviucasa"
               target="_blank"
               rel="no-follow noreferrer"
             >
@@ -122,7 +122,7 @@ export function Footer() {
               </div>
             </Link>
             <Link
-              href="https://www.tiktok.com/@fuemicasa"
+              href="https://www.tiktok.com/@reviucasa"
               target="_blank"
               rel="no-follow noreferrer"
             >
