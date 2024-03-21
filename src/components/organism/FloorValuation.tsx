@@ -1,9 +1,9 @@
 import { OpinionCard } from "@/components/molecules/OpinionCard";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";
 
 type FloorValuationProps = {
-  reviews: Array<ReviewData>;
+  reviews: Array<Review>;
 };
 
 export const FloorValuation = ({ reviews }: FloorValuationProps) => {

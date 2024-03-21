@@ -122,7 +122,7 @@
     "eresPropietario": "Soy propietario de una vivienda en alquiler. ¿Puedo participar?",
     "preguntasFecuentes": "Preguntas frecuentes",
     "legal": "Legal",
-    "politicaPrivacidad": "Política de privacidad",
+    "PoliticaPrivacidad": "Política de privacidad",
     "terminosYCondiciones": "Términos y condiciones",
     "legalNotice": "Aviso Legal",
     "cookies": "Cookies",
@@ -574,5 +574,156 @@
   "valuationForm": {
     "estadoPiso": "Estado del piso y mantenimiento",
     "eligeTantasComoQuieras": "Elige tantas como quieras"
+  },
+  "config": {
+    "buildingQuality": {
+      "summerTemperature": {
+        "isolated": "Bien aislado",
+        "good": "Correcto",
+        "hot": "Caluroso"
+      },
+      "winterTemperature": {
+        "isolated": "Bien aislado",
+        "good": "Correcto",
+        "cold": "Frío"
+      },
+      "noise": {
+        "quiet": "Silencioso",
+        "good": "Tolerable",
+        "noisy": "Bastante",
+        "very-noisy": "Se oye todo"
+      },
+      "light": {
+        "poor-light": "Nada de luz",
+        "dim-light": "Poca luz",
+        "bright": "Luminoso",
+        "very-bright": "Muy luminoso"
+      },
+      "maintenance": {
+        "excellent": "Como nuevo",
+        "good": "Bueno",
+        "acceptable": "Aceptable",
+        "poor": "Poco",
+        "very-poor": "Malo"
+      },
+      "services": {
+        "heating": "Calefacción",
+        "air-conditioning": "Aire acondicionado",
+        "gas": "Gas",
+        "terrace": "Terraza",
+        "balcony": "Balcón",
+        "patio": "Patio"
+      }
+    },
+    "landLord": {
+      "landLordTreatment": {
+        "excellent": "Genial",
+        "good": "Bueno",
+        "acceptable": "Mejorable",
+        "poor": "Malo",
+        "no-contact": "Sin trato"
+      },
+      "problemSolving": {
+        "excellent": "Genial",
+        "good": "Buena",
+        "acceptable": "Mejorable",
+        "slow": "Lenta",
+        "slow-useless": "Lenta e ineficaz"
+      },
+      "deposit": {
+        "returned": "Si",
+        "returned-with-deductions": "Solo una parte",
+        "not-returned": "No"
+      }
+    },
+    "neighbors": {
+      "buildingNeighborhood": {
+        "familiar": "Familiar",
+        "young-couples": "Parejas jóvenes",
+        "students": "Pisos de estudiantes",
+        "shared": "Pisos compartidos",
+        "seniors": "Mayores +75 años"
+      },
+      "touristicApartments": {
+        "yes-tolerable": "Sí, tolerable",
+        "yes-annoying": "Sí, molestos",
+        "no": "No hay"
+      },
+      "neighborsRelationship": {
+        "excellent": "Muy buena",
+        "friendly": "Cordial",
+        "poor": "Mala",
+        "no-relations": "Sin relación"
+      },
+      "buildingMaintenance": {
+        "excellent": "Como nuevo",
+        "good": "Bueno",
+        "acceptable": "Aceptable",
+        "poor": "Malo"
+      },
+      "buildingCleaning": {
+        "excellent": "Muy limpio",
+        "good": "Buena",
+        "poor": "Poca",
+        "no-cleaning": "Sin limpieza"
+      },
+      "services": {
+        "lift": "Ascensor",
+        "cleaning": "Limpieza",
+        "doorman": "Portería",
+        "parking": "Parking",
+        "storage-room": "Trastero"
+      }
+    },
+    "neighborhood": {
+      "vibe": {
+        "quiet": "Tranquilo",
+        "festive": "Lúdico/Festivo",
+        "familiar": "Familiar",
+        "student-oriented": "Estudiantil",
+        "nightlife": "Nocturno"
+      },
+      "tourists": {
+        "many": "Muchos",
+        "some": "Bastantes",
+        "few": "Pocos",
+        "none": "No hay"
+      },
+      "noise": {
+        "quiet": "Silenciosa",
+        "good": "Tolerable",
+        "noisy": "Ruidosa"
+      },
+      "security": {
+        "excellent": "Muy segura",
+        "good": "Sin problemas",
+        "acceptable": "Mejorable",
+        "poor": "Poco segura"
+      },
+      "cleaning": {
+        "good": "Buena",
+        "poor": "Poco limpia",
+        "very-poor": "Sucia"
+      },
+      "services": {
+        "supermarket": "Supermercados",
+        "schools": "Colegios",
+        "metro": "Metro",
+        "bus": "Autobús",
+        "shops": "Comercios",
+        "market": "Mercado",
+        "restaurants": "Restaurantes",
+        "medical-center": "Centro de salud",
+        "mall": "Centro comercial",
+        "veterinarian": "Veterinario",
+        "gym": "Gimnasio",
+        "playground": "Parque infantil",
+        "pharmacy": "Farmacias",
+        "bike-parking": "Parking de bicicletas",
+        "bicing": "Bicing",
+        "park": "Zona verde",
+        "children-area": "Zona infantil"
+      }
+    }
   }
 }

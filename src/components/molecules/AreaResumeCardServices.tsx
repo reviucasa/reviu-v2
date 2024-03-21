@@ -31,7 +31,7 @@ export const AreaResumeCardService = ({
                 /* config?.neighborhood.services.find((name) => name.value === services.word)?.label */
                 (
                   config as Config | undefined
-                )?.review_config.neighborhood.vibe.find(
+                )?.reviewConfig.neighborhood.vibe.find(
                   (name: ConfigValue) => name.value === services.word
                 )?.label
               }

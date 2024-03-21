@@ -40,7 +40,7 @@ export const ValuationForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.review.valuation,
+    defaultValues: review?.data.valuation,
   });
   const isFormCompleted = isValid && !isDirty;
   const handleRouteChange = () => {
@@ -70,8 +70,8 @@ export const ValuationForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.review.valuation);
-  }, [review?.review.valuation]);
+    reset(review?.data.valuation);
+  }, [review?.data.valuation]);
 
   type FormData = yup.InferType<typeof schema>;
   const onSubmit: SubmitHandler<FormData> = async (data) =>

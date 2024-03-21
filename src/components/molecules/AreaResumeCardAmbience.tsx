@@ -60,7 +60,7 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
                         )?.label */
                         (
                           config as Config | undefined
-                        )?.review_config.neighborhood.vibe.find(
+                        )?.reviewConfig.neighborhood.vibe.find(
                           (name: ConfigValue) => name.value === vibes.word
                         )?.label
                       }

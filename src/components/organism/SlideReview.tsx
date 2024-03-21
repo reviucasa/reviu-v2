@@ -6,7 +6,7 @@ import arrowLeft from "../../../public/arrowLeft.svg";
 import arrowRigth from "../../../public/arrowRigth.svg";
 import { Button } from "../atoms/Button";
 import { OpinionCardSmall } from "../molecules/OpinionCardSmall";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 export const SlideReview = ({
   title,
@@ -16,7 +16,7 @@ export const SlideReview = ({
   sizeGapCardMobile,
 }: {
   title: string;
-  dataReview: ReviewData[];
+  dataReview: Review[];
   sizeCard: number;
   sizeGapCard: number;
   sizeGapCardMobile: number;
@@ -108,7 +108,7 @@ export const SlideReview = ({
             }}
             className={`flex justify-center  transition-transform duration-700	`}
           >
-            {shuffleData?.map((review: ReviewData) => (
+            {shuffleData?.map((review: Review) => (
               <OpinionCardSmall
                 key={review.id}
                 review={review}

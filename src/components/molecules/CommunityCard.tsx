@@ -7,14 +7,14 @@ import { Label } from "../atoms/Label";
 import { ModalInfo } from "./ModalInfo";
 import { useConfig } from "@/hooks/swr/useConfig";
 import { useTranslations } from "next-intl";
-import { ReviewData } from "@/models/review";
 import { Config, ConfigValue } from "@/models/types";
+import { Review } from "@/models/review";
 
 export const CommunityCard = ({
   review,
   className,
 }: {
-  review: ReviewData;
+  review: Review;
   className?: string;
 }) => {
   const { config } = useConfig();
@@ -57,15 +57,15 @@ export const CommunityCard = ({
         </div>
         <div className="flex-1 grid grid-cols-2 gap-8">
           <Label tittle={t("common.tipologiaResidentes")}>
-            {review.review?.community?.building_neighborhood
+            {review.data?.community?.buildingNeighborhood
               ?.map(
                 (type: string) =>
                   (
                     config as Config | undefined
-                  )?.review_config.neighbors.building_neighborhood.find(
+                  )?.reviewConfig.neighbors.buildingNeighborhood.find(
                     (t: ConfigValue) => t.value === type
                   )?.label
-                /* config?.neighbors.building_neighborhood.find(
+                /* config?.neighbors.buildingNeighborhood.find(
                     (t) => t.value === type
                   )?.label */
               )
@@ -76,9 +76,9 @@ export const CommunityCard = ({
             {
               (
                 config as Config | undefined
-              )?.review_config.neighbors.touristic_apartments.find(
+              )?.reviewConfig.neighbors.touristicApartments.find(
                 (t) =>
-                  t.value === review.review?.community?.touristic_apartments
+                  t.value === review.data?.community?.touristicApartments
               )?.label
             }
           </Label>
@@ -86,9 +86,9 @@ export const CommunityCard = ({
             {
               /* config? */ (
                 config as Config | undefined
-              )?.review_config.neighbors.neighbors_relationship.find(
+              )?.reviewConfig.neighbors.neighborsRelationship.find(
                 (t) =>
-                  t.value === review.review?.community?.neighbors_relationship
+                  t.value === review.data?.community?.neighborsRelationship
               )?.label
             }
           </Label>
@@ -97,9 +97,9 @@ export const CommunityCard = ({
             {
               (
                 config as Config | undefined
-              )?.review_config.neighbors.building_maintenance.find(
+              )?.reviewConfig.neighbors.buildingMaintenance.find(
                 (t) =>
-                  t.value === review.review?.community?.building_maintenance
+                  t.value === review.data?.community?.buildingMaintenance
               )?.label
             }
           </Label>
@@ -107,18 +107,18 @@ export const CommunityCard = ({
             {
               (
                 config as Config | undefined
-              )?.review_config.neighbors.building_cleaning.find(
-                (t) => t.value === review.review?.community?.building_cleaning
+              )?.reviewConfig.neighbors.buildingCleaning.find(
+                (t) => t.value === review.data?.community?.buildingCleaning
               )?.label
             }
           </Label>
           <Label tittle={t("common.services")}>
-            {review.review?.community?.services
+            {review.data?.community?.services
               ?.map(
                 (type: string) =>
                   (
                     config as Config | undefined
-                  )?.review_config.neighbors.services.find(
+                  )?.reviewConfig.neighbors.services.find(
                     (t) => t.value === type
                   )?.label
               )
@@ -127,11 +127,11 @@ export const CommunityCard = ({
 
           <div className="grid col-span-2">
             <div className="flex">
-              {review.review?.community?.comment && (
+              {review.data?.community?.comment && (
                 <>
                   <Image src={comillas} alt="20" className="h-fit" />
                   <p className="pl-2 text-sm md:text-base">
-                    {review.review?.community?.comment}
+                    {review.data?.community?.comment}
                   </p>
                 </>
               )}

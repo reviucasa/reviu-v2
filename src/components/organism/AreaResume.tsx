@@ -7,10 +7,10 @@ import { MiniAreaPorcent } from "../molecules/MiniAreaPorcent";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
 import { useTranslations } from "next-intl";
 import {  Stat } from "@/models/types";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 type AreaResume = {
-  reviews: Array<ReviewData>;
+  reviews: Array<Review>;
   stats: Array<Stat>;
   className?: string;
   notEnoughStats: boolean;

@@ -1,9 +1,9 @@
 import { CommunityCard } from "@/components/molecules/CommunityCard";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";
 
 type CommunityValuation = {
-  reviews: Array<ReviewData>;
+  reviews: Array<Review>;
 };
 
 export const CommunityValuation = ({ reviews }: CommunityValuation) => {

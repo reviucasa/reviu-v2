@@ -98,7 +98,7 @@ export const NeighbourhoodForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.review.neighbourhood,
+    defaultValues: review?.data.neighbourhood,
   });
   const isFormCompleted = isValid && !isDirty;
   const handleRouteChange = () => {
@@ -123,8 +123,8 @@ export const NeighbourhoodForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.review.neighbourhood);
-  }, [review?.review.neighbourhood]);
+    reset(review?.data.neighbourhood);
+  }, [review?.data.neighbourhood]);
 
   type FormData = yup.InferType<typeof schema>;
 

@@ -15,8 +15,8 @@ export default function Review() {
       router.push("/review/address");
     }
     /* revalidateUser(); */
-    if (review?.review.step) {
-      router.push(steps[review.review.step].url);
+    if (review?.data.step) {
+      router.push(steps[review.data.step].url);
     }
   }, [review, router, user]);
 

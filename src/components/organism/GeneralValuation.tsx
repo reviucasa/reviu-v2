@@ -1,12 +1,12 @@
 import { CommunityCard } from "@/components/molecules/CommunityCard";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
 
 type GeneralValuationProps = {
-  reviews: Array<ReviewData>;
+  reviews: Array<Review>;
 };
 
 export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {

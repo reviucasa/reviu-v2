@@ -8,20 +8,24 @@ import {
   getDoc,
   updateDoc,
   setDoc,
+  collection,
+  query,
+  limit,
+  getDocs,
 } from "firebase/firestore";
 
-export type ReviewData = {
+export type Review = {
   address: string;
   id: string;
   timestamp: string;
   updated: string;
   draft: boolean;
   apartmentId: string;
-  review: Partial<Review>;
+  data: Partial<ReviewData>;
   buildingId: string;
 };
 
-export type Review = {
+export type ReviewData = {
   community: Community;
   management?: Management;
   neighbourhood: Neighbourhood;
@@ -34,25 +38,25 @@ export type Review = {
 };
 
 export type Community = {
-  building_cleaning?: string;
-  building_maintenance?: string;
-  building_neighborhood?: string[];
-  neighbors_relationship?: string;
+  buildingCleaning?: string;
+  buildingMaintenance?: string;
+  buildingNeighborhood?: string[];
+  neighborsRelationship?: string;
   services?: string[];
-  touristic_apartments?: string;
+  touristicApartments?: string;
   comment?: string;
 };
 
 export type Management = {
-  advice_landlord: string;
-  advice_real_state: string;
+  adviceLandlord: string;
+  adviceRealState: string;
   deposit: string;
-  is_real_state_agency: boolean;
-  landlord_dealing: string;
-  problem_solving: string;
-  real_state_agency_id?: string;
-  real_state_agency: string;
-  real_state_dealing: string;
+  isRealStateAgency: boolean;
+  landlordDealing: string;
+  problemSolving: string;
+  realStateAgency_id?: string;
+  realStateAgency: string;
+  realStateDealing: string;
 };
 export type Neighbourhood = {
   cleaning: string;
@@ -70,40 +74,40 @@ export type Opinion = {
   title: string;
 };
 export type Stay = {
-  current_residence: boolean;
-  start_month: string;
-  end_month: string;
-  start_price: string;
-  end_price: string;
-  start_year: string;
-  end_year: string;
+  currentResidence: boolean;
+  startMonth: string;
+  endMonth: string;
+  startPrice: string;
+  endPrice: string;
+  startYear: string;
+  endYear: string;
 };
 export type Valuation = {
   light: string;
   maintenance: string;
   noise: string;
   services: string[];
-  summer_temperature: string;
-  winter_temperature: string;
+  summerTemperature: string;
+  winterTemperature: string;
 };
 
-const reviewConverter: FirestoreDataConverter<ReviewData> = {
-  toFirestore(review: ReviewData): DocumentData {
+const reviewConverter: FirestoreDataConverter<Review> = {
+  toFirestore(review: Review): DocumentData {
     return review;
   },
-  fromFirestore(snapshot: QueryDocumentSnapshot): ReviewData {
-    const data = snapshot.data();
+  fromFirestore(snapshot: QueryDocumentSnapshot): Review {
+    const doc = snapshot.data();
     return {
-      ...data,
+      ...doc,
       id: snapshot.id,
-    } as ReviewData;
+    } as Review;
   },
 };
 
 // Create a new user
 const createReview = async (
   uid: string,
-  user: Partial<ReviewData>
+  user: Partial<Review>
 ): Promise<void> => {
   const ref = doc(db, `users/${uid}`).withConverter(reviewConverter); // Get a reference to the document with the specific ID
   await setDoc(ref, user);
@@ -113,7 +117,7 @@ const createReview = async (
 };
 
 // Retrieve user draft review
-const getReview = async (uid: string): Promise<ReviewData | undefined> => {
+const getReview = async (uid: string): Promise<Review | undefined> => {
   const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
   const snapshot = await getDoc(ref);
   return snapshot.exists() ? snapshot.data() : undefined;
@@ -122,7 +126,7 @@ const getReview = async (uid: string): Promise<ReviewData | undefined> => {
 // Update an existing user
 const updateReview = async (
   uid: string,
-  updatedFields: Partial<ReviewData>
+  updatedFields: Partial<Review>
 ): Promise<void> => {
   const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
   await updateDoc(ref, updatedFields);
@@ -134,4 +138,28 @@ const deleteReview = async (uid: string): Promise<void> => {
   await deleteDoc(ref);
 };
 
-export { reviewConverter, createReview, getReview, updateReview };
+// Retrieve user draft review
+const getReviews = async (count?: number): Promise<Review[]> => {
+  const ref = collection(db, `reviews`).withConverter(reviewConverter);
+  let q = query(ref);
+
+  // Conditionally add a limit
+  if (count) {
+    q = query(q, limit(count));
+  }
+
+  return getDocs(q)
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log("No reviews.");
+        return [];
+      }
+      return snapshot.docs.map((doc) => doc.data());
+    })
+    .catch((error) => {
+      console.error("Error fetching reviews:", error);
+      return [];
+    });
+};
+
+export { reviewConverter, createReview, getReview, updateReview, getReviews };

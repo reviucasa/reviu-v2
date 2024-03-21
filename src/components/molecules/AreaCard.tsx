@@ -4,13 +4,13 @@ import location from "public/iconLocation.png";
 import { useState } from "react";
 import comillas from "../../../public/comillas.png";
 import { ModalInfo } from "./ModalInfo";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 export const AreaCard = ({
   review,
   className,
 }: {
-  review: ReviewData;
+  review: Review;
   className?: string;
 }) => {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -50,8 +50,8 @@ export const AreaCard = ({
           <div className="flex">
             <Image src={comillas} alt="20" className="h-fit" />
             <p className="flex pl-2 items-center text-sm md:text-base">
-              {review.review?.community?.comment
-                ? review.review?.community?.comment
+              {review.data?.community?.comment
+                ? review.data?.community?.comment
                 : "No han dejado comentario"}
             </p>
           </div>

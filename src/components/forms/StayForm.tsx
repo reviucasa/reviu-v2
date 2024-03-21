@@ -27,7 +27,7 @@ export const StayForm = () => {
   const schema = yup.object({
     currentResidence: yup.boolean().required(),
     startMonth: yup.string() /* .when(["currentResidence"], {
-      is: (current_residence: boolean) => current_residence === true,
+      is: (currentResidence: boolean) => currentResidence === true,
       then: yup
         .string()
         .required(t("common.seleccionaMes")),
@@ -40,11 +40,11 @@ export const StayForm = () => {
             "common.mesInicio",
           ),
           function (value) {
-            const { current_residence, start_year } = this.parent;
-            if (current_residence === true && value) {
+            const { currentResidence, startYear } = this.parent;
+            if (currentResidence === true && value) {
               const currentYear = new Date().getFullYear();
               const currentMonth = new Date().getMonth() + 1;
-              const startYear = parseInt(start_year);
+              const startYear = parseInt(startYear);
               const startMonth = parseInt(value);
               if (startYear > currentYear) {
                 return false;
@@ -59,7 +59,7 @@ export const StayForm = () => {
     }) */,
     startYear: yup.string().required(t("common.seleccionaAño")),
     endYear: yup.string() /* .when(["currentResidence", "startYear"], {
-      is: (current_residence: boolean) => current_residence === false,
+      is: (currentResidence: boolean) => currentResidence === false,
       then: yup
         .string()
         .required(t("common.seleccionaAño", "Debes seleccionar un año"))
@@ -70,19 +70,19 @@ export const StayForm = () => {
             "El año de salida no puede ser anterior al año de inicio"
           ),
           function (value) {
-            const { start_year } = this.parent;
-            if (!start_year || !value) {
+            const { startYear } = this.parent;
+            if (!startYear || !value) {
               return true;
             }
-            const startYear = parseInt(start_year);
+            const startYear = parseInt(startYear);
             const endYear = parseInt(value);
             return endYear >= startYear;
           }
         ),
     }) */,
     endMonth: yup.string(),
-    /* .when(["current_residence", "start_year", "start_month"], {
-        is: (current_residence: boolean) => current_residence === false,
+    /* .when(["currentResidence", "startYear", "startMonth"], {
+        is: (currentResidence: boolean) => currentResidence === false,
         then: yup
           .string()
           .required(t("common.seleccionaMes", "Debes seleccionar un mes"))
@@ -93,13 +93,13 @@ export const StayForm = () => {
               "El mes de salida no puede ser posterior al mes de inicio"
             ),
             function (value) {
-              const { start_year, start_month, endYear } = this.parent;
-              if (!start_year || !start_month || !value) {
+              const { startYear, startMonth, endYear } = this.parent;
+              if (!startYear || !startMonth || !value) {
                 return true;
               }
-              const startYear = parseInt(start_year);
+              const startYear = parseInt(startYear);
               const endYear = parseInt(endYear);
-              const startMonth = parseInt(start_month);
+              const startMonth = parseInt(startMonth);
               const endMonth = parseInt(value);
               if (startYear === endYear) {
                 return endMonth >= startMonth;
@@ -107,9 +107,9 @@ export const StayForm = () => {
               return true;
             }
           ),
-      }) */ start_price: yup.string().required(t("common.seleccionaPrecio")),
+      }) */ startPrice: yup.string().required(t("common.seleccionaPrecio")),
     end_price: yup.string(),
-    /* .when("currentResidence", (current_residence, schema) => {
+    /* .when("currentResidence", (currentResidence, schema) => {
         return currentResidence === false
           ? schema.required(
               t("common.seleccionaPrecio")
@@ -128,7 +128,7 @@ export const StayForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.review.stay,
+    defaultValues: review?.data.stay,
   });
 
   const isFormCompleted = isValid && !isDirty;
@@ -154,14 +154,14 @@ export const StayForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.review.stay);
-  }, [review?.review.stay]);
+    reset(review?.data.stay);
+  }, [review?.data.stay]);
 
   type FormData = yup.InferType<typeof schema>;
 
   const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
 
-  const watchcurrent_residence = watch("currentResidence");
+  const watchcurrentResidence = watch("currentResidence");
   return (
     <ReviewFormLayout
       title={t("stayReview.estancia")}
@@ -172,7 +172,7 @@ export const StayForm = () => {
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col">
-          <label htmlFor="current_residence">
+          <label htmlFor="currentResidence">
             {t("stayReview.residesActualmente")}
           </label>
           <Controller
@@ -194,7 +194,7 @@ export const StayForm = () => {
             <FieldError>{errors.currentResidence.message}</FieldError>
           )}
         </div>
-        {watchcurrent_residence !== undefined && (
+        {watchcurrentResidence !== undefined && (
           <div className="flex flex-col">
             <label>{t("stayReview.cuandoEmpezasteVivir")}</label>
             <div className="flex gap-3">
@@ -235,7 +235,7 @@ export const StayForm = () => {
             </div>
           </div>
         )}
-        {watchcurrent_residence?.valueOf() === false && (
+        {watchcurrentResidence?.valueOf() === false && (
           <div className="flex flex-col">
             <label>{t("stayReview.cuandoDejasteVivir")}</label>
 
@@ -278,25 +278,25 @@ export const StayForm = () => {
           </div>
         )}
 
-        {watchcurrent_residence !== undefined && (
+        {watchcurrentResidence !== undefined && (
           <div className="flex flex-col">
-            <label htmlFor="start_price">
+            <label htmlFor="startPrice">
               {t("stayReview.quePrecioTeniaEntrar")}
             </label>
             <input
-              aria-invalid={!!errors.start_price}
+              aria-invalid={!!errors.startPrice}
               type="number"
               className="w-full"
               placeholder={t("stayReview.precioVivienda")}
-              {...register("start_price")}
+              {...register("startPrice")}
             />
-            {errors.start_price && (
-              <FieldError>{errors.start_price.message}</FieldError>
+            {errors.startPrice && (
+              <FieldError>{errors.startPrice.message}</FieldError>
             )}
           </div>
         )}
 
-        {watchcurrent_residence === false && (
+        {watchcurrentResidence === false && (
           <div className="flex flex-col">
             <label htmlFor="end_price">
               {t("stayReview.quePrecioTeniaSalir")}
@@ -313,7 +313,7 @@ export const StayForm = () => {
             )}
           </div>
         )}
-        {watchcurrent_residence !== undefined && (
+        {watchcurrentResidence !== undefined && (
           <div className="flex justify-between">
             <div>
               <Back className="lg:hidden" />

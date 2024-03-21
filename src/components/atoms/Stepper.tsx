@@ -24,8 +24,8 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
   };
 
   const isStepDisabled = useCallback(
-    (index: number): boolean => index > (review?.review?.step || 0),
-    [review?.review?.step]
+    (index: number): boolean => index > (review?.data?.step || 0),
+    [review?.data?.step]
   );
 
   const activeStepIndex = getActiveStepIndex();

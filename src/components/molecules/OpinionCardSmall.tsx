@@ -1,6 +1,5 @@
 import { Chip } from "@/components/atoms/Chip";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import points from "../../../public/3points.png";
 import thumbDown from "../../../public/thumbDown.svg";
@@ -9,14 +8,14 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 export const OpinionCardSmall = ({
   review,
   sizeCard,
   className,
 }: {
-  review: ReviewData;
+  review: Review;
   sizeCard: number;
   className?: string;
 }) => {
@@ -24,8 +23,9 @@ export const OpinionCardSmall = ({
   const [openReportInfo, setOpenReportInfo] = useState<boolean>(false);
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
 
-  const router = useRouter();
   const t = useTranslations();
+
+  console.log(review);
 
   return (
     <>
@@ -50,12 +50,12 @@ export const OpinionCardSmall = ({
             </div>
             <Chip
               className={`text-xs flex items-center gap-3 rounded-2xl h-10 w-10 px-2 py-2 ${
-                review.review?.opinion?.recomend
+                review.data?.opinion?.recomend
                   ? "bg-lime text-primary-500"
                   : "bg-red-500 text-white"
               }`}
             >
-              {review.review?.opinion?.recomend ? (
+              {review.data?.opinion?.recomend ? (
                 <Image src={thumbUp} width={20} height={20} alt="thumbUp" />
               ) : (
                 <Image src={thumbDown} width={20} height={20} alt="thumbDown" />
@@ -64,7 +64,7 @@ export const OpinionCardSmall = ({
           </div>
           <div className="flex h-full pb-4 justify-start">
             <p className="font-bold text-xl text-ellipsis	">
-              {/* {review.review.opinion.title} */}
+              {review.data?.opinion?.title}
             </p>
           </div>
         </div>

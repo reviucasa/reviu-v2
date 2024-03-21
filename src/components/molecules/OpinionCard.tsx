@@ -12,13 +12,13 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 export const OpinionCard = ({
   review,
   className,
 }: {
-  review: ReviewData;
+  review: Review;
   className?: string;
 }) => {
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
@@ -43,18 +43,18 @@ export const OpinionCard = ({
         </div>
         <Chip
           className={`text-xs flex items-center gap-3 rounded-none lg:rounded-full h-10 ${
-            review.review?.opinion?.recomend
+            review.data?.opinion?.recomend
               ? "bg-lime text-primary-500 u`"
               : "bg-red-500 text-white"
           }`}
         >
-          {review.review?.opinion?.recomend ? (
+          {review.data?.opinion?.recomend ? (
             <Image src={thumbUp} width={20} height={20} alt="thumbUp" />
           ) : (
             <Image src={thumbDown} width={20} height={20} alt="thumbDown" />
           )}
           <p className="tracking-wider font-bold">{`${
-            review.review?.opinion?.recomend ? "" : "NO"
+            review.data?.opinion?.recomend ? "" : "NO"
           } ${t("common.loRecomiendo")}`}</p>
         </Chip>
       </div>
@@ -77,7 +77,7 @@ export const OpinionCard = ({
         </div>
         <div className="flex-1">
           <span className="font-bold text-sm md:text-base">
-            {review.review?.opinion?.title}
+            {review.data?.opinion?.title}
           </span>
           <div className="flex flex-col lg:gap-6 gap-4 lg:mt-8 mt-4 lg:mb-6">
             <div className="flex align-top gap-4 ">
@@ -91,7 +91,7 @@ export const OpinionCard = ({
                 />
               </div>
               <span className="flex-1 text-sm md:text-base">
-                {review.review?.opinion?.positive}
+                {review.data?.opinion?.positive}
               </span>
             </div>
             <div className="flex align-top gap-4 ">
@@ -105,7 +105,7 @@ export const OpinionCard = ({
                 />
               </div>
               <div className="flex-1 text-sm md:text-base">
-                {review.review?.opinion?.negative}
+                {review.data?.opinion?.negative}
               </div>
             </div>
           </div>

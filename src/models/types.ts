@@ -1,4 +1,4 @@
-import { ReviewData } from "./review";
+import { Review } from "./review";
 
 export type Adress = {
   address: string;
@@ -71,7 +71,7 @@ export type Analisis = {
   building: {
     id: string;
     address: string;
-    reviews: ReviewData[];
+    reviews: Review[];
     neighborhood: {
       word_cloud: WordCloud[];
       stats: Stat[];
@@ -86,7 +86,7 @@ export type AgencyReviews = {
     id: string;
     agency_name: string;
   };
-  reviews: ReviewData[];
+  reviews: Review[];
 };
 
 export type ConfigValue = {
@@ -95,51 +95,49 @@ export type ConfigValue = {
 };
 
 export type Config = {
-  review_config: {
-    building_info: {
-      current_residence: [];
-      start_month: [];
-      start_year: [];
-      start_price: [];
-    };
-    building_quality: {
-      summer_temperature: ConfigValue[];
-      winter_temperature: ConfigValue[];
-      noise: ConfigValue[];
-      light: ConfigValue[];
-      maintenance: ConfigValue[];
-      services: ConfigValue[];
-    };
-    experience: {
-      overall: [];
-      positive_comments: [];
-      negative_comments: [];
-      recommend: [];
-    };
-    landlord: {
-      is_agency: [];
-      landlord_treatment: ConfigValue[];
-      problem_solving: ConfigValue[];
-      deposit: ConfigValue[];
-      advices: [];
-    };
-    neighbors: {
-      building_neighborhood: ConfigValue[];
-      touristic_apartments: ConfigValue[];
-      neighbors_relationship: ConfigValue[];
-      building_maintenance: ConfigValue[];
-      building_cleaning: ConfigValue[];
-      services: ConfigValue[];
-      comments: [];
-    };
-    neighborhood: {
-      vibe: ConfigValue[];
-      tourists: ConfigValue[];
-      noise: ConfigValue[];
-      security: ConfigValue[];
-      cleaning: ConfigValue[];
-      services: ConfigValue[];
-      comments: [];
-    };
+  buildingInfo: {
+    currentResidence: [];
+    startMonth: [];
+    startYear: [];
+    startPrice: [];
+  };
+  buildingQuality: {
+    summerTemperature: ConfigValue[];
+    winterTemperature: ConfigValue[];
+    noise: ConfigValue[];
+    light: ConfigValue[];
+    maintenance: ConfigValue[];
+    services: ConfigValue[];
+  };
+  experience: {
+    overall: [];
+    positiveComments: [];
+    negativeComments: [];
+    recommend: [];
+  };
+  landlord: {
+    isAgency: [];
+    landlordTreatment: ConfigValue[];
+    problemSolving: ConfigValue[];
+    deposit: ConfigValue[];
+    advices: [];
+  };
+  neighbors: {
+    buildingNeighborhood: ConfigValue[];
+    touristicApartments: ConfigValue[];
+    neighborsRelationship: ConfigValue[];
+    buildingMaintenance: ConfigValue[];
+    buildingCleaning: ConfigValue[];
+    services: ConfigValue[];
+    comments: [];
+  };
+  neighborhood: {
+    vibe: ConfigValue[];
+    tourists: ConfigValue[];
+    noise: ConfigValue[];
+    security: ConfigValue[];
+    cleaning: ConfigValue[];
+    services: ConfigValue[];
+    comments: [];
   };
 };

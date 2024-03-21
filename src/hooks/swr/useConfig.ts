@@ -13,7 +13,7 @@ export const useConfig = () => {
   };
 
   return {
-    config: data, //data?.review_config,
+    config: data, //data?.reviewConfig,
     configForceRefresh: handleForceRefresh,
   };
 };

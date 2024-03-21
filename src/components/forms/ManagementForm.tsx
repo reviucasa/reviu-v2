@@ -45,20 +45,20 @@ export const ManagementForm = () => {
         
     realStateDealing: yup
       .string()
-      /* .when("is_real_state_agency", (isRealStateAgency, schema) => {
+      /* .when("isRealStateAgency", (isRealStateAgency, schema) => {
         return isRealStateAgency === true
           ? schema.required(
               t("common.seleccionaOpcion")
             )
           : schema;
       }) */,
-    landlord_dealing: yup
+    landlordDealing: yup
       .string()
       .required(t("common.seleccionaOpcion", "Debes seleccionar una opción")),
-    problem_solving: yup.string(),
+    problemSolving: yup.string(),
     deposit: yup.string(),
-    advice_real_state: yup.string(),
-    advice_landlord: yup.string(),
+    adviceRealState: yup.string(),
+    adviceLandlord: yup.string(),
   });
 
   const {
@@ -73,7 +73,7 @@ export const ManagementForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.review.management,
+    defaultValues: review?.data.management,
   });
 
   const onSelectRealStateAgency = useCallback(async () => {
@@ -115,9 +115,9 @@ export const ManagementForm = () => {
   };
   useEffect(() => {
     if (review) {
-      setSelectedRealStateAgency(review?.review.management?.real_state_agency);
+      setSelectedRealStateAgency(review?.data.management?.realStateAgency);
     }
-  }, [review?.review.management]);
+  }, [review?.data.management]);
 
   useEffect(() => {
     if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
@@ -129,8 +129,8 @@ export const ManagementForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.review.management);
-  }, [review?.review.management]);
+    reset(review?.data.management);
+  }, [review?.data.management]);
 
   type FormData = yup.InferType<typeof schema>;
   const watchIsRealStateAgency = watch("isRealStateAgency");
@@ -152,7 +152,7 @@ export const ManagementForm = () => {
       {config && (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
-            <label htmlFor="is_real_state_agency">
+            <label htmlFor="isRealStateAgency">
               {t(
                 "managementReview:gestionadoInmobiliaria",
                 "¿Has gestionado el piso a través de una inmobiliaria?"
@@ -179,7 +179,7 @@ export const ManagementForm = () => {
 
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
-              <label htmlFor="real_state_agency">
+              <label htmlFor="realStateAgency">
                 {t(
                   "managementReview:queInmobiliaria",
                   "¿Qué inmobiliaria lleva o ha llevado la gestión?"
@@ -198,7 +198,7 @@ export const ManagementForm = () => {
           )}
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
-              <label htmlFor="real_state_dealing">
+              <label htmlFor="realStateDealing">
                 {t(
                   "managementReview:tratoInmobiliaria",
                   "¿Cómo ha sido el trato de la inmobiliaria?"
@@ -211,7 +211,7 @@ export const ManagementForm = () => {
                   <RadioInput
                     ariaInvalid={!!errors.realStateDealing}
                     {...field}
-                    options={config.landlord.landlord_treatment}
+                    options={config.landlord.landlordTreatment}
                   />
                 )}
               /> */}
@@ -223,30 +223,30 @@ export const ManagementForm = () => {
           {watchIsRealStateAgency !== undefined && (
             <>
               <div className="flex flex-col">
-                <label htmlFor="landlord_dealing">
+                <label htmlFor="landlordDealing">
                   {t(
                     "managementReview:tratoCasero",
                     "¿Cómo ha sido el trato del casero/a?"
                   )}
                 </label>
                 {/* <Controller
-                  name="landlord_dealing"
+                  name="landlordDealing"
                   control={control}
                   render={({ field }) => (
                     <RadioInput
-                      ariaInvalid={!!errors.landlord_dealing}
+                      ariaInvalid={!!errors.landlordDealing}
                       {...field}
-                      options={config.landlord.landlord_treatment}
+                      options={config.landlord.landlordTreatment}
                     />
                   )}
                 /> */}
-                {errors.landlord_dealing && (
-                  <FieldError>{errors.landlord_dealing.message}</FieldError>
+                {errors.landlordDealing && (
+                  <FieldError>{errors.landlordDealing.message}</FieldError>
                 )}
               </div>
               <div className="flex flex-col">
                 <div className="flex justify-between">
-                  <label htmlFor="problem_solving">
+                  <label htmlFor="problemSolving">
                     {t(
                       "managementReview:respuestaProblema",
                       "¿Y la respuesta cuando surgió un problema?"
@@ -257,22 +257,22 @@ export const ManagementForm = () => {
                   </span>
                 </div>
                 {/* <Controller
-                  name="problem_solving"
+                  name="problemSolving"
                   control={control}
                   render={({ field }) => (
                     <RadioInput
-                      ariaInvalid={!!errors.problem_solving}
+                      ariaInvalid={!!errors.problemSolving}
                       {...field}
-                      options={config.landlord.problem_solving}
+                      options={config.landlord.problemSolving}
                     />
                   )}
                 /> */}
-                {errors.problem_solving && (
-                  <FieldError>{errors.problem_solving.message}</FieldError>
+                {errors.problemSolving && (
+                  <FieldError>{errors.problemSolving.message}</FieldError>
                 )}
               </div>
               {/* <div className="flex flex-col">
-                {review?.review.stay.current_residence ? (
+                {review?.data.stay.currentResidence ? (
                   ""
                 ) : (
                   <>
@@ -303,7 +303,7 @@ export const ManagementForm = () => {
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
               <div className="flex justify-between">
-                <label htmlFor="advice_real_state">
+                <label htmlFor="adviceRealState">
                   {t(
                     "managementReview:consejosInmobiliaria",
                     "¿Qué consejos le darías a la inmobiliaria?"
@@ -314,24 +314,24 @@ export const ManagementForm = () => {
                 </span>
               </div>
               {/* <Controller
-                name="advice_real_state"
+                name="adviceRealState"
                 control={control}
                 render={({ field }) => (
                   <TextAreaWithCharCounter
                     {...field}
-                    ariaInvalid={!!errors.advice_real_state}
+                    ariaInvalid={!!errors.adviceRealState}
                     className="w-full h-32"
                     placeholder={t(
                       "managementReview:feedbackPositivo",
                       "Apórtales feedback contructivo"
                     )}
-                    name="advice_real_state"
+                    name="adviceRealState"
                     control={control}
                   />
                 )}
               /> */}
-              {errors.advice_real_state && (
-                <FieldError>{errors.advice_real_state.message}</FieldError>
+              {errors.adviceRealState && (
+                <FieldError>{errors.adviceRealState.message}</FieldError>
               )}
             </div>
           )}
@@ -340,7 +340,7 @@ export const ManagementForm = () => {
               {" "}
               <div className="flex flex-col">
                 <div className="flex justify-between">
-                  <label htmlFor="advice_landlord">
+                  <label htmlFor="adviceLandlord">
                     {t(
                       "managementReview:consejosCasero",
                       "¿Qué consejos le darías al casero/a?"
@@ -351,24 +351,24 @@ export const ManagementForm = () => {
                   </span>
                 </div>
                 {/* <Controller
-                  name="advice_landlord"
+                  name="adviceLandlord"
                   control={control}
                   render={({ field }) => (
                     <TextAreaWithCharCounter
                       {...field}
-                      ariaInvalid={!!errors.advice_landlord}
+                      ariaInvalid={!!errors.adviceLandlord}
                       className="w-full h-32"
                       placeholder={t(
                         "managementReview:feedbackPositivo",
                         "Apórtales feedback contructivo"
                       )}
-                      name="advice_landlord"
+                      name="adviceLandlord"
                       control={control}
                     />
                   )}
                 /> */}
-                {errors.advice_landlord && (
-                  <FieldError>{errors.advice_landlord.message}</FieldError>
+                {errors.adviceLandlord && (
+                  <FieldError>{errors.adviceLandlord.message}</FieldError>
                 )}
               </div>
               <div className="flex justify-between">

@@ -1,9 +1,9 @@
 import { auth } from "@/firebase/config";
-import { ReviewData, getReview } from "@/models/review";
+import { Review, getReview } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 
 const useReview = () => {
-  const queryFn = async (): Promise<ReviewData | undefined> => {
+  const queryFn = async (): Promise<Review | undefined> => {
     return getReview(auth.currentUser!.uid);
   };
 
@@ -16,7 +16,7 @@ const useReview = () => {
     data: review,
     isLoading,
     refetch,
-  } = useQuery<ReviewData | undefined, Error>(queryOptions);
+  } = useQuery<Review | undefined, Error>(queryOptions);
 
   return { review, isLoading, refreshReview: () => refetch() };
 };

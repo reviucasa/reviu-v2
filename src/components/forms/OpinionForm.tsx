@@ -36,7 +36,7 @@ export const OpinionForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.review.opinion,
+    defaultValues: review?.data.opinion,
   });
   const isFormCompleted = isValid && !isDirty;
 
@@ -58,8 +58,8 @@ export const OpinionForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.review.opinion);
-  }, [review?.review.opinion]);
+    reset(review?.data.opinion);
+  }, [review?.data.opinion]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     await onSubmitReview(data);

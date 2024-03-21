@@ -17,11 +17,11 @@ import { useTranslations } from "next-intl";
 import { getUrlReview } from "@/helpers/stepper";
 
 const schema = yup.object({
-  building_neighborhood: yup.array(),
-  touristic_apartments: yup.string(),
-  neighbors_relationship: yup.string(),
-  building_maintenance: yup.string(),
-  building_cleaning: yup.string(),
+  buildingNeighborhood: yup.array(),
+  touristicApartments: yup.string(),
+  neighborsRelationship: yup.string(),
+  buildingMaintenance: yup.string(),
+  buildingCleaning: yup.string(),
   services: yup.array(),
   comment: yup.string().nullable(),
 });
@@ -67,8 +67,8 @@ export const CommunityForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    if (review) reset(review.review.community);
-  }, [review?.review.community]);
+    if (review) reset(review.data.community);
+  }, [review?.data.community]);
 
   type FormData = yup.InferType<typeof schema>;
 
@@ -88,23 +88,23 @@ export const CommunityForm = () => {
               </span>
             </div>
             {/* <Controller
-              name="building_neighborhood"
+              name="buildingNeighborhood"
               control={control}
               render={({ field }) => (
                 <MultiselectInput
-                  ariaInvalid={!!errors.building_neighborhood}
+                  ariaInvalid={!!errors.buildingNeighborhood}
                   {...field}
-                  options={config?.neighbors.building_neighborhood}
+                  options={config?.neighbors.buildingNeighborhood}
                 />
               )}
             /> */}
-            {errors.building_neighborhood && (
-              <FieldError>{errors.building_neighborhood.message}</FieldError>
+            {errors.buildingNeighborhood && (
+              <FieldError>{errors.buildingNeighborhood.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex justify-between">
-              <label htmlFor="touristic_apartments">
+              <label htmlFor="touristicApartments">
                 {t("common.pisosTuristicos")}
               </label>
               <span className="text-gray-500 text-sm">
@@ -112,23 +112,23 @@ export const CommunityForm = () => {
               </span>
             </div>
             {/* <Controller
-              name="touristic_apartments"
+              name="touristicApartments"
               control={control}
               render={({ field }) => (
                 <RadioInput
-                  ariaInvalid={!!errors.touristic_apartments}
+                  ariaInvalid={!!errors.touristicApartments}
                   {...field}
-                  options={config.neighbors.touristic_apartments}
+                  options={config.neighbors.touristicApartments}
                 />
               )}
             /> */}
-            {errors.touristic_apartments && (
-              <FieldError>{errors.touristic_apartments.message}</FieldError>
+            {errors.touristicApartments && (
+              <FieldError>{errors.touristicApartments.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex justify-between">
-              <label htmlFor="neighbors_relationship">
+              <label htmlFor="neighborsRelationship">
                 {t("communityReviews.relacionVecinal")}
               </label>
               <span className="text-gray-500 text-sm">
@@ -136,23 +136,23 @@ export const CommunityForm = () => {
               </span>
             </div>
             {/* <Controller
-              name="neighbors_relationship"
+              name="neighborsRelationship"
               control={control}
               render={({ field }) => (
                 <RadioInput
-                  ariaInvalid={!!errors.neighbors_relationship}
+                  ariaInvalid={!!errors.neighborsRelationship}
                   {...field}
-                  options={config.neighbors.neighbors_relationship}
+                  options={config.neighbors.neighborsRelationship}
                 />
               )}
             /> */}
-            {errors.neighbors_relationship && (
-              <FieldError>{errors.neighbors_relationship.message}</FieldError>
+            {errors.neighborsRelationship && (
+              <FieldError>{errors.neighborsRelationship.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex justify-between">
-              <label htmlFor="building_maintenance">
+              <label htmlFor="buildingMaintenance">
                 {t("communityReviews.esadoEdificio")}
               </label>
               <span className="text-gray-500 text-sm">
@@ -160,40 +160,40 @@ export const CommunityForm = () => {
               </span>
             </div>
             {/* <Controller
-              name="building_maintenance"
+              name="buildingMaintenance"
               control={control}
               render={({ field }) => (
                 <RadioInput
-                  ariaInvalid={!!errors.building_maintenance}
+                  ariaInvalid={!!errors.buildingMaintenance}
                   {...field}
-                  options={config.neighbors.building_maintenance}
+                  options={config.neighbors.buildingMaintenance}
                 />
               )}
             /> */}
-            {errors.building_maintenance && (
-              <FieldError>{errors.building_maintenance.message}</FieldError>
+            {errors.buildingMaintenance && (
+              <FieldError>{errors.buildingMaintenance.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex justify-between">
-              <label htmlFor="building_cleaning">{t("common.limpieza")}</label>
+              <label htmlFor="buildingCleaning">{t("common.limpieza")}</label>
               <span className="text-gray-500 text-sm">
                 {t("common.opcional")}
               </span>
             </div>
             {/* <Controller
-              name="building_cleaning"
+              name="buildingCleaning"
               control={control}
               render={({ field }) => (
                 <RadioInput
-                  ariaInvalid={!!errors.building_cleaning}
+                  ariaInvalid={!!errors.buildingCleaning}
                   {...field}
-                  options={config.neighbors.building_cleaning}
+                  options={config.neighbors.buildingCleaning}
                 />
               )}
             /> */}
-            {errors.building_cleaning && (
-              <FieldError>{errors.building_cleaning.message}</FieldError>
+            {errors.buildingCleaning && (
+              <FieldError>{errors.buildingCleaning.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">

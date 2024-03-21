@@ -573,5 +573,156 @@
   "valuationForm": {
     "estadoPiso": "State and maintenance of the home",
     "eligeTantasComoQuieras": "Choose as many as you want"
+  },
+  "config": {
+    "buildingQuality": {
+      "summerTemperature": {
+        "isolated": "Well isolated",
+        "good": "Correct",
+        "hot": "Hot"
+      },
+      "winterTemperature": {
+        "isolated": "Well isolated",
+        "good": "Correct",
+        "cold": "Cold"
+      },
+      "noise": {
+        "quiet": "Quiet",
+        "good": "Tolerable",
+        "noisy": "Noisy",
+        "very-noisy": "You hear everything"
+      },
+      "light": {
+        "poor-light": "No light",
+        "dim-light": "Little light",
+        "bright": "Bright",
+        "very-bright": "Very bright"
+      },
+      "maintenance": {
+        "excellent": "Like new",
+        "good": "Good",
+        "acceptable": "Acceptable",
+        "poor": "Little",
+        "very-poor": "Bad"
+      },
+      "services": {
+        "heating": "Heating",
+        "air-conditioning": "Air conditioning",
+        "gas": "Gas",
+        "terrace": "Terrace",
+        "balcony": "Balcony",
+        "patio": "Patio"
+      }
+    },
+    "landLord": {
+      "landLordTreatment": {
+        "excellent": "Great",
+        "good": "Good",
+        "acceptable": "Improvable",
+        "poor": "Bad",
+        "no-contact": "No contact"
+      },
+      "problemSolving": {
+        "excellent": "Great",
+        "good": "Good",
+        "acceptable": "Improvable",
+        "slow": "Slow",
+        "slow-useless": "Slow and useless"
+      },
+      "deposit": {
+        "returned": "Yes",
+        "returned-with-deductions": "Only a part",
+        "not-returned": "No"
+      }
+    },
+    "neighbors": {
+      "buildingNeighborhood": {
+        "familiar": "Familiar",
+        "young-couples": "Young couples",
+        "students": "Students flats",
+        "shared": "Shared flats",
+        "seniors": "Seniors +75 years old"
+      },
+      "touristicApartments": {
+        "yes-tolerable": "Yes, tolerable",
+        "yes-annoying": "Yes, annoying",
+        "no": "No"
+      },
+      "neighborsRelationship": {
+        "excellent": "Very good",
+        "friendly": "Friendly",
+        "poor": "Bad",
+        "no-relations": "No relations"
+      },
+      "buildingMaintenance": {
+        "excellent": "Like new",
+        "good": "Good",
+        "acceptable": "Acceptable",
+        "poor": "Bad"
+      },
+      "buildingCleaning": {
+        "excellent": "Very clean",
+        "good": "Good",
+        "poor": "Poor",
+        "no-cleaning": "No cleaning"
+      },
+      "services": {
+        "lift": "Lift",
+        "cleaning": "Cleaning",
+        "doorman": "Doorman",
+        "parking": "Parking",
+        "storage-room": "Storage room"
+      }
+    },
+    "neighborhood": {
+      "vibe": {
+        "quiet": "Quiet",
+        "festive": "Festive",
+        "familiar": "Familiar",
+        "student-oriented": "Student-oriented",
+        "nightlife": "Nightlife"
+      },
+      "tourists": {
+        "many": "Many",
+        "some": "Some",
+        "few": "Few",
+        "none": "None"
+      },
+      "noise": {
+        "quiet": "Quiet",
+        "good": "Good",
+        "noisy": "Noisy"
+      },
+      "security": {
+        "excellent": "Very safe",
+        "good": "Good",
+        "acceptable": "Acceptable",
+        "poor": "Poor"
+      },
+      "cleaning": {
+        "good": "Good",
+        "poor": "Poor",
+        "very-poor": "Very poor"
+      },
+      "services": {
+        "supermarket": "Supermarket",
+        "schools": "Schools",
+        "metro": "Metro",
+        "bus": "Bus",
+        "shops": "Shops",
+        "market": "Market",
+        "restaurants": "Restaurants",
+        "medical-center": "Medical center",
+        "mall": "Mall",
+        "veterinarian": "Veterinarian",
+        "gym": "Gym",
+        "playground": "Playground",
+        "pharmacy": "Pharmacy",
+        "bike-parking": "Bike parking",
+        "bicing": "Bicing",
+        "park": "Park",
+        "children-area": "Children area"
+      }
+    }
   }
 }

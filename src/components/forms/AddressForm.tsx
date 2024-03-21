@@ -102,7 +102,7 @@ export const AddressForm = () => {
 
   const currentUrlPosition = getPositionUrlReview(pathname);
   const stepReview = getNextStepReview(
-    review?.review?.step || 0,
+    review?.data?.step || 0,
     currentUrlPosition + 1
   );
 

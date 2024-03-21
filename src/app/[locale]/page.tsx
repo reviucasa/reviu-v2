@@ -13,16 +13,16 @@ import { useEffect } from "react";
 export default function Home() {
   const router = useRouter();
 
-  const handleVerify = async () => {
-    const credentials = await verifyEmailLinkAndAuthenticate();
-    if (credentials && credentials.user.displayName === null) {
-      router.replace("/auth/register");
-    }
-  };
-
   useEffect(() => {
+    const handleVerify = async () => {
+      const credentials = await verifyEmailLinkAndAuthenticate();
+      if (credentials && credentials.user.displayName === null) {
+        router.replace("/auth/register");
+      }
+    };
+
     handleVerify();
-  }, []);
+  }, [router]);
 
   return (
     <MainLayout>

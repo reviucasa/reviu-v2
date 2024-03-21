@@ -1,8 +1,8 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
 import cardBanner from "../../../public/cardbanner.png";
 import { Button } from "../atoms/Button";
 import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
 
 export const BannerOpinion = ({
   className,

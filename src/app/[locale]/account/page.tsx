@@ -23,19 +23,41 @@ const schema = yup.object({
   name: yup.string(),
   lastname: yup.string(),
   birthday: yup
-    .date()
+    .string()
+    .test(
+      "is-older-than-18",
+      "Para tener una cuenta es necesario ser mayor de edad",
+      (value) => {
+        if (!value) return true; // Pass validation if value is null or undefined
+
+        // Parse the date string (assuming 'YYYY-MM-DD' format)
+        const birthdate = dayjs(value, "YYYY-MM-DD");
+        const cutoffDate = dayjs().subtract(18, "years");
+
+        // Check if the birthdate is before the cutoff date
+        return birthdate.isBefore(cutoffDate);
+      }
+    ),
+  /* .date()
     .max(
-      dayjs().subtract(18, "year").format("YYYY-MM-DD"),
+      dayjs().subtract(18, "years").toDate(), // Ensure age is over 18
       "Para tener una cuenta es necesario ser mayor de edad"
     )
     .nullable()
-    .transform((curr, orig) => (orig === "" ? null : curr)),
+    .transform((value, originalValue) =>
+      originalValue === ""
+        ? null
+        : originalValue
+        ? new Date(originalValue)
+        : value
+    ), */
   country: yup.string(),
   gender: yup.string(),
   subscribedToNewsletter: yup.boolean(),
 });
 
 type EditData = yup.InferType<typeof schema>;
+
 /* 
 type EditData = {
   name: string;
@@ -52,7 +74,6 @@ export default function Account() {
   const [enabled, setEnabled] = useState<boolean | undefined>(
     user?.subscribedToNewsletter
   );
-  const router = useRouter();
   const locale = useLocale();
   const t = useTranslations();
 
@@ -65,6 +86,7 @@ export default function Account() {
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
   });
+
   const isFormCompleted = isValid && !isDirty;
 
   const onSubmit: SubmitHandler<EditData> = async (data) => {
@@ -78,7 +100,16 @@ export default function Account() {
       ...userData,
       birthday: dayjs(data.birthday).format("DD/MM/YYYY"),
     });
-    router.push("/");
+
+    const formattedBirthday = user?.birthday
+      ? getStringDate(user.birthday)
+      : "";
+
+    reset({
+      ...userData,
+      birthday: formattedBirthday,
+    });
+    /* router.refresh(); */
   };
 
   const getStringDate = (date?: string) => {
@@ -88,20 +119,24 @@ export default function Account() {
   };
 
   useEffect(() => {
+    const formattedBirthday = user?.birthday
+      ? getStringDate(user.birthday)
+      : "";
     reset({
       name: user?.name,
       lastname: user?.lastname,
-      birthday: new Date(getStringDate(user?.birthday)),
+      birthday: formattedBirthday,
       country: user?.country ?? undefined,
       gender: user?.gender ?? undefined,
     });
-  }, [user]);
+  }, [user, reset]);
 
   useEffect(() => {
     if (user?.subscribedToNewsletter !== enabled) {
       setEnabled(user?.subscribedToNewsletter);
     }
   }, [user?.subscribedToNewsletter]);
+
   return (
     <>
       {/* <HomeReviewHead

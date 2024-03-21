@@ -572,5 +572,156 @@
   "valuationForm": {
     "estadoPiso": "Estat del pis i manteniment",
     "eligeTantasComoQuieras": "Tria'n tantes com vulguis"
+  },
+  "config": {
+    "buildingQuality": {
+      "summerTemperature": {
+        "isolated": "Ben aïllat",
+        "good": "Correcte",
+        "hot": "Calurós"
+      },
+      "winterTemperature": {
+        "isolated": "Ben aïllat",
+        "good": "Correcte",
+        "cold": "Fred"
+      },
+      "noise": {
+        "quiet": "Silenciós",
+        "good": "Tolerable",
+        "noisy": "Bastant",
+        "very-noisy": "S'hi sent tot"
+      },
+      "light": {
+        "poor-light": "Res de llum",
+        "dim-light": "Poca llum",
+        "bright": "Lluminós",
+        "very-bright": "Molt lluminós"
+      },
+      "maintenance": {
+        "excellent": "Com nou",
+        "good": "Bé",
+        "acceptable": "Acceptable",
+        "poor": "Poc",
+        "very-poor": "Dolent"
+      },
+      "services": {
+        "heating": "Calefacció",
+        "air-conditioning": "Aire condicionat",
+        "gas": "Gas",
+        "terrace": "Terrassa",
+        "balcony": "Balcó",
+        "patio": "Pati"
+      }
+    },
+    "landLord": {
+      "landLordTreatment": {
+        "excellent": "Genial",
+        "good": "Bé",
+        "acceptable": "Millorable",
+        "poor": "Dolent",
+        "no-contact": "Sense tracte"
+      },
+      "problemSolving": {
+        "excellent": "Genial",
+        "good": "Bé",
+        "acceptable": "Millorable",
+        "slow": "Lenta",
+        "slow-useless": "Lenta i ineficaç"
+      },
+      "deposit": {
+        "returned": "Sí",
+        "returned-with-deductions": "Només una part",
+        "not-returned": "No"
+      }
+    },
+    "neighbors": {
+      "buildingNeighborhood": {
+        "familiar": "Familiar",
+        "young-couples": "Parelles joves",
+        "students": "Pisos d'estudiants",
+        "shared": "Pisos compartits",
+        "seniors": "Gent gran +75 anys"
+      },
+      "touristicApartments": {
+        "yes-tolerable": "Sí, tolerable",
+        "yes-annoying": "Sí, molestos",
+        "no": "No hi ha"
+      },
+      "neighborsRelationship": {
+        "excellent": "Molt bona",
+        "friendly": "Cordial",
+        "poor": "Mala",
+        "no-relations": "Sense relació"
+      },
+      "buildingMaintenance": {
+        "excellent": "Com nou",
+        "good": "Bé",
+        "acceptable": "Acceptable",
+        "poor": "Dolent"
+      },
+      "buildingCleaning": {
+        "excellent": "Molt net",
+        "good": "Bona",
+        "poor": "Poca",
+        "no-cleaning": "Sense neteja"
+      },
+      "services": {
+        "lift": "Ascensor",
+        "cleaning": "Neteja",
+        "doorman": "Porteria",
+        "parking": "Parking",
+        "storage-room": "Traster"
+      }
+    },
+    "neighborhood": {
+      "vibe": {
+        "quiet": "Tranquil",
+        "festive": "Lúdic/Festiu",
+        "familiar": "Familiar",
+        "student-oriented": "Estudiantil",
+        "nightlife": "Nocturn"
+      },
+      "tourists": {
+        "many": "Molts",
+        "some": "Bastants",
+        "few": "Pocs",
+        "none": "No hi ha"
+      },
+      "noise": {
+        "quiet": "Silenciosa",
+        "good": "Tolerable",
+        "noisy": "Ruidosa"
+      },
+      "security": {
+        "excellent": "Molt segura",
+        "good": "Sense problemes",
+        "acceptable": "Millorable",
+        "poor": "Poc segura"
+      },
+      "cleaning": {
+        "good": "Bona",
+        "poor": "Poca neta",
+        "very-poor": "Bruta"
+      },
+      "services": {
+        "supermarket": "Supermercats",
+        "schools": "Escoles",
+        "metro": "Metro",
+        "bus": "Autobús",
+        "shops": "Comerços",
+        "market": "Mercat",
+        "restaurants": "Restaurants",
+        "medical-center": "Centre de salut",
+        "mall": "Centre comercial",
+        "veterinarian": "Veterinari",
+        "gym": "Gimnàs",
+        "playground": "Parc infantil",
+        "pharmacy": "Farmàcies",
+        "bike-parking": "Parking de bicicletes",
+        "bicing": "Bicing",
+        "park": "Zona verda",
+        "children-area": "Zona infantil"
+      }
+    }
   }
 }

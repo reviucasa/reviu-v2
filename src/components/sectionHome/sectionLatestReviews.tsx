@@ -1,6 +1,5 @@
 "use client";
-import { ReviewData } from "@/models/review";
-import { useRouter } from "next/router";
+import { Review, getReviews } from "@/models/review";
 import { useEffect, useState } from "react";
 import { BounceLoader } from "react-spinners";
 import { SlideReview } from "../organism/SlideReview";
@@ -18,15 +17,15 @@ export type SectionsType = Array<CardReviewType>;
 
 export function SectionLatestReviews() {
   const t = useTranslations();
-  const [dataLatestReviews, setDataLatestReviews] = useState<ReviewData[]>([]);
+  const [dataLatestReviews, setDataLatestReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const getReviews = async (number?: number) => {
+  const fetchReviews = async (number?: number) => {
     setLoading(true);
 
     try {
-      /* const response = await getLatestReviews(number);
-      setDataLatestReviews(response.data.reviews); */
+      const response = await getReviews(number);
+      setDataLatestReviews(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -35,7 +34,7 @@ export function SectionLatestReviews() {
   };
 
   useEffect(() => {
-    getReviews(12);
+    fetchReviews(2);
   }, []);
 
   return (

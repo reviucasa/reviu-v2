@@ -1,9 +1,9 @@
 import { useTranslations } from "next-intl";
 import { AreaCard } from "../molecules/AreaCard";
-import { ReviewData } from "@/models/review";
+import { Review } from "@/models/review";
 
 type AreaValuation = {
-  reviews: Array<ReviewData>;
+  reviews: Array<Review>;
 };
 
 export const AreaValuation = ({ reviews }: AreaValuation) => {
