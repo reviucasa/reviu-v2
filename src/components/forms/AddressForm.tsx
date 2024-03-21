@@ -111,12 +111,12 @@ export const AddressForm = () => {
       try {
         if (review) {
           await updateReview(auth.currentUser!.uid, {
-            apartmentId: apartmentSelected,
+            apartment: {id: apartmentSelected},
             buildingId: building.building.id,
           });
         } else {
           await createReview(auth.currentUser!.uid, {
-            apartmentId: apartmentSelected,
+            apartment: {id: apartmentSelected},
             buildingId: building.building.id,
             data: { step: stepReview },
           });

@@ -15,13 +15,20 @@ import {
   orderBy,
 } from "firebase/firestore";
 
+export type Apartment = {
+  id: string;
+  stair: string;
+  floor: string;
+  door: string;
+};
+
 export type Review = {
   address: string;
   id: string;
   timestamp: string;
   updated: string;
   draft: boolean;
-  apartmentId: string;
+  apartment?: Partial<Apartment>;
   data: Partial<ReviewData>;
   buildingId: string;
 };

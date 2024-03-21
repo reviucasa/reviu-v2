@@ -17,7 +17,7 @@ export type SectionsType = Array<CardReviewType>;
 
 export function SectionLatestReviews() {
   const t = useTranslations();
-  const [dataLatestReviews, setDataLatestReviews] = useState<Review[]>([]);
+  const [latestReviews, setLatestReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
   const fetchReviews = async (number?: number) => {
@@ -25,7 +25,7 @@ export function SectionLatestReviews() {
 
     try {
       const response = await getReviews(number);
-      setDataLatestReviews(response);
+      setLatestReviews(response);
     } catch (error) {
       console.log(error);
     } finally {
@@ -46,7 +46,7 @@ export function SectionLatestReviews() {
       )}
       <SlideReview
         title={t("common.latestReviews")}
-        dataReview={dataLatestReviews}
+        reviews={latestReviews}
         sizeCard={420}
         sizeGapCard={28}
         sizeGapCardMobile={16}

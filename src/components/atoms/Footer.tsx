@@ -32,7 +32,7 @@ export function Footer() {
             >
               {t("common.sobreNosotros")}
             </li>
-            <li>{/*t('common.contacto', 'Contacto')*/}</li>
+            <li>{t("common.contacto")}</li>
           </ul>
         </div>
         <div className="lg:text-left">

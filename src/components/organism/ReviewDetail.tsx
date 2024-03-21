@@ -79,7 +79,7 @@ export const ReviewDetail = ({
             <div>
               <div className="flex justify-end pb-4 relative top-5">
                 <Chip
-                  className={`text-xs lg:flex hidden items-center gap-3 h-10 ${
+                  className={`text-xs lg:flex hidden items-center gap-3 h-10 px-4 ${
                     review?.data?.opinion?.recomend
                       ? "bg-lime text-primary-500"
                       : "bg-red-500 text-white"

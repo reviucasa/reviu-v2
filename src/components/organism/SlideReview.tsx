@@ -10,13 +10,13 @@ import { Review } from "@/models/review";
 
 export const SlideReview = ({
   title,
-  dataReview,
+  reviews,
   sizeCard,
   sizeGapCard,
   sizeGapCardMobile,
 }: {
   title: string;
-  dataReview: Review[];
+  reviews: Review[];
   sizeCard: number;
   sizeGapCard: number;
   sizeGapCardMobile: number;
@@ -73,8 +73,8 @@ export const SlideReview = ({
   }, []);
 
   const shuffleData = useMemo(() => {
-    return dataReview && shuffle(dataReview);
-  }, [dataReview]);
+    return reviews && shuffle(reviews);
+  }, [reviews]);
 
   const handleNextReviews = () => {
     setCurrentIndex((prevIndex) => prevIndex + 1);
@@ -139,7 +139,7 @@ export const SlideReview = ({
         </Button>
         <Button
           onClick={handleNextReviews}
-          disabled={currentIndex + numberOfCards >= dataReview.length}
+          disabled={currentIndex + numberOfCards >= reviews.length}
           className="flex justify-center w-[72px] h-[40px]"
           buttonClassName="btn-secondary-200 button w-[72px] h-[40px] rounded-[40px]"
         >

@@ -41,13 +41,13 @@ export const OpinionCardSmall = ({
           <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
             <div className="flex-1 flex flex-col  items-start justify-center ">
               <p>
-                {review.id}
-                {/* {review?.apartment?.floor} */}
+                {review.address}
+                {review.apartment?.floor}
               </p>
-              <p className="font-bold">{/* {review?.apartment?.floor} */}</p>
+              <p className="font-bold">{review.apartment?.floor}</p>
             </div>
             <Chip
-              className={`text-xs flex items-center gap-3 rounded-2xl h-10 w-10 px-2 py-2 ${
+              className={`h-10 w-10 px-2 py-2 ${
                 review.data?.opinion?.recomend
                   ? "bg-lime text-primary-500"
                   : "bg-red-500 text-white"
