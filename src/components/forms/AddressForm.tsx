@@ -118,7 +118,7 @@ export const AddressForm = () => {
           await createReview(auth.currentUser!.uid, {
             apartmentId: apartmentSelected,
             buildingId: building.building.id,
-            review: { step: stepReview },
+            data: { step: stepReview },
           });
         }
         /* revalidateUser(); */

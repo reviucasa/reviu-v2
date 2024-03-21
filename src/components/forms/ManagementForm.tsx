@@ -12,7 +12,6 @@ import { Button } from "../atoms/Button";
 import { RealAgencyComboBox } from "../atoms/RealAgencyComboBox";
 import { useReview } from "@/hooks/swr/useReview";
 import { useSubmitReview } from "@/hooks/useSubmitReview";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { getUrlReview } from "@/helpers/stepper";
@@ -20,7 +19,6 @@ import { getUrlReview } from "@/helpers/stepper";
 export const ManagementForm = () => {
   const { review } = useReview();
   const { onSubmitReview } = useSubmitReview("management");
-  const { config } = useConfig();
   const router = useRouter();
   const { nextStepReview } = useStep();
   const { t } = useTranslation();
@@ -149,7 +147,7 @@ export const ManagementForm = () => {
         "El feedback positivo es la mejor manera de comunicar y ser escuchado."
       )}
     >
-      {config && (
+      {/* config && */ (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
             <label htmlFor="isRealStateAgency">

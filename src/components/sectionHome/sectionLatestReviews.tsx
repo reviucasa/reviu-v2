@@ -34,7 +34,7 @@ export function SectionLatestReviews() {
   };
 
   useEffect(() => {
-    fetchReviews(2);
+    fetchReviews(12);
   }, []);
 
   return (

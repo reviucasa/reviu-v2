@@ -14,7 +14,6 @@ import { MultiselectInput } from "../molecules/MultiselectInput";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { useReview } from "@/hooks/swr/useReview";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useTranslations } from "next-intl";
 import { getUrlReview } from "@/helpers/stepper";
@@ -25,7 +24,6 @@ export const NeighbourhoodForm = () => {
   const router = useRouter();
   const { nextStepReview } = useStep();
   const { review } = useReview();
-  const { config } = useConfig();
   const { onSubmitReview } = useSubmitReview("neighbourhood");
   const t = useTranslations();
 
@@ -132,7 +130,7 @@ export const NeighbourhoodForm = () => {
 
   return (
     <ReviewFormLayout title={t("common.barrio")}>
-      {config && (
+      {/* config &&  */(
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
             <div className="flex justify-between">
@@ -156,7 +154,7 @@ export const NeighbourhoodForm = () => {
                 <MultiselectInput
                   ariaInvalid={!!errors.vibe}
                   {...field}
-                  options={config.neighborhood.vibe}
+                  options={config.neighbourhood.vibe}
                 />
               )}
             /> */}
@@ -171,7 +169,7 @@ export const NeighbourhoodForm = () => {
                 <RadioInput
                   ariaInvalid={!!errors.tourists}
                   {...field}
-                  options={config.neighborhood.tourists}
+                  options={config.neighbourhood.tourists}
                 />
               )}
             /> */}
@@ -188,7 +186,7 @@ export const NeighbourhoodForm = () => {
                 <RadioInput
                   ariaInvalid={!!errors.noise}
                   {...field}
-                  options={config.neighborhood.noise}
+                  options={config.neighbourhood.noise}
                 />
               )}
             /> */}
@@ -211,7 +209,7 @@ export const NeighbourhoodForm = () => {
                 <RadioInput
                   ariaInvalid={!!errors.security}
                   {...field}
-                  options={config.neighborhood.security}
+                  options={config.neighbourhood.security}
                 />
               )}
             /> */}
@@ -228,7 +226,7 @@ export const NeighbourhoodForm = () => {
                 <RadioInput
                   ariaInvalid={!!errors.cleaning}
                   {...field}
-                  options={config.neighborhood.cleaning}
+                  options={config.neighbourhood.cleaning}
                 />
               )}
             /> */}
@@ -251,7 +249,7 @@ export const NeighbourhoodForm = () => {
               render={({ field }) => (
                 <MultiselectInput
                   {...field}
-                  options={config.neighborhood.services}
+                  options={config.neighbourhood.services}
                 />
               )}
             /> */}

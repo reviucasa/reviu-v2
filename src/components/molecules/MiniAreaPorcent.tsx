@@ -2,7 +2,6 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import IconInfo from "../../../public/IconInfo.png";
 import { Dialog } from "../atoms/Dialog";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { ConfigValue, Stat, Value } from "@/models/types";
 
 export const MiniAreaPorcent = ({
@@ -12,7 +11,6 @@ export const MiniAreaPorcent = ({
   stat: Stat;
   className?: string;
 }) => {
-  const { config } = useConfig();
   const [maxPercentStat, setMaxPercentStat] = useState<Value>();
   const [statConfig, setStatConfig] = useState<ConfigValue[]>();
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
@@ -28,11 +26,11 @@ export const MiniAreaPorcent = ({
   }, [stat]);
 
   useEffect(() => {
-    if (stat && config) {
+    if (stat) {
       //@ts-ignore
-      setStatConfig(config.neighborhood[stat.stat]);
+      setStatConfig(config.neighbourhood[stat.stat]);
     }
-  }, [stat, config]);
+  }, [stat]);
   const roundedPercentage = Math.ceil(maxPercentStat?.percentage ?? 0); // Si el porcentaje es undefined utilizamos por defecto 0
 
   return (

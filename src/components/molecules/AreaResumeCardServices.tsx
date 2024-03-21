@@ -1,6 +1,6 @@
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { Config, ConfigValue } from "@/models/types";
+import { useTranslations } from "next-intl";
 import { useContext } from "react";
 
 export const AreaResumeCardService = ({
@@ -10,8 +10,8 @@ export const AreaResumeCardService = ({
   className?: string;
   title?: string;
 }) => {
-  const { config } = useConfig();
   const { wordCloud } = useContext(AnalisisContext);
+  const config = useTranslations("config");
 
   return (
     <div
@@ -27,15 +27,7 @@ export const AreaResumeCardService = ({
               className="h-10 w-fit py-2 px-4 bg-white rounded-[8px] border-[1px] border-purple-400 m-2 hover:bg-purple-100"
               key={index}
             >
-              {
-                /* config?.neighborhood.services.find((name) => name.value === services.word)?.label */
-                (
-                  config as Config | undefined
-                )?.reviewConfig.neighborhood.vibe.find(
-                  (name: ConfigValue) => name.value === services.word
-                )?.label
-              }
-              {/* {t(`common.${config?.neighborhood.vibe.find((name) => name.value === vibes.word)?.label}`)} */}
+              {config(`neighbourhood.vibe.${services.word}`)}
             </div>
           ))}
       </div>

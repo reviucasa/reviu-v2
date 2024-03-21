@@ -615,8 +615,8 @@
         "patio": "Patio"
       }
     },
-    "landLord": {
-      "landLordTreatment": {
+    "landlord": {
+      "landlordTreatment": {
         "excellent": "Genial",
         "good": "Bueno",
         "acceptable": "Mejorable",
@@ -675,7 +675,7 @@
         "storage-room": "Trastero"
       }
     },
-    "neighborhood": {
+    "neighbourhood": {
       "vibe": {
         "quiet": "Tranquilo",
         "festive": "Lúdico/Festivo",

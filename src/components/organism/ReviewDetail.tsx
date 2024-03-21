@@ -11,7 +11,6 @@ import { Label } from "../atoms/Label";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { Review } from "@/models/review";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
@@ -33,11 +32,7 @@ export const ReviewDetail = ({
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
 
   const config = useTranslations("config");
-  console.log(
-    config(
-      `buildingQuality.summerTemperature.${review?.data?.valuation?.summerTemperature}`
-    )
-  );
+
   return (
     <div>
       {review && (
@@ -147,67 +142,38 @@ export const ReviewDetail = ({
               </div>
               <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
                 <Label tittle={t("common.temperaturaVerano")}>
-                  {
-                    /* (
-                      config as Config | undefined
-                    )?.buildingQuality.summerTemperature.find(
-                      (t) =>
-                        t.value === review?.data?.valuation?.summerTemperature
-                    )?.label */
-                    config(
-                      `buildingQuality.summerTemperature.${review?.data?.valuation?.summerTemperature}`
-                    )
-                  }
+                  {config(
+                    `buildingQuality.summerTemperature.${review?.data?.valuation?.summerTemperature}`
+                  )}
                 </Label>
-                {/* <Label tittle={t("common.temperaturaInvierno")}>
-                  {
-                    (
-                      config as Config | undefined
-                    )?.buildingQuality.winterTemperature.find(
-                      (t) =>
-                        t.value === review?.data?.valuation?.winterTemperature
-                    )?.label
-                  }
+                <Label tittle={t("common.temperaturaInvierno")}>
+                  {config(
+                    `buildingQuality.winterTemperature.${review?.data?.valuation?.winterTemperature}`
+                  )}
                 </Label>
                 <Label tittle={t("common.relacionVecinal")}>
-                  {
-                    (
-                      config as Config | undefined
-                    )?.neighbors.neighborsRelationship.find(
-                      (t) =>
-                        t.value ===
-                        review.data?.community?.neighborsRelationship
-                    )?.label
-                  }
+                  {config(
+                    `neighbors.neighborsRelationship.${review.data?.community?.neighborsRelationship}`
+                  )}
                 </Label>
                 <Label tittle={t("common.luz")}>
-                  {
-                    (config as Config | undefined)?.buildingQuality.light.find(
-                      (t) => t.value === review.data?.valuation?.light
-                    )?.label
-                  }
+                  {config(
+                    `buildingQuality.light.${review.data?.valuation?.light}`
+                  )}
                 </Label>
 
                 <Label tittle={t("common.estadoYMantenimiento")}>
-                  {
-                    (
-                      config as Config | undefined
-                    )?.neighbors.buildingMaintenance.find(
-                      (t) =>
-                        t.value === review?.data?.community?.buildingMaintenance
-                    )?.label
-                  }
+                  {config(
+                    `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
+                  )}
                 </Label>
                 <Label tittle={t("common.services")}>
                   {review?.data?.community?.services
-                    ?.map(
-                      (type: string) =>
-                        (config as Config | undefined)?.neighbors.services.find(
-                          (t) => t.value === type
-                        )?.label
+                    ?.map((type: string) =>
+                      config(`neighbors.services.${type}`)
                     )
                     .join(", ")}
-                </Label> */}
+                </Label>
               </div>
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">
                 <h6 className="mb-2 lg:text-xl font-bold">
@@ -234,45 +200,28 @@ export const ReviewDetail = ({
                         <span>{review.data?.management?.realStateAgency}</span>
                       )}
                     </div>
-                    {/* <Label tittle={t("realstate:comoHaSidoElTrato")}>
-                      {
-                        (
-                          config as Config | undefined
-                        )?.landlord.landlordTreatment.find(
-                          (t) =>
-                            t.value ===
-                            review.data?.management?.realStateDealing
-                        )?.label
-                      }
-                    </Label> */}
+                    <Label tittle={t("realstate.comoHaSidoElTrato")}>
+                      {config(
+                        `landlord.landlordTreatment.${review?.data?.management?.realStateDealing}`
+                      )}
+                    </Label>
                   </>
                 )}
-                {/* <Label tittle={t("common.tratoCasero")}>
-                  {
-                    (
-                      config as Config | undefined
-                    )?.landlord.landlordTreatment.find(
-                      (t) =>
-                        t.value === review.data?.management?.landlordDealing
-                    )?.label
-                  }
+                <Label tittle={t("common.tratoCasero")}>
+                  {config(
+                    `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
+                  )}
                 </Label>
                 <Label tittle={t("common.respuestaProblema")}>
-                  {
-                    (
-                      config as Config | undefined
-                    )?.landlord.problemSolving.find(
-                      (t) => t.value === review.data?.management?.problemSolving
-                    )?.label
-                  }
+                  {config(
+                    `landlord.problemSolving.${review?.data?.management?.problemSolving}`
+                  )}
                 </Label>
                 <Label tittle={t("common.devolvieronFianza")}>
-                  {
-                    (config as Config | undefined)?.landlord.deposit.find(
-                      (t) => t.value === review.data?.management?.deposit
-                    )?.label
-                  }
-                </Label> */}
+                  {config(
+                    `landlord.deposit.${review?.data?.management?.deposit}`
+                  )}
+                </Label>
               </div>
 
               <div className="flex flex-col gap-6 my-8">
@@ -316,75 +265,41 @@ export const ReviewDetail = ({
                       </h6>
                     </div>
                     <div className="flex-1 grid grid-cols-2 gap-8">
-                      {/* <Label tittle={t("common.tipologiaResidentes")}>
+                      <Label tittle={t("common.tipologiaResidentes")}>
                         {review.data?.community?.buildingNeighborhood
-                          ?.map(
-                            (type: string) =>
-                              (
-                                config as Config | undefined
-                              )?.neighbors.buildingNeighborhood.find(
-                                (t) => t.value === type
-                              )?.label
+                          ?.map((type: string) =>
+                            config(`neighbors.buildingNeighborhood.${type}`)
                           )
                           .join(", ")}
                       </Label>
 
                       <Label tittle={t("common.pisosTuristicos")}>
-                        {
-                          (
-                            config as Config | undefined
-                          )?.neighbors.touristicApartments.find(
-                            (t) =>
-                              t.value ===
-                              review.data?.community?.touristicApartments
-                          )?.label
-                        }
+                        {config(
+                          `neighbors.touristicApartments.${review?.data?.community?.touristicApartments}`
+                        )}
                       </Label>
                       <Label tittle={t("common.relacionVecinal")}>
-                        {
-                          (
-                            config as Config | undefined
-                          )?.neighbors.neighborsRelationship.find(
-                            (t) =>
-                              t.value ===
-                              review.data?.community?.neighborsRelationship
-                          )?.label
-                        }
+                        {config(
+                          `neighbors.neighborsRelationship.${review?.data?.community?.neighborsRelationship}`
+                        )}
                       </Label>
                       <Label tittle={t("common.estadoYMantenimiento")}>
-                        {
-                          (
-                            config as Config | undefined
-                          )?.neighbors.buildingMaintenance.find(
-                            (t) =>
-                              t.value ===
-                              review.data?.community?.buildingMaintenance
-                          )?.label
-                        }
+                        {config(
+                          `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
+                        )}
                       </Label>
                       <Label tittle={t("common.limpieza")}>
-                        {
-                          (
-                            config as Config | undefined
-                          )?.neighbors.buildingCleaning.find(
-                            (t) =>
-                              t.value ===
-                              review.data?.community?.buildingCleaning
-                          )?.label
-                        }
+                        {config(
+                          `neighbors.buildingCleaning.${review?.data?.community?.buildingCleaning}`
+                        )}
                       </Label>
                       <Label tittle={t("common.services")}>
                         {review.data?.community?.services
-                          ?.map(
-                            (type: string) =>
-                              (
-                                config as Config | undefined
-                              )?.neighbors.services.find(
-                                (t) => t.value === type
-                              )?.label
+                          ?.map((type: string) =>
+                            config(`neighbors.services.${type}`)
                           )
                           .join(", ")}
-                      </Label> */}
+                      </Label>
                       <div className="grid col-span-2">
                         {review.data?.community?.comment && (
                           <div className="flex">
@@ -402,60 +317,44 @@ export const ReviewDetail = ({
                 <h5 className="mb-2">{t("common.zona300")}</h5>
               </div>
               <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
-                {/* <Label tittle={t("common.tipologiaAmbiente")}>
+                <Label tittle={t("common.tipologiaAmbiente")}>
                   {vibe
                     ?.filter((vibes) => vibes.count > 1)
                     .slice(0, 3)
-                    .map(
-                      (vibes) =>
-                        (config as Config | undefined)?.neighborhood.vibe.find(
-                          (name) => name.value === vibes.word
-                        )?.label
-                    )
+                    .map((vibes) => config(`neighbourhood.vibe.${vibes.word}`))
                     .join(", ")}
                 </Label>
                 <Label tittle={t("common.turistas")}>
-                  {
-                    (config as Config | undefined)?.neighborhood.tourists.find(
-                      (t) => t.value === review.data?.neighbourhood?.tourists
-                    )?.label
-                  }
+                  {config(
+                    `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
+                  )}
                 </Label>
                 <Label tittle={t("common.ruido")}>
-                  {
-                    (config as Config | undefined)?.neighborhood.noise.find(
-                      (t) => t.value === review.data?.neighbourhood?.noise
-                    )?.label
-                  }
+                  {config(
+                    `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
+                  )}
                 </Label>
                 <Label tittle={t("common.seguridad")}>
-                  {
-                    (config as Config | undefined)?.neighborhood.security.find(
-                      (t) => t.value === review.data?.neighbourhood?.security
-                    )?.label
-                  }
+                  {config(
+                    `neighbourhood.security.${review?.data?.neighbourhood?.security}`
+                  )}
                 </Label>
                 <Label tittle={t("common.limpieza")}>
-                  {
-                    (config as Config | undefined)?.neighborhood.cleaning.find(
-                      (t) => t.value === review.data?.neighbourhood?.cleaning
-                    )?.label
-                  }
+                  {config(
+                    `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
+                  )}
                 </Label>
                 <Label tittle={t("common.services")}>
                   {services
                     ?.filter((services) => services.count > 2)
                     .slice(0, 5)
-                    .map(
-                      (services) =>
-                        (
-                          config as Config | undefined
-                        )?.neighborhood.services.find(
-                          (name) => name.value === services.word
-                        )?.label
+                    .map((services) =>
+                      config(
+                        `neighbourhood.buildingMaintenance.${services.word}`
+                      )
                     )
                     .join(", ")}
-                </Label> */}
+                </Label>
                 <div className="grid col-span-2">
                   {review?.data?.community?.comment && (
                     <div className="flex">

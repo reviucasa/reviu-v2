@@ -25,8 +25,6 @@ export const OpinionCardSmall = ({
 
   const t = useTranslations();
 
-  console.log(review);
-
   return (
     <>
       <div
@@ -43,7 +41,7 @@ export const OpinionCardSmall = ({
           <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
             <div className="flex-1 flex flex-col  items-start justify-center ">
               <p>
-                {review.address}
+                {review.id}
                 {/* {review?.apartment?.floor} */}
               </p>
               <p className="font-bold">{/* {review?.apartment?.floor} */}</p>

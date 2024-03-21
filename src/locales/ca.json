@@ -613,8 +613,8 @@
         "patio": "Pati"
       }
     },
-    "landLord": {
-      "landLordTreatment": {
+    "landlord": {
+      "landlordTreatment": {
         "excellent": "Genial",
         "good": "Bé",
         "acceptable": "Millorable",
@@ -673,7 +673,7 @@
         "storage-room": "Traster"
       }
     },
-    "neighborhood": {
+    "neighbourhood": {
       "vibe": {
         "quiet": "Tranquil",
         "festive": "Lúdic/Festiu",
@@ -700,7 +700,7 @@
       },
       "cleaning": {
         "good": "Bona",
-        "poor": "Poca neta",
+        "poor": "Poc neta",
         "very-poor": "Bruta"
       },
       "services": {

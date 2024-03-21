@@ -10,7 +10,6 @@ import { Button } from "../atoms/Button";
 import { MultiselectInput } from "../molecules/MultiselectInput";
 import { useReview } from "@/hooks/swr/useReview";
 import { useSubmitReview } from "@/hooks/useSubmitReview";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
@@ -29,7 +28,6 @@ const schema = yup.object({
 export const CommunityForm = () => {
   const { review } = useReview();
   const { onSubmitReview } = useSubmitReview("community");
-  const { config } = useConfig();
   const router = useRouter();
   const { nextStepReview } = useStep();
   const t = useTranslations();
@@ -76,7 +74,7 @@ export const CommunityForm = () => {
 
   return (
     <ReviewFormLayout title={t("communityReviews.comunidadVecinos")}>
-      {config && (
+      {/* config && */ (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
             <div className="flex justify-between">

@@ -72,7 +72,7 @@ export type Analisis = {
     id: string;
     address: string;
     reviews: Review[];
-    neighborhood: {
+    neighbourhood: {
       word_cloud: WordCloud[];
       stats: Stat[];
     };
@@ -131,7 +131,7 @@ export type Config = {
     services: ConfigValue[];
     comments: [];
   };
-  neighborhood: {
+  neighbourhood: {
     vibe: ConfigValue[];
     tourists: ConfigValue[];
     noise: ConfigValue[];

@@ -12,6 +12,7 @@ import {
   query,
   limit,
   getDocs,
+  orderBy,
 } from "firebase/firestore";
 
 export type Review = {
@@ -107,10 +108,10 @@ const reviewConverter: FirestoreDataConverter<Review> = {
 // Create a new user
 const createReview = async (
   uid: string,
-  user: Partial<Review>
+  review: Partial<Review>
 ): Promise<void> => {
-  const ref = doc(db, `users/${uid}`).withConverter(reviewConverter); // Get a reference to the document with the specific ID
-  await setDoc(ref, user);
+  const ref = doc(db, `users/${uid}`).withConverter(reviewConverter);
+  await setDoc(ref, review);
 
   /* const ref = collection(db, `users`).withConverter(userConverter);
   await addDoc(ref, user); */
@@ -145,7 +146,7 @@ const getReviews = async (count?: number): Promise<Review[]> => {
 
   // Conditionally add a limit
   if (count) {
-    q = query(q, limit(count));
+    q = query(q, orderBy("timeCreated", "desc"), limit(count));
   }
 
   return getDocs(q)

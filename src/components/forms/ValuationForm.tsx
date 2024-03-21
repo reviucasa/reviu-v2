@@ -7,10 +7,7 @@ import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { ReviewFormLayout } from "../layouts/ReviewFormLayout";
-import { MultiselectInput } from "../molecules/MultiselectInput";
-import { RadioInput } from "../molecules/RadioInput";
 import { useReview } from "@/hooks/swr/useReview";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
@@ -18,7 +15,6 @@ import { getUrlReview } from "@/helpers/stepper";
 
 export const ValuationForm = () => {
   const { review } = useReview();
-  const { config } = useConfig();
   const { onSubmitReview } = useSubmitReview("valuation");
   const router = useRouter();
   const { nextStepReview } = useStep();
@@ -79,7 +75,7 @@ export const ValuationForm = () => {
 
   return (
     <ReviewFormLayout title={t("common.valoracionPiso", "Valoración del piso")}>
-      {config && (
+      {
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
             <label htmlFor="currentResidence">
@@ -220,7 +216,7 @@ export const ValuationForm = () => {
             </Button>
           </div>
         </form>
-      )}
+      }
     </ReviewFormLayout>
   );
 };

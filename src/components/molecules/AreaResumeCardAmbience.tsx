@@ -5,15 +5,13 @@ import ludico from "../../../public/AmbienteLudico.svg";
 import nocturno from "../../../public/AmbienteNocturno.svg";
 import quiet from "../../../public/quiet.svg";
 import student from "../../../public/student-oriented'.svg";
-import { useConfig } from "@/hooks/swr/useConfig";
 import { useTranslations } from "next-intl";
 import { AnalisisContext } from "@/context/AnalisisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
 
 export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
-  const { config } = useConfig();
   const { wordCloud } = useContext(AnalisisContext);
-  const t = useTranslations();
+  const config = useTranslations("config");
   const IconAmbience = [
     { name: "quiet", image: quiet },
     { name: "student-oriented", image: student },
@@ -54,17 +52,7 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
                       />
                     )}
                     <p className="lg:text-2xl text-base">
-                      {
-                        /* config?.neighborhood.vibe.find(
-                          (name) => name.value === vibes.word
-                        )?.label */
-                        (
-                          config as Config | undefined
-                        )?.reviewConfig.neighborhood.vibe.find(
-                          (name: ConfigValue) => name.value === vibes.word
-                        )?.label
-                      }
-                      {/* {t(`common.${config?.neighborhood.vibe.find((name) => name.value === vibes.word)?.label}`)} */}
+                      {config(`neighbourhood.vibe.${vibes.word}`)}
                     </p>
                   </div>
                 );
