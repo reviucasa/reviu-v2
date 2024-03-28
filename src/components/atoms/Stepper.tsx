@@ -1,4 +1,4 @@
-import { useReview } from "@/hooks/swr/useReview";
+import { useDraft } from "@/hooks/swr/useDraft";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
@@ -16,7 +16,7 @@ type StepperProps = {
 
 const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
   const pathname = usePathname();
-  const { review } = useReview();
+  const { draft } = useDraft();
 
   const getActiveStepIndex = (): number => {
     const activeIndex = steps.findIndex((step) => step.url === pathname);
@@ -24,8 +24,8 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
   };
 
   const isStepDisabled = useCallback(
-    (index: number): boolean => index > (review?.data?.step || 0),
-    [review?.data?.step]
+    (index: number): boolean => index > (draft?.data?.step || 0),
+    [draft?.data?.step]
   );
 
   const activeStepIndex = getActiveStepIndex();

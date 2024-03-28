@@ -22,8 +22,8 @@ export const ApartmentLocation = ({
   return (
     <div className={className}>
       <span className="font-bold text-sm md:text-base">
-        {/* {review?.apartment?.stair} {review?.apartment?.floor}{" "}
-        {review?.apartment?.door} */}
+        {review?.apartment?.stair} {review?.apartment?.floor}{" "}
+        {review?.apartment?.door}
         <p className="text-xs md:text-base font-normal flex ">
           {review.address}
         </p>

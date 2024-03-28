@@ -1,8 +1,9 @@
+"use client";
 import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Face from "public/face.png";
+import Face from "../../../public/face.png";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdDone } from "react-icons/md";
@@ -15,13 +16,19 @@ import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { getUrlReview } from "@/helpers/stepper";
+import { useTranslations } from "next-intl";
+import { reviewConfigParams } from "@/staticData";
+import { useDraft } from "@/hooks/swr/useDraft";
+import TextAreaWithCharCounter from "../molecules/TexareaCounter";
+import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 
 export const ManagementForm = () => {
-  const { review } = useReview();
-  const { onSubmitReview } = useSubmitReview("management");
+  const { draft } = useDraft();
+  const { onSubmitDraft } = useSubmitDraft("management");
   const router = useRouter();
   const { nextStepReview } = useStep();
-  const { t } = useTranslation();
+  const t = useTranslations();
+  const config = useTranslations("config");
 
   const [selectedRealStateAgency, setSelectedRealStateAgency] =
     useState<string>();
@@ -31,28 +38,22 @@ export const ManagementForm = () => {
     isRealStateAgency: yup.boolean().required(t("common.seleccionaOpcion")),
     realStateAgency: yup
       .string()
-      /* .when("isRealStateAgency", (isRealStateAgency, schema: yup.StringSchema)=> {
-        return isRealStateAgency === true
-          ? schema.required(
-              t(
-                "common.necesitamosSaber",
-              )
-            )
-          : schema;
-      }) */,
-        
+      .when(
+        "isRealStateAgency",
+        (isRealStateAgency, schema: yup.StringSchema) => {
+          return isRealStateAgency === true
+            ? schema.required(t("common.necesitamosSaber"))
+            : schema;
+        }
+      ),
     realStateDealing: yup
       .string()
-      /* .when("isRealStateAgency", (isRealStateAgency, schema) => {
+      .when("isRealStateAgency", (isRealStateAgency, schema) => {
         return isRealStateAgency === true
-          ? schema.required(
-              t("common.seleccionaOpcion")
-            )
+          ? schema.required(t("common.seleccionaOpcion"))
           : schema;
-      }) */,
-    landlordDealing: yup
-      .string()
-      .required(t("common.seleccionaOpcion", "Debes seleccionar una opción")),
+      }),
+    landlordDealing: yup.string().required(t("common.seleccionaOpcion")),
     problemSolving: yup.string(),
     deposit: yup.string(),
     adviceRealState: yup.string(),
@@ -71,16 +72,15 @@ export const ManagementForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.data.management,
+    defaultValues: draft?.data.management,
   });
 
   const onSelectRealStateAgency = useCallback(async () => {
     setError(undefined);
-    if (review && selectedRealStateAgency) {
+    if (draft && selectedRealStateAgency) {
       try {
         setValue("realStateAgency", selectedRealStateAgency, {
-          shouldDirty:
-            selectedRealStateAgency !== getValues("realStateAgency"),
+          shouldDirty: selectedRealStateAgency !== getValues("realStateAgency"),
         });
       } catch (error) {
         /* if (axios.isAxiosError(error)) {
@@ -94,32 +94,29 @@ export const ManagementForm = () => {
 
   useEffect(() => {
     if (selectedRealStateAgency) onSelectRealStateAgency();
-  }, [selectedRealStateAgency]);
+  }, [onSelectRealStateAgency, selectedRealStateAgency]);
 
-  const handleRouteChange = () => {
+  /* const handleRouteChange = () => {
     if (isDirty) {
-      const resultado = confirm(
-        t(
-          "common.withSaving",
-        )
-      );
+      const resultado = confirm(t("common.withSaving"));
       if (!resultado) {
-        /* router.events.emit("routeChangeError", "routeChange aborted", "", {
+        router.events.emit("routeChangeError", "routeChange aborted", "", {
           shallow: false,
-        }); */ //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
+        }); //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
         throw "routeChange aborted.";
       }
     }
-  };
+  }; */
+
   useEffect(() => {
-    if (review) {
-      setSelectedRealStateAgency(review?.data.management?.realStateAgency);
+    if (draft) {
+      setSelectedRealStateAgency(draft?.data.management?.realStateAgency);
     }
-  }, [review?.data.management]);
+  }, [draft, draft?.data.management]);
 
   useEffect(() => {
     if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, nextStepReview, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -127,34 +124,31 @@ export const ManagementForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.data.management);
-  }, [review?.data.management]);
+    reset(draft?.data.management);
+  }, [reset, draft?.data.management]);
 
   type FormData = yup.InferType<typeof schema>;
   const watchIsRealStateAgency = watch("isRealStateAgency");
   const isFormCompleted = isValid && !isDirty;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitDraft(data);
 
   return (
     <ReviewFormLayout
-      title={t("managementReview:gestion", "Gestión")}
+      title={t("managementReview.gestion")}
       image={Face}
       imageAlt="face"
-      commentTitle={t("managementReview:seAmable", "Se amable y contructivo")}
-      comment={t(
-        "managementReview:feedback",
-        "El feedback positivo es la mejor manera de comunicar y ser escuchado."
-      )}
+      commentTitle={t("managementReview.seAmable")}
+      comment={t("managementReview.feedback")}
     >
-      {/* config && */ (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      {
+        /* config && */ <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6"
+        >
           <div className="flex flex-col">
             <label htmlFor="isRealStateAgency">
-              {t(
-                "managementReview:gestionadoInmobiliaria",
-                "¿Has gestionado el piso a través de una inmobiliaria?"
-              )}
+              {t("managementReview.gestionadoInmobiliaria")}
             </label>
             <Controller
               name="isRealStateAgency"
@@ -164,8 +158,8 @@ export const ManagementForm = () => {
                   ariaInvalid={!!errors.isRealStateAgency}
                   {...field}
                   options={[
-                    { label: t("common.si", "Si"), value: true },
-                    { label: t("common.no", "No"), value: false },
+                    { label: t("common.si"), value: true },
+                    { label: t("common.no"), value: false },
                   ]}
                 />
               )}
@@ -178,10 +172,7 @@ export const ManagementForm = () => {
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
               <label htmlFor="realStateAgency">
-                {t(
-                  "managementReview:queInmobiliaria",
-                  "¿Qué inmobiliaria lleva o ha llevado la gestión?"
-                )}
+                {t("managementReview.queInmobiliaria")}
               </label>
 
               <RealAgencyComboBox
@@ -197,22 +188,26 @@ export const ManagementForm = () => {
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
               <label htmlFor="realStateDealing">
-                {t(
-                  "managementReview:tratoInmobiliaria",
-                  "¿Cómo ha sido el trato de la inmobiliaria?"
-                )}
+                {t("managementReview.tratoInmobiliaria")}
               </label>
-              {/* <Controller
+              <Controller
                 name="realStateDealing"
                 control={control}
                 render={({ field }) => (
                   <RadioInput
                     ariaInvalid={!!errors.realStateDealing}
                     {...field}
-                    options={config.landlord.landlordTreatment}
+                    options={reviewConfigParams.landlord.landlordTreatment.map(
+                      (e) => {
+                        return {
+                          label: config(`landlord.landlordTreatment.${e}`),
+                          value: e,
+                        };
+                      }
+                    )}
                   />
                 )}
-              /> */}
+              />
               {errors.realStateDealing && (
                 <FieldError>{errors.realStateDealing.message}</FieldError>
               )}
@@ -222,22 +217,26 @@ export const ManagementForm = () => {
             <>
               <div className="flex flex-col">
                 <label htmlFor="landlordDealing">
-                  {t(
-                    "managementReview:tratoCasero",
-                    "¿Cómo ha sido el trato del casero/a?"
-                  )}
+                  {t("managementReview.tratoCasero")}
                 </label>
-                {/* <Controller
+                <Controller
                   name="landlordDealing"
                   control={control}
                   render={({ field }) => (
                     <RadioInput
                       ariaInvalid={!!errors.landlordDealing}
                       {...field}
-                      options={config.landlord.landlordTreatment}
+                      options={reviewConfigParams.landlord.landlordTreatment.map(
+                        (e) => {
+                          return {
+                            label: config(`landlord.landlordTreatment.${e}`),
+                            value: e,
+                          };
+                        }
+                      )}
                     />
                   )}
-                /> */}
+                />
                 {errors.landlordDealing && (
                   <FieldError>{errors.landlordDealing.message}</FieldError>
                 )}
@@ -245,40 +244,41 @@ export const ManagementForm = () => {
               <div className="flex flex-col">
                 <div className="flex justify-between">
                   <label htmlFor="problemSolving">
-                    {t(
-                      "managementReview:respuestaProblema",
-                      "¿Y la respuesta cuando surgió un problema?"
-                    )}
+                    {t("managementReview.respuestaProblema")}
                   </label>
                   <span className="text-gray-500 text-sm">
-                    {t("common.opcional", "Opcional")}
+                    {t("common.opcional")}
                   </span>
                 </div>
-                {/* <Controller
+                <Controller
                   name="problemSolving"
                   control={control}
                   render={({ field }) => (
                     <RadioInput
                       ariaInvalid={!!errors.problemSolving}
                       {...field}
-                      options={config.landlord.problemSolving}
+                      options={reviewConfigParams.landlord.problemSolving.map(
+                        (e) => {
+                          return {
+                            label: config(`landlord.problemSolving.${e}`),
+                            value: e,
+                          };
+                        }
+                      )}
                     />
                   )}
-                /> */}
+                />
                 {errors.problemSolving && (
                   <FieldError>{errors.problemSolving.message}</FieldError>
                 )}
               </div>
-              {/* <div className="flex flex-col">
-                {review?.data.stay.currentResidence ? (
+              <div className="flex flex-col">
+                {draft?.data?.stay?.currentResidence ? (
                   ""
                 ) : (
                   <>
                     <label htmlFor="deposit">
-                      {t(
-                        "managementReview:fianza",
-                        "¿Te devolvieron la fianza?"
-                      )}
+                      {t("managementReview.fianza")}
                     </label>
                     <Controller
                       name="deposit"
@@ -286,7 +286,14 @@ export const ManagementForm = () => {
                       render={({ field }) => (
                         <RadioInput
                           {...field}
-                          options={config.landlord.deposit}
+                          options={reviewConfigParams.landlord.deposit.map(
+                            (e) => {
+                              return {
+                                label: config(`landlord.deposit.${e}`),
+                                value: e,
+                              };
+                            }
+                          )}
                         />
                       )}
                     />
@@ -295,23 +302,20 @@ export const ManagementForm = () => {
                     )}
                   </>
                 )}
-              </div> */}
+              </div>
             </>
           )}
           {watchIsRealStateAgency?.valueOf() === true && (
             <div className="flex flex-col">
               <div className="flex justify-between">
                 <label htmlFor="adviceRealState">
-                  {t(
-                    "managementReview:consejosInmobiliaria",
-                    "¿Qué consejos le darías a la inmobiliaria?"
-                  )}
+                  {t("managementReview.consejosInmobiliaria")}
                 </label>
                 <span className="text-gray-500 text-sm">
-                  {t("common.opcional", "Opcional")}
+                  {t("common.opcional")}
                 </span>
               </div>
-              {/* <Controller
+              <Controller
                 name="adviceRealState"
                 control={control}
                 render={({ field }) => (
@@ -319,15 +323,12 @@ export const ManagementForm = () => {
                     {...field}
                     ariaInvalid={!!errors.adviceRealState}
                     className="w-full h-32"
-                    placeholder={t(
-                      "managementReview:feedbackPositivo",
-                      "Apórtales feedback contructivo"
-                    )}
+                    placeholder={t("managementReview.feedbackPositivo")}
                     name="adviceRealState"
                     control={control}
                   />
                 )}
-              /> */}
+              />
               {errors.adviceRealState && (
                 <FieldError>{errors.adviceRealState.message}</FieldError>
               )}
@@ -339,16 +340,13 @@ export const ManagementForm = () => {
               <div className="flex flex-col">
                 <div className="flex justify-between">
                   <label htmlFor="adviceLandlord">
-                    {t(
-                      "managementReview:consejosCasero",
-                      "¿Qué consejos le darías al casero/a?"
-                    )}
+                    {t("managementReview.consejosCasero")}
                   </label>
                   <span className="text-gray-500 text-sm">
-                    {t("common.opcional", "Opcional")}
+                    {t("common.opcional")}
                   </span>
                 </div>
-                {/* <Controller
+                <Controller
                   name="adviceLandlord"
                   control={control}
                   render={({ field }) => (
@@ -356,15 +354,12 @@ export const ManagementForm = () => {
                       {...field}
                       ariaInvalid={!!errors.adviceLandlord}
                       className="w-full h-32"
-                      placeholder={t(
-                        "managementReview:feedbackPositivo",
-                        "Apórtales feedback contructivo"
-                      )}
+                      placeholder={t("managementReview.feedbackPositivo")}
                       name="adviceLandlord"
                       control={control}
                     />
                   )}
-                /> */}
+                />
                 {errors.adviceLandlord && (
                   <FieldError>{errors.adviceLandlord.message}</FieldError>
                 )}
@@ -382,19 +377,14 @@ export const ManagementForm = () => {
                   }
                   disabled={isFormCompleted}
                 >
-                  {isFormCompleted
-                    ? t("common.guardado", "Guardado")
-                    : t("common.guardar", "Guardar")}
+                  {isFormCompleted ? t("common.guardado") : t("common.guardar")}
                   {isFormCompleted && <MdDone size={22} />}
                 </Button>
               </div>
             </>
           )}
         </form>
-      )}
+      }
     </ReviewFormLayout>
   );
 };
-function useTranslation(): { t: any } {
-  throw new Error("Function not implemented.");
-}

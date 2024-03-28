@@ -1,3 +1,4 @@
+"use client";
 import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";

@@ -40,11 +40,11 @@ export const OpinionCardSmall = ({
         >
           <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
             <div className="flex-1 flex flex-col  items-start justify-center ">
-              <p>
-                {review.address}
-                {review.apartment?.floor}
+              <p>{review.address}</p>
+              <p className="font-bold">
+                {review?.apartment?.stair} {review?.apartment?.floor}{" "}
+                {review?.apartment?.door}
               </p>
-              <p className="font-bold">{review.apartment?.floor}</p>
             </div>
             <Chip
               className={`h-10 w-10 px-2 py-2 ${

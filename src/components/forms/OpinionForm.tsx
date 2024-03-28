@@ -1,3 +1,4 @@
+"use client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import smileHouse from "public/smile_house.png";
 import { useEffect } from "react";

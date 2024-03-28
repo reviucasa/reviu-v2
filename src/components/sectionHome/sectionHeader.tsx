@@ -3,12 +3,13 @@
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
 import lupa from "../../../public/lupa.png";
-import { AdressComboBox } from "../atoms/AdressComboBox";
+import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { CardSlide } from "../organism/CardSlide";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
+import { findBuildingByAddress } from "@/models/building";
 
 export type SectionType = {
   title: string;
@@ -31,35 +32,30 @@ export function SectionHeader() {
 
   const onSelectAddress = async (address: string) => {
     setSelectedAddress(address);
-    if (address) {
+    if (address && address != "") {
       setLoading(true);
-      try {
-        /* const response = await searchBuilding(address);
-        await router.push(`/analisis/${response.data?.building.id}`); */
-      } catch (error) {
-        console.log(error);
-        /* if (axios.isAxiosError(error)) {
-          if (error.response?.status === 404)
-            setError(t("common.noSeEncontroDirección"));
-          else setError(error.response?.data.status);
-        } */
-      } finally {
-        setLoading(false);
+      const building = await findBuildingByAddress(address);
+      if (building) {
+        // router.push(`/analisis/${building.id}`);
+      } else {
+        setError(t("common:noSeEncontroDirección"));
       }
+      setLoading(false);
     }
   };
+
   const dataContentSlide: SectionsType = [
     {
       title: tabSearchOpinion,
       text: [t("slide.tittleSearchOpinion"), t("slide.tittleWriteOpinion")],
       children: (
         <div className="flex flex-col w-full items-center	">
-          <AdressComboBox
+          <AddressComboBox
             icon={lupa}
             placeholder={t("common.buscar")}
             className="lg:w-3/4 w-full"
-            selectedAdress={selectedAddress}
-            setSelectedAdress={onSelectAddress}
+            selectedAddress={selectedAddress}
+            setSelectedAddress={onSelectAddress}
           />
           <div className="flex lg:w-3/4 w-full">
             <FieldError className=" my-3">{error}</FieldError>

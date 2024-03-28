@@ -1,49 +1,19 @@
 import { Review } from "./review";
 
-export type Adress = {
+export type Address =
+  /* {
   address: string;
-};
+} */
+  {
+    id: string | undefined;
+    address: {
+      string: string;
+    };
+  };
 
-export type AdressList = { results: Adress[] };
+export type AddressList = { results: Address[] };
 
-export type RealStateAgency = {
-  id: string;
-  agency_name: string;
-};
 
-export type RealStateAgencyList = { agencies: Array<RealStateAgency> };
-
-export type Apartment = {
-  id: string;
-  stair: string;
-  floor: string;
-  door: string;
-};
-
-export type Floor = {
-  stair: string;
-  floor: string;
-  apartments: Apartment[];
-};
-
-export type Stair = {
-  stair: string;
-  building_floors: Floor[];
-};
-
-export type Building = {
-  id: string;
-  block_id: string;
-  address: string;
-  number: string;
-  latitude: number;
-  longitude: number;
-  building_stairs: Stair[];
-};
-
-export type BuildingResponse = {
-  building: Building;
-};
 
 export type ReviewRequest = {
   buildingId?: string;

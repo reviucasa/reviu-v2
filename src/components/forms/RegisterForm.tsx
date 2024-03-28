@@ -62,7 +62,6 @@ export const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     setLoading(true);
-    console.log(data);
 
     if (isValid && auth.user) {
       try {

@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { sendSignInLink } from "@/firebase/auth";
 
 let schema = yup.object().shape({
-  email: yup.string().nonNullable().email(),
+  email: yup.string().required().email(),
 });
 
 export const LoginForm = () => {

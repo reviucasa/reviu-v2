@@ -1,24 +1,27 @@
-import { SubmitHandler } from 'react-hook-form'
-import { useStep } from './useStep'
-import { useReview } from './swr/useReview'
+import { SubmitHandler } from "react-hook-form";
+import { useStep } from "./useStep";
+import { auth } from "@/firebase/config";
+import { updateDraft, updateReview } from "@/models/review";
 
 type ReturnSubmitReview = {
-  onSubmitReview: SubmitHandler<any>
-}
+  onSubmitReview: SubmitHandler<any>;
+};
 
 export function useSubmitReview(formName: string): ReturnSubmitReview {
-  /* const { updateReview } = useReview() */
-  const { nextStepReview } = useStep()
+  const { nextStepReview } = useStep();
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
+    console.log(data);
     try {
-      /* await updateReview({ review: { [formName]: data, step: nextStepReview } }) */
+      await updateReview(auth.currentUser!.uid, {
+        data: { [formName]: data, step: nextStepReview },
+      });
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-  }
+  };
 
   return {
-    onSubmitReview: onSubmit
-  }
+    onSubmitReview: onSubmit,
+  };
 }

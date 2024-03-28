@@ -1,0 +1,196 @@
+"use client";
+import { Address } from "@/models/types";
+import { Combobox, Transition } from "@headlessui/react";
+import debounce from "lodash.debounce";
+import { useTranslations } from "next-intl";
+import Image, { StaticImageData } from "next/image";
+import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Loader } from "@googlemaps/js-api-loader";
+
+type AddressComboBoxProps = {
+  placeholder?: string;
+  className?: string;
+  selectedAddress?: string;
+  icon?: StaticImageData;
+  setSelectedAddress?: (value: string) => void;
+};
+
+export const AddressComboBox = ({
+  className,
+  selectedAddress,
+  setSelectedAddress,
+  icon,
+  placeholder,
+}: AddressComboBoxProps) => {
+  const [searchResult, setSearchResult] = useState<{
+    autocompleteSuggestions: Address[];
+    status: string;
+  }>({
+    autocompleteSuggestions: [],
+    status: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  // Initialize state for Google services to null
+  const [service, setService] =
+    useState<google.maps.places.AutocompleteService | null>(null);
+  const [sessionToken, setSessionToken] =
+    useState<google.maps.places.AutocompleteSessionToken | null>(null);
+
+  useEffect(() => {
+    // Load the Google Maps API only on the client side
+    const loader = new Loader({
+      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+      version: "weekly",
+      libraries: ["places"],
+    });
+
+    loader.importLibrary("places").then((places) => {
+      setService(new places.AutocompleteService());
+      setSessionToken(new places.AutocompleteSessionToken());
+    });
+  }, []);
+
+  function handlePredictions(
+    predictions: google.maps.places.QueryAutocompletePrediction[] | null,
+    status: google.maps.places.PlacesServiceStatus
+  ) {
+    if (status === "OK") {
+      // handle autocomplete suggestions
+      const autocompleteSuggestions = predictions!.map((prediction) => {
+        return {
+          id: prediction.place_id,
+          address: {
+            string: prediction.description,
+          },
+        };
+      });
+      setSearchResult({
+        autocompleteSuggestions: autocompleteSuggestions,
+        status: "OK",
+      });
+    } else {
+      setSearchResult({
+        autocompleteSuggestions: [],
+        status: status,
+      });
+    }
+  }
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const fetchAddressList = useCallback(
+    debounce(async (query: string) => {
+      setLoading(true);
+
+      if (query === "") {
+        setSearchResult({
+          autocompleteSuggestions: [],
+          status: "",
+        });
+        setLoading(false);
+
+        return;
+      }
+
+      if (!service || !sessionToken) return;
+
+      const request = {
+        input: query, // + " Barcelona",
+        sessionToken: sessionToken,
+        language: "ca",
+        /* region: "ca",
+        componentRestrictions: {
+          country: "es",
+        }, */
+        origin: new google!.maps.LatLng(41.3874, 2.1686),
+        /* radius: 5000, */
+      };
+
+      // getQueryPredictions()
+      service.getQueryPredictions(request, handlePredictions);
+      setLoading(false);
+    }, 300),
+    [service, sessionToken]
+  );
+
+  const t = useTranslations();
+
+  return (
+    <Combobox value={selectedAddress} onChange={setSelectedAddress} nullable>
+      <div className={`relative ${className}`}>
+        <Combobox.Input
+          className={`w-full ${icon && "!pl-10"}`}
+          placeholder={placeholder ?? t("common.enQueDirección")}
+          onChange={(event) => fetchAddressList(event.target.value)}
+        />
+        {icon && (
+          <Image
+            src={icon}
+            alt="lupa"
+            className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
+            aria-hidden="true"
+          ></Image>
+        )}
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+        >
+          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+            {loading && (
+              <Combobox.Option
+                className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                key=""
+                value={undefined}
+                disabled
+              >
+                {t("common.buscandoDirección")}
+              </Combobox.Option>
+            )}
+            {searchResult.autocompleteSuggestions.length === 0 && !loading && (
+              <Combobox.Option
+                className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                key=""
+                value={undefined}
+                disabled
+              >
+                {t("common.noSeEncontroDirección")}
+              </Combobox.Option>
+            )}
+
+            {
+              !loading && searchResult.autocompleteSuggestions.length > 0
+                ? searchResult.autocompleteSuggestions.map((e) => {
+                    return (
+                      <Combobox.Option
+                        className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                        key={e.id}
+                        value={e.address.string}
+                      >
+                        {e.address.string}
+                      </Combobox.Option>
+                      /*  <li key={item.id}>
+                    <p>{item.name.string}</p>
+                    <p>{item.address.string}</p>
+                  </li> */
+                    );
+                  })
+                : null
+              /* addressList.map((address) => (
+                <Combobox.Option
+                  className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                  key={address.name.string}
+                  value={address.name.string}
+                >
+                  {address.name.string}
+                </Combobox.Option>
+              )) */
+            }
+          </Combobox.Options>
+        </Transition>
+      </div>
+    </Combobox>
+  );
+};

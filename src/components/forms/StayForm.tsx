@@ -1,121 +1,101 @@
+"use client";
 import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import padlock from "public/padlock.png";
+import padlock from "../../../public/padlock.png";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdDone } from "react-icons/md";
 import * as yup from "yup";
 import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
-import { useReview } from "@/hooks/swr/useReview";
-import { useSubmitReview } from "@/hooks/useSubmitReview";
-import { useRouter } from "next/navigation";
-import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
-import { getUrlReview } from "@/helpers/stepper";
 import { range } from "@/helpers/generateRange";
+import { useSubmitDraft } from "@/hooks/useSubmitDraft";
+import { useDraft } from "@/hooks/swr/useDraft";
+import { useRouter } from "next/navigation";
+import { getUrlReview } from "@/helpers/stepper";
+import { useStep } from "@/hooks/useStep";
 
 export const StayForm = () => {
-  const { review } = useReview();
-  const { onSubmitReview } = useSubmitReview("stay");
+  const { draft } = useDraft();
+  const { onSubmitDraft } = useSubmitDraft("stay");
+  const t = useTranslations();
   const router = useRouter();
   const { nextStepReview } = useStep();
-  const t = useTranslations();
 
   const schema = yup.object({
     currentResidence: yup.boolean().required(),
-    startMonth: yup.string() /* .when(["currentResidence"], {
+    startMonth: yup.string().when(["currentResidence"], {
       is: (currentResidence: boolean) => currentResidence === true,
-      then: yup
-        .string()
-        .required(t("common.seleccionaMes")),
+      then: yup.string().required(t("common.seleccionaMes")),
       otherwise: yup
         .string()
         .required(t("common.seleccionaMes"))
-        .test(
-          "validStartMonth",
-          t(
-            "common.mesInicio",
-          ),
-          function (value) {
-            const { currentResidence, startYear } = this.parent;
-            if (currentResidence === true && value) {
-              const currentYear = new Date().getFullYear();
-              const currentMonth = new Date().getMonth() + 1;
-              const startYear = parseInt(startYear);
-              const startMonth = parseInt(value);
-              if (startYear > currentYear) {
-                return false;
-              }
-              if (startYear === currentYear && startMonth > currentMonth) {
-                return false;
-              }
+        .test("validStartMonth", t("common.mesInicio"), function (value) {
+          const { currentResidence, _startYear } = this.parent;
+          if (currentResidence === true && value) {
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth() + 1;
+            const startYear = parseInt(_startYear);
+            const startMonth = parseInt(value);
+            if (startYear > currentYear) {
+              return false;
             }
-            return true;
+            if (startYear === currentYear && startMonth > currentMonth) {
+              return false;
+            }
           }
-        ),
-    }) */,
+          return true;
+        }),
+    }),
     startYear: yup.string().required(t("common.seleccionaAño")),
-    endYear: yup.string() /* .when(["currentResidence", "startYear"], {
+    endYear: yup.string().when(["currentResidence", "startYear"], {
       is: (currentResidence: boolean) => currentResidence === false,
       then: yup
         .string()
-        .required(t("common.seleccionaAño", "Debes seleccionar un año"))
-        .test(
-          "validYear",
-          t(
-            "common.añoSalida",
-            "El año de salida no puede ser anterior al año de inicio"
-          ),
-          function (value) {
-            const { startYear } = this.parent;
-            if (!startYear || !value) {
-              return true;
-            }
-            const startYear = parseInt(startYear);
-            const endYear = parseInt(value);
-            return endYear >= startYear;
+        .required(t("common.seleccionaAño"))
+        .test("validYear", t("common.añoSalida"), function (value) {
+          const { _startYear } = this.parent;
+          if (!_startYear || !value) {
+            return true;
           }
-        ),
-    }) */,
-    endMonth: yup.string(),
-    /* .when(["currentResidence", "startYear", "startMonth"], {
+          const startYear = parseInt(_startYear);
+          const endYear = parseInt(value);
+          return endYear >= startYear;
+        }),
+    }),
+    endMonth: yup
+      .string()
+      .when(["currentResidence", "startYear", "startMonth"], {
         is: (currentResidence: boolean) => currentResidence === false,
         then: yup
           .string()
-          .required(t("common.seleccionaMes", "Debes seleccionar un mes"))
-          .test(
-            "validEndMonth",
-            t(
-              "common.mesSalida",
-              "El mes de salida no puede ser posterior al mes de inicio"
-            ),
-            function (value) {
-              const { startYear, startMonth, endYear } = this.parent;
-              if (!startYear || !startMonth || !value) {
-                return true;
-              }
-              const startYear = parseInt(startYear);
-              const endYear = parseInt(endYear);
-              const startMonth = parseInt(startMonth);
-              const endMonth = parseInt(value);
-              if (startYear === endYear) {
-                return endMonth >= startMonth;
-              }
+          .required(t("common.seleccionaMes"))
+          .test("validEndMonth", t("common.mesSalida"), function (value) {
+            const { _startYear, _startMonth, _endYear } = this.parent;
+            if (!_startYear || !_startMonth || !value) {
               return true;
             }
-          ),
-      }) */ startPrice: yup.string().required(t("common.seleccionaPrecio")),
-    end_price: yup.string(),
-    /* .when("currentResidence", (currentResidence, schema) => {
+            const startYear = parseInt(_startYear);
+            const endYear = parseInt(_endYear);
+            const startMonth = parseInt(_startMonth);
+            const endMonth = parseInt(value);
+            if (startYear === endYear) {
+              return endMonth >= startMonth;
+            }
+            return true;
+          }),
+      }),
+    startPrice: yup.string().required(t("common.seleccionaPrecio")),
+    endPrice: yup
+      .string()
+      .when("currentResidence", (currentResidence, schema) => {
         return currentResidence === false
-          ? schema.required(
-              t("common.seleccionaPrecio")
-            )
+          ? schema.required(t("common.seleccionaPrecio"))
           : schema;
-      }) */
+      }),
   });
 
   const {
@@ -128,25 +108,26 @@ export const StayForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.data.stay,
+    defaultValues: draft?.data?.stay,
   });
 
   const isFormCompleted = isValid && !isDirty;
 
-  const handleRouteChange = () => {
+  /* const handleRouteChange = () => {
     if (isDirty) {
       const resultado = confirm(t("common.withSaving"));
       if (!resultado) {
-        /* router.events.emit("routeChangeError", "routeChange aborted", "", {
+        router.events.emit("routeChangeError", "routeChange aborted", "", {
           shallow: false,
-        }); */ //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
+        }); //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
         throw "routeChange aborted.";
       }
     }
-  };
+  }; */
+
   useEffect(() => {
     if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, nextStepReview, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -154,12 +135,12 @@ export const StayForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.data.stay);
-  }, [review?.data.stay]);
+    reset(draft?.data?.stay);
+  }, [draft?.data?.stay]);
 
   type FormData = yup.InferType<typeof schema>;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitDraft(data);
 
   const watchcurrentResidence = watch("currentResidence");
   return (
@@ -302,14 +283,14 @@ export const StayForm = () => {
               {t("stayReview.quePrecioTeniaSalir")}
             </label>
             <input
-              aria-invalid={!!errors.end_price}
+              aria-invalid={!!errors.endPrice}
               type="number"
               className="w-full"
               placeholder={t("stayReview.precioVivienda")}
-              {...register("end_price")}
+              {...register("endPrice")}
             />
-            {errors.end_price && (
-              <FieldError>{errors.end_price.message}</FieldError>
+            {errors.endPrice && (
+              <FieldError>{errors.endPrice.message}</FieldError>
             )}
           </div>
         )}

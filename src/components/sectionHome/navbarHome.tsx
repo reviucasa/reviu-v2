@@ -1,5 +1,5 @@
 "use client";
-import { AdressComboBox } from "@/components/atoms/AdressComboBox";
+import { AddressComboBox } from "@/components/atoms/AddressComboBox";
 import { Button } from "@/components/atoms/Button";
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
@@ -32,7 +32,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
 
   const onSelectAddress = async (address: string) => {
     setSelectedAddress(address);
-    if (address) {
+    if (address && address != "") {
       setLoading(true);
       try {
         /* const response = await searchBuilding(address);
@@ -75,12 +75,12 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
         {search && (
           <>
             <div className="flex flex-col flex-1">
-              <AdressComboBox
+              <AddressComboBox
                 icon={lupa}
                 placeholder={t("common.buscar")}
                 className="flex-1 mx-10 hidden md:block"
-                selectedAdress={selectedAddress}
-                setSelectedAdress={onSelectAddress}
+                selectedAddress={selectedAddress}
+                setSelectedAddress={onSelectAddress}
               />
               <FieldError className="absolute mx-10 top-[74px] hidden md:block">
                 {error}

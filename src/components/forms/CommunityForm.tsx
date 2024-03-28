@@ -1,3 +1,4 @@
+"use client"
 import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
@@ -73,7 +74,7 @@ export const CommunityForm = () => {
   const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
 
   return (
-    <ReviewFormLayout title={t("communityReviews.comunidadVecinos")}>
+    <ReviewFormLayout title={'Not implemented yet...'/* t("communityReviews.comunidadVecinos") */}>
       {/* config && */ (
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">

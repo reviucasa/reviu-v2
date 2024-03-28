@@ -5,23 +5,29 @@ import { AcceptDialog } from "@/components/dialogs/AcceptDialog";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import Message from "../../../public/message.png";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { AdressComboBox } from "../atoms/AdressComboBox";
+import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
-import { useReview } from "@/hooks/swr/useReview";
 import { useRouter, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Apartment, BuildingResponse } from "@/models/types";
 import {
   getNextStepReview,
   getPositionUrlReview,
   getUrlReview,
 } from "@/helpers/stepper";
-import { createReview, updateReview } from "@/models/review";
+import { createDraft, updateDraft } from "@/models/review";
 import { auth } from "@/firebase/config";
+import {
+  Apartment,
+  Building,
+  findBuildingByAddress,
+  findBuildingByCatastroId,
+  getBuilding,
+  getBuildingStairs,
+} from "@/models/building";
+import { useDraft } from "@/hooks/swr/useDraft";
 
 export const AddressForm = () => {
-  const { review } = useReview();
-  /* const { revalidateUser } = useUser() */
+  const { draft } = useDraft();
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
@@ -44,105 +50,101 @@ export const AddressForm = () => {
       </a>
     </div>
   );
-  const [selectedAddress, setSelectedAddress] = useState<string>();
-  const [building, setBuilding] = useState<BuildingResponse>();
+  const [selectedAddress, setSelectedAddress] = useState<string>("");
+  const [building, setBuilding] = useState<Building>();
   const [aparmentList, setAparmentList] = useState<Apartment[]>([]);
   const [error, setError] = useState<string>();
   const [stairSelected, setStairSelected] = useState<string>();
-  const [apartmentSelected, setApartmentSelected] = useState<string>();
+  const [apartmentSelected, setApartmentSelected] = useState<Apartment>();
   const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlertsetIsOpen] =
     useState(false);
   const [isOpenAddressIncorrectAlert, setIsOpenAddressIncorrectAlert] =
     useState(false);
 
   useEffect(() => {
-    if (review) {
-      setSelectedAddress(review.address);
-    }
-  }, [review]);
+    const fetchBuilding = async (buildingId: string) => {
+      const b = await findBuildingByCatastroId(buildingId);
+      setBuilding(b);
+      setStairSelected(draft?.apartment?.stair!);
+      setAparmentList(
+        b?.apartments.filter((a) => a.stair == draft?.apartment?.stair!) || []
+      );
+      setApartmentSelected(draft?.apartment);
+    };
 
-  useEffect(() => {
-    /* if (review?.apartment?.stair) {
-      onSelectStair(review?.apartment?.stair);
+    if (draft?.address) {
+      setSelectedAddress(draft.address);
+      if (draft?.apartment) {
+        fetchBuilding(draft.buildingId);
+      }
     }
-    setApartmentSelected(review?.apartment?.id); */
-  }, [review, building]);
+  }, [draft]);
 
   const onSelectAddress = useCallback(async () => {
     setBuilding(undefined);
     setError(undefined);
+
     if (selectedAddress) {
-      /* try {
-        const response = await searchBuilding(selectedAddress);
-        setBuilding(response.data);
-      } catch (error) {
-        if (axios.isAxiosError(error)) {
-          if (error.response?.status === 404)
-            setError(t("common.noSeEncontroDirección"));
-          else setError(error.response?.data.status);
-        }
-      } */
+      const buildingData = await findBuildingByAddress(selectedAddress);
+
+      if (buildingData) {
+        setBuilding(buildingData);
+      } else {
+        setError("No matching address found");
+      }
     }
   }, [selectedAddress]);
 
   const onSelectStair = (selectedStair: string) => {
     setStairSelected(selectedStair);
-    const theStair = building?.building.building_stairs.find(
-      (stair) => stair.stair === selectedStair
+    setAparmentList(
+      building?.apartments.filter((a) => a.stair == selectedStair) || []
     );
-    const allApartments = theStair?.building_floors
-      .map((floor) => floor.apartments)
-      .flat();
-    setAparmentList(allApartments || []);
   };
 
-  const onSelectHoleAddress = (event: ChangeEvent<HTMLSelectElement>) => {
-    setApartmentSelected(event.currentTarget.value);
+  const onSelectWholeAddress = (event: ChangeEvent<HTMLSelectElement>) => {
+    setApartmentSelected(
+      aparmentList.find((a) => a.id == event.currentTarget.value)
+    );
   };
 
   const currentUrlPosition = getPositionUrlReview(pathname);
+
   const stepReview = getNextStepReview(
-    review?.data?.step || 0,
+    draft?.data?.step || 0,
     currentUrlPosition + 1
   );
 
   const onSubmit = async () => {
     if (building && apartmentSelected) {
-      try {
-        if (review) {
-          await updateReview(auth.currentUser!.uid, {
-            apartment: {id: apartmentSelected},
-            buildingId: building.building.id,
-          });
-        } else {
-          await createReview(auth.currentUser!.uid, {
-            apartment: {id: apartmentSelected},
-            buildingId: building.building.id,
-            data: { step: stepReview },
-          });
-        }
-        /* revalidateUser(); */
-        router.push(getUrlReview(stepReview));
-      } catch (error) {
-        /* if (axios.isAxiosError(error)) {
-          if (error.response?.status === 400) {
-            setIsOpenExistingReviewAlertsetIsOpen(true);
-          } else {
-            setError(error.response?.data.status);
-          }
-        } */
+      if (draft?.address) {
+        // TODO: add popup when if draft confirming they want to create a new draft with a new address
+        await updateDraft(auth.currentUser!.uid, {
+          apartment: apartmentSelected,
+          buildingId: building.catastroId,
+        });
+      } else {
+        await createDraft(auth.currentUser!.uid, {
+          address: selectedAddress,
+          apartment: apartmentSelected,
+          buildingId: building.catastroId,
+          data: { step: stepReview },
+        });
       }
+      /* revalidateUser(); */
+      router.push(getUrlReview(stepReview));
     }
   };
 
   useEffect(() => {
     if (selectedAddress) onSelectAddress();
-  }, [selectedAddress]);
+  }, [onSelectAddress, selectedAddress]);
 
   useEffect(() => {
     //If there is only one stair, select it
-    if (building?.building.building_stairs.length === 1)
-      onSelectStair(building.building.building_stairs[0].stair);
+    if (building && getBuildingStairs(building!).length === 1) {
+      onSelectStair(building!.apartments[0].stair!);
+    }
   }, [building]);
 
   return (
@@ -154,9 +156,9 @@ export const AddressForm = () => {
     >
       <div className="flex flex-col">
         <label htmlFor="address">{t("addressReview.calleYNúmero")}</label>
-        <AdressComboBox
-          selectedAdress={selectedAddress}
-          setSelectedAdress={setSelectedAddress}
+        <AddressComboBox
+          selectedAddress={selectedAddress}
+          setSelectedAddress={setSelectedAddress}
         />
         <FieldError>{error}</FieldError>
         <AddressNotFoundHelp
@@ -165,7 +167,7 @@ export const AddressForm = () => {
         />
         {building && (
           <div className="flex gap-3 mt-5">
-            {building.building.building_stairs.length > 1 && (
+            {getBuildingStairs(building).length > 1 && (
               <div className="w-full">
                 <label>{t("addressReview.escalera")}</label>
                 <select
@@ -174,9 +176,9 @@ export const AddressForm = () => {
                   onChange={(ev) => onSelectStair(ev.target.value)}
                 >
                   <option value="">{t("addressReview.escalera")}</option>
-                  {building.building.building_stairs.map((stair) => (
-                    <option key={stair.stair} value={stair.stair}>
-                      {stair.stair}
+                  {getBuildingStairs(building).map((stair) => (
+                    <option key={stair} value={stair}>
+                      {stair}
                     </option>
                   ))}
                 </select>
@@ -186,8 +188,8 @@ export const AddressForm = () => {
               <label>{t("addressReview.pisoYPuerta")}</label>
               <select
                 className="w-full"
-                value={apartmentSelected}
-                onChange={onSelectHoleAddress}
+                value={apartmentSelected?.id}
+                onChange={onSelectWholeAddress}
               >
                 <option value="">{t("addressReview.pisoYPuerta")}</option>
                 {aparmentList.map((apartment, index) => (

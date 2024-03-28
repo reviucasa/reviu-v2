@@ -1,11 +1,11 @@
-import { RealStateAgency } from "@/models/types";
+import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
 import { Combobox, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import { Fragment, useCallback, useState } from "react";
 
-type AdressComboBoxProps = {
+type AddressComboBoxProps = {
   placeholder?: string;
   className?: string;
   selectedRealStateAgency?: string;
@@ -19,7 +19,7 @@ export const RealAgencyComboBox = ({
   setSelectedRealStateAgency,
   icon,
   placeholder,
-}: AdressComboBoxProps) => {
+}: AddressComboBoxProps) => {
   const [realAgencyList, setRealAgencyList] = useState<RealStateAgency[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -27,8 +27,10 @@ export const RealAgencyComboBox = ({
   const fetchRealStateAgencyList = useCallback(
     debounce(async (query: string) => {
       setLoading(true);
-      /* const response = await getRealStateAgencyList(query)
-      setRealAgencyList(response.data.agencies) */
+      console.log("fetching agencies...");
+      const agencies = await searchAgenciesByName(query.toLowerCase());
+      console.log(agencies);
+      setRealAgencyList(agencies);
       setLoading(false);
     }, 300),
     []
@@ -44,7 +46,11 @@ export const RealAgencyComboBox = ({
         <Combobox.Input
           className={`w-full ${icon && "!pl-10"}`}
           placeholder={placeholder ?? t("common.queInmobiliaria")}
-          onChange={(event) => fetchRealStateAgencyList(event.target.value)}
+          onChange={(event) =>
+            event.target.value.length > 2
+              ? fetchRealStateAgencyList(event.target.value)
+              : {}
+          }
         />
         {icon && (
           <Image
@@ -86,9 +92,9 @@ export const RealAgencyComboBox = ({
                 <Combobox.Option
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={agency.id}
-                  value={agency.agency_name}
+                  value={agency.name}
                 >
-                  {agency.agency_name}
+                  {agency.name}
                 </Combobox.Option>
               ))}
           </Combobox.Options>

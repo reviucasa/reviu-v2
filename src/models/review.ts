@@ -14,13 +14,7 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
-
-export type Apartment = {
-  id: string;
-  stair: string;
-  floor: string;
-  door: string;
-};
+import { Apartment } from "./types";
 
 export type Review = {
   address: string;
@@ -28,9 +22,10 @@ export type Review = {
   timestamp: string;
   updated: string;
   draft: boolean;
-  apartment?: Partial<Apartment>;
+  apartment?: Apartment;
   data: Partial<ReviewData>;
   buildingId: string;
+  userId: string;
 };
 
 export type ReviewData = {
@@ -112,27 +107,38 @@ const reviewConverter: FirestoreDataConverter<Review> = {
   },
 };
 
-// Create a new user
-const createReview = async (
+// Create a new review
+const createDraft = async (
   uid: string,
   review: Partial<Review>
 ): Promise<void> => {
-  const ref = doc(db, `users/${uid}`).withConverter(reviewConverter);
+  const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
   await setDoc(ref, review);
-
-  /* const ref = collection(db, `users`).withConverter(userConverter);
-  await addDoc(ref, user); */
 };
 
 // Retrieve user draft review
-const getReview = async (uid: string): Promise<Review | undefined> => {
+const getDraft = async (uid: string): Promise<Review | undefined> => {
   const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
   const snapshot = await getDoc(ref);
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
-// Update an existing user
-const updateReview = async (
+const updateDraftData = async <K extends keyof ReviewData>(
+  uid: string,
+  dataField: K | `${K}.${string}`, // Allows for nested fields like "community.services"
+  fieldValue: ReviewData[K] | any, // Use 'any' for nested fields to bypass deep type checks
+  nextStep: number
+): Promise<void> => {
+  const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
+
+  await updateDoc(ref, {
+    [`data.${dataField}`]: fieldValue,
+    "data.step": nextStep,
+  });
+};
+
+// Update an existing review
+const updateDraft = async (
   uid: string,
   updatedFields: Partial<Review>
 ): Promise<void> => {
@@ -140,13 +146,44 @@ const updateReview = async (
   await updateDoc(ref, updatedFields);
 };
 
-// Delete a user
-const deleteReview = async (uid: string): Promise<void> => {
+// Delete a draft
+const deleteDraft = async (uid: string): Promise<void> => {
   const ref = doc(db, `drafts/${uid}`);
   await deleteDoc(ref);
 };
 
 // Retrieve user draft review
+const getReview = async (id: string): Promise<Review | undefined> => {
+  const ref = doc(db, `reviews/${id}`).withConverter(reviewConverter);
+  const snapshot = await getDoc(ref);
+  return snapshot.exists() ? snapshot.data() : undefined;
+};
+
+// Create a new review
+const publishReview = async (
+  uid: string,
+  review: Partial<Review>
+): Promise<void> => {
+  const ref = doc(db, `reviews/`).withConverter(reviewConverter);
+  await setDoc(ref, { ...review, userId: uid });
+};
+
+// Update an existing review
+const updateReview = async (
+  id: string,
+  updatedFields: Partial<Review>
+): Promise<void> => {
+  const ref = doc(db, `review/${id}`).withConverter(reviewConverter);
+  await updateDoc(ref, updatedFields);
+};
+
+// Delete a review
+const deleteReview = async (uid: string): Promise<void> => {
+  const ref = doc(db, `drafts/${uid}`);
+  await deleteDoc(ref);
+};
+
+// Retrieve reviews
 const getReviews = async (count?: number): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
   let q = query(ref);
@@ -170,4 +207,14 @@ const getReviews = async (count?: number): Promise<Review[]> => {
     });
 };
 
-export { reviewConverter, createReview, getReview, updateReview, getReviews };
+export {
+  getDraft,
+  createDraft,
+  updateDraft,
+  updateDraftData,
+  deleteDraft,
+  getReview,
+  publishReview,
+  updateReview,
+  getReviews,
+};
