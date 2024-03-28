@@ -27,6 +27,7 @@ export const NeighbourhoodForm = () => {
   const { review } = useReview();
   const { onSubmitReview } = useSubmitReview("neighbourhood");
   const t = useTranslations();
+  const config = useTranslations("config");
 
   const schema = yup.object({
     vibe: yup
@@ -131,8 +132,11 @@ export const NeighbourhoodForm = () => {
 
   return (
     <ReviewFormLayout title={t("common.barrio")}>
-      {/* config &&  */(
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      {
+        /* config &&  */ <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6"
+        >
           <div className="flex flex-col">
             <div className="flex justify-between">
               <label htmlFor="vibe">
@@ -145,7 +149,7 @@ export const NeighbourhoodForm = () => {
                 />
               </label>
               <span className="text-gray-500 text-sm">
-                {t("neighbourhoodReview:unaOpcion")}
+                {t("neighbourhoodReview.unaOpcion")}
               </span>
             </div>
             {/* <Controller
@@ -238,10 +242,10 @@ export const NeighbourhoodForm = () => {
           <div className="flex flex-col">
             <div className="flex justify-between">
               <label htmlFor="currentResidence">
-                {t("neighbourhoodReview:serviciosProximos")}
+                {t("neighbourhoodReview.serviciosProximos")}
               </label>
               <span className="text-gray-500 text-sm">
-                {t("neighbourhoodReview:unaOpcion")}
+                {t("neighbourhoodReview.unaOpcion")}
               </span>
             </div>
             {/* <Controller
@@ -274,7 +278,7 @@ export const NeighbourhoodForm = () => {
                   ariaInvalid={!!errors.comments}
                   className="w-full h-32"
                   placeholder={t(
-                    "neighbourhoodReview:algunComentarioAñadir",
+                    "neighbourhoodReview.algunComentarioAñadir",
                     "Añade algun comentario más que quieras aportar"
                   )}
                   name="comments"
@@ -304,18 +308,18 @@ export const NeighbourhoodForm = () => {
             </Button>
           </div>
         </form>
-      )}
+      }
       <HowDialog
         isOpen={vibeOpen}
         setIsOpen={setVibeOpen}
         values={vibeValues}
-        title={t("neighbourhoodReview:comoValorasAmbiente")}
+        title={t("neighbourhoodReview.comoValorasAmbiente")}
       />
       <HowDialog
         isOpen={securityOpen}
         setIsOpen={setSecurityOpen}
         values={securityValues}
-        title={t("neighbourhoodReview:comoValorasSeguridad")}
+        title={t("neighbourhoodReview.comoValorasSeguridad")}
       />
     </ReviewFormLayout>
   );

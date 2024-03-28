@@ -14,7 +14,7 @@ import {
   getDocs,
   orderBy,
 } from "firebase/firestore";
-import { Apartment } from "./types";
+import { Apartment } from "./building";
 
 export type Review = {
   address: string;

@@ -1,6 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import smileHouse from "public/smile_house.png";
+import smileHouse from "../../../public/smile_house.png";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
@@ -73,12 +73,12 @@ export const OpinionForm = () => {
       title={t("opinionReview.opinionPiso")}
       image={smileHouse}
       imageAlt="Smile house"
-      commentTitle={t("opinionReview:conciso")}
-      comment={t("opinionReview:estaInformacion")}
+      commentTitle={t("opinionReview.conciso")}
+      comment={t("opinionReview.estaInformacion")}
     >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col">
-          <label htmlFor="title">{t("opinionReview:resumeExperiencia")}</label>
+          <label htmlFor="title">{t("opinionReview.resumeExperiencia")}</label>
           {/* <Controller
             name="title"
             control={control}
@@ -89,7 +89,7 @@ export const OpinionForm = () => {
                 ariaInvalid={!!errors.positive}
                 className="w-full h-20"
                 placeholder={t(
-                  "opinionReview:escribeSencillo",
+                  "opinionReview.escribeSencillo",
                 )}
                 name="title"
                 control={control}
@@ -99,7 +99,7 @@ export const OpinionForm = () => {
           {errors.title && <FieldError>{errors.title.message}</FieldError>}
         </div>
         <div className="flex flex-col">
-          <label htmlFor="positive">{t("opinionReview:valorPositivo")}</label>
+          <label htmlFor="positive">{t("opinionReview.valorPositivo")}</label>
           {/* <Controller
             name="positive"
             control={control}
@@ -109,7 +109,7 @@ export const OpinionForm = () => {
                 ariaInvalid={!!errors.positive}
                 className="w-full h-32"
                 placeholder={t(
-                  "opinionReview:cuentanosCosasBuenas",
+                  "opinionReview.cuentanosCosasBuenas",
                   "Cuéntanos las cosas buenas que tiene la vivienda"
                 )}
                 name="positive"
@@ -123,7 +123,7 @@ export const OpinionForm = () => {
           )}
         </div>
         <div className="flex flex-col">
-          <label htmlFor="negative">{t("opinionReview:valorNegativo")}</label>
+          <label htmlFor="negative">{t("opinionReview.valorNegativo")}</label>
 
           {/* <Controller
             name="negative"
@@ -134,7 +134,7 @@ export const OpinionForm = () => {
                 ariaInvalid={!!errors.negative}
                 className="w-full h-32"
                 placeholder={t(
-                  "opinionReview:cuentanosMejorias",
+                  "opinionReview.cuentanosMejorias",
                   "Cuéntanos las cosas que mejorarías de la vivienda"
                 )}
                 name="negative"
@@ -147,7 +147,7 @@ export const OpinionForm = () => {
           )}
         </div>
         <div className="flex flex-col">
-          <label htmlFor="recomend">{t("opinionReview:recomendarias")}</label>
+          <label htmlFor="recomend">{t("opinionReview.recomendarias")}</label>
           <Controller
             name="recomend"
             control={control}

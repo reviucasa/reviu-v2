@@ -1,6 +1,6 @@
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import Image from "next/image";
-import location from "public/iconLocation.png";
+import location from "../../../public/iconLocation.png";
 import { useState } from "react";
 import comillas from "../../../public/comillas.png";
 import { ModalInfo } from "./ModalInfo";
