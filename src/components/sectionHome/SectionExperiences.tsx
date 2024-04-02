@@ -16,9 +16,9 @@ export function SectionExperiences({ className }: SectionExperiencesProps) {
     <div className={className}>
       <div className="text-center">
         <div className="flex justify-center">
-          <label className="flex self-center absolute text-xs font-bold leading-3 uppercase mb-0 text-primary-500">
+          <p className="flex self-center absolute text-xs font-bold leading-3 uppercase mb-0 text-primary-500">
             {t("experiences.howItWork")}
-          </label>
+          </p>
           <Image
             src={circulosection}
             alt=""

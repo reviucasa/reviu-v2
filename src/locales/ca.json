@@ -646,12 +646,12 @@
       "touristicApartments": {
         "yes-tolerable": "Sí, tolerable",
         "yes-annoying": "Sí, molestos",
-        "no": "No hi ha"
+        "no": "No n'hi ha"
       },
       "neighborsRelationship": {
         "excellent": "Molt bona",
         "friendly": "Cordial",
-        "poor": "Mala",
+        "poor": "Dolenta",
         "no-relations": "Sense relació"
       },
       "buildingMaintenance": {
@@ -691,7 +691,7 @@
       "noise": {
         "quiet": "Silenciosa",
         "good": "Tolerable",
-        "noisy": "Ruidosa"
+        "noisy": "Sorollosa"
       },
       "security": {
         "excellent": "Molt segura",

@@ -14,10 +14,15 @@ import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
+import { useDraft } from "@/hooks/swr/useDraft";
+import { useSubmitDraft } from "@/hooks/useSubmitDraft";
+import TextAreaWithCharCounter from "../molecules/TexareaCounter";
+import { deleteDraft, publishReview } from "@/models/review";
+import { auth } from "@/firebase/config";
 
 export const OpinionForm = () => {
-  const { review /* , updateReview */ } = useReview();
-  const { onSubmitReview } = useSubmitReview("opinion");
+  const { draft /* , updateReview */, refreshDraft } = useDraft();
+  const { onSubmitDraft } = useSubmitDraft("opinion");
   const router = useRouter();
   const { nextStepReview } = useStep();
   const t = useTranslations();
@@ -37,7 +42,7 @@ export const OpinionForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.data.opinion,
+    defaultValues: draft?.data.opinion,
   });
   const isFormCompleted = isValid && !isDirty;
 
@@ -59,11 +64,16 @@ export const OpinionForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.data.opinion);
-  }, [review?.data.opinion]);
+    reset(draft?.data.opinion);
+  }, [draft?.data.opinion, reset]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await onSubmitReview(data);
+    await onSubmitDraft(data);
+    await refreshDraft();
+    await publishReview(auth.currentUser!.uid, draft!);
+    await deleteDraft(auth.currentUser!.uid);
+    await refreshDraft();
+    // TODO: reset/delete draft
     /* await updateReview({ draft: false }); */
     router.push("/success");
   };
@@ -79,7 +89,7 @@ export const OpinionForm = () => {
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
         <div className="flex flex-col">
           <label htmlFor="title">{t("opinionReview.resumeExperiencia")}</label>
-          {/* <Controller
+          <Controller
             name="title"
             control={control}
             render={({ field }) => (
@@ -88,19 +98,17 @@ export const OpinionForm = () => {
                 maxLength={80}
                 ariaInvalid={!!errors.positive}
                 className="w-full h-20"
-                placeholder={t(
-                  "opinionReview.escribeSencillo",
-                )}
+                placeholder={t("opinionReview.escribeSencillo")}
                 name="title"
                 control={control}
               />
             )}
-          /> */}
+          />
           {errors.title && <FieldError>{errors.title.message}</FieldError>}
         </div>
         <div className="flex flex-col">
           <label htmlFor="positive">{t("opinionReview.valorPositivo")}</label>
-          {/* <Controller
+          <Controller
             name="positive"
             control={control}
             render={({ field }) => (
@@ -108,15 +116,12 @@ export const OpinionForm = () => {
                 {...field}
                 ariaInvalid={!!errors.positive}
                 className="w-full h-32"
-                placeholder={t(
-                  "opinionReview.cuentanosCosasBuenas",
-                  "Cuéntanos las cosas buenas que tiene la vivienda"
-                )}
+                placeholder={t("opinionReview.cuentanosCosasBuenas")}
                 name="positive"
                 control={control}
               />
             )}
-          /> */}
+          />
 
           {errors.positive && (
             <FieldError>{errors.positive.message}</FieldError>
@@ -125,7 +130,7 @@ export const OpinionForm = () => {
         <div className="flex flex-col">
           <label htmlFor="negative">{t("opinionReview.valorNegativo")}</label>
 
-          {/* <Controller
+          <Controller
             name="negative"
             control={control}
             render={({ field }) => (
@@ -133,15 +138,12 @@ export const OpinionForm = () => {
                 {...field}
                 ariaInvalid={!!errors.negative}
                 className="w-full h-32"
-                placeholder={t(
-                  "opinionReview.cuentanosMejorias",
-                  "Cuéntanos las cosas que mejorarías de la vivienda"
-                )}
+                placeholder={t("opinionReview.cuentanosMejorias")}
                 name="negative"
                 control={control}
               />
             )}
-          /> */}
+          />
           {errors.negative && (
             <FieldError>{errors.negative.message}</FieldError>
           )}

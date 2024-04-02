@@ -14,18 +14,20 @@ import { HowDialog } from "../dialogs/HowDialog";
 import { MultiselectInput } from "../molecules/MultiselectInput";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
-import { useReview } from "@/hooks/swr/useReview";
-import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useTranslations } from "next-intl";
 import { getUrlReview } from "@/helpers/stepper";
+import { useDraft } from "@/hooks/swr/useDraft";
+import { useSubmitDraft } from "@/hooks/useSubmitDraft";
+import { reviewConfigParams } from "@/staticData";
+import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 
 export const NeighbourhoodForm = () => {
   const [vibeOpen, setVibeOpen] = useState(false);
   const [securityOpen, setSecurityOpen] = useState(false);
   const router = useRouter();
   const { nextStepReview } = useStep();
-  const { review } = useReview();
-  const { onSubmitReview } = useSubmitReview("neighbourhood");
+  const { draft } = useDraft();
+  const { onSubmitDraft } = useSubmitDraft("neighbourhood");
   const t = useTranslations();
   const config = useTranslations("config");
 
@@ -90,6 +92,7 @@ export const NeighbourhoodForm = () => {
       description: t("common.inseguro"),
     },
   ];
+
   const {
     formState: { isDirty, isValid, errors, isSubmitSuccessful },
     handleSubmit,
@@ -98,7 +101,7 @@ export const NeighbourhoodForm = () => {
   } = useForm<FormData>({
     resolver: yupResolver(schema),
     reValidateMode: "onChange",
-    defaultValues: review?.data.neighbourhood,
+    defaultValues: draft?.data.neighbourhood,
   });
   const isFormCompleted = isValid && !isDirty;
   const handleRouteChange = () => {
@@ -115,7 +118,7 @@ export const NeighbourhoodForm = () => {
 
   useEffect(() => {
     if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, nextStepReview, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -123,12 +126,12 @@ export const NeighbourhoodForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    reset(review?.data.neighbourhood);
-  }, [review?.data.neighbourhood]);
+    reset(draft?.data.neighbourhood);
+  }, [draft?.data.neighbourhood, reset]);
 
   type FormData = yup.InferType<typeof schema>;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitDraft(data);
 
   return (
     <ReviewFormLayout title={t("common.barrio")}>
@@ -152,49 +155,66 @@ export const NeighbourhoodForm = () => {
                 {t("neighbourhoodReview.unaOpcion")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="vibe"
               control={control}
               render={({ field }) => (
                 <MultiselectInput
                   ariaInvalid={!!errors.vibe}
                   {...field}
-                  options={config.neighbourhood.vibe}
+                  options={reviewConfigParams.neighbourhood.vibe.map((e) => {
+                    return {
+                      label: config(`neighbourhood.vibe.${e}`),
+                      value: e,
+                    };
+                  })}
                 />
               )}
-            /> */}
+            />
             {errors.vibe && <FieldError>{errors.vibe.message}</FieldError>}
           </div>
           <div className="flex flex-col">
             <label htmlFor="tourists">{t("common.turistas")}</label>
-            {/* <Controller
+            <Controller
               name="tourists"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.tourists}
                   {...field}
-                  options={config.neighbourhood.tourists}
+                  options={reviewConfigParams.neighbourhood.tourists.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbourhood.tourists.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.tourists && (
               <FieldError>{errors.tourists.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <label htmlFor="noise">{t("common.ruido")}</label>
-            {/* <Controller
+            <Controller
               name="noise"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.noise}
                   {...field}
-                  options={config.neighbourhood.noise}
+                  options={reviewConfigParams.neighbourhood.noise.map((e) => {
+                    return {
+                      label: config(`neighbourhood.noise.${e}`),
+                      value: e,
+                    };
+                  })}
                 />
               )}
-            /> */}
+            />
             {errors.noise && <FieldError>{errors.noise.message}</FieldError>}
           </div>
           <div className="flex flex-col">
@@ -207,34 +227,48 @@ export const NeighbourhoodForm = () => {
                 }}
               />
             </label>
-            {/*  <Controller
+            <Controller
               name="security"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.security}
                   {...field}
-                  options={config.neighbourhood.security}
+                  options={reviewConfigParams.neighbourhood.security.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbourhood.security.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.security && (
               <FieldError>{errors.security.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <label htmlFor="currentResidence">{t("common.limpieza")}</label>
-            {/* <Controller
+            <Controller
               name="cleaning"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.cleaning}
                   {...field}
-                  options={config.neighbourhood.cleaning}
+                  options={reviewConfigParams.neighbourhood.cleaning.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbourhood.cleaning.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.cleaning && (
               <FieldError>{errors.cleaning.message}</FieldError>
             )}
@@ -248,28 +282,35 @@ export const NeighbourhoodForm = () => {
                 {t("neighbourhoodReview.unaOpcion")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="services"
               control={control}
               render={({ field }) => (
                 <MultiselectInput
                   {...field}
-                  options={config.neighbourhood.services}
+                  options={reviewConfigParams.neighbourhood.services.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbourhood.services.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.services && (
               <FieldError>{errors.services.message}</FieldError>
             )}
           </div>
           <div className="flex flex-col">
             <div className="flex justify-between">
-              <label htmlFor="comments">{t("common.añadirComentario")}</label>
+              <p /* htmlFor="comments" */>{t("common.añadirComentario")}</p>
               <span className="text-gray-500 text-sm">
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="comments"
               control={control}
               render={({ field }) => (
@@ -277,15 +318,12 @@ export const NeighbourhoodForm = () => {
                   {...field}
                   ariaInvalid={!!errors.comments}
                   className="w-full h-32"
-                  placeholder={t(
-                    "neighbourhoodReview.algunComentarioAñadir",
-                    "Añade algun comentario más que quieras aportar"
-                  )}
+                  placeholder={t("neighbourhoodReview.algunComentarioAñadir")}
                   name="comments"
                   control={control}
                 />
               )}
-            /> */}
+            />
             {errors.comments && (
               <FieldError>{errors.comments.message}</FieldError>
             )}

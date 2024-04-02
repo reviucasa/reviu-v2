@@ -21,7 +21,9 @@ export default function Review() {
     }
     /* revalidateUser(); */
     if (draft?.data.step) {
-      router.push(steps[draft.data.step].url);
+      router.push(
+        draft.data.step > 6 ? steps[6].url : steps[draft.data.step].url
+      );
     }
   }, [draft, router, user]);
 

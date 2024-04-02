@@ -2,6 +2,7 @@ import { SubmitHandler } from "react-hook-form";
 import { useStep } from "./useStep";
 import { auth } from "@/firebase/config";
 import { updateDraft, updateReview } from "@/models/review";
+import { removeUndefinedValues } from "./useSubmitDraft";
 
 type ReturnSubmitReview = {
   onSubmitReview: SubmitHandler<any>;
@@ -12,9 +13,11 @@ export function useSubmitReview(formName: string): ReturnSubmitReview {
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     console.log(data);
+    const cleanedData = removeUndefinedValues(data);
+    console.log(cleanedData);
     try {
       await updateReview(auth.currentUser!.uid, {
-        data: { [formName]: data, step: nextStepReview },
+        data: { [formName]: cleanedData, step: nextStepReview },
       });
     } catch (error) {
       console.log(error);

@@ -13,6 +13,7 @@ import {
   limit,
   getDocs,
   orderBy,
+  addDoc,
 } from "firebase/firestore";
 import { Apartment } from "./building";
 
@@ -21,7 +22,6 @@ export type Review = {
   id: string;
   timestamp: string;
   updated: string;
-  draft: boolean;
   apartment?: Apartment;
   data: Partial<ReviewData>;
   buildingId: string;
@@ -164,8 +164,8 @@ const publishReview = async (
   uid: string,
   review: Partial<Review>
 ): Promise<void> => {
-  const ref = doc(db, `reviews/`).withConverter(reviewConverter);
-  await setDoc(ref, { ...review, userId: uid });
+  const ref = collection(db, `reviews`).withConverter(reviewConverter);
+  await addDoc(ref, { ...review, userId: uid });
 };
 
 // Update an existing review

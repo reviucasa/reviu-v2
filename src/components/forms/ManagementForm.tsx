@@ -90,6 +90,7 @@ export const ManagementForm = () => {
         } */
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedRealStateAgency]);
 
   useEffect(() => {

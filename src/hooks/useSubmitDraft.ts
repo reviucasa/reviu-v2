@@ -1,7 +1,13 @@
 import { SubmitHandler } from "react-hook-form";
 import { useStep } from "./useStep";
 import { auth } from "@/firebase/config";
-import { ReviewData, updateDraft, updateDraftData } from "@/models/review";
+import {
+  ReviewData,
+  publishReview,
+  updateDraft,
+  updateDraftData,
+} from "@/models/review";
+import { useDraft } from "./swr/useDraft";
 
 type ReturnSubmitDraft = {
   onSubmitDraft: SubmitHandler<any>;
@@ -12,6 +18,8 @@ export function useSubmitDraft(formName: string): ReturnSubmitDraft {
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
     console.log(data);
+    const cleanedData = removeUndefinedValues(data);
+    console.log(cleanedData);
     try {
       await updateDraftData(
         auth.currentUser!.uid,
@@ -27,4 +35,15 @@ export function useSubmitDraft(formName: string): ReturnSubmitDraft {
   return {
     onSubmitDraft: onSubmit,
   };
+}
+
+type GenericObject = { [key: string]: any };
+
+export function removeUndefinedValues(obj: GenericObject): GenericObject {
+  Object.keys(obj).forEach((key) => {
+    if (obj[key] && typeof obj[key] === "object")
+      removeUndefinedValues(obj[key]);
+    else if (obj[key] === undefined) delete obj[key];
+  });
+  return obj;
 }

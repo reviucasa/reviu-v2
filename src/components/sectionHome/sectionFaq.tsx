@@ -55,9 +55,9 @@ export function SectionFaq({
     <div className={className}>
       {withTitle && (
         <div className="flex justify-center">
-          <label className="flex self-center absolute text-xs font-bold uppercase">
+          <p className="flex self-center absolute text-xs font-bold uppercase">
             {t("faq.frequentQuestion")}
-          </label>
+          </p>
           <Image
             src={circulosection}
             alt=""

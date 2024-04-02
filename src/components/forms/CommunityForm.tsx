@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
@@ -15,6 +15,10 @@ import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
 import { getUrlReview } from "@/helpers/stepper";
+import { reviewConfigParams } from "@/staticData";
+import TextAreaWithCharCounter from "../molecules/TexareaCounter";
+import { useSubmitDraft } from "@/hooks/useSubmitDraft";
+import { useDraft } from "@/hooks/swr/useDraft";
 
 const schema = yup.object({
   buildingNeighborhood: yup.array(),
@@ -27,11 +31,12 @@ const schema = yup.object({
 });
 
 export const CommunityForm = () => {
-  const { review } = useReview();
-  const { onSubmitReview } = useSubmitReview("community");
+  const { draft } = useDraft();
+  const { onSubmitDraft } = useSubmitDraft("community");
   const router = useRouter();
   const { nextStepReview } = useStep();
   const t = useTranslations();
+  const config = useTranslations("config");
 
   const {
     formState: { isDirty, isValid, errors, isSubmitSuccessful },
@@ -58,7 +63,7 @@ export const CommunityForm = () => {
   };
   useEffect(() => {
     if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful]);
+  }, [isSubmitSuccessful, nextStepReview, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -66,17 +71,20 @@ export const CommunityForm = () => {
   }, [isDirty]); */
 
   useEffect(() => {
-    if (review) reset(review.data.community);
-  }, [review?.data.community]);
+    if (draft) reset(draft.data.community);
+  }, [reset, draft, draft?.data.community]);
 
   type FormData = yup.InferType<typeof schema>;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitReview(data);
+  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitDraft(data);
 
   return (
-    <ReviewFormLayout title={'Not implemented yet...'/* t("communityReviews.comunidadVecinos") */}>
-      {/* config && */ (
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+    <ReviewFormLayout title={t("communityReviews.comunidadVecinos")}>
+      {
+        /* config && */ <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-6"
+        >
           <div className="flex flex-col">
             <div className="flex justify-between">
               <label htmlFor="currentResidence">
@@ -86,17 +94,24 @@ export const CommunityForm = () => {
                 {t("communityReviews.eligeTantasComoQuieras")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="buildingNeighborhood"
               control={control}
               render={({ field }) => (
                 <MultiselectInput
                   ariaInvalid={!!errors.buildingNeighborhood}
                   {...field}
-                  options={config?.neighbors.buildingNeighborhood}
+                  options={reviewConfigParams.neighbors.buildingNeighborhood.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbors.buildingNeighborhood.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.buildingNeighborhood && (
               <FieldError>{errors.buildingNeighborhood.message}</FieldError>
             )}
@@ -110,17 +125,24 @@ export const CommunityForm = () => {
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="touristicApartments"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.touristicApartments}
                   {...field}
-                  options={config.neighbors.touristicApartments}
+                  options={reviewConfigParams.neighbors.touristicApartments.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbors.touristicApartments.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.touristicApartments && (
               <FieldError>{errors.touristicApartments.message}</FieldError>
             )}
@@ -134,17 +156,24 @@ export const CommunityForm = () => {
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="neighborsRelationship"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.neighborsRelationship}
                   {...field}
-                  options={config.neighbors.neighborsRelationship}
+                  options={reviewConfigParams.neighbors.neighborsRelationship.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbors.neighborsRelationship.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.neighborsRelationship && (
               <FieldError>{errors.neighborsRelationship.message}</FieldError>
             )}
@@ -158,17 +187,24 @@ export const CommunityForm = () => {
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="buildingMaintenance"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.buildingMaintenance}
                   {...field}
-                  options={config.neighbors.buildingMaintenance}
+                  options={reviewConfigParams.neighbors.buildingMaintenance.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbors.buildingMaintenance.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.buildingMaintenance && (
               <FieldError>{errors.buildingMaintenance.message}</FieldError>
             )}
@@ -180,17 +216,24 @@ export const CommunityForm = () => {
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="buildingCleaning"
               control={control}
               render={({ field }) => (
                 <RadioInput
                   ariaInvalid={!!errors.buildingCleaning}
                   {...field}
-                  options={config.neighbors.buildingCleaning}
+                  options={reviewConfigParams.neighbors.buildingCleaning.map(
+                    (e) => {
+                      return {
+                        label: config(`neighbors.buildingCleaning.${e}`),
+                        value: e,
+                      };
+                    }
+                  )}
                 />
               )}
-            /> */}
+            />
             {errors.buildingCleaning && (
               <FieldError>{errors.buildingCleaning.message}</FieldError>
             )}
@@ -202,17 +245,22 @@ export const CommunityForm = () => {
                 {t("communityReviews.eligeTantasComoQuieras")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="services"
               control={control}
               render={({ field }) => (
                 <MultiselectInput
                   ariaInvalid={!!errors.services}
                   {...field}
-                  options={config.neighbors.services}
+                  options={reviewConfigParams.neighbors.services.map((e) => {
+                    return {
+                      label: config(`neighbors.services.${e}`),
+                      value: e,
+                    };
+                  })}
                 />
               )}
-            /> */}
+            />
             {errors.services && (
               <FieldError>{errors.services.message}</FieldError>
             )}
@@ -226,7 +274,7 @@ export const CommunityForm = () => {
                 {t("common.opcional")}
               </span>
             </div>
-            {/* <Controller
+            <Controller
               name="comment"
               control={control}
               render={({ field }) => (
@@ -234,15 +282,12 @@ export const CommunityForm = () => {
                   {...field}
                   ariaInvalid={!!errors.comment}
                   className="w-full h-32"
-                  placeholder={t(
-                    "communityReviews.añadirAlgunComentarioMas",
-                    "Añade algún comentario más que quieras aportar"
-                  )}
+                  placeholder={t("communityReviews.añadirAlgunComentarioMas")}
                   name="comment"
                   control={control}
                 />
               )}
-            /> */}
+            />
             {errors.comment && (
               <FieldError>{errors.comment.message}</FieldError>
             )}
@@ -267,7 +312,7 @@ export const CommunityForm = () => {
             </div>
           </div>
         </form>
-      )}
+      }
     </ReviewFormLayout>
   );
 };
