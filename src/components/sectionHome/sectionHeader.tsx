@@ -35,10 +35,11 @@ export function SectionHeader() {
     if (address && address != "") {
       setLoading(true);
       const building = await findBuildingByAddress(address);
+      console.log(building);
       if (building) {
-        // router.push(`/analisis/${building.id}`);
+        router.push(`/building/${building.id}`);
       } else {
-        setError(t("common:noSeEncontroDirección"));
+        setError(t("common.noSeEncontroDirección"));
       }
       setLoading(false);
     }
@@ -47,7 +48,7 @@ export function SectionHeader() {
   const dataContentSlide: SectionsType = [
     {
       title: tabSearchOpinion,
-      text: [t("slide.tittleSearchOpinion"), t("slide.tittleWriteOpinion")],
+      text: [t("slide.titleSearchOpinion"), t("slide.titleWriteOpinion")],
       children: (
         <div className="flex flex-col w-full items-center	">
           <AddressComboBox

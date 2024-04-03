@@ -14,8 +14,9 @@ import {
   getDocs,
   orderBy,
   addDoc,
+  where,
 } from "firebase/firestore";
-import { Apartment } from "./building";
+import { Apartment, Building } from "./building";
 
 export type Review = {
   address: string;
@@ -207,6 +208,14 @@ const getReviews = async (count?: number): Promise<Review[]> => {
     });
 };
 
+// Retrieve a building by CatastroID
+const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
+  const ref = collection(db, `reviews/`).withConverter(reviewConverter);
+  const q = query(ref, where("buildingId", "==", buildingId));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((e) => e.data());
+};
+
 export {
   getDraft,
   createDraft,
@@ -217,4 +226,5 @@ export {
   publishReview,
   updateReview,
   getReviews,
+  getReviewsByBuidingId,
 };

@@ -17,9 +17,7 @@ export function useSubmitDraft(formName: string): ReturnSubmitDraft {
   const { nextStepReview } = useStep();
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
-    console.log(data);
     const cleanedData = removeUndefinedValues(data);
-    console.log(cleanedData);
     try {
       await updateDraftData(
         auth.currentUser!.uid,

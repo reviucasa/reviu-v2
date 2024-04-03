@@ -52,28 +52,28 @@ export const DialogReport = ({
   const Options = [
     {
       id: 1,
-      tittle: t("common.acoso"),
+      title: t("common.acoso"),
       IconRed: IconAcosoRed,
       Icon: IconAcoso,
       text: t("common.informacionAtaca"),
     },
     {
       id: 2,
-      tittle: t("common.discriminacion"),
+      title: t("common.discriminacion"),
       IconRed: IconFireRed,
       Icon: IconFire,
       text: t("common.lenguajeOfensivo"),
     },
     {
       id: 3,
-      tittle: t("common.spam"),
+      title: t("common.spam"),
       IconRed: IconSpamRed,
       Icon: IconSpam,
       text: "",
     },
     {
       id: 4,
-      tittle: t("common.informacionFalsa"),
+      title: t("common.informacionFalsa"),
       IconRed: IconInfoFalseRed,
       Icon: IconInfoFalse,
       text: "",
@@ -97,9 +97,9 @@ export const DialogReport = ({
           </h5>
           <p className="mb-6 lg:text-base text-sm">{t("common.eligeUno")}</p>
           <div className="grid gap-2">
-            {Options.map(({ id, tittle, IconRed, Icon, text }) => (
+            {Options.map(({ id, title, IconRed, Icon, text }) => (
               <div
-                key={tittle}
+                key={title}
                 className={`${
                   selectedReportType?.id === id ? "bg-primary-100" : "bg-white"
                 }`}
@@ -108,21 +108,21 @@ export const DialogReport = ({
                 <div className="p-4 border border-gray-300 rounded-md cursor-pointer">
                   <div className="grid grid-cols-[1fr_auto] leading-6">
                     <p className="text-gray-500 font-bold lg:text-base text-sm">
-                      {tittle}
+                      {title}
                     </p>
                     {selectedReportType?.id === id ? (
                       <Image
                         src={IconRed}
                         width={24}
                         height={24}
-                        alt={`Icono ${tittle}`}
+                        alt={`Icono ${title}`}
                       />
                     ) : (
                       <Image
                         src={Icon}
                         width={24}
                         height={24}
-                        alt={`Icono ${tittle}`}
+                        alt={`Icono ${title}`}
                       />
                     )}
                     <div className="lg:text-base text-sm">{text}</div>

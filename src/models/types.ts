@@ -43,7 +43,7 @@ export type Analisis = {
     address: string;
     reviews: Review[];
     neighbourhood: {
-      word_cloud: WordCloud[];
+      wordCloud: WordCloud[];
       stats: Stat[];
     };
     latitude: number;

@@ -141,33 +141,33 @@ export const ReviewDetail = ({
                 </h6>
               </div>
               <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
-                <Label tittle={t("common.temperaturaVerano")}>
+                <Label title={t("common.temperaturaVerano")}>
                   {config(
                     `buildingQuality.summerTemperature.${review?.data?.valuation?.summerTemperature}`
                   )}
                 </Label>
-                <Label tittle={t("common.temperaturaInvierno")}>
+                <Label title={t("common.temperaturaInvierno")}>
                   {config(
                     `buildingQuality.winterTemperature.${review?.data?.valuation?.winterTemperature}`
                   )}
                 </Label>
-                <Label tittle={t("common.relacionVecinal")}>
+                <Label title={t("common.relacionVecinal")}>
                   {config(
                     `neighbors.neighborsRelationship.${review.data?.community?.neighborsRelationship}`
                   )}
                 </Label>
-                <Label tittle={t("common.luz")}>
+                <Label title={t("common.luz")}>
                   {config(
                     `buildingQuality.light.${review.data?.valuation?.light}`
                   )}
                 </Label>
 
-                <Label tittle={t("common.estadoYMantenimiento")}>
+                <Label title={t("common.estadoYMantenimiento")}>
                   {config(
                     `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
                   )}
                 </Label>
-                <Label tittle={t("common.services")}>
+                <Label title={t("common.services")}>
                   {review?.data?.community?.services
                     ?.map((type: string) =>
                       config(`neighbors.services.${type}`)
@@ -200,24 +200,24 @@ export const ReviewDetail = ({
                         <span>{review.data?.management?.realStateAgency}</span>
                       )}
                     </div>
-                    <Label tittle={t("realstate.comoHaSidoElTrato")}>
+                    <Label title={t("realstate.comoHaSidoElTrato")}>
                       {config(
                         `landlord.landlordTreatment.${review?.data?.management?.realStateDealing}`
                       )}
                     </Label>
                   </>
                 )}
-                <Label tittle={t("common.tratoCasero")}>
+                <Label title={t("common.tratoCasero")}>
                   {config(
                     `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
                   )}
                 </Label>
-                <Label tittle={t("common.respuestaProblema")}>
+                <Label title={t("common.respuestaProblema")}>
                   {config(
                     `landlord.problemSolving.${review?.data?.management?.problemSolving}`
                   )}
                 </Label>
-                <Label tittle={t("common.devolvieronFianza")}>
+                <Label title={t("common.devolvieronFianza")}>
                   {config(
                     `landlord.deposit.${review?.data?.management?.deposit}`
                   )}
@@ -265,7 +265,7 @@ export const ReviewDetail = ({
                       </h6>
                     </div>
                     <div className="flex-1 grid grid-cols-2 gap-8">
-                      <Label tittle={t("common.tipologiaResidentes")}>
+                      <Label title={t("common.tipologiaResidentes")}>
                         {review.data?.community?.buildingNeighborhood
                           ?.map((type: string) =>
                             config(`neighbors.buildingNeighborhood.${type}`)
@@ -273,27 +273,27 @@ export const ReviewDetail = ({
                           .join(", ")}
                       </Label>
 
-                      <Label tittle={t("common.pisosTuristicos")}>
+                      <Label title={t("common.pisosTuristicos")}>
                         {config(
                           `neighbors.touristicApartments.${review?.data?.community?.touristicApartments}`
                         )}
                       </Label>
-                      <Label tittle={t("common.relacionVecinal")}>
+                      <Label title={t("common.relacionVecinal")}>
                         {config(
                           `neighbors.neighborsRelationship.${review?.data?.community?.neighborsRelationship}`
                         )}
                       </Label>
-                      <Label tittle={t("common.estadoYMantenimiento")}>
+                      <Label title={t("common.estadoYMantenimiento")}>
                         {config(
                           `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
                         )}
                       </Label>
-                      <Label tittle={t("common.limpieza")}>
+                      <Label title={t("common.limpieza")}>
                         {config(
                           `neighbors.buildingCleaning.${review?.data?.community?.buildingCleaning}`
                         )}
                       </Label>
-                      <Label tittle={t("common.services")}>
+                      <Label title={t("common.services")}>
                         {review.data?.community?.services
                           ?.map((type: string) =>
                             config(`neighbors.services.${type}`)
@@ -317,34 +317,34 @@ export const ReviewDetail = ({
                 <h5 className="mb-2">{t("common.zona300")}</h5>
               </div>
               <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
-                <Label tittle={t("common.tipologiaAmbiente")}>
+                <Label title={t("common.tipologiaAmbiente")}>
                   {vibe
                     ?.filter((vibes) => vibes.count > 1)
                     .slice(0, 3)
                     .map((vibes) => config(`neighbourhood.vibe.${vibes.word}`))
                     .join(", ")}
                 </Label>
-                <Label tittle={t("common.turistas")}>
+                <Label title={t("common.turistas")}>
                   {config(
                     `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
                   )}
                 </Label>
-                <Label tittle={t("common.ruido")}>
+                <Label title={t("common.ruido")}>
                   {config(
                     `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
                   )}
                 </Label>
-                <Label tittle={t("common.seguridad")}>
+                <Label title={t("common.seguridad")}>
                   {config(
                     `neighbourhood.security.${review?.data?.neighbourhood?.security}`
                   )}
                 </Label>
-                <Label tittle={t("common.limpieza")}>
+                <Label title={t("common.limpieza")}>
                   {config(
                     `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
                   )}
                 </Label>
-                <Label tittle={t("common.services")}>
+                <Label title={t("common.services")}>
                   {services
                     ?.filter((services) => services.count > 2)
                     .slice(0, 5)
