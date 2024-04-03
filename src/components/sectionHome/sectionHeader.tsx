@@ -37,7 +37,7 @@ export function SectionHeader() {
       const building = await findBuildingByAddress(address);
       console.log(building);
       if (building) {
-        router.push(`/building/${building.id}`);
+        router.push(`building/${building.id}`);
       } else {
         setError(t("common.noSeEncontroDirección"));
       }

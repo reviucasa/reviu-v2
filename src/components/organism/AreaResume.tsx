@@ -4,10 +4,10 @@ import maskGroup from "../../../public/maskGroup.png";
 import { AreaResumeCardAmbience } from "../molecules/AreaResumeCardAmbience";
 import { AreaResumeCardService } from "../molecules/AreaResumeCardServices";
 import { MiniAreaPorcent } from "../molecules/MiniAreaPorcent";
-import { AnalisisContext } from "@/context/AnalisisSectionActive";
+import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { useTranslations } from "next-intl";
-import {  Stat } from "@/models/types";
 import { Review } from "@/models/review";
+import { Stat } from "@/models/analysis";
 
 type AreaResume = {
   reviews: Array<Review>;
@@ -22,11 +22,11 @@ export const AreaResume = ({
   className,
   notEnoughStats,
 }: AreaResume) => {
-  const { analisisSectionActive } = useContext(AnalisisContext);
+  const { analysisSectionActive } = useContext(AnalysisContext);
   const t = useTranslations();
-  const { sections } = useContext(AnalisisContext);
+  const { sections } = useContext(AnalysisContext);
 
-  return analisisSectionActive === Object.keys(sections)[0] ? (
+  return analysisSectionActive === Object.keys(sections)[0] ? (
     <div className={`grid lg:gap-6 grid-col gap-4 ${className}`}>
       <h5 className="lg:text-xl text-base mt-16">{t("common.resumenZona")}</h5>
       {notEnoughStats ? (

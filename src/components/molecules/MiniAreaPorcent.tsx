@@ -2,7 +2,8 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import IconInfo from "../../../public/IconInfo.png";
 import { Dialog } from "../atoms/Dialog";
-import { ConfigValue, Stat, Value } from "@/models/types";
+import { ConfigValue } from "@/models/types";
+import { Stat, Value } from "@/models/analysis";
 
 export const MiniAreaPorcent = ({
   stat,
@@ -45,9 +46,7 @@ export const MiniAreaPorcent = ({
       >
         <Image src={IconInfo} alt={"16"} />
       </button>
-      <h6 className="font-bold md:text-base text-sm">
-        {stat.stat_display_text}
-      </h6>
+      <h6 className="font-bold md:text-base text-sm">{stat.statDisplayText}</h6>
       <p className="text-base md:text-2xl font-extrabold pb-2">
         {statConfig?.find((item) => item.value === maxPercentStat?.key)?.label}
       </p>

@@ -1,6 +1,6 @@
 import { CommunityCard } from "@/components/molecules/CommunityCard";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
-import { AnalisisContext } from "@/context/AnalisisSectionActive";
+import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
@@ -13,7 +13,7 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
   const t = useTranslations();
 
   // draw review information in boxes
-  const { setAnalisisSectionActive, sections } = useContext(AnalisisContext);
+  const { setAnalysisSectionActive, sections } = useContext(AnalysisContext);
 
   const viewAllOpinions = t("generalValuation:viewAllOpinions");
   return (
@@ -28,7 +28,7 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
         <span
           className="w-full flex justify-center cursor-pointer pt-3 text-sm md:text-base"
           onClick={() => {
-            setAnalisisSectionActive(Object.keys(sections)[1]);
+            setAnalysisSectionActive(Object.keys(sections)[1]);
           }}
         >{`${viewAllOpinions} (${reviews.length}) >`}</span>
       </div>
@@ -42,7 +42,7 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
         ))}
         <a
           className="w-full flex justify-center cursor-pointer text-sm md:text-base"
-          onClick={() => setAnalisisSectionActive(Object.keys(sections)[2])}
+          onClick={() => setAnalysisSectionActive(Object.keys(sections)[2])}
         >{`${viewAllOpinions} (${reviews.length}) >`}</a>
       </div>
     </div>

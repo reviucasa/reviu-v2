@@ -12,7 +12,7 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
-import { AnalisisContext } from "@/context/AnalisisSectionActive";
+import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
 import { useRouter } from "next/navigation";
 
@@ -26,7 +26,7 @@ export const ReviewDetail = ({
   const t = useTranslations();
   /* const { config } = useConfig(); */
   const router = useRouter();
-  const { wordCloud } = useContext(AnalisisContext);
+  const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);

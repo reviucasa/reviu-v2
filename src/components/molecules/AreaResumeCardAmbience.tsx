@@ -6,11 +6,11 @@ import nocturno from "../../../public/AmbienteNocturno.svg";
 import quiet from "../../../public/quiet.svg";
 import student from "../../../public/student-oriented'.svg";
 import { useTranslations } from "next-intl";
-import { AnalisisContext } from "@/context/AnalisisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
+import { AnalysisContext } from "@/context/AnalysisSectionActive";
 
 export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
-  const { wordCloud } = useContext(AnalisisContext);
+  const { wordCloud } = useContext(AnalysisContext);
   const config = useTranslations("config");
   const IconAmbience = [
     { name: "quiet", image: quiet },

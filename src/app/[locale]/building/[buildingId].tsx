@@ -8,15 +8,16 @@ import { AreaValuation } from "@/components/organism/AreaValuation";
 import { CommunityValuation } from "@/components/organism/CommunityValuation";
 import { FloorValuation } from "@/components/organism/FloorValuation";
 import { GeneralValuation } from "@/components/organism/GeneralValuation";
-import { AnalisisContext } from "@/context/AnalisisSectionActive";
+import { AnalysisContext } from "@/context/AnalysisSectionActive";
+import { Analysis } from "@/models/analysis";
+import { getBuilding } from "@/models/building";
 import { getReviewsByBuidingId } from "@/models/review";
-import { Analisis } from "@/models/types";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-export default function BuildingPage({ analisis }: { analisis: Analisis }) {
+export default function BuildingPage({ analysis }: { analysis: Analysis }) {
   const router = useRouter();
   const t = useTranslations();
   const sections: {
@@ -24,19 +25,19 @@ export default function BuildingPage({ analisis }: { analisis: Analisis }) {
   } = {
     valuationGeneral: {
       title: t("common.valuationGeneral"),
-      sectionObject: <GeneralValuation reviews={analisis.building.reviews} />,
+      sectionObject: <GeneralValuation reviews={analysis.reviews} />,
     },
     valuationFloor: {
       title: t("common.valuationFloor"),
-      sectionObject: <FloorValuation reviews={analisis.building.reviews} />,
+      sectionObject: <FloorValuation reviews={analysis.reviews} />,
     },
     valuationCommunity: {
       title: t("common.valuationCommunity"),
-      sectionObject: <CommunityValuation reviews={analisis.building.reviews} />,
+      sectionObject: <CommunityValuation reviews={analysis.reviews} />,
     },
     valuationArea: {
       title: t("common.valuationArea"),
-      sectionObject: <AreaValuation reviews={analisis.building.reviews} />,
+      sectionObject: <AreaValuation reviews={analysis.reviews} />,
     },
   };
   // eslint-disable-next-line quotes
@@ -57,8 +58,8 @@ export default function BuildingPage({ analisis }: { analisis: Analisis }) {
       ssr: false,
     }
   );
-  const notOpinions = analisis.building.reviews.length === 0;
-  const notEnoughStats = analisis.building.neighbourhood.stats[0].total < 3;
+  const notOpinions = analysis.reviews.length === 0;
+  // const notEnoughStats = analysis.neighbourhood.stats[0].total < 3;
 
   //con esto estoy deshabilitando el server side rendering, para este componente solo. Para que funcione
   return (
@@ -66,28 +67,26 @@ export default function BuildingPage({ analisis }: { analisis: Analisis }) {
       <div className="lg:p-14 bg-white p-4 mb-11 lg:mb-0">
         <div className="flex justify-between">
           {notOpinions ? (
-            <h5 className="lg:text-3xl mb-7">{analisis.building.address}</h5>
+            <h5 className="lg:text-3xl mb-7">{analysis.address}</h5>
           ) : (
-            <h5 className="lg:text-3xl mb-7">
-              {analisis.building.reviews[0]?.address}
-            </h5>
+            <h5 className="lg:text-3xl mb-7">{analysis.reviews[0]?.address}</h5>
           )}
           <DropDownShare />
         </div>
-        <AnalisisContext.Provider
+        <AnalysisContext.Provider
           value={{
             sections: sections,
-            analisisSectionActive: activeSection,
-            setAnalisisSectionActive: setActiveSection,
-            wordCloud: analisis.building.neighbourhood.wordCloud,
+            analysisSectionActive: activeSection,
+            setAnalysisSectionActive: setActiveSection,
+            wordCloud: [], //analysis.neighbourhood?.wordCloud,
           }}
         >
           <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1">
             <div>
               <div className="h-32 sm:h-72 w-full">
                 <OpenStreetMap
-                  latitude={analisis.building.latitude}
-                  longitude={analisis.building.longitude}
+                  latitude={analysis.latitude}
+                  longitude={analysis.longitude}
                 />
               </div>
               {!notOpinions && (
@@ -124,24 +123,44 @@ export default function BuildingPage({ analisis }: { analisis: Analisis }) {
             </div>
             <AreaResume
               className="col-span-2"
-              reviews={analisis.building.reviews}
-              stats={analisis.building.neighbourhood.stats}
-              notEnoughStats={notEnoughStats}
+              reviews={analysis.reviews}
+              stats={[] /* analysis.neighbourhood.stats */}
+              notEnoughStats={true /* notEnoughStats */}
             />
           </div>
-        </AnalisisContext.Provider>
+        </AnalysisContext.Provider>
       </div>
     </MainLayout>
   );
 }
 
 export const getServerSideProps = async (contexto: any) => {
-  const { locale, params } = contexto;
+  const { params } = contexto;
   const { buildingId } = params;
   console.log(buildingId);
 
-  // TODO: needs to return an Analisis Object (check legacy backend) 
-  const response = await getReviewsByBuidingId(buildingId);
+  // TODO: needs to return an Analysis Object (check legacy backend)
+  const building = await getBuilding(buildingId);
+
+  if (!building) {
+    return {
+      redirect: {
+        destination: "/", // The path to redirect to
+        permanent: false, // If the redirection is permanent (HTTP 301) or temporary (HTTP 307)
+      },
+    };
+  }
+  const reviews = await getReviewsByBuidingId(buildingId);
+  console.log(building);
+  console.log(reviews);
+
+  const analysis = new Analysis({
+    buildingId: building!.id,
+    address: building?.address,
+    reviews,
+    latitude: building?.latitude,
+    longitude: building?.longitude,
+  });
 
   /* const translations = await serverSideTranslations(locale, [
     "common",
@@ -155,7 +174,7 @@ export const getServerSideProps = async (contexto: any) => {
 
   return {
     props: {
-      analisis: response /* ?.data */,
+      analysis /* ?.data */,
       /* ...translations, */
     },
   };

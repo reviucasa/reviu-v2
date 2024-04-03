@@ -13,8 +13,6 @@ export type Address =
 
 export type AddressList = { results: Address[] };
 
-
-
 export type ReviewRequest = {
   buildingId?: string;
   apartmentId?: string;
@@ -22,34 +20,7 @@ export type ReviewRequest = {
   draft?: boolean;
 };
 
-export type WordCloud = {
-  group: string;
-  words: { word: string; count: number }[];
-};
-export type Value = {
-  key: string;
-  value: number;
-  percentage: number;
-};
-export type Stat = {
-  stat: string;
-  total: number;
-  stat_display_text: string;
-  values: Value[];
-};
-export type Analisis = {
-  building: {
-    id: string;
-    address: string;
-    reviews: Review[];
-    neighbourhood: {
-      wordCloud: WordCloud[];
-      stats: Stat[];
-    };
-    latitude: number;
-    longitude: number;
-  };
-};
+
 
 export type AgencyReviews = {
   agency: {

@@ -36,7 +36,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
       setLoading(true);
       try {
         /* const response = await searchBuilding(address);
-        await router.push(`/analisis/${response.data?.building.id}`); */
+        await router.push(`/analysis/${response.data?.building.id}`); */
       } catch (error) {
         console.log(error);
         /* if (axios.isAxiosError(error)) {
