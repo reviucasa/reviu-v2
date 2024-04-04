@@ -12,9 +12,7 @@ export function useSubmitReview(formName: string): ReturnSubmitReview {
   const { nextStepReview } = useStep();
 
   const onSubmit: SubmitHandler<any> = async (data: any) => {
-    console.log(data);
     const cleanedData = removeUndefinedValues(data);
-    console.log(cleanedData);
     try {
       await updateReview(auth.currentUser!.uid, {
         data: { [formName]: cleanedData, step: nextStepReview },

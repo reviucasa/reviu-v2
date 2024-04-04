@@ -31,13 +31,18 @@ export const BannerOpinion = ({
         <Button
           buttonClassName={`${colorButton}  mt-6 content-center overflow-hidden`}
           className="!w-full"
-          onClick={() => window.open("mailto:info@reviucasa.com")}
+          onClick={
+            () =>
+              router.push(
+                "/review"
+              ) /* window.open("mailto:info@reviucasa.com") */
+          }
         >
           {textButton}
         </Button>
       </div>
       <div className="relative min-h-[180px]">
-        <Image src={cardBanner} fill alt="" className="object-cover" />
+        <Image src={cardBanner} fill alt="" className="object-cover" priority />
       </div>
     </div>
   );

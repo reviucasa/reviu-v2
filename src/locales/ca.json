@@ -74,6 +74,7 @@
     "valuationGeneral": "Valoració general"
   },
   "common": {
+    "results": "Resultats",
     "writeReview": "Escriu una opinió",
     "logIn": "Iniciar sessió",
     "signIn": "Registra't",
@@ -147,7 +148,7 @@
     "consejosInmobiliaria": "Quins consells donaries a la immobiliària?",
     "consejosCasero": "Quins consells donaries al propietari del pis?",
     "comunidadVecinos": "Comunitat de veïns",
-    "zona300": "Zona(300m)",
+    "zona300": "Zona (300m)",
     "tipologiaAmbiente": "Ambient",
     "inmobiliaria": "Immobiliària",
     "opinion": "Opinió",
@@ -160,7 +161,7 @@
     "acoso": "Assetjament",
     "informacionAtaca": "La informació ataca directament una persona",
     "discriminacion": "Discriminació o incitació a l'odi",
-    "lenguajeOfensivo": "utilitza llenguatge ofensiu sobre una persona o col·lectiu a causa de la seva identitat",
+    "lenguajeOfensivo": "Utilitza llenguatge ofensiu sobre una persona o col·lectiu a causa de la seva identitat",
     "spam": "És spam",
     "informacionFalsa": "La informació és falsa",
     "loRecomiendo": "El recomano",
@@ -179,6 +180,7 @@
     "resumenZona": "Resum de la zona",
     "recopilandoDatos": "Estem recopilant dades de la zona. Anima els teus a deixar una opinió!",
     "buscar": "Buscar una adreça a Barcelona",
+    "searchAgency": "Buscar una immobiliària a Barcelona",
     "barrio": "Barri o zona",
     "Català": "Català",
     "Español": "Espanyol",
@@ -522,7 +524,7 @@
     "cambiosPolitica": "6. Canvis en la Política de Privacitat",
     "cambiosPoliticaP1": "Reviu Casa es reserva el dret a modificar aquesta Política de Privacitat en qualsevol moment. Els canvis o actualitzacions de la Política de Privacitat es notificaran explícitament a l'Usuari mitjançant un avís en la Pàgina Web, juntament amb la versió actualitzada de la Política de Privacitat."
   },
-  "realstate": {
+  "agency": {
     "valoracionesPisos": "Valoracions dels pisos",
     "informacionInmobiliaria": "informació de la immobiliària",
     "reseñas": "Opinions",
@@ -547,11 +549,13 @@
   "slide": {
     "titleSearchOpinion": "Descobreix si la immobiliària et tractarà bé abans de signar el contracte",
     "titleWriteOpinion": "Deixa la teva opinió sobre el pis i la immobiliària. Qualsevol detall pot ajudar qui s’hi està a punt de mudar",
+    "titleSearchAgency": "Cerca ressenyes sobre qualsevol immobiliària.",
     "noTeLlevesSorpresas": "No t'emportis sorpreses. Que t'expliqui com és el pis qui hi ha viscut",
     "hazUnRepaso": "Fes memòria dels llocs on has viscut",
     "tabs": {
       "searchOpinion": "Busca una opinió",
-      "writeOpinion": "Escriu una opinió"
+      "writeOpinion": "Escriu una opinió",
+      "searchAgency": "Busca una immobiliària"
     }
   },
   "stayReview": {
@@ -574,6 +578,16 @@
   "valuationForm": {
     "estadoPiso": "Estat del pis i manteniment",
     "eligeTantasComoQuieras": "Tria'n tantes com vulguis"
+  },
+  "configKeys": {
+    "neighbourhood": {
+      "vibe": "Ambient",
+      "tourists": "Turistes",
+      "noise": "Soroll",
+      "security": "Seguretat",
+      "cleaning": "Neteja",
+      "services": "Serveis"
+    }
   },
   "config": {
     "buildingQuality": {

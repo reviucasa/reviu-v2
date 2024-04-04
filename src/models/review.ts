@@ -1,4 +1,4 @@
-import { db } from "@/firebase/config";
+import { db, firebase } from "@/firebase/config";
 import {
   DocumentData,
   FirestoreDataConverter,
@@ -15,18 +15,27 @@ import {
   orderBy,
   addDoc,
   where,
+  serverTimestamp,
+  Timestamp,
 } from "firebase/firestore";
-import { Apartment, Building } from "./building";
+import { Apartment } from "./building";
+
+enum ReviewStatus {
+  Deleted = "deleted",
+  Reported = "reported",
+  Published = "published",
+}
 
 export type Review = {
   address: string;
   id: string;
-  timestamp: string;
-  updated: string;
+  timeCreated: Timestamp;
+  timeUpdated: Timestamp;
   apartment?: Apartment;
   data: Partial<ReviewData>;
   buildingId: string;
   userId: string;
+  status?: ReviewStatus;
 };
 
 export type ReviewData = {
@@ -58,7 +67,7 @@ export type Management = {
   isRealStateAgency: boolean;
   landlordDealing: string;
   problemSolving: string;
-  realStateAgency_id?: string;
+  agencyId: string;
   realStateAgency: string;
   realStateDealing: string;
 };
@@ -96,7 +105,8 @@ export type Valuation = {
 };
 
 const reviewConverter: FirestoreDataConverter<Review> = {
-  toFirestore(review: Review): DocumentData {
+  toFirestore(r: Review): DocumentData {
+    const { id, ...review } = r;
     return review;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Review {
@@ -166,7 +176,12 @@ const publishReview = async (
   review: Partial<Review>
 ): Promise<void> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  await addDoc(ref, { ...review, userId: uid });
+  await addDoc(ref, {
+    ...review,
+    userId: uid,
+    timeCreated: serverTimestamp(),
+    timeUpdated: serverTimestamp(),
+  });
 };
 
 // Update an existing review
@@ -187,7 +202,7 @@ const deleteReview = async (uid: string): Promise<void> => {
 // Retrieve reviews
 const getReviews = async (count?: number): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  let q = query(ref);
+  let q = query(ref, where("status", "==", ReviewStatus.Published));
 
   // Conditionally add a limit
   if (count) {
@@ -210,10 +225,17 @@ const getReviews = async (count?: number): Promise<Review[]> => {
 
 // Retrieve a building by CatastroID
 const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
-  const ref = collection(db, `reviews/`).withConverter(reviewConverter);
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
   const q = query(ref, where("buildingId", "==", buildingId));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((e) => e.data());
+};
+
+const getReviewsByAgencyId = async (agencyId: string): Promise<Review[]> => {
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(ref, where("data.management.agencyId", "==", agencyId));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => doc.data() as Review); // Cast to Review type if necessary
 };
 
 export {
@@ -227,4 +249,6 @@ export {
   updateReview,
   getReviews,
   getReviewsByBuidingId,
+  getReviewsByAgencyId,
+  reviewConverter,
 };

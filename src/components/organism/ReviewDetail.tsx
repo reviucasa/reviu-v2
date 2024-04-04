@@ -185,12 +185,12 @@ export const ReviewDetail = ({
                   <>
                     <div className="flex flex-col gap-2 text-sm md:text-base">
                       <label>{t("common.inmobiliaria")}</label>
-                      {review.data.management.realStateAgency_id ? (
+                      {review.data.management.agencyId ? (
                         <a
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold"
                           onClick={() => {
                             router.push(
-                              `/realstate/${review.data.management?.realStateAgency_id}`
+                              `/agency/${review.data.management?.agencyId}`
                             );
                           }}
                         >
@@ -200,7 +200,7 @@ export const ReviewDetail = ({
                         <span>{review.data?.management?.realStateAgency}</span>
                       )}
                     </div>
-                    <Label title={t("realstate.comoHaSidoElTrato")}>
+                    <Label title={t("agency.comoHaSidoElTrato")}>
                       {config(
                         `landlord.landlordTreatment.${review?.data?.management?.realStateDealing}`
                       )}
@@ -356,11 +356,11 @@ export const ReviewDetail = ({
                     .join(", ")}
                 </Label>
                 <div className="grid col-span-2">
-                  {review?.data?.community?.comment && (
+                  {review?.data?.neighbourhood?.comments && (
                     <div className="flex">
                       <Image src={comillas} alt="20" className="h-fit" />
                       <p className="pl-2 text-sm md:text-base">
-                        {review.data?.community?.comment}
+                        {review.data?.neighbourhood?.comments}
                       </p>
                     </div>
                   )}

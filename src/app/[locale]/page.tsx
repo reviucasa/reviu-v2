@@ -9,7 +9,6 @@ import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestRevi
 import { verifyEmailLinkAndAuthenticate } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
 
 export default function Home() {
   const router = useRouter();

@@ -1,5 +1,8 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { SectionFaq } from "@/components/sectionHome/sectionFaq";
+import { Analysis } from "@/models/analysis";
+import { getBuilding } from "@/models/building";
+import { getReviewsByBuidingId } from "@/models/review";
 import { unstable_setRequestLocale } from "next-intl/server";
 
 export default function Faq({

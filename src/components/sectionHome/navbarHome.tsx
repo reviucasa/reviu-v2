@@ -17,6 +17,7 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
+import { findBuildingByAddress } from "@/models/building";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -34,19 +35,13 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-      try {
-        /* const response = await searchBuilding(address);
-        await router.push(`/analysis/${response.data?.building.id}`); */
-      } catch (error) {
-        console.log(error);
-        /* if (axios.isAxiosError(error)) {
-          if (error.response?.status === 404)
-            setError(t("common.noSeEncontroDirección"));
-          else setError(error.response?.data.status);
-        } */
-      } finally {
-        setLoading(false);
+      const building = await findBuildingByAddress(address);
+      if (building) {
+        router.push(`/building/${building.id}`);
+      } else {
+        setError(t("common.noSeEncontroDirección"));
       }
+      setLoading(false);
     }
   };
 

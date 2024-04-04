@@ -42,9 +42,9 @@ export const OpinionCard = ({
           />
         </div>
         <Chip
-          className={`text-xs flex items-center gap-3 rounded-none lg:rounded-full h-10 ${
+          className={`text-xs flex px-3 items-center gap-2 rounded-none lg:rounded-full h-10 ${
             review.data?.opinion?.recomend
-              ? "bg-lime text-primary-500 u`"
+              ? "bg-lime text-primary-500"
               : "bg-red-500 text-white"
           }`}
         >

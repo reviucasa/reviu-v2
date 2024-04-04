@@ -1,5 +1,6 @@
 import { db } from "@/firebase/config";
 import { parseLocation } from "@/helpers/parseLocation";
+import { removeAccents, removeAccents2 } from "@/helpers/removeAccents";
 import {
   FirestoreDataConverter,
   DocumentData,
@@ -9,7 +10,6 @@ import {
   getDoc,
   updateDoc,
   deleteDoc,
-  DocumentReference,
   collection,
   query,
   where,
@@ -58,10 +58,9 @@ export type Building = {
 };
 
 const buildingConverter: FirestoreDataConverter<Building> = {
-  toFirestore(building: Building): DocumentData {
-    return {
-      ...building,
-    };
+  toFirestore(b: Building): DocumentData {
+    const { id, ...building } = b;
+    return building;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Building {
     const doc = snapshot.data();
@@ -72,18 +71,17 @@ const buildingConverter: FirestoreDataConverter<Building> = {
       doc.apartments?.map((apartmentDoc: any) => ({
         id: apartmentDoc.apartmentCatastroId,
         floor: apartmentDoc.apartmentFloor || "",
-        stair: apartmentDoc.apartmentStair || "", // Default to empty string if undefined
-        door: apartmentDoc.apartmentDoor || "", // Default to empty string if undefined
+        stair: apartmentDoc.apartmentStair || "",
+        door: apartmentDoc.apartmentDoor || "",
       })) || [];
 
     return {
       ...doc,
       id: snapshot.id,
-      catastroId: doc.catastroId, // Assuming the document ID corresponds to the catastroId
+      catastroId: doc.catastroId,
       latitude,
       longitude,
-      number: doc.streetNumber.toString(), // Ensure `number` is a string
-      // Ensure apartments is properly typed, if necessary
+      number: doc.streetNumber.toString(),
       apartments,
     } as Building;
   },
@@ -151,7 +149,7 @@ const findBuildingByAddress = async (
     );
     const q = query(
       buildingsCol,
-      where("address", "==", streetName.trim()),
+      where("address", "==", removeAccents(streetName.trim())),
       where("streetNumber", "==", streetNumber.trim())
     );
 

@@ -1,15 +1,11 @@
 import { Review } from "./review";
 
-export type Address =
-  /* {
-  address: string;
-} */
-  {
-    id: string | undefined;
-    address: {
-      string: string;
-    };
+export type Address = {
+  id: string | undefined;
+  address: {
+    string: string;
   };
+};
 
 export type AddressList = { results: Address[] };
 
@@ -20,12 +16,10 @@ export type ReviewRequest = {
   draft?: boolean;
 };
 
-
-
 export type AgencyReviews = {
   agency: {
     id: string;
-    agency_name: string;
+    name: string;
   };
   reviews: Review[];
 };

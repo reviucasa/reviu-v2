@@ -19,7 +19,7 @@ import { getUrlReview } from "@/helpers/stepper";
 import { useStep } from "@/hooks/useStep";
 
 export const StayForm = () => {
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("stay");
   const t = useTranslations();
   const router = useRouter();
@@ -126,8 +126,11 @@ export const StayForm = () => {
   }; */
 
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful, nextStepReview, router]);
+    if (isSubmitSuccessful) {
+      refreshDraft();
+      router.push(getUrlReview(nextStepReview));
+    }
+  }, [isSubmitSuccessful, nextStepReview, refreshDraft, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -136,7 +139,7 @@ export const StayForm = () => {
 
   useEffect(() => {
     reset(draft?.data?.stay);
-  }, [draft?.data?.stay]);
+  }, [draft?.data?.stay, reset]);
 
   type FormData = yup.InferType<typeof schema>;
 

@@ -26,7 +26,7 @@ export const NeighbourhoodForm = () => {
   const [securityOpen, setSecurityOpen] = useState(false);
   const router = useRouter();
   const { nextStepReview } = useStep();
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("neighbourhood");
   const t = useTranslations();
   const config = useTranslations("config");
@@ -104,26 +104,13 @@ export const NeighbourhoodForm = () => {
     defaultValues: draft?.data.neighbourhood,
   });
   const isFormCompleted = isValid && !isDirty;
-  const handleRouteChange = () => {
-    if (isDirty) {
-      const resultado = confirm(t("common.withSaving"));
-      if (!resultado) {
-        /* router.events.emit("routeChangeError", "routeChange aborted", "", {
-          shallow: false,
-        }); */ //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
-        throw "routeChange aborted.";
-      }
-    }
-  };
 
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful, nextStepReview, router]);
-
-  /* useEffect(() => {
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => router.events.off("routeChangeStart", handleRouteChange);
-  }, [isDirty]); */
+    if (isSubmitSuccessful) {
+      refreshDraft();
+      router.push(getUrlReview(nextStepReview));
+    }
+  }, [isSubmitSuccessful, nextStepReview, refreshDraft, router]);
 
   useEffect(() => {
     reset(draft?.data.neighbourhood);

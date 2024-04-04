@@ -19,7 +19,7 @@ import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import { useDraft } from "@/hooks/swr/useDraft";
 
 export const ValuationForm = () => {
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("valuation");
   const router = useRouter();
   const { nextStepReview } = useStep();
@@ -59,8 +59,11 @@ export const ValuationForm = () => {
   }; */
 
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful, nextStepReview, router]);
+    if (isSubmitSuccessful) {
+      refreshDraft();
+      router.push(getUrlReview(nextStepReview));
+    }
+  }, [isSubmitSuccessful, nextStepReview, refreshDraft, router]);
 
   /* useEffect(() => {
     router.events.on("routeChangeStart", handleRouteChange);
@@ -69,7 +72,7 @@ export const ValuationForm = () => {
 
   useEffect(() => {
     reset(draft?.data?.valuation);
-  }, [draft?.data?.valuation]);
+  }, [draft?.data?.valuation, reset]);
 
   type FormData = yup.InferType<typeof schema>;
 

@@ -9,29 +9,19 @@ export type Value = {
   value: number;
   percentage: number;
 };
+
 export type Stat = {
   stat: string;
   total: number;
   statDisplayText: string;
   values: Value[];
 };
-/* export type Analysis = {
-  buildingId: string;
-  address: string;
-  reviews: Review[];
-  neighbourhood: {
-    wordCloud: WordCloud[];
-    stats: Stat[];
-  };
-  latitude: number;
-  longitude: number;
-}; */
 
 export class Analysis {
   buildingId: string;
   address: string;
   reviews: Review[];
-  neighbourhood?: {
+  neighbourhood: {
     wordCloud: WordCloud[];
     stats: Stat[];
   };

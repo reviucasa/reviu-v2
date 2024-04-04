@@ -3,7 +3,7 @@ import { useContext } from "react";
 import maskGroup from "../../../public/maskGroup.png";
 import { AreaResumeCardAmbience } from "../molecules/AreaResumeCardAmbience";
 import { AreaResumeCardService } from "../molecules/AreaResumeCardServices";
-import { MiniAreaPorcent } from "../molecules/MiniAreaPorcent";
+import { MiniAreaPercent } from "../molecules/MiniAreaPercent";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
@@ -50,7 +50,7 @@ export const AreaResume = ({
           </div>
           <div className="grid lg:grid-cols-4 lg:grid-rows-1 lg:gap-6 grid-cols-2 grid-rows-2 gap-4">
             {stats.map((stat, index) => (
-              <MiniAreaPorcent stat={stat} key={index} />
+              <MiniAreaPercent stat={stat} key={index} />
             ))}
           </div>
         </>

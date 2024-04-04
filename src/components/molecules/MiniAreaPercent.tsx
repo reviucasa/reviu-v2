@@ -4,8 +4,10 @@ import IconInfo from "../../../public/IconInfo.png";
 import { Dialog } from "../atoms/Dialog";
 import { ConfigValue } from "@/models/types";
 import { Stat, Value } from "@/models/analysis";
+import { reviewConfigParams } from "@/staticData";
+import { useTranslations } from "next-intl";
 
-export const MiniAreaPorcent = ({
+export const MiniAreaPercent = ({
   stat,
   className,
 }: {
@@ -15,6 +17,9 @@ export const MiniAreaPorcent = ({
   const [maxPercentStat, setMaxPercentStat] = useState<Value>();
   const [statConfig, setStatConfig] = useState<ConfigValue[]>();
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+  const configKeys = useTranslations("configKeys");
+  const config = useTranslations("config");
+  const t = useTranslations();
 
   useEffect(() => {
     if (stat) {
@@ -28,10 +33,21 @@ export const MiniAreaPorcent = ({
 
   useEffect(() => {
     if (stat) {
-      //@ts-ignore
-      setStatConfig(config.neighbourhood[stat.stat]);
+      // setStatConfig(config.neighbourhood[stat.stat]);
+      type NeighbourhoodKey = keyof typeof reviewConfigParams.neighbourhood;
+      setStatConfig(
+        reviewConfigParams.neighbourhood[stat.stat as NeighbourhoodKey].map(
+          (e: string) => {
+            return {
+              label: config(`neighbourhood.${stat.stat}.${e}`),
+              value: e,
+            };
+          }
+        )
+      );
+      // value: config(`neighbourhood.${[stat.stat]}`),
     }
-  }, [stat]);
+  }, [config, stat]);
   const roundedPercentage = Math.ceil(maxPercentStat?.percentage ?? 0); // Si el porcentaje es undefined utilizamos por defecto 0
 
   return (
@@ -46,8 +62,10 @@ export const MiniAreaPorcent = ({
       >
         <Image src={IconInfo} alt={"16"} />
       </button>
-      <h6 className="font-bold md:text-base text-sm">{stat.statDisplayText}</h6>
-      <p className="text-base md:text-2xl font-extrabold pb-2">
+      <h6 className="font-bold md:text-base text-sm">
+        {configKeys(`neighbourhood.${stat.stat}`)}
+      </h6>
+      <p className="text-base md:text-xl font-extrabold pb-2">
         {statConfig?.find((item) => item.value === maxPercentStat?.key)?.label}
       </p>
 
@@ -76,7 +94,7 @@ export const MiniAreaPorcent = ({
             y="50%"
             textAnchor="middle"
             dy="0.3em"
-            style={{ fill: "#8B5CF6", fontSize: "10px" }}
+            style={{ fill: "#8B5CF6", fontSize: "9px" }}
           >
             {roundedPercentage}%
           </text>
@@ -89,8 +107,8 @@ export const MiniAreaPorcent = ({
         }}
         className="w-[420px]"
       >
-        <h5>Resultados</h5>
-        <p className="pb-6">{stat.stat}</p>
+        <h5>{configKeys(`neighbourhood.${stat.stat}`)}</h5>
+        <p className="pb-6">{t("common.results")}</p>
         {statConfig?.map((config, index) => {
           const percent = stat.values.find((value) => {
             return value.key === config.value;

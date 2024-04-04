@@ -19,6 +19,7 @@ import { reviewConfigParams } from "@/staticData";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import { useDraft } from "@/hooks/swr/useDraft";
+import { MdDone } from "react-icons/md";
 
 const schema = yup.object({
   buildingNeighborhood: yup.array(),
@@ -31,7 +32,7 @@ const schema = yup.object({
 });
 
 export const CommunityForm = () => {
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("community");
   const router = useRouter();
   const { nextStepReview } = useStep();
@@ -50,25 +51,12 @@ export const CommunityForm = () => {
 
   const isFormCompleted = isValid && !isDirty;
 
-  const handleRouteChange = () => {
-    if (isDirty) {
-      const resultado = confirm(t("common.withSaving"));
-      /* if (!resultado) {
-        router.events.emit("routeChangeError", "routeChange aborted", "", {
-          shallow: false,
-        }); //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
-        throw "routeChange aborted.";
-      } */
-    }
-  };
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful, nextStepReview, router]);
-
-  /* useEffect(() => {
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => router.events.off("routeChangeStart", handleRouteChange);
-  }, [isDirty]); */
+    if (isSubmitSuccessful) {
+      refreshDraft();
+      router.push(getUrlReview(nextStepReview));
+    }
+  }, [isSubmitSuccessful, nextStepReview, refreshDraft, router]);
 
   useEffect(() => {
     if (draft) reset(draft.data.community);
@@ -306,8 +294,16 @@ export const CommunityForm = () => {
               >
                 {t("common.skip")}
               </Button>
-              <Button buttonClassName={"btn-primary-500"}>
-                {t("common.guardar")}
+              <Button
+                buttonClassName={
+                  isFormCompleted
+                    ? "btn-primary-transparent font-semibold"
+                    : "btn-primary-500"
+                }
+                disabled={isFormCompleted}
+              >
+                {isFormCompleted ? t("common.guardado") : t("common.guardar")}
+                {isFormCompleted && <MdDone size={22} />}
               </Button>
             </div>
           </div>

@@ -74,6 +74,7 @@
     "valuationGeneral": "Valoración general"
   },
   "common": {
+    "results": "Resultados",
     "writeReview": "Escribe una opinión",
     "logIn": "Inicia sesión",
     "signIn": "Regístrate",
@@ -150,7 +151,7 @@
     "consejosInmobiliaria": "¿Qué consejos le darías a la inmobiliaria?",
     "consejosCasero": "¿Qué consejos le darías al casero?",
     "comunidadVecinos": "Comunidad de vecinos",
-    "zona300": "Zona(300m)",
+    "zona300": "Zona (300m)",
     "tipologiaAmbiente": "Ambiente",
     "inmobiliaria": "Inmobiliaria",
     "opinion": "Opinión",
@@ -182,6 +183,7 @@
     "resumenZona": "Resumen de la zona",
     "recopilandoDatos": "Estamos recopilando datos de la zona.¡Anima a los tuyos a dejar su opinión!",
     "buscar": "Buscar una dirección en Barcelona",
+    "searchAgency": "Busca una inmobiliaria en Barcelona",
     "barrio": "Barrio o zona",
     "Català": "Catalán",
     "Español": "Español",
@@ -523,7 +525,7 @@
     "cambiosPolitica": "6. Cambios en la Política de Privacidad",
     "cambiosPoliticaP1": "Reviu Casa se reserva el derecho a modificar esta Política de Privacidad en cualquier momento. Los cambios o actualizaciones de la Política de Privacidad se notificarán explícitamente al Usuario mediante un aviso en el Sitio Web, junto con la versión actualizada de la Política de Privacidad. "
   },
-  "realstate": {
+  "agency": {
     "valoracionesPisos": "Valoraciones de los pisos",
     "informacionInmobiliaria": "información de la inmobiliaria",
     "reseñas": " opiniones",
@@ -548,11 +550,13 @@
   "slide": {
     "titleSearchOpinion": "Descubre si la inmobiliaria te tratará bien antes de firmar el contrato",
     "titleWriteOpinion": "Deja tu opinión sobre el piso y la inmobiliaria. Cualquier detalle puede ayudar a quien esté a punto de mudarse",
+    "titleSearchAgency": "Busca opiniones sobre cualquier inmobiliaria.",
     "noTeLlevesSorpresas": "No te lleves sorpresas. Que te cuente cómo es el piso quien ha vivido ahí",
     "hazUnRepaso": "Haz un repaso de los lugares donde has vivido y comparte tu experiencia",
     "tabs": {
       "searchOpinion": "Busca una opinión",
-      "writeOpinion": "Escribe una opinión"
+      "writeOpinion": "Escribe una opinión",
+      "searchAgency": "Busca una inmobiliaria"
     }
   },
   "stayReview": {
@@ -575,6 +579,16 @@
   "valuationForm": {
     "estadoPiso": "Estado del piso y mantenimiento",
     "eligeTantasComoQuieras": "Elige tantas como quieras"
+  },
+  "configKeys": {
+    "neighbourhood": {
+      "vibe": "Ambiente",
+      "tourists": "Turistas",
+      "noise": "Ruido",
+      "security": "Seguridad",
+      "cleaning": "Limpieza",
+      "services": "Servicios"
+    }
   },
   "config": {
     "buildingQuality": {

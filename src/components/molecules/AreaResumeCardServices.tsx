@@ -1,5 +1,4 @@
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
-import { Config, ConfigValue } from "@/models/types";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
 
@@ -21,13 +20,16 @@ export const AreaResumeCardService = ({
       <div className="flex flex-wrap justify-center ">
         {wordCloud
           .find((name) => name.group === "services")
-          ?.words.filter((services) => services.count > 1)
+          ?.words.filter((services) => services.count > 0)
           .map((services, index) => (
             <div
               className="h-10 w-fit py-2 px-4 bg-white rounded-[8px] border-[1px] border-purple-400 m-2 hover:bg-purple-100"
               key={index}
             >
-              {config(`neighbourhood.vibe.${services.word}`)}
+              {config(`neighbourhood.services.${services.word}`) +
+                " (" +
+                services.count +
+                ")"}
             </div>
           ))}
       </div>

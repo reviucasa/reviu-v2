@@ -1,13 +1,7 @@
 import { SubmitHandler } from "react-hook-form";
 import { useStep } from "./useStep";
 import { auth } from "@/firebase/config";
-import {
-  ReviewData,
-  publishReview,
-  updateDraft,
-  updateDraftData,
-} from "@/models/review";
-import { useDraft } from "./swr/useDraft";
+import { ReviewData, updateDraftData } from "@/models/review";
 
 type ReturnSubmitDraft = {
   onSubmitDraft: SubmitHandler<any>;
@@ -22,7 +16,7 @@ export function useSubmitDraft(formName: string): ReturnSubmitDraft {
       await updateDraftData(
         auth.currentUser!.uid,
         formName as keyof ReviewData,
-        data,
+        cleanedData,
         nextStepReview
       );
     } catch (error) {

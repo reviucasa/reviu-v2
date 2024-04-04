@@ -8,33 +8,32 @@ import { Fragment, useCallback, useState } from "react";
 type AddressComboBoxProps = {
   placeholder?: string;
   className?: string;
-  selectedRealStateAgency?: string;
+  selectedRealStateAgency?: RealStateAgency;
   icon?: StaticImageData;
-  setSelectedRealStateAgency?: (value: string) => void;
+  setSelectedRealStateAgency?: (value: RealStateAgency) => void;
 };
 
-export const RealAgencyComboBox = ({
+export const AgencyComboBox = ({
   className,
   selectedRealStateAgency,
   setSelectedRealStateAgency,
   icon,
   placeholder,
 }: AddressComboBoxProps) => {
-  const [realAgencyList, setRealAgencyList] = useState<RealStateAgency[]>([]);
+  const [agenciesList, setAgenciesList] = useState<RealStateAgency[]>([]);
   const [loading, setLoading] = useState(false);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchRealStateAgencyList = useCallback(
     debounce(async (query: string) => {
       setLoading(true);
-      console.log("fetching agencies...");
       const agencies = await searchAgenciesByName(query.toLowerCase());
-      console.log(agencies);
-      setRealAgencyList(agencies);
+      setAgenciesList(agencies);
       setLoading(false);
     }, 300),
     []
   );
+
   const t = useTranslations();
 
   return (
@@ -47,10 +46,11 @@ export const RealAgencyComboBox = ({
           className={`w-full ${icon && "!pl-10"}`}
           placeholder={placeholder ?? t("common.queInmobiliaria")}
           onChange={(event) =>
-            event.target.value.length > 2
+            event.target.value.length > 3
               ? fetchRealStateAgencyList(event.target.value)
               : {}
           }
+          displayValue={(agency: any) => agency.name}
         />
         {icon && (
           <Image
@@ -66,7 +66,7 @@ export const RealAgencyComboBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+          <Combobox.Options className="absolute mt-1 max-h-40  w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-50">
             {loading && (
               <Combobox.Option
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
@@ -77,7 +77,7 @@ export const RealAgencyComboBox = ({
                 {t("common.buscandoInmobiliaria")}
               </Combobox.Option>
             )}
-            {realAgencyList?.length === 0 && !loading && (
+            {agenciesList?.length === 0 && !loading && (
               <Combobox.Option
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                 key=""
@@ -88,11 +88,11 @@ export const RealAgencyComboBox = ({
               </Combobox.Option>
             )}
             {!loading &&
-              realAgencyList?.map((agency) => (
+              agenciesList?.slice(0, 3).map((agency) => (
                 <Combobox.Option
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={agency.id}
-                  value={agency.name}
+                  value={agency}
                 >
                   {agency.name}
                 </Combobox.Option>

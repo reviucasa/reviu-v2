@@ -10,6 +10,8 @@ import { CardSlide } from "../organism/CardSlide";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { findBuildingByAddress } from "@/models/building";
+import { AgencyComboBox } from "../atoms/AgencyComboBox";
+import { RealStateAgency } from "@/models/agency";
 
 export type SectionType = {
   title: string;
@@ -24,9 +26,12 @@ export type SectionsType = Array<SectionType>;
 export function SectionHeader() {
   const t = useTranslations();
   const [selectedAddress, setSelectedAddress] = useState<string>();
+  const [selectedRealStateAgency, setSelectedRealStateAgency] =
+    useState<RealStateAgency>();
   const router = useRouter();
   const tabSearchOpinion = t("slide.tabs.searchOpinion");
   const tabWriteOpinion = t("common.writeReview");
+  const tabSearchAgency = t("slide.tabs.searchAgency");
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
@@ -35,14 +40,24 @@ export function SectionHeader() {
     if (address && address != "") {
       setLoading(true);
       const building = await findBuildingByAddress(address);
-      console.log(building);
       if (building) {
-        router.push(`building/${building.id}`);
+        router.push(`/building/${building.id}`);
       } else {
         setError(t("common.noSeEncontroDirección"));
       }
       setLoading(false);
     }
+  };
+
+  const onSelectRealStateAgency = async (agency: RealStateAgency) => {
+    setSelectedRealStateAgency(agency);
+    if (agency) {
+      setLoading(true);
+      router.push(`/agency/${agency.documentId}`);
+    } else {
+      setError(t("common.noSeEncontroLaInmobiliaria"));
+    }
+    setLoading(false);
   };
 
   const dataContentSlide: SectionsType = [
@@ -79,6 +94,26 @@ export function SectionHeader() {
       ),
       styleBorder: "border-b-primary-500",
       bg: "bg-primary-100",
+    },
+    {
+      title: tabSearchAgency,
+      text: [t("slide.titleSearchOpinion"), t("slide.titleSearchAgency")],
+      children: (
+        <div className="flex flex-col w-full items-center	">
+          <AgencyComboBox
+            icon={lupa}
+            placeholder={t("common.searchAgency")}
+            className="lg:w-3/4 w-full"
+            selectedRealStateAgency={selectedRealStateAgency}
+            setSelectedRealStateAgency={onSelectRealStateAgency}
+          />
+          <div className="flex lg:w-3/4 w-full">
+            <FieldError className=" my-3">{error}</FieldError>
+          </div>
+        </div>
+      ),
+      styleBorder: "border-b-secondary-500",
+      bg: "bg-secondary-300",
     },
   ];
 

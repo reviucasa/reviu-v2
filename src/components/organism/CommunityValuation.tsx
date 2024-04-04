@@ -13,7 +13,7 @@ export const CommunityValuation = ({ reviews }: CommunityValuation) => {
     <div>
       <h5>
         {t(
-          "communityValuations:communityValuations",
+          "communityValuations.communityValuations",
         )}
       </h5>
       <p>

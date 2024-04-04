@@ -12,7 +12,7 @@ export const AreaValuation = ({ reviews }: AreaValuation) => {
   // draw review information in boxes
   return (
     <div className="flex-1">
-      <h5>{t("areaValuations:areaValuations")}</h5>
+      <h5>{t("areaValuations.areaValuations")}</h5>
       <p>
         {reviews.length} {t("common.reviews")}
       </p>

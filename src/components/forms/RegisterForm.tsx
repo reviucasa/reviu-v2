@@ -45,7 +45,6 @@ export const RegisterForm = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log("AuthUser::", auth.user);
     if (!auth) {
       router.replace("/auth/login");
     }

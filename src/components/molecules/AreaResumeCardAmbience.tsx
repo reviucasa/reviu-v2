@@ -30,7 +30,7 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
           <div className="flex text-2xl font-extrabold gap-7 lg:gap-8 lg:flex-row flex-col">
             {wordCloud
               .find((name) => name.group === "vibe")
-              ?.words.filter((vibes) => vibes.count > 1)
+              ?.words.filter((vibes) => vibes.count > 0)
               .slice(0, 3)
               .map((vibes, index) => {
                 const iconName = vibes.word;
@@ -47,8 +47,7 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
                         src={matchIcon.image}
                         alt={`Icono ${matchIcon.name}`}
                         width={50}
-                        height={50}
-                        className="hover:scale-110 duration-500"
+                        className="hover:scale-110 duration-500 w-50 h-auto"
                       />
                     )}
                     <p className="lg:text-2xl text-base">

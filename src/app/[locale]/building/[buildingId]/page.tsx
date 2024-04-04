@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/atoms/Button";
 import { DropDownShare } from "@/components/atoms/DropDownShare";
 import { TabMenu } from "@/components/atoms/TabMenu";
@@ -9,17 +10,68 @@ import { CommunityValuation } from "@/components/organism/CommunityValuation";
 import { FloorValuation } from "@/components/organism/FloorValuation";
 import { GeneralValuation } from "@/components/organism/GeneralValuation";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
+import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { Analysis } from "@/models/analysis";
-import { getBuilding } from "@/models/building";
-import { getReviewsByBuidingId } from "@/models/review";
+import { Building, getBuilding } from "@/models/building";
+import { getReviewsByBuidingId, reviewConverter } from "@/models/review";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
+import React from "react";
 import { useState } from "react";
 
-export default function BuildingPage({ analysis }: { analysis: Analysis }) {
+export default function BuildingPage({
+  params,
+}: {
+  params: { buildingId: string };
+}) {
   const router = useRouter();
   const t = useTranslations();
+
+  const {
+    data: building,
+    isError: isBuildingError,
+    error: buildingError,
+  } = useQuery<Building | undefined, Error>({
+    queryKey: ["building", params.buildingId],
+    queryFn: () => getBuilding(params.buildingId),
+  });
+
+  const { data: reviews } = useQuery({
+    queryKey: ["reviews", params.buildingId],
+    queryFn: () => getReviewsByBuidingId(params.buildingId),
+  });
+
+  // Redirect if there's an error fetching the building
+  if (isBuildingError) {
+    console.error(buildingError);
+    router.push("/");
+  }
+
+  // Construct the Analysis object once we have all the required data
+  const analysis = React.useMemo(() => {
+    if (building && reviews) {
+      const neighbourhood = computeReviewsSummary(reviews);
+
+      return new Analysis({
+        buildingId: building.id,
+        address: [building.address, building.number, "Barcelona"].join(", "),
+        reviews,
+        latitude: building.latitude,
+        longitude: building.longitude,
+        neighbourhood,
+      });
+    }
+  }, [building, reviews]);
+
+  const [activeSection, setActiveSection] =
+    useState<string>("valuationGeneral");
+
+  if (!analysis) {
+    return <div>Loading...</div>;
+  }
+
   const sections: {
     [key: string]: { title: string; sectionObject: JSX.Element };
   } = {
@@ -40,10 +92,6 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
       sectionObject: <AreaValuation reviews={analysis.reviews} />,
     },
   };
-  // eslint-disable-next-line quotes
-  const [activeSection, setActiveSection] = useState<string>(
-    Object.keys(sections)[0]
-  );
 
   const menuOptions = Object.keys(sections).map((sectionKey) => {
     return {
@@ -52,16 +100,19 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
       onClick: () => setActiveSection(sectionKey),
     };
   });
+
   const OpenStreetMap = dynamic(
-    () => import("../../../components/molecules/OpenStreetMap"),
+    () => import("../../../../components/molecules/OpenStreetMap"),
     {
       ssr: false,
     }
   );
   const notOpinions = analysis.reviews.length === 0;
-  // const notEnoughStats = analysis.neighbourhood.stats[0].total < 3;
+  const notEnoughStats =
+    analysis.neighbourhood.stats.length == 0
+      ? true
+      : analysis.neighbourhood.stats[0].total < 1;
 
-  //con esto estoy deshabilitando el server side rendering, para este componente solo. Para que funcione
   return (
     <MainLayout>
       <div className="lg:p-14 bg-white p-4 mb-11 lg:mb-0">
@@ -78,7 +129,7 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
             sections: sections,
             analysisSectionActive: activeSection,
             setAnalysisSectionActive: setActiveSection,
-            wordCloud: [], //analysis.neighbourhood?.wordCloud,
+            wordCloud: analysis.neighbourhood.wordCloud,
           }}
         >
           <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1">
@@ -97,7 +148,6 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
                 />
               )}
 
-              {/*@ts-ignore*/}
               {!notOpinions && (
                 <div>{sections[activeSection].sectionObject}</div>
               )}
@@ -109,7 +159,7 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
                     buttonClassName="btn-primary-500 content-center overflow-hidden px-14"
                     onClick={() => router.push("/review")}
                   >
-                    {t("common.write-review")}
+                    {t("common.writeReview")}
                   </Button>
                 </div>
               )}
@@ -124,8 +174,8 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
             <AreaResume
               className="col-span-2"
               reviews={analysis.reviews}
-              stats={[] /* analysis.neighbourhood.stats */}
-              notEnoughStats={true /* notEnoughStats */}
+              stats={analysis.neighbourhood.stats}
+              notEnoughStats={notEnoughStats}
             />
           </div>
         </AnalysisContext.Provider>
@@ -133,49 +183,3 @@ export default function BuildingPage({ analysis }: { analysis: Analysis }) {
     </MainLayout>
   );
 }
-
-export const getServerSideProps = async (contexto: any) => {
-  const { params } = contexto;
-  const { buildingId } = params;
-  console.log(buildingId);
-
-  // TODO: needs to return an Analysis Object (check legacy backend)
-  const building = await getBuilding(buildingId);
-
-  if (!building) {
-    return {
-      redirect: {
-        destination: "/", // The path to redirect to
-        permanent: false, // If the redirection is permanent (HTTP 301) or temporary (HTTP 307)
-      },
-    };
-  }
-  const reviews = await getReviewsByBuidingId(buildingId);
-  console.log(building);
-  console.log(reviews);
-
-  const analysis = new Analysis({
-    buildingId: building!.id,
-    address: building?.address,
-    reviews,
-    latitude: building?.latitude,
-    longitude: building?.longitude,
-  });
-
-  /* const translations = await serverSideTranslations(locale, [
-    "common",
-    "generalValuation",
-    "floorValuations",
-    "communityValuations",
-    "areaValuations",
-    "areaResume",
-    "realstate",
-  ]); */
-
-  return {
-    props: {
-      analysis /* ?.data */,
-      /* ...translations, */
-    },
-  };
-};

@@ -95,12 +95,15 @@ export const AddressForm = () => {
     }
   }, [selectedAddress]);
 
-  const onSelectStair = (selectedStair: string) => {
-    setStairSelected(selectedStair);
-    setAparmentList(
-      building?.apartments.filter((a) => a.stair == selectedStair) || []
-    );
-  };
+  const onSelectStair = useCallback(
+    (selectedStair: string) => {
+      setStairSelected(selectedStair);
+      setAparmentList(
+        building?.apartments.filter((a) => a.stair == selectedStair) || []
+      );
+    },
+    [building?.apartments]
+  );
 
   const onSelectWholeAddress = (event: ChangeEvent<HTMLSelectElement>) => {
     setApartmentSelected(
@@ -145,7 +148,7 @@ export const AddressForm = () => {
     if (building && getBuildingStairs(building!).length === 1) {
       onSelectStair(building!.apartments[0].stair!);
     }
-  }, [building]);
+  }, [building, onSelectStair]);
 
   return (
     <ReviewFormLayout
@@ -178,7 +181,7 @@ export const AddressForm = () => {
                   <option value="">{t("addressReview.escalera")}</option>
                   {getBuildingStairs(building).map((stair) => (
                     <option key={stair} value={stair}>
-                      {stair}
+                      {stair == "" ? "-" : stair}
                     </option>
                   ))}
                 </select>

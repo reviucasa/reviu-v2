@@ -74,6 +74,7 @@
     "valuationGeneral": "General overview"
   },
   "common": {
+    "results": "Results",
     "writeReview": "Leave a review",
     "logIn": "Log in",
     "signIn": "Sign in",
@@ -149,7 +150,7 @@
     "consejosInmobiliaria": "What advice would you give to the real estate agent?",
     "consejosCasero": "What advice would you give to the landlord?",
     "comunidadVecinos": "Building",
-    "zona300": "Area(300m)",
+    "zona300": "Area (300m)",
     "tipologiaAmbiente": "Environment",
     "inmobiliaria": "Real estate agent",
     "opinion": "Review",
@@ -162,7 +163,7 @@
     "acoso": "Harassment",
     "informacionAtaca": "The information attacks a person directly.",
     "discriminacion": "Discrimination or hate speech",
-    "lenguajeOfensivo": "the review uses offensive language about a person or group because of their identity.",
+    "lenguajeOfensivo": "The review uses offensive language about a person or group because of their identity.",
     "spam": "It's spam",
     "informacionFalsa": "The information is false.",
     "loRecomiendo": "I recommend it",
@@ -181,6 +182,7 @@
     "resumenZona": "Area overview",
     "recopilandoDatos": "We are gathering data from the area. Encourage your friends and family to leave a review! ",
     "buscar": "Search for an address in Barcelona",
+    "searchAgency": "Search for a real state agency",
     "barrio": "Neighborhood or area",
     "Català": "Catalan",
     "Español": "Spanish",
@@ -522,7 +524,7 @@
     "cambiosPolitica": "6. Changes in the Privacy Policy",
     "cambiosPoliticaP1": "Reviu Casa reserves the right to modify this Privacy Policy at any time. Changes or updates to the Privacy Policy will be explicitly notified to the User by means of a notice on the Website, together with the updated version of the Privacy Policy.  "
   },
-  "realstate": {
+  "agency": {
     "valoracionesPisos": "Home reviews",
     "informacionInmobiliaria": "Real estate agent information",
     "reseñas": " Reviews ",
@@ -547,11 +549,13 @@
   "slide": {
     "titleSearchOpinion": "Find out if the real estate agent will treat you well before you sign the contract.",
     "titleWriteOpinion": "Provide reviews of the apartment and the real estate agent. Any information will help the following",
+    "titleSearchAgency": "Search for reviews about any real estate agency.",
     "noTeLlevesSorpresas": "Avoid ugly surprises. Let someone who has lived in the home tell you what it's like",
     "hazUnRepaso": "Re-live your experience and share it.",
     "tabs": {
       "searchOpinion": "Search opinion",
-      "writeOpinion": "Write opinion"
+      "writeOpinion": "Write opinion",
+      "searchAgency": "Search agency"
     }
   },
   "stayReview": {
@@ -574,6 +578,16 @@
   "valuationForm": {
     "estadoPiso": "State and maintenance of the home",
     "eligeTantasComoQuieras": "Choose as many as you want"
+  },
+  "configKeys": {
+    "neighbourhood": {
+      "vibe": "Vibe",
+      "tourists": "Tourists",
+      "noise": "Noise",
+      "security": "Security",
+      "cleaning": "Cleaning",
+      "services": "Services"
+    }
   },
   "config": {
     "buildingQuality": {

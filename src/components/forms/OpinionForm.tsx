@@ -17,11 +17,11 @@ import { useTranslations } from "next-intl";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
-import { deleteDraft, publishReview } from "@/models/review";
+import { Review, deleteDraft, getDraft, publishReview } from "@/models/review";
 import { auth } from "@/firebase/config";
 
 export const OpinionForm = () => {
-  const { draft /* , updateReview */, refreshDraft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("opinion");
   const router = useRouter();
   const { nextStepReview } = useStep();
@@ -35,7 +35,7 @@ export const OpinionForm = () => {
   });
   type FormData = yup.InferType<typeof schema>;
   const {
-    formState: { isDirty, isValid, errors, isSubmitSuccessful },
+    formState: { errors },
     control,
     handleSubmit,
     reset,
@@ -44,38 +44,21 @@ export const OpinionForm = () => {
     reValidateMode: "onChange",
     defaultValues: draft?.data.opinion,
   });
-  const isFormCompleted = isValid && !isDirty;
-
-  const handleRouteChange = () => {
-    if (isDirty) {
-      const resultado = confirm(t("common.withSaving"));
-      /* if (!resultado) {
-        router.events.emit("routeChangeError", "routeChange aborted", "", {
-          shallow: false,
-        }); //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
-        throw "routeChange aborted.";
-      } */
-    }
-  };
-
-  /* useEffect(() => {
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => router.events.off("routeChangeStart", handleRouteChange);
-  }, [isDirty]); */
 
   useEffect(() => {
     reset(draft?.data.opinion);
   }, [draft?.data.opinion, reset]);
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    await onSubmitDraft(data);
-    await refreshDraft();
-    await publishReview(auth.currentUser!.uid, draft!);
-    await deleteDraft(auth.currentUser!.uid);
-    await refreshDraft();
-    // TODO: reset/delete draft
-    /* await updateReview({ draft: false }); */
-    router.push("/success");
+    try {
+      await onSubmitDraft(data);
+      const finalDraft = await getDraft(auth.currentUser?.uid!);
+      publishReview(auth.currentUser!.uid, finalDraft!);
+      deleteDraft(auth.currentUser!.uid);
+      router.push("/success");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

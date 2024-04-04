@@ -10,9 +10,7 @@ import { MdDone } from "react-icons/md";
 import * as yup from "yup";
 import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
-import { RealAgencyComboBox } from "../atoms/RealAgencyComboBox";
-import { useReview } from "@/hooks/swr/useReview";
-import { useSubmitReview } from "@/hooks/useSubmitReview";
+import { AgencyComboBox } from "../atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { useStep } from "@/hooks/useStep";
 import { getUrlReview } from "@/helpers/stepper";
@@ -21,9 +19,10 @@ import { reviewConfigParams } from "@/staticData";
 import { useDraft } from "@/hooks/swr/useDraft";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
+import { RealStateAgency, getAgency } from "@/models/agency";
 
 export const ManagementForm = () => {
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("management");
   const router = useRouter();
   const { nextStepReview } = useStep();
@@ -31,7 +30,7 @@ export const ManagementForm = () => {
   const config = useTranslations("config");
 
   const [selectedRealStateAgency, setSelectedRealStateAgency] =
-    useState<string>();
+    useState<RealStateAgency>();
   const [error, setError] = useState<string>();
 
   const schema = yup.object({
@@ -46,6 +45,7 @@ export const ManagementForm = () => {
             : schema;
         }
       ),
+
     realStateDealing: yup
       .string()
       .when("isRealStateAgency", (isRealStateAgency, schema) => {
@@ -65,7 +65,6 @@ export const ManagementForm = () => {
     handleSubmit,
     control,
     watch,
-    register,
     reset,
     setValue,
     getValues,
@@ -78,51 +77,38 @@ export const ManagementForm = () => {
   const onSelectRealStateAgency = useCallback(async () => {
     setError(undefined);
     if (draft && selectedRealStateAgency) {
-      try {
-        setValue("realStateAgency", selectedRealStateAgency, {
-          shouldDirty: selectedRealStateAgency !== getValues("realStateAgency"),
-        });
-      } catch (error) {
-        /* if (axios.isAxiosError(error)) {
-          if (error.response?.status === 404)
-            setError(t("common.noSeEncontroLaInmobiliaria"));
-          else setError(error.response?.data.status);
-        } */
-      }
+      setValue("realStateAgency", selectedRealStateAgency.name, {
+        shouldDirty:
+          selectedRealStateAgency.name !== getValues("realStateAgency"),
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedRealStateAgency]);
+  }, [draft, getValues, selectedRealStateAgency, setValue]);
 
   useEffect(() => {
     if (selectedRealStateAgency) onSelectRealStateAgency();
   }, [onSelectRealStateAgency, selectedRealStateAgency]);
 
-  /* const handleRouteChange = () => {
-    if (isDirty) {
-      const resultado = confirm(t("common.withSaving"));
-      if (!resultado) {
-        router.events.emit("routeChangeError", "routeChange aborted", "", {
-          shallow: false,
-        }); //primer argumento NOMBRE del evento // segundo info ruta actual // tercero ruta destino
-        throw "routeChange aborted.";
-      }
-    }
-  }; */
-
   useEffect(() => {
-    if (draft) {
-      setSelectedRealStateAgency(draft?.data.management?.realStateAgency);
+    const fetchAgencyDetails = async (agencyId: string) => {
+      try {
+        const agencyData = await getAgency(agencyId);
+        setSelectedRealStateAgency(agencyData);
+      } catch (error) {
+        console.error("Failed to fetch real state agency details", error);
+      }
+    };
+
+    if (draft?.data.management?.agencyId) {
+      fetchAgencyDetails(draft?.data.management?.agencyId);
     }
   }, [draft, draft?.data.management]);
 
   useEffect(() => {
-    if (isSubmitSuccessful) router.push(getUrlReview(nextStepReview));
-  }, [isSubmitSuccessful, nextStepReview, router]);
-
-  /* useEffect(() => {
-    router.events.on("routeChangeStart", handleRouteChange);
-    return () => router.events.off("routeChangeStart", handleRouteChange);
-  }, [isDirty]); */
+    if (isSubmitSuccessful) {
+      refreshDraft();
+      router.push(getUrlReview(nextStepReview));
+    }
+  }, [isSubmitSuccessful, nextStepReview, refreshDraft, router]);
 
   useEffect(() => {
     reset(draft?.data.management);
@@ -130,9 +116,14 @@ export const ManagementForm = () => {
 
   type FormData = yup.InferType<typeof schema>;
   const watchIsRealStateAgency = watch("isRealStateAgency");
+  
   const isFormCompleted = isValid && !isDirty;
 
-  const onSubmit: SubmitHandler<FormData> = (data) => onSubmitDraft(data);
+  const onSubmit: SubmitHandler<FormData> = (data) =>
+    onSubmitDraft({
+      ...data,
+      agencyId: selectedRealStateAgency?.documentId ?? "",
+    });
 
   return (
     <ReviewFormLayout
@@ -143,10 +134,7 @@ export const ManagementForm = () => {
       comment={t("managementReview.feedback")}
     >
       {
-        /* config && */ <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-6"
-        >
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <div className="flex flex-col">
             <label htmlFor="isRealStateAgency">
               {t("managementReview.gestionadoInmobiliaria")}
@@ -176,7 +164,7 @@ export const ManagementForm = () => {
                 {t("managementReview.queInmobiliaria")}
               </label>
 
-              <RealAgencyComboBox
+              <AgencyComboBox
                 selectedRealStateAgency={selectedRealStateAgency}
                 setSelectedRealStateAgency={setSelectedRealStateAgency}
               />

@@ -12,6 +12,9 @@ import IconFire from "../../../public/iconFire.svg";
 import { Button } from "../atoms/Button";
 import { Dialog } from "../atoms/Dialog";
 import { useTranslations } from "next-intl";
+import { ReviewReport, createReviewReport } from "@/models/report";
+import { auth } from "@/firebase/config";
+import { useUser } from "@/hooks/swr/useUser";
 
 export const DialogReport = ({
   isOpen,
@@ -24,11 +27,12 @@ export const DialogReport = ({
 }) => {
   // const [openModalInfo, setOpenModalInfo] = useState<boolean>(false)
   const [openModalReport, setOpenModalReport] = useState<boolean>(false);
-  const [textReport, setTextReport] = useState();
+  const [textReport, setTextReport] = useState("");
   const [selectedReportType, setSelectedReportType] = useState<{
     id: number;
     text: string;
   }>();
+  const { user } = useUser();
   const t = useTranslations();
 
   const handleSelectedReportType = (value: { id: number; text: string }) => {
@@ -79,8 +83,25 @@ export const DialogReport = ({
       text: "",
     },
   ];
-  const handleReport = () => {};
-  /* reportFeedback(reviewId, selectedReportType?.text!); */
+
+  const handleReviewReport = async () => {
+    if (user) {
+      const report: Partial<ReviewReport> = {
+        reason: selectedReportType?.text ?? null,
+        reviewId,
+        comment: textReport,
+        user: {
+          id: user!.id,
+          email: auth.currentUser!.email!,
+          name: [user.name, user.lastname].join(" "),
+          isAgency: false, // TODO: fer usuaris amb diferents permisos (admin, agency, owner, user)
+        },
+      };
+      createReviewReport(report);
+    }
+  };
+  // TODO: (crear trigger perque senvii un email del report)
+  // limitar el numero de reports al mes que pot tenir un usuari?
 
   return (
     <Dialog
@@ -130,6 +151,19 @@ export const DialogReport = ({
                 </div>
               </div>
             ))}
+            <div>
+              <div className="mt-6 flex justify-between">
+                <p>{t("common.describeMotivo")}</p>
+                <span className="text-gray-500 text-sm">
+                  {t("common.opcional")}
+                </span>
+              </div>
+              <textarea
+                className="w-full h-[100px]"
+                placeholder={t("common.escribeAqui")}
+                onChange={handleTextReport}
+              ></textarea>
+            </div>
             <div className="flex items-center justify-between mt-8 gap-4">
               <p
                 className="underline lg:text-base text-sm cursor-pointer"
@@ -142,7 +176,7 @@ export const DialogReport = ({
                 buttonClassName="btn-primary-500 content-center overflow-hidden"
                 disabled={!selectedReportType}
                 onClick={() => {
-                  handleReport();
+                  handleReviewReport();
                   setIsOpen(!isOpen);
                 }}
               >
@@ -185,7 +219,7 @@ export const DialogReport = ({
               disabled={!textReport}
               onClick={() => {
                 handleModalTextReport();
-                handleReport();
+                handleReviewReport();
               }}
             >
               {t("common.reportar")}

@@ -11,7 +11,7 @@ export const FloorValuation = ({ reviews }: FloorValuationProps) => {
   // draw review information in boxes
   return (
     <div>
-      <h5>{t("floorValuations:floorValuations")}</h5>
+      <h5>{t("floorValuations.floorValuations")}</h5>
       <p>
         {reviews.length} {t("common.reviews")}
       </p>
