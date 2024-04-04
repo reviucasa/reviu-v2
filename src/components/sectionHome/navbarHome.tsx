@@ -101,15 +101,15 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             <Menu.Button>
               <GiHamburgerMenu />
             </Menu.Button>
-            <Transition>
-              <Transition.Child
-                className="absolute top-[40px] left-0 w-full z-10"
-                enter="transition ease-out duration-500"
-                enterFrom="opacity-20 -translate-y-10"
-                enterTo="opacity-100 translate-y-10"
-                leave="transition ease-in duration-75"
-                leaveFrom="transform opacity-100 scale-100"
-                leaveTo="transform opacity-0 scale-95"
+            {/* <Transition> */}
+              <div //Transition.Child
+                className="absolute top-[80px] left-0 w-full z-10"
+                // enter="transition ease-out duration-500"
+                // enterFrom="opacity-20 -translate-y-10"
+                // enterTo="opacity-100 translate-y-10"
+                // leave="transition ease-in duration-75"
+                // leaveFrom="transform opacity-100 scale-100"
+                // leaveTo="transform opacity-0 scale-95"
               >
                 <Menu.Items className="bg-gray-100 flex flex-col items-center gap-5 p-4">
                   {auth.user != null ? (
@@ -208,8 +208,8 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     </>
                   )}
                 </Menu.Items>
-              </Transition.Child>
-            </Transition>
+              </div> {/*  Transition.Child> */}
+            {/* </Transition> */}
           </Menu>
         </div>
       </div>

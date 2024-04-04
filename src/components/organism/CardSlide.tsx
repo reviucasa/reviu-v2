@@ -37,7 +37,7 @@ export const CardSlide = ({
           priority
           className="xl:flex hidden"
         />
-        <div className="min-h-[520px] w-full sm:h-full justify-between lg:px-0 px-4  lg:pt-14 pt-6  flex flex-col lg:justify-between">
+        <div className="min-h-[520px] w-full sm:h-full justify-between lg:px-0 px-4  md:pt-14 pt-6  flex flex-col lg:justify-between">
           {/* /section tab */}
           <TabMenuSlide
             sectionActive={sectionActive}

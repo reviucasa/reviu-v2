@@ -1,7 +1,7 @@
 import { Review } from "@/models/review";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
-import { PiCalendarBlank } from "react-icons/pi";
+import { PiCalendarBlank, PiMoneyLight } from "react-icons/pi";
 
 export const ApartmentLocation = ({
   className,
@@ -14,6 +14,10 @@ export const ApartmentLocation = ({
   const EndYear = Number(review?.data?.stay?.endYear);
   const StartYear = Number(review?.data?.stay?.startYear);
   const diffYear = EndYear ? EndYear - StartYear : ActualYear - StartYear;
+
+  const startPrice = Number(review?.data?.stay?.startPrice);
+  const endPrice = Number(review?.data?.stay?.endPrice);
+  const priceChange = endPrice != startPrice;
 
   const t = useTranslations();
 
@@ -28,6 +32,23 @@ export const ApartmentLocation = ({
           {review.address}
         </p>
       </span>
+      <div className="flex items-center">
+        <div className="flex w-5 h-5">
+          <PiMoneyLight size={20} color="#546E7A" />
+        </div>
+        <p className="text-neutral-400 ml-2 text-xs md:text-sm ">
+          {!priceChange
+            ? t("common.price") + " " + review.data.stay?.startPrice + "€"
+            : t("common.startPrice") +
+              " " +
+              review.data.stay?.startPrice +
+              "€ - " +
+              t("common.endPrice") +
+              " " +
+              review.data.stay?.endPrice +
+              "€"}
+        </p>
+      </div>
       <div className="flex items-center">
         <div className="flex w-5 h-5">
           <PiCalendarBlank size={20} color="#546E7A" />
