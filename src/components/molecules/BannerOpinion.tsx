@@ -31,11 +31,10 @@ export const BannerOpinion = ({
         <Button
           buttonClassName={`${colorButton}  mt-6 content-center overflow-hidden`}
           className="!w-full"
-          onClick={
-            () =>
-              router.push(
-                "/review"
-              ) /* window.open("mailto:info@reviucasa.com") */
+          onClick={() =>
+            textButton == t("agency.contactaNosotros")
+              ? window.open("mailto:info@reviucasa.com")
+              : router.push("/review")
           }
         >
           {textButton}

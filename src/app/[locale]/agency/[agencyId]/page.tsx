@@ -15,13 +15,12 @@ import { useQuery } from "@tanstack/react-query";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
   const t = useTranslations();
+  const config = useTranslations("config");
 
   const { data: agency, error } = useQuery<RealStateAgency | undefined, Error>({
     queryKey: ["agency", params.agencyId],
     queryFn: () => getAgency(params.agencyId),
   });
-
-  console.log(error);
 
   const { data: reviews } = useQuery<Review[] | undefined, Error>({
     queryKey: ["reviews", params.agencyId],
@@ -60,7 +59,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
               .map((review) => {
                 return (
                   <div
-                    className={`border border-gray-300 rounded-md mb-8 lg:p-0 p-4`}
+                    className={`border border-gray-300 rounded-md mb-8 lg:p-0 lg:pt-2 p-4`}
                     key={review.id}
                   >
                     <div className="lg:flex hidden items-center lg:py-4 lg:px-6 w-full lg:justify-between ">
@@ -95,35 +94,26 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
                           title={t("agency.comoHaSidoElTrato")}
                           className="mb-4"
                         >
-                          {reviewConfigParams.landlord.landlordTreatment.find(
-                            (e) =>
-                              e === review.data?.management?.realStateAgency
+                          {config(
+                            `landlord.landlordTreatment.${review?.data?.management?.realStateDealing}`
                           )}
                         </Label>
                         {/* <Label
                           title={t("agency.cuandoSurgioProblema")}
                           className="mb-4"
                         >
-                          {
-                            config?.landlord.problem_solving.find(
-                              (t) =>
-                                t.value ===
-                                review.data?.management?.problemSolving
-                            )?.label
-                          }
+                          {config(
+                            `landlord.problemSolving.${review?.data?.management?.problemSolving}`
+                          )}
                         </Label> */}
-                        {/* <Label
-                          title={t("agency.devolvieronFianza")}
+                        <Label
+                          title={t("common.devolvieronFianza")}
                           className="mb-4"
                         >
-                          {
-                            config?.landlord.deposit.find(
-                              (t) =>
-                                t.value === review.data?.management?.deposit
-                            )?.label
-                          }
-                        </Label> */}
-                        <div></div>
+                          {config(
+                            `landlord.deposit.${review?.data?.management?.deposit}`
+                          )}
+                        </Label>
                         <div className="grid col-span-2">
                           <div className="flex  gap-4">
                             <Image src={comillas} alt="20" className="h-fit" />
