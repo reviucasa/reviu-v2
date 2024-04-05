@@ -21,7 +21,6 @@ import {
   Building,
   findBuildingByAddress,
   findBuildingByCatastroId,
-  getBuilding,
   getBuildingStairs,
 } from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";

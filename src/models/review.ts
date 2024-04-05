@@ -200,15 +200,15 @@ const updateReview = async (
 };
 
 // Delete a review
-const deleteReview = async (uid: string): Promise<void> => {
-  const ref = doc(db, `drafts/${uid}`);
+const deleteReview = async (id: string): Promise<void> => {
+  const ref = doc(db, `reviews`, id);
   await deleteDoc(ref);
 };
 
 // Retrieve reviews
 const getReviews = async (count?: number): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  let q = query(ref, where("status", "==", ReviewStatus.Published));
+  let q = query(ref/* , where("status", "!=", ReviewStatus.Deleted) */);
 
   // Conditionally add a limit
   if (count) {
@@ -253,6 +253,7 @@ export {
   getReview,
   publishReview,
   updateReview,
+  deleteReview,
   getReviews,
   getReviewsByBuidingId,
   getReviewsByAgencyId,
