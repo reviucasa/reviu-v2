@@ -16,6 +16,7 @@ import { Building, getBuilding } from "@/models/building";
 import { getReviewsByBuidingId, reviewConverter } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import build from "next/dist/build";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React from "react";
@@ -118,7 +119,12 @@ export default function BuildingPage({
       <div className="lg:p-14 bg-white p-4 mb-11 lg:mb-0">
         <div className="flex justify-between">
           {notOpinions ? (
-            <h5 className="lg:text-3xl mb-7">{analysis.address}</h5>
+            <div className="flex flex-col gap-2 mb-7">
+              <h5 className="lg:text-3xl  font-secondary">
+                {analysis.address.split(",").slice(0, 2).join(" ")}
+              </h5>
+              <p className="text-sm tracking-widest">0{building?.postalCode} / {building?.neighbourhood.toLocaleUpperCase()}</p>
+            </div>
           ) : (
             <h5 className="lg:text-3xl mb-7">{analysis.reviews[0]?.address}</h5>
           )}

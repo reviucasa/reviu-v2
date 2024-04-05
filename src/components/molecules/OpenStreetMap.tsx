@@ -8,24 +8,24 @@ type MapProps = {
   longitude: number;
 };
 function OpenStreetMap({ latitude, longitude }: MapProps) {
-  const [center, setCenter] = useState({ lat: latitude, lng: longitude });
+  const [center, setCenter] = useState({ lat: latitude/* +0.00025 */, lng: longitude });
   const ZOOM_LEVEL = 15;
   const windowWidth = window.innerWidth;
   const purpleOptions = {
     color: "#9E80F7",
-    radius: windowWidth < 768 ? 200 : 300,
+    radius: windowWidth < 768 ? 250 : 350,
   };
 
   const icon = L.icon({
     iconUrl: "/marker-icon.png",
-    iconSize: [25,41], iconAnchor: [12,41]
+    iconSize: [45,51], iconAnchor: [22.5,51]
   });
 
-  const customIcon = L.icon({
+  /* const customIcon = L.icon({
     iconUrl:
       "https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.5/dist/leaflet.awesome-markers.min.js",
     iconSize: windowWidth < 768 ? [35, 40] : [50, 55],
-  });
+  }); */
 
   return (
     <MapContainer

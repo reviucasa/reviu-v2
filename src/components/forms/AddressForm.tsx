@@ -123,13 +123,13 @@ export const AddressForm = () => {
         // TODO: add popup when if draft confirming they want to create a new draft with a new address
         await updateDraft(auth.currentUser!.uid, {
           apartment: apartmentSelected,
-          buildingId: building.catastroId,
+          buildingId: building.id,
         });
       } else {
         await createDraft(auth.currentUser!.uid, {
           address: selectedAddress,
           apartment: apartmentSelected,
-          buildingId: building.catastroId,
+          buildingId: building.id,
           data: { step: stepReview },
         });
       }

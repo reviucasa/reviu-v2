@@ -51,6 +51,8 @@ export type Building = {
   catastroId: string;
   address: string;
   blockCode: string;
+  postalCode: string;
+  neighbourhood: string;
   apartments: Apartment[];
   latitude: number; // Extracted from the location field
   longitude: number; // Extracted from the location field

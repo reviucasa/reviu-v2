@@ -208,7 +208,7 @@ const deleteReview = async (id: string): Promise<void> => {
 // Retrieve reviews
 const getReviews = async (count?: number): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  let q = query(ref/* , where("status", "!=", ReviewStatus.Deleted) */);
+  let q = query(ref, where("status", "!=", ReviewStatus.Deleted));
 
   // Conditionally add a limit
   if (count) {
