@@ -137,7 +137,8 @@
     "tipologiaResidentes": "Type of residents",
     "estadoYMantenimiento": "State and maintenance",
     "relacionVecinal": "Relationship with neighbors",
-    "verMás": "See more >",
+    "verMás": "See detail >",
+    "verDetalle": "Veure detall >",
     "detalleOpinion": "Detailed opinion",
     "comentarioPositivo": "Positive comment",
     "comentarioNegativo": "Negative comment",
@@ -425,7 +426,9 @@
   "loginForm": {
     "iniciaORegistrate": "Log in or sign in",
     "textDescubre": "Find out what it's like to live there before you move in and share your experience to help others",
-    "escribeTuCorreo": "Type in your email address"
+    "escribeTuCorreo": "Type in your email address",
+    "enlaceEnviado": "Hemos enviado un enlace a tu correo",
+    "revisaCorreo": "Entra, revisa el email que te hemos enviado y sigue las instrucciones para iniciar sesión."
   },
   "managementReview": {
     "gestion": "Management",

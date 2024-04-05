@@ -28,7 +28,7 @@ export const LoginLayout = ({
           />
         )}
       </div>
-      <div className="absolute top-6 left-4">
+      <div className="absolute top-8 left-8">
         <Image
           src={Logo}
           quality={100}

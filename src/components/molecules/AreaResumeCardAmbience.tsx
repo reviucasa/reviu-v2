@@ -21,13 +21,13 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
   ];
 
   return (
-    <div className="bg-zinc-50 border border-gray-300 rounded-lg min-h-[230px] W-44 py-6 px-8 h-full flex flex-col justify-between">
+    <div className="bg-zinc-50 border border-gray-300 rounded-lg min-h-[200px] W-44 py-6 px-8 h-full flex flex-col justify-between">
       <p className="flex justify-center mb-6 font-bold text-sm md:text-base">
         {title}
       </p>
       <div className="flex justify-center content-center ">
         <div className="flex flex-col">
-          <div className="flex text-2xl font-extrabold gap-7 lg:gap-8 lg:flex-row flex-col">
+          <div className="flex text-2xl font-extrabold gap-8 lg:gap-14 lg:flex-row flex-col">
             {wordCloud
               .find((name) => name.group === "vibe")
               ?.words.filter((vibes) => vibes.count > 0)
@@ -50,7 +50,7 @@ export const AreaResumeCardAmbience = ({ title }: { title?: string }) => {
                         className="hover:scale-110 duration-500 w-50 h-auto"
                       />
                     )}
-                    <p className="lg:text-2xl text-base">
+                    <p className="lg:text-xl text-base font-secondary">
                       {config(`neighbourhood.vibe.${vibes.word}`)}
                     </p>
                   </div>

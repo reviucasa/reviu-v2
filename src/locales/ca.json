@@ -136,6 +136,7 @@
     "estadoYMantenimiento": "Estat i manteniment",
     "relacionVecinal": "Relació veïnal",
     "verMás": "Veure més >",
+    "verDetalle": "Veure detall >",
     "detalleOpinion": "Detall opinió",
     "comentarioPositivo": "Comentari positiu",
     "comentarioNegativo": "Comentari negatiu",
@@ -424,7 +425,9 @@
   "loginForm": {
     "iniciaORegistrate": "Inicia sessió o registra't",
     "textDescubre": "Descobreix com es viu en aquest pis abans d’entrar-hi i comparteix la teva experiència per ajudar els altres",
-    "escribeTuCorreo": "Escriu la teva adreça de correu electrònic"
+    "escribeTuCorreo": "Escriu la teva adreça de correu electrònic",
+    "enlaceEnviado": "Hem enviat un enllaç al teu correu",
+    "revisaCorreo": "Entra, revisa el correu electrònic que t'hem enviat i segueix les instruccions per iniciar sessió."
   },
 
   "managementReview": {

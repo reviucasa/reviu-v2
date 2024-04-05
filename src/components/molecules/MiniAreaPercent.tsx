@@ -52,53 +52,71 @@ export const MiniAreaPercent = ({
 
   return (
     <div
-      className={`bg-zinc-50 relative flex flex-col border border-gray-300 rounded-lg W-44 pb-6 pt-6 px-4 text-center items-center hover:bg-purple-100 justify-between ${className}`}
+      className={`bg-zinc-50 relative flex flex-col border border-gray-300 rounded-lg W-44 pb-4 pt-6 px-6   hover:bg-purple-100 justify-between ${className}`}
     >
-      <button
-        className="flex justify-end p-0 h-7 items-center absolute top-1 right-0"
+      <div
+        className={`flex border-b-2 pb-2 text-center items-center justify-between `}
+      >
+        {/* <button
+        className="flex justify-end p-0 h-7 items-center absolute top-2 right-2"
         onClick={() => {
           setOpenModalInfo(true);
         }}
       >
         <Image src={IconInfo} alt={"16"} />
-      </button>
-      <h6 className="font-bold md:text-base text-sm">
-        {configKeys(`neighbourhood.${stat.stat}`)}
-      </h6>
-      <p className="text-base md:text-xl font-extrabold pb-2">
-        {statConfig?.find((item) => item.value === maxPercentStat?.key)?.label}
-      </p>
+      </button> */}
+        <div className="flex flex-col items-start gap-2">
+          <h6 className="font-bold md:text-base text-sm">
+            {configKeys(`neighbourhood.${stat.stat}`)}
+          </h6>
+          <p className="text-base md:text-2xl font-extrabold pb-2 font-secondary ">
+            {
+              statConfig?.find((item) => item.value === maxPercentStat?.key)
+                ?.label
+            }
+          </p>
+        </div>
 
-      <div className="w-16 h-16 flex justify-center items-center text-purple-400 bottom-6 hover:scale-110 hover:rounded-full duration-500 cursor-default	">
-        <svg viewBox="0 0 36 36">
-          <path
-            d="M18 2.0845
+        <div className="w-16 h-16 flex justify-center items-center text-purple-400 bottom-6 hover:scale-110 hover:rounded-full duration-500 cursor-default">
+          <svg viewBox="0 0 36 36">
+            <path
+              d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
-            fill="white"
-            stroke="#C5B3FA"
-            strokeWidth="3"
-            strokeDasharray="100, 100"
-          />
-          <path
-            d="M18 2.0845
+              fill="white"
+              stroke="#C5B3FA"
+              strokeWidth="3"
+              strokeDasharray="100, 100"
+            />
+            <path
+              d="M18 2.0845
           a 15.9155 15.9155 0 0 1 0 31.831
           a 15.9155 15.9155 0 0 1 0 -31.831"
-            fill="transparent"
-            stroke="#9E80F7"
-            strokeWidth="3"
-            strokeDasharray={`${roundedPercentage}, 100`}
-          />
-          <text
-            x="50%"
-            y="50%"
-            textAnchor="middle"
-            dy="0.3em"
-            style={{ fill: "#8B5CF6", fontSize: "9px" }}
-          >
-            {roundedPercentage}%
-          </text>
-        </svg>
+              fill="transparent"
+              stroke="#9E80F7"
+              strokeWidth="3"
+              strokeDasharray={`${roundedPercentage}, 100`}
+            />
+            <text
+              x="50%"
+              y="50%"
+              textAnchor="middle"
+              dy="0.3em"
+              style={{ fill: "#8B5CF6", fontSize: "9px" }}
+            >
+              {roundedPercentage}%
+            </text>
+          </svg>
+        </div>
+      </div>
+
+      <div
+        className="pt-2 text-primary-500 cursor-pointer text-sm md:text-base"
+        onClick={() => {
+          setOpenModalInfo(true);
+        }}
+      >
+        {t("common.verDetalle")}
       </div>
       <Dialog
         isOpen={openModalInfo}

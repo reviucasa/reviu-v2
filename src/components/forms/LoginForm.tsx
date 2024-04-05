@@ -2,7 +2,6 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
 import { useTranslations } from "next-intl";
-import { useUser } from "@/hooks/swr/useUser";
 import { useRouter } from "next/navigation";
 import { sendSignInLink } from "@/firebase/auth";
 
@@ -15,6 +14,7 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const refEmail = useRef<HTMLInputElement>(null);
   const t = useTranslations();
+  const router = useRouter();
 
   const validateEmail = useCallback(() => {
     const email = refEmail.current?.value;
@@ -28,25 +28,9 @@ export const LoginForm = () => {
     setLoading(true);
     if (validForm) {
       await sendSignInLink(email!);
-      alert("Check you email!");
+      router.push("/auth/checkEmail");
     }
     setLoading(false);
-
-    /* loginWithMagicLink(email as string)
-      .then(() => {
-        const prevRoute = localStorage.getItem("prevRoute");
-
-        if (user && prevRoute) {
-          router.push(prevRoute);
-          localStorage.removeItem("prevRoute");
-        }
-      })
-      .catch((err: AxiosError) => {
-        console.log("Error during login: ", err);
-      })
-      .finally(() => {
-        setLoading(false);
-      }); */
   };
 
   useEffect(() => {

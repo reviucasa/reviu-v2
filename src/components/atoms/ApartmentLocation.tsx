@@ -29,8 +29,9 @@ export const ApartmentLocation = ({
         {review?.apartment?.stair} {review?.apartment?.floor}{" "}
         {review?.apartment?.door}
         <p className="text-xs md:text-base font-normal flex ">
-          {review.address}
+          {review.address.split(",").slice(0, 2).join(" ")}
         </p>
+        <p className="text-xs md:text-base font-normal flex ">Barcelona</p>
       </span>
       <div className="flex items-center">
         <div className="flex w-5 h-5">

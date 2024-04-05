@@ -14,7 +14,7 @@ export default function Login() {
     if (user) {
       router.back();
     }
-  }, [user]);
+  }, [router, user]);
 
   return (
     <>
