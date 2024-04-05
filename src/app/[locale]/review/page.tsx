@@ -2,7 +2,7 @@
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useUser } from "@/hooks/swr/useUser";
 import { steps } from "@/staticData";
-import {  useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Review() {
@@ -16,7 +16,9 @@ export default function Review() {
     }
     if (draft?.data.step) {
       router.push(
-        draft.data.step > 6 ? steps[6].url : steps[draft.data.step].url
+        draft.data.step > steps.length - 1
+          ? steps[steps.length - 1].url
+          : steps[draft.data.step].url
       );
     }
   }, [draft, router, user]);

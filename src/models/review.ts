@@ -50,6 +50,11 @@ export type ReviewData = {
   updated: string;
 };
 
+export type ReviewImage = {
+  url: string;
+  caption: string;
+};
+
 export type Community = {
   buildingCleaning?: string;
   buildingMaintenance?: string;
@@ -85,6 +90,7 @@ export type Opinion = {
   positive: string;
   recomend: boolean;
   title: string;
+  images: ReviewImage[];
 };
 export type Stay = {
   currentResidence: boolean;
