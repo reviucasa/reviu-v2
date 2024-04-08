@@ -55,7 +55,7 @@ export const MiniAreaPercent = ({
       className={`bg-zinc-50 relative flex flex-col border border-gray-300 rounded-lg W-44 pb-4 pt-6 px-6   hover:bg-purple-100 justify-between ${className}`}
     >
       <div
-        className={`flex border-b-2 pb-2 text-center items-center justify-between `}
+        className={`flex flex-col sm:flex-row  pb-2 text-center items-center justify-between`}
       >
         {/* <button
         className="flex justify-end p-0 h-7 items-center absolute top-2 right-2"
@@ -65,11 +65,11 @@ export const MiniAreaPercent = ({
       >
         <Image src={IconInfo} alt={"16"} />
       </button> */}
-        <div className="flex flex-col items-start gap-2">
-          <h6 className="font-bold md:text-base text-sm">
+        <div className="flex flex-col items-center sm:items-start gap-2">
+          <h6 className="font-bold text-center sm:text-start md:text-base text-sm">
             {configKeys(`neighbourhood.${stat.stat}`)}
           </h6>
-          <p className="text-base md:text-2xl font-extrabold pb-2 font-secondary ">
+          <p className="text-center sm:text-start text-md md:text-2xl whitespace-nowrap font-extrabold pb-2 font-secondary ">
             {
               statConfig?.find((item) => item.value === maxPercentStat?.key)
                 ?.label
@@ -109,6 +109,7 @@ export const MiniAreaPercent = ({
           </svg>
         </div>
       </div>
+      <div className="border-b-2"></div>
 
       <div
         className="pt-2 text-primary-500 cursor-pointer text-sm md:text-base"

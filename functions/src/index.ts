@@ -74,18 +74,19 @@ async function sendSignInEmail(
           padding: 0;
           font-family: Helvetica, Arial, sans-serif;
           color: #161925;
+          text-decoration: none;
         }
         .email-container {
           background-color: #f5f2fe;
           text-align: center;
-          width: 100vw;
+          width: 100%;
         }
         .email-content {
           background-color: #ffffff;
           border-radius: 24px;
           margin: 0px auto;
-          padding: 20px;
-          width: 50%;
+          padding: 16px;
+          width: 60%;
         }
         .btn-primary {
           background-color: #124a36;
@@ -95,7 +96,7 @@ async function sendSignInEmail(
           text-decoration: none;
           border-radius: 5px;
           display: block;
-          margin: 52px auto;
+          margin: 40px auto;
         }
         .signin-link {
           color: #9e80f7;
@@ -110,7 +111,7 @@ async function sendSignInEmail(
           max-width: 100%;
           display: block;
         }
-        @media (max-width: 768px) {
+        @media (max-width: 900px) {
           .email-content {
             width: 90%;
           }
@@ -122,7 +123,7 @@ async function sendSignInEmail(
         src="https://reviu.vercel.app/logo.png"
         alt="Check Email"
         width="180"
-        style="margin: 40px auto"
+        style="margin: 20px auto"
       />
       <div class="email-content">
         <h2 style="font-size: 28px; font-weight: 600">
@@ -136,12 +137,12 @@ async function sendSignInEmail(
           src="https://reviu.vercel.app/check-email2.png"
           alt="Check Email"
           width="120"
-          style="margin: 0px auto 40px auto; padding-left: 14px"
+          style="margin: 0px auto 32px auto; padding-left: 14px"
         />
         <p style="padding: 0 24px; max-width: 400px; margin: 0 auto">
           ${translation.copyComment}
         </p>
-        <p class="signin-link">${link}</p>
+        <p class="signin-link" style="padding-top: 0px;">${link}</p>
       </div>
       <div>
         <div
@@ -149,11 +150,9 @@ async function sendSignInEmail(
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
-            margin: 40px auto;
           "
         >
-          <div style="display: flex; gap: 15px; margin: 0 auto">
+          <div style="display: flex; margin: 20px auto">
             <a
               href="https://www.instagram.com/reviucasa"
               target="_blank"
@@ -168,6 +167,7 @@ async function sendSignInEmail(
                   display: flex;
                   align-items: center;
                   justify-content: center;
+                  margin-right: 15px;
                 "
               >
                 <img
@@ -214,6 +214,7 @@ async function sendSignInEmail(
                   display: flex;
                   align-items: center;
                   justify-content: center;
+                  margin-left: 15px;
                 "
               >
                 <img
@@ -225,7 +226,14 @@ async function sendSignInEmail(
             </a>
           </div>
         </div>
-        <p style="color: #b5b2be; margin-top: 20px">reviucasa.com</p>
+        <p style="
+          color: #b5b2be !important;
+          padding: 0 0 20px 0;
+          text-decoration: none;
+          "
+        >
+          reviucasa.com
+        </p>
       </div>
     </body>
   </html>

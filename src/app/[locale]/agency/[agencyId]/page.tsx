@@ -106,14 +106,16 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
                             `landlord.problemSolving.${review?.data?.management?.problemSolving}`
                           )}
                         </Label> */}
-                        <Label
-                          title={t("common.devolvieronFianza")}
-                          className="mb-4"
-                        >
-                          {config(
-                            `landlord.deposit.${review?.data?.management?.deposit}`
-                          )}
-                        </Label>
+                        {review?.data?.management?.deposit && (
+                          <Label
+                            title={t("common.devolvieronFianza")}
+                            className="mb-4"
+                          >
+                            {config(
+                              `landlord.deposit.${review?.data?.management?.deposit}`
+                            )}
+                          </Label>
+                        )}
                         <div className="grid col-span-2">
                           <div className="flex  gap-4">
                             <Image src={comillas} alt="20" className="h-fit" />

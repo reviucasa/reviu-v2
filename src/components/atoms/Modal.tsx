@@ -1,5 +1,4 @@
 import { Dialog as HeadlessUIDialog } from "@headlessui/react";
-import clsx from "clsx";
 import { ReactNode } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -9,12 +8,14 @@ export const Modal = ({
   children,
   title,
   description,
+  iconClose,
 }: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   children?: ReactNode;
   title?: string;
   description?: string;
+  iconClose?: boolean;
 }) => {
   return (
     <HeadlessUIDialog
@@ -24,7 +25,7 @@ export const Modal = ({
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <HeadlessUIDialog.Backdrop
-        className="fixed inset-0 bg-black/50 z-40"
+        className="fixed inset-0 bg-black/50 z-30"
         aria-hidden="true"
       />
 
@@ -34,6 +35,14 @@ export const Modal = ({
         <HeadlessUIDialog.Panel
           className={"max-h-full  bg-transparent  drop-shadow-guzzu "}
         >
+          {iconClose && (
+            <div
+              className="flex bg-white w-10 h-10 absolute right-6 top-6 justify-center items-center rounded-lg cursor-pointer"
+              onClick={() => setIsOpen(false)}
+            >
+              <AiOutlineClose size={24} />
+            </div>
+          )}
           <div className={"overflow-auto max-h-full mx-auto"}>
             <HeadlessUIDialog.Title as="h4" className="mb-4">
               {title}

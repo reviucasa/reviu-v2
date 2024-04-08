@@ -37,7 +37,7 @@ export const ReviewDetail = ({
   const config = useTranslations("config");
 
   return (
-    <div>
+    <div className="pb-20 md:pb-0">
       {review && (
         <>
           <div className="bg-white grid lg:grid-cols-[auto_1fr] grid-col border-b-2 mb-10 md:gap-10 gap-5">
@@ -379,7 +379,7 @@ export const ReviewDetail = ({
                   {t("common.Imágenes")}
                 </h6>
               </div>
-              <div className="grid grid-cols-2 xs:grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
                 {review.data.opinion?.images.map((image, index) => (
                   <div
                     key={index}

@@ -56,7 +56,7 @@ export const DialogDrawer = ({
                     <AiOutlineClose size={24} />
                   </div>
                   <div
-                    className="lg:hidden flex absolute bg-white w-10 top-4 right-2 justify-center items-center rounded-l-lg cursor-pointer z-10"
+                    className="lg:hidden flex absolute bg-white border border-gray-400 p-2 top-4 right-2 justify-center items-center rounded-lg cursor-pointer z-10"
                     onClick={() => setIsOpen(false)}
                   >
                     <AiOutlineClose size={24} />
