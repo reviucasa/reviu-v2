@@ -3,7 +3,6 @@ import * as yup from "yup";
 import { Button } from "../atoms/Button";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { sendSignInLink } from "@/firebase/auth";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/firebase/config";
 

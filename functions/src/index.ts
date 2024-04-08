@@ -9,7 +9,7 @@ admin.initializeApp();
 
 const actionCodeSettings = {
   // URL must be in the authorized domains list in the Firebase Console.
-  url: "https://reviu-git-dev-nicolaufs.vercel.app" /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
+  url: "https://reviu.vercel.app/" /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
   // This must be true.
   handleCodeInApp: true,
 };
