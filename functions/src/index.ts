@@ -171,7 +171,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconInstagram.svg"
+                  src="https://reviu.vercel.app/IconInstagram.png"
                   alt="icon instagram"
                   style="height: auto; width: 36px"
                 />
@@ -194,7 +194,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconTwitter.svg"
+                  src="https://reviu.vercel.app/IconTwitter.png"
                   alt="icon twitter"
                   style="height: auto; width: 36px"
                 />
@@ -218,7 +218,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconTikTok.svg"
+                  src="https://reviu.vercel.app/IconTikTok.png"
                   alt="icon tiktok"
                   style="height: auto; width: 36px"
                 />
@@ -232,7 +232,7 @@ async function sendSignInEmail(
           text-decoration: none;
           "
         >
-          reviucasa.com
+          reviucasa
         </p>
       </div>
     </body>
