@@ -9,7 +9,7 @@ admin.initializeApp();
 
 const actionCodeSettings = {
   // URL must be in the authorized domains list in the Firebase Console.
-  url: "http://localhost:3000/" /* "https://www.reviucasa.com/", */,
+  url: "https://reviu-git-dev-nicolaufs.vercel.app" /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
   // This must be true.
   handleCodeInApp: true,
 };
@@ -23,8 +23,6 @@ export const sendSignInLinkToEmail = functions
       .auth()
       .generateSignInWithEmailLink(email, actionCodeSettings)
       .then((link) => {
-        console.log("Sending to: ", email);
-        console.log("Link: ", link);
         return sendSignInEmail(email, locale, link);
       })
       .catch((error) => {
@@ -245,11 +243,7 @@ async function sendSignInEmail(
       MessageStream: "outbound",
     })
     .then((response) => {
-      console.log("Sending message");
-      console.log(response.To);
-      console.log(response.Message);
-      console.log(response.MessageID);
-      console.log(response.SubmittedAt);
+      console.log("Sending message to", response.To);
       return response;
     });
 
