@@ -127,7 +127,9 @@ async function sendSignInEmail(
         style="margin: 40px auto"
       />
       <div class="email-content">
-        <h2 style="font-size: 28px; font-weight: 600">${translation.welcome}</h2>
+        <h2 style="font-size: 28px; font-weight: 600">
+          ${translation.welcome}
+        </h2>
         <p>${translation.clickComment}</p>
         <a href="${link}" style="color: white" class="btn-primary"
           >${translation.signIn}</a
