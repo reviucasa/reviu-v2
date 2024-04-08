@@ -2,41 +2,63 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import smileHouse from "../../../public/smile_house.png";
 import { useEffect } from "react";
-import { Controller, SubmitHandler, useForm } from "react-hook-form";
+import {
+  Controller,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 import * as yup from "yup";
 import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { ReviewFormLayout } from "../layouts/ReviewFormLayout";
 import { RadioInput } from "../molecules/RadioInput";
-import { useReview } from "@/hooks/swr/useReview";
-import { useSubmitReview } from "@/hooks/useSubmitReview";
 import { useRouter } from "next/navigation";
-import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
-import { Review, deleteDraft, getDraft, publishReview } from "@/models/review";
+import { PiImage, PiTrash } from "react-icons/pi";
+import Image from "next/image";
+import {
+  Opinion,
+  ReviewImage,
+  ReviewStatus,
+  deleteDraft,
+  getDraft,
+  publishReview,
+} from "@/models/review";
 import { auth } from "@/firebase/config";
+import { uploadImage } from "@/firebase/helpers";
+import { resizeImage } from "@/helpers/resizeImage";
 
 export const OpinionForm = () => {
-  const { draft, refreshDraft } = useDraft();
+  const { draft } = useDraft();
   const { onSubmitDraft } = useSubmitDraft("opinion");
   const router = useRouter();
-  const { nextStepReview } = useStep();
   const t = useTranslations();
 
   const schema = yup.object({
     title: yup.string().required(t("common.tituloRequerido")),
     positive: yup.string().required(t("common.tuValoracionPositiva")),
     negative: yup.string().required(t("common.tuValoracionNegativa")),
+    images: yup.array().of(
+      yup.object({
+        url: yup.mixed(),
+        caption: yup.string(),
+      })
+    ),
     recomend: yup.boolean().required(t("common.recomendariasVivienda")),
   });
+
   type FormData = yup.InferType<typeof schema>;
+
   const {
     formState: { errors },
     control,
+    setError,
+    clearErrors,
     handleSubmit,
     reset,
   } = useForm<FormData>({
@@ -45,15 +67,68 @@ export const OpinionForm = () => {
     defaultValues: draft?.data.opinion,
   });
 
+  const { fields, append, remove } = useFieldArray({
+    control,
+    name: "images", // The key of the field array in your form
+  });
+
   useEffect(() => {
     reset(draft?.data.opinion);
   }, [draft?.data.opinion, reset]);
 
+  async function uploadImagesAndPrepareData(data: any): Promise<Opinion> {
+    const imageDataPromises = data.images.map(async (image: ReviewImage) => {
+      if (!image.url.includes("https://")) {
+        try {
+          console.log("resizing...");
+          const file = await resizeImage(image.url);
+          console.log("uploading...");
+          const url = await uploadImage(
+            file,
+            `reviews/${auth.currentUser!.uid}/${Date.now()}`
+          );
+          console.log(url);
+          return {
+            url,
+            caption: image.caption,
+          } as ReviewImage;
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        return image;
+      }
+    });
+
+    const images: ReviewImage[] = await Promise.all(imageDataPromises);
+
+    const opinionData: Opinion = {
+      title: data.title,
+      positive: data.positive,
+      negative: data.negative,
+      recomend: data.recomend,
+      images,
+    };
+
+    // Submit opinionData or use as needed
+    return opinionData;
+  }
+
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
+
     try {
-      await onSubmitDraft(data);
-      const finalDraft = await getDraft(auth.currentUser?.uid!);
-      publishReview(auth.currentUser!.uid, finalDraft!);
+      const opinionData = await uploadImagesAndPrepareData(data);
+
+      console.log(opinionData);
+
+      await onSubmitDraft(opinionData);
+      let finalDraft = await getDraft(auth.currentUser?.uid!);
+
+      publishReview(auth.currentUser!.uid, {
+        ...finalDraft!,
+        status: ReviewStatus.Published,
+      });
       deleteDraft(auth.currentUser!.uid);
       router.push("/success");
     } catch (error) {
@@ -131,6 +206,130 @@ export const OpinionForm = () => {
             <FieldError>{errors.negative.message}</FieldError>
           )}
         </div>
+        {/* Images section */}
+        <div className="">
+          <label htmlFor="images">
+            Share the most relevant pictures about the area, the building and
+            the property
+          </label>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0">
+            {fields.map((field, index) => (
+              <div key={field.id} className="text-center ">
+                <div className="flex flex-col relative text-center gap-y-2">
+                  <Controller
+                    control={control}
+                    name={`images.${index}.url`}
+                    render={({ field: { onChange, value } }) =>
+                      value != null || field.url != null ? (
+                        <Image
+                          id={`image-preview-${index}`}
+                          src={field.url || value}
+                          width={100}
+                          height={100}
+                          className="rounded-md object-cover border border-dashed border-gray-400 w-auto h-48"
+                          alt="selected image"
+                        />
+                      ) : (
+                        <div className="rounded-lg border border-dashed border-gray-400 hover:border-secondary-500 px-6 py-16 h-48">
+                          <PiImage
+                            className="mx-auto h-6 w-6 text-gray-300"
+                            aria-hidden="true"
+                          />
+
+                          <div className=" text-sm text-gray-600">
+                            <label
+                              htmlFor={`images.${index}.image`}
+                              className="cursor-pointer font-semibold text-primary-300 focus-within:outline-none focus-within:ring-0 hover:text-primary-500"
+                            >
+                              <p className="mt-4 w-full">Upload a file</p>
+                              <input
+                                id={`images.${index}.image`}
+                                type="file"
+                                accept="image/*"
+                                className="sr-only"
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  console.log("Pressed");
+                                  if (e.target.files && e.target.files[0]) {
+                                    console.log("file chosen");
+                                    const file = e.target.files[0];
+
+                                    /* if (file.size > 1 * 2000 * 1024) {
+                                      setError(`images.${index}.file`, {
+                                        type: "size",
+                                        message:
+                                          "File size should not exceed 2MB",
+                                      });
+                                      return;
+                                    } else { */
+                                    clearErrors(`images.${index}.url`);
+                                    const reader = new FileReader();
+                                    if (file) {
+                                      reader.onload = async (e: Event) => {
+                                        if (reader.result) {
+                                          onChange(reader.result);
+
+                                          const target = e.target as FileReader;
+
+                                          const previewElement =
+                                            document.getElementById(
+                                              `image-preview-${index}`
+                                            ) as HTMLImageElement;
+                                          if (previewElement) {
+                                            previewElement.src =
+                                              reader.result as string;
+                                          }
+                                        }
+                                      };
+                                      reader.readAsDataURL(file);
+                                    }
+                                    /* } */
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
+                          <p className="text-xs leading-5 text-gray-600">
+                            PNG or JPG up to 2MB
+                          </p>
+                        </div>
+                      )
+                    }
+                  />
+                  <Controller
+                    control={control}
+                    name={`images.${index}.caption`}
+                    render={({ field: { onChange, value } }) => (
+                      <input
+                        {...field}
+                        placeholder="Image description"
+                        value={value}
+                        className=" h-10"
+                        maxLength={80}
+                        onChange={onChange}
+                      />
+                    )}
+                  />
+                  <PiTrash
+                    color="rgb(248, 113, 113)"
+                    className="absolute top-2 right-2 p-1 w-6 h-6"
+                    onClick={() => remove(index)}
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+          <button
+            type="button"
+            className={`btn-terciary-500 w-40 ${
+              fields.length == 0 ? " mt-2" : "mt-8"
+            }`}
+            onClick={() => append({ url: null, caption: "" })}
+          >
+            Add Image
+          </button>
+        </div>
         <div className="flex flex-col">
           <label htmlFor="recomend">{t("opinionReview.recomendarias")}</label>
           <Controller
@@ -152,7 +351,6 @@ export const OpinionForm = () => {
             <FieldError>{errors.recomend.message}</FieldError>
           )}
         </div>
-
         <div className="flex justify-between">
           <div>
             <Back className="lg:hidden" />

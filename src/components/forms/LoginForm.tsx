@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { sendSignInLink } from "@/firebase/auth";
+import { httpsCallable } from "firebase/functions";
+import { functions } from "@/firebase/config";
 
 let schema = yup.object().shape({
   email: yup.string().required().email(),
@@ -15,6 +17,7 @@ export const LoginForm = () => {
   const refEmail = useRef<HTMLInputElement>(null);
   const t = useTranslations();
   const router = useRouter();
+  const locale = useLocale();
 
   const validateEmail = useCallback(() => {
     const email = refEmail.current?.value;
@@ -27,8 +30,26 @@ export const LoginForm = () => {
     const email = refEmail.current?.value;
     setLoading(true);
     if (validForm) {
-      await sendSignInLink(email!);
-      router.push("/auth/checkEmail");
+      /* await sendSignInLink(email!); */
+
+      const sendSignInLinkToEmail = httpsCallable(
+        functions,
+        "sendSignInLinkToEmail"
+      );
+      // Call the function and pass data
+      try {
+        const response = await sendSignInLinkToEmail({ email, locale });
+        window.localStorage.setItem("email", email || "none");
+        console.log(response);
+        router.push("/auth/checkEmail");
+        /* const tx = result.data;
+          console.log(tx); */
+        /* await addTransaction({ ...tx } as Transaction); */
+      } catch (error) {
+        console.error("Function call failed:", error);
+        setLoading(false);
+        throw error;
+      }
     }
     setLoading(false);
   };

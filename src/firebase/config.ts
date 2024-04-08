@@ -23,4 +23,4 @@ export const auth = initializeAuth(firebase, {
 });
 export const db = getFirestore(firebase);
 export const storage = getStorage(firebase);
-export const functions = getFunctions(firebase);
+export const functions = getFunctions(firebase, "europe-west1");
