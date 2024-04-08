@@ -11,10 +11,11 @@ import { Label } from "../atoms/Label";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
-import { Review } from "@/models/review";
+import { Review, ReviewImage } from "@/models/review";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
 import { useRouter } from "next/navigation";
+import { DialogImage } from "../molecules/DialogImage";
 
 export const ReviewDetail = ({
   review,
@@ -30,11 +31,13 @@ export const ReviewDetail = ({
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+  const [openModalImage, setOpenModalImage] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<ReviewImage>();
 
   const config = useTranslations("config");
 
   return (
-    <div>
+    <div className="pb-20 md:pb-0">
       {review && (
         <>
           <div className="bg-white grid lg:grid-cols-[auto_1fr] grid-col border-b-2 mb-10 md:gap-10 gap-5">
@@ -217,11 +220,13 @@ export const ReviewDetail = ({
                     `landlord.problemSolving.${review?.data?.management?.problemSolving}`
                   )}
                 </Label>
-                <Label title={t("common.devolvieronFianza")}>
-                  {config(
-                    `landlord.deposit.${review?.data?.management?.deposit}`
-                  )}
-                </Label>
+                {review?.data?.management?.deposit && (
+                  <Label title={t("common.devolvieronFianza")}>
+                    {config(
+                      `landlord.deposit.${review?.data?.management?.deposit}`
+                    )}
+                  </Label>
+                )}
               </div>
 
               <div className="flex flex-col gap-6 my-8">
@@ -240,19 +245,21 @@ export const ReviewDetail = ({
                     </div>
                   </div>
                 )}
-                <div className="flex flex-col">
-                  <div className="flex gap-4">
-                    <Image src={comillas} alt="20" className="h-fit" />
-                    <div>
-                      <p className="font-bold text-sm md:text-base">
-                        {t("common.consejosCasero")}
-                      </p>
-                      <p className="text-sm md:text-base">
-                        {review?.data?.management?.adviceLandlord}
-                      </p>
+                {review?.data?.management?.adviceLandlord && (
+                  <div className="flex flex-col">
+                    <div className="flex gap-4">
+                      <Image src={comillas} alt="20" className="h-fit" />
+                      <div>
+                        <p className="font-bold text-sm md:text-base">
+                          {t("common.consejosCasero")}
+                        </p>
+                        <p className="text-sm md:text-base">
+                          {review?.data?.management?.adviceLandlord}
+                        </p>
+                      </div>
                     </div>
                   </div>
-                </div>
+                )}
               </div>
               {review &&
                 review.data &&
@@ -366,7 +373,42 @@ export const ReviewDetail = ({
                   )}
                 </div>
               </div>
+
+              <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                <h6 className="mb-2 lg:text-xl font-bold">
+                  {t("common.Imágenes")}
+                </h6>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
+                {review.data.opinion?.images.map((image, index) => (
+                  <div
+                    key={index}
+                    className="text-center cursor-pointer"
+                    onClick={() => {
+                      setSelectedImage(image);
+                      setOpenModalImage(!openModalImage);
+                    }}
+                  >
+                    <div className="flex flex-col relative text-center gap-y-2">
+                      <Image
+                        id={`image-preview-${index}`}
+                        src={image.url}
+                        width={100}
+                        height={100}
+                        className="rounded-md object-cover border border-gray-200 w-auto h-80"
+                        alt="selected image"
+                      />
+                      <p> {image.caption}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
+            <DialogImage
+              isOpen={openModalImage}
+              setIsOpen={setOpenModalImage}
+              image={selectedImage}
+            />
             <DialogReport
               isOpen={openModalInfo}
               setIsOpen={setOpenModalInfo}

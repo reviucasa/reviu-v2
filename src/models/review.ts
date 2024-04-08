@@ -20,7 +20,7 @@ import {
 } from "firebase/firestore";
 import { Apartment } from "./building";
 
-enum ReviewStatus {
+export enum ReviewStatus {
   Deleted = "deleted",
   Reported = "reported",
   Published = "published",
@@ -31,11 +31,11 @@ export type Review = {
   id: string;
   timeCreated: Timestamp;
   timeUpdated: Timestamp;
+  status: ReviewStatus;
   apartment?: Apartment;
   data: Partial<ReviewData>;
   buildingId: string;
   userId: string;
-  status?: ReviewStatus;
 };
 
 export type ReviewData = {

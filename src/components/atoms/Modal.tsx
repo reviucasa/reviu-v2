@@ -1,16 +1,13 @@
 import { Dialog as HeadlessUIDialog } from "@headlessui/react";
-import clsx from "clsx";
 import { ReactNode } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
-export const Dialog = ({
+export const Modal = ({
   isOpen,
   setIsOpen,
   children,
   title,
   description,
-  panelClassName,
-  className,
   iconClose,
 }: {
   isOpen: boolean;
@@ -18,8 +15,6 @@ export const Dialog = ({
   children?: ReactNode;
   title?: string;
   description?: string;
-  panelClassName?: string;
-  className?: string;
   iconClose?: boolean;
 }) => {
   return (
@@ -30,33 +25,25 @@ export const Dialog = ({
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <HeadlessUIDialog.Backdrop
-        className="fixed inset-0 bg-black/50 z-40"
+        className="fixed inset-0 bg-black/50 z-30"
         aria-hidden="true"
       />
 
       {/* Full-screen container to center the panel */}
-      <div className="fixed inset-0 flex items-center justify-center lg:p-4 p-0">
+      <div className="fixed inset-0 flex items-center justify-center p-0">
         {/* The actual dialog panel  */}
         <HeadlessUIDialog.Panel
-          className={clsx(
-            "max-h-full  rounded-2xl bg-white  drop-shadow-guzzu ",
-            panelClassName
-          )}
+          className={"max-h-full  bg-transparent  drop-shadow-guzzu "}
         >
           {iconClose && (
             <div
-              className="flex bg-white w-10 h-10 absolute -left-10 top-14 justify-center items-center rounded-l-lg cursor-pointer"
+              className="flex bg-white w-10 h-10 absolute right-6 top-6 justify-center items-center rounded-lg cursor-pointer"
               onClick={() => setIsOpen(false)}
             >
               <AiOutlineClose size={24} />
             </div>
           )}
-          <div
-            className={clsx(
-              "overflow-auto lg:p-10 p-4 max-h-full mx-auto",
-              className
-            )}
-          >
+          <div className={"overflow-auto max-h-full mx-auto"}>
             <HeadlessUIDialog.Title as="h4" className="mb-4">
               {title}
             </HeadlessUIDialog.Title>
