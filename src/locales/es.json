@@ -109,7 +109,10 @@
     "pisosTuristicos": "Pisos turísticos",
     "skip": "Saltar",
     "enQueDirección": "¿En que dirección se encuentra?",
+    "searchError": "Error de búsqueda",
     "noSeEncontroDirección": "No se encontró la dirección",
+    "buildingNotFound": "No se encontró el edificio",
+    "agencyNotFound": "No se encontró la inmobiliaria",
     "1AñoViviendo": "1 año viviendo ahí",
     "masDe": "Más de",
     "añosViviendo": "años viviendo ahí",
@@ -243,7 +246,10 @@
     "añosVar": "años",
     "reseñasYOpiniones": "Reseñas y opiniones de pisos reales",
     "latestReviews": "Lee las últimas opiniones",
-    "buscandoDirección": "Buscando dirección...."
+    "buscandoDirección": "Buscando dirección....",
+    "livedFrom": "Vivió desde el",
+    "until": "hasta el",
+    "movedIn": "Se mudó el"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunidad de vecinos",

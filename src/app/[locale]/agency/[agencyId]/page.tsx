@@ -5,19 +5,31 @@ import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
 import green_house from "../../../../../public/green_house.png";
 import comillas from "../../../../../public/comillas.png";
+import lupa from "../../../../../public/lupa.png";
 import { useTranslations } from "next-intl";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import { reviewConfigParams } from "@/staticData";
 import { Review, getReviewsByAgencyId } from "@/models/review";
 import { RealStateAgency, getAgency } from "@/models/agency";
-import React from "react";
+import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { BounceLoader } from "react-spinners";
+import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
+import { useRouter } from "next/navigation";
+import { FieldError } from "@/components/atoms/FieldError";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
+  const router = useRouter();
   const t = useTranslations();
   const config = useTranslations("config");
+  const [selectedRealStateAgency, setSelectedRealStateAgency] =
+    useState<RealStateAgency>();
+  const [error, setError] = useState<string>();
 
-  const { data: agency, error } = useQuery<RealStateAgency | undefined, Error>({
+  const { data: agency, error: agencyError } = useQuery<
+    RealStateAgency | undefined,
+    Error
+  >({
     queryKey: ["agency", params.agencyId],
     queryFn: () => getAgency(params.agencyId),
   });
@@ -27,8 +39,44 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
     queryFn: () => getReviewsByAgencyId(params.agencyId),
   });
 
+  const onSelectRealStateAgency = async (agency: RealStateAgency) => {
+    setSelectedRealStateAgency(agency);
+    if (agency) {
+      router.push(`/agency/${agency.documentId}`);
+    } else {
+      setError(t("common.noSeEncontroLaInmobiliaria"));
+    }
+  };
+
   if (!reviews || !agency) {
-    return <div>Loading...</div>;
+    return (
+      <RealStateLayout>
+        {agencyError ? (
+          <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
+            <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
+              {t("common.searchError")}
+            </span>
+            <h3>{t("common.agencyNotFound")}</h3>
+            <div className="flex flex-col w-full md:w-1/2 items-center md:items-start mt-12	">
+              <AgencyComboBox
+                icon={lupa}
+                placeholder={t("common.searchAgency")}
+                className="lg:w-3/4 w-full"
+                selectedRealStateAgency={selectedRealStateAgency}
+                setSelectedRealStateAgency={onSelectRealStateAgency}
+              />
+              <div className="flex lg:w-3/4 w-full">
+                <FieldError className=" my-3">{error}</FieldError>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">
+            <BounceLoader color="#d8b4fe" size={140} />
+          </div>
+        )}
+      </RealStateLayout>
+    );
   }
 
   const lengthReview = reviews.filter(

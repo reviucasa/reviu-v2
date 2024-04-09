@@ -122,7 +122,7 @@ async function sendSignInEmail(
       <img
         src="https://reviu.vercel.app/logo.png"
         alt="Check Email"
-        width="180"
+        width="120"
         style="margin: 20px auto"
       />
       <div class="email-content">

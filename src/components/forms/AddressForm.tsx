@@ -118,6 +118,7 @@ export const AddressForm = () => {
   );
 
   const onSubmit = async () => {
+    setLoading(true);
     if (building && apartmentSelected) {
       if (draft?.address) {
         // TODO: add popup when if draft confirming they want to create a new draft with a new address
@@ -136,6 +137,7 @@ export const AddressForm = () => {
       /* revalidateUser(); */
       router.push(getUrlReview(stepReview));
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -215,6 +217,7 @@ export const AddressForm = () => {
             buttonClassName="btn-primary-500"
             disabled={!apartmentSelected}
             onClick={onSubmit}
+            loading={loading}
           >
             {t("addressReview.empezar")}
           </Button>

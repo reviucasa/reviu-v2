@@ -1,11 +1,12 @@
 "use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { ReviewDetail } from "@/components/organism/ReviewDetail";
-import { Review, getReview, getReviewsByBuidingId } from "@/models/review";
+import { Review, getReview } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { BounceLoader } from "react-spinners";
 
 export default function ReviewDetails({
   params,
@@ -31,7 +32,13 @@ export default function ReviewDetails({
   }
 
   if (!review) {
-    return <div>Loading...</div>;
+    return (
+      <MainLayout>
+        <div className="top-0 left-0 flex justify-center items-center w-full h-[100vh] z-50 bg-white opacity-90">
+          <BounceLoader color="#d8b4fe" size={140} />
+        </div>
+      </MainLayout>
+    );
   }
 
   return (

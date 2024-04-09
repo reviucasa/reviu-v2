@@ -374,34 +374,37 @@ export const ReviewDetail = ({
                 </div>
               </div>
 
-              <div className="border-b-2 lg:mb-8 mb-4 mt-4">
-                <h6 className="mb-2 lg:text-xl font-bold">
-                  {t("common.Imágenes")}
-                </h6>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
-                {review.data.opinion?.images.map((image, index) => (
-                  <div
-                    key={index}
-                    className="text-center cursor-pointer"
-                    onClick={() => {
-                      setSelectedImage(image);
-                      setOpenModalImage(!openModalImage);
-                    }}
-                  >
-                    <div className="flex flex-col relative text-center gap-y-2">
-                      <Image
-                        id={`image-preview-${index}`}
-                        src={image.url}
-                        width={100}
-                        height={100}
-                        className="rounded-md object-cover border border-gray-200 w-auto h-80"
-                        alt="selected image"
-                      />
-                      <p> {image.caption}</p>
+              {review.data.opinion?.images && (
+                <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                  <h6 className="mb-2 lg:text-xl font-bold">
+                    {t("common.Imágenes")}
+                  </h6>
+                </div>
+              )}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
+                {review.data.opinion?.images &&
+                  review.data.opinion?.images.map((image, index) => (
+                    <div
+                      key={index}
+                      className="text-center cursor-pointer"
+                      onClick={() => {
+                        setSelectedImage(image);
+                        setOpenModalImage(!openModalImage);
+                      }}
+                    >
+                      <div className="flex flex-col relative text-center gap-y-2">
+                        <Image
+                          id={`image-preview-${index}`}
+                          src={image.url}
+                          width={300}
+                          height={300}
+                          className="rounded-md object-cover border border-gray-200 w-auto h-80"
+                          alt="selected image"
+                        />
+                        <p> {image.caption}</p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
             <DialogImage

@@ -109,7 +109,10 @@
     "pisosTuristicos": "Tourist apartments",
     "skip": "Skip",
     "enQueDirección": "What's the address?",
+    "searchError": "Search error",
     "noSeEncontroDirección": "Address not found",
+    "buildingNotFound": "Building not found",
+    "agencyNotFound": "Agency not found",
     "1AñoViviendo": "1 year living there",
     "masDe": "More than",
     "añosViviendo": "years living there",
@@ -242,7 +245,10 @@
     "añosVar": "years",
     "reseñasYOpiniones": "Reviews of homes",
     "latestReviews": "Read the latest reviews",
-    "buscandoDirección": "Searching address...."
+    "buscandoDirección": "Searching address....",
+    "livedFrom": "Lived from",
+    "until": "until",
+    "movedIn": "Moved in on"
   },
   "communityReviews": {
     "comunidadVecinos": "Building",

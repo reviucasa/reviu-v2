@@ -29,7 +29,7 @@ export const DialogDrawer = ({
         onClose={() => setIsOpen(false)}
       >
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <HeadlessUIDialog.Backdrop className="fixed inset-0 bg-black/50" aria-hidden="true" />
+        <HeadlessUIDialog.Backdrop className="fixed inset-0 z-10 bg-black/50" aria-hidden="true" />
 
         {/* Full-screen container to center the panel */}
         <Transition.Child

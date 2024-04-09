@@ -1,4 +1,5 @@
 "use client";
+import { AddressComboBox } from "@/components/atoms/AddressComboBox";
 import { Button } from "@/components/atoms/Button";
 import { DropDownShare } from "@/components/atoms/DropDownShare";
 import { TabMenu } from "@/components/atoms/TabMenu";
@@ -12,15 +13,21 @@ import { GeneralValuation } from "@/components/organism/GeneralValuation";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { Analysis } from "@/models/analysis";
-import { Building, getBuilding } from "@/models/building";
-import { getReviewsByBuidingId, reviewConverter } from "@/models/review";
+import {
+  Building,
+  findBuildingByAddress,
+  getBuilding,
+} from "@/models/building";
+import { getReviewsByBuidingId } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import build from "next/dist/build";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
+import { BounceLoader } from "react-spinners";
+import lupa from "../../../../../public/lupa.png";
+import { FieldError } from "@/components/atoms/FieldError";
 
 export default function BuildingPage({
   params,
@@ -29,6 +36,8 @@ export default function BuildingPage({
 }) {
   const router = useRouter();
   const t = useTranslations();
+  const [selectedAddress, setSelectedAddress] = useState<string>();
+  const [error, setError] = useState<string>();
 
   const {
     data: building,
@@ -47,7 +56,7 @@ export default function BuildingPage({
   // Redirect if there's an error fetching the building
   if (isBuildingError) {
     console.error(buildingError);
-    router.push("/");
+    /* router.push("/"); */
   }
 
   // Construct the Analysis object once we have all the required data
@@ -69,8 +78,47 @@ export default function BuildingPage({
   const [activeSection, setActiveSection] =
     useState<string>("valuationGeneral");
 
+  const onSelectAddress = async (address: string) => {
+    setSelectedAddress(address);
+    if (address && address != "") {
+      const building = await findBuildingByAddress(address);
+      if (building) {
+        router.push(`/building/${building.id}`);
+      } else {
+        setError(t("common.noSeEncontroDirección"));
+      }
+    }
+  };
+
   if (!analysis) {
-    return <div>Loading...</div>;
+    return (
+      <MainLayout>
+        {buildingError ? (
+          <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
+            <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
+              {t("common.searchError")}
+            </span>
+            <h3>{t("common.buildingNotFound")}</h3>
+            <div className="flex flex-col w-full md:w-3/5 items-center md:items-start mt-12	">
+              <AddressComboBox
+                icon={lupa}
+                placeholder={t("common.buscar")}
+                className="lg:w-3/4 w-full"
+                selectedAddress={selectedAddress}
+                setSelectedAddress={onSelectAddress}
+              />
+              <div className="flex lg:w-3/4 w-full">
+                <FieldError className=" my-3">{error}</FieldError>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">
+            <BounceLoader color="#d8b4fe" size={140} />
+          </div>
+        )}
+      </MainLayout>
+    );
   }
 
   const sections: {
@@ -123,7 +171,10 @@ export default function BuildingPage({
               <h5 className="lg:text-3xl  font-secondary">
                 {analysis.address.split(",").slice(0, 2).join(" ")}
               </h5>
-              <p className="text-sm tracking-widest">0{building?.postalCode} / {building?.neighbourhood.toLocaleUpperCase()}</p>
+              <p className="text-sm tracking-widest">
+                0{building?.postalCode} /{" "}
+                {building?.neighbourhood.toLocaleUpperCase()}
+              </p>
             </div>
           ) : (
             <h5 className="lg:text-3xl mb-7">{analysis.reviews[0]?.address}</h5>

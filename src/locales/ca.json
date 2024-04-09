@@ -108,7 +108,10 @@
     "pisosTuristicos": "Pisos turístics",
     "skip": "Saltar",
     "enQueDirección": "A quina adreça es troba?",
+    "searchError": "Error de cerca",
     "noSeEncontroDirección": "No s'ha trobat l'adreça",
+    "buildingNotFound": "No s'ha trobat l'edifici",
+    "agencyNotFound": "No s'ha trobat la immobiliària",
     "1AñoViviendo": "1 any vivint-hi",
     "masDe": "Més de",
     "añosViviendo": "  anys vivint-hi",
@@ -241,7 +244,10 @@
     "añosVar": "anys",
     "reseñasYOpiniones": "Ressenyes i opinions de pisos reals",
     "latestReviews": "Llegeix les últimes opinions",
-    "buscandoDirección": "Buscant l'adreça...."
+    "buscandoDirección": "Buscant l'adreça....",
+    "livedFrom": "Hi va viure des del",
+    "until": "fins el",
+    "movedIn": "S'hi va traslladar el"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunitat de veïns",
