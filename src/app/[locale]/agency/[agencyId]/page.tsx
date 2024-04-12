@@ -16,7 +16,7 @@ import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { FieldError } from "@/components/atoms/FieldError";
 import cardBannerImage from "public/real-state-banner.jpg";
-import { RealStateLayout } from "@/components/layouts/RealStateLayout";
+import { MainLayout } from "@/components/layouts/MainLayout";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
 
   if (!reviews || !agency) {
     return (
-      <RealStateLayout>
+      <MainLayout>
         {agencyError ? (
           <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
             <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
@@ -75,7 +75,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
             <BounceLoader color="#d8b4fe" size={140} />
           </div>
         )}
-      </RealStateLayout>
+      </MainLayout>
     );
   }
 
@@ -84,7 +84,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
   ).length;
 
   return (
-    <RealStateLayout>
+    <MainLayout>
       <div className="lg:px-16 px-4 pt-10 pb-20 bg-white">
         <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
           {t("agency.informacionInmobiliaria")}
@@ -198,6 +198,6 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
           </div>
         </div>
       </div>
-    </RealStateLayout>
+    </MainLayout>
   );
 }
