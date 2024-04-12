@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { useState } from "react";
-import ImageBgLeft from "../../../public/ImgSlideLeft.svg";
-import ImageBgRigth from "../../../public/ImgSlideRigth.svg";
-import IconHouseLima from "../../../public/houseLima.svg";
+import ImageBgLeft from "public/ImgSlideLeft.svg";
+import ImageBgRigth from "public/ImgSlideRigth.svg";
+import IconHouseLima from "public/houseLima.svg";
 import { ProgressBarSlide } from "../atoms/ProgressBarSlide";
 import { TabMenuSlide } from "../atoms/TabMenuSlide";
 import { SectionsType } from "../sectionHome/sectionHeader";

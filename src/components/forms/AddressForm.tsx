@@ -3,7 +3,7 @@ import { Button } from "@/components/atoms/Button";
 import { FieldError } from "@/components/atoms/FieldError";
 import { AcceptDialog } from "@/components/dialogs/AcceptDialog";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
-import Message from "../../../public/message.png";
+import Message from "public/message.png";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";

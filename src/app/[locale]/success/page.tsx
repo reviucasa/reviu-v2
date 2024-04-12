@@ -2,7 +2,7 @@
 import { Button } from "@/components/atoms/Button";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import okhand from "../../../../public/ok-hand.png";
+import okhand from "public/ok-hand.png";
 import { useRouter } from "next/navigation";
 
 export default function Success() {

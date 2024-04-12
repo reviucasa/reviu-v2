@@ -26,8 +26,8 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
-import lupa from "../../../../../public/lupa.png";
-import cardBannerImage from "../../../../../public/leave-review-banner.jpg";
+import lupa from "public/lupa.png";
+import cardBannerImage from "public/leave-review-banner.jpg";
 import { FieldError } from "@/components/atoms/FieldError";
 
 export default function BuildingPage({

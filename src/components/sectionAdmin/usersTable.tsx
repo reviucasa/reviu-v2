@@ -1,8 +1,8 @@
 "use client";
 import { BiCheck, BiChevronRight, BiX } from "react-icons/bi";
 import Image from "next/image";
-import thumbDown from "../../../public/thumbDown.svg";
-import thumbUp from "../../../public/thumbUp.svg";
+import thumbDown from "public/thumbDown.svg";
+import thumbUp from "public/thumbUp.svg";
 import { Review, ReviewStatus, getReviews } from "@/models/review";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useQuery } from "@tanstack/react-query";

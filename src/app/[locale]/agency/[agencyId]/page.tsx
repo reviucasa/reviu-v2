@@ -1,14 +1,12 @@
 "use client";
 import { Label } from "@/components/atoms/Label";
-import { RealStateLayout } from "@/components/layouts/RealStateLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
-import green_house from "../../../../../public/green_house.png";
-import comillas from "../../../../../public/comillas.png";
-import lupa from "../../../../../public/lupa.png";
+import green_house from "public/green_house.png";
+import comillas from "public/comillas.png";
+import lupa from "public/lupa.png";
 import { useTranslations } from "next-intl";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
-import { reviewConfigParams } from "@/staticData";
 import { Review, getReviewsByAgencyId } from "@/models/review";
 import { RealStateAgency, getAgency } from "@/models/agency";
 import React, { useState } from "react";
@@ -17,7 +15,8 @@ import { BounceLoader } from "react-spinners";
 import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { FieldError } from "@/components/atoms/FieldError";
-import cardBannerImage from "../../../../../public/real-state-banner.jpg";
+import cardBannerImage from "public/real-state-banner.jpg";
+import { RealStateLayout } from "@/components/layouts/RealStateLayout";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
   const router = useRouter();

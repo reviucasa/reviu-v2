@@ -3,7 +3,7 @@ import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import Face from "../../../public/face.png";
+import Face from "public/face.png";
 import { useCallback, useEffect, useState } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdDone } from "react-icons/md";

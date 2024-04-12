@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Instagram from "../../../public/IconInstagram.svg";
-import TikTok from "../../../public/IconTikTok.svg";
-import Twitter from "../../../public/IconTwitter.svg";
-import LogoWhite from "../../../public/reviuLogoWhite.svg";
+import Instagram from "public/IconInstagram.svg";
+import TikTok from "public/IconTikTok.svg";
+import Twitter from "public/IconTwitter.svg";
+import LogoWhite from "public/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

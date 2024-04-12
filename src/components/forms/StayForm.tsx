@@ -3,7 +3,7 @@ import { FieldError } from "@/components/atoms/FieldError";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import { RadioInput } from "@/components/molecules/RadioInput";
 import { yupResolver } from "@hookform/resolvers/yup";
-import padlock from "../../../public/padlock.png";
+import padlock from "public/padlock.png";
 import { useEffect } from "react";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import { MdDone } from "react-icons/md";

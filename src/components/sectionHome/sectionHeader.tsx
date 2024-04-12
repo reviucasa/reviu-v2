@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
-import lupa from "../../../public/lupa.png";
+import lupa from "public/lupa.png";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";

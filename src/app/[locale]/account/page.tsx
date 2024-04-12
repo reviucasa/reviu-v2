@@ -10,8 +10,8 @@ import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
-import padlock from "../../../../public/padlock.png";
-import smallPadlock from "../../../../public/smallPadlock.png";
+import padlock from "public/padlock.png";
+import smallPadlock from "public/smallPadlock.png";
 import { useUser } from "@/hooks/swr/useUser";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -270,9 +270,11 @@ export default function Account() {
                       );
                     })}
                   </select>
-                  <div className="flex lg:flex-row lg:justify-between flex-col"> {/* TODO: Linkejar amb la pagina de privacy */}
+                  <div className="flex lg:flex-row lg:justify-between flex-col">
+                    {" "}
+                    {/* TODO: Linkejar amb la pagina de privacy */}
                     <p className="font-normal text-neutral-500 lg:w-3/4 w-full order-last lg:order-first">
-                      {t("account.textDataStatsFirstPart")}{" "} 
+                      {t("account.textDataStatsFirstPart")}{" "}
                       <span className="font-bold text-primary-900">
                         {t("common.politicaPrivacidad")}{" "}
                       </span>

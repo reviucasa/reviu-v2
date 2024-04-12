@@ -1,10 +1,10 @@
 import { Menu, Transition } from "@headlessui/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Share from "../../../public/IconShare.svg";
-import ShareWhatsapp from "../../../public/IconWhatsapp.svg";
-import Enlace from "../../../public/Icon_Enlace.svg";
-import ShareTwitter from "../../../public/ShareTwitter.svg";
+import Share from "public/IconShare.svg";
+import ShareWhatsapp from "public/IconWhatsapp.svg";
+import Enlace from "public/Icon_Enlace.svg";
+import ShareTwitter from "public/ShareTwitter.svg";
 import { Fragment, useEffect, useState } from "react";
 
 export const DropDownShare = () => {

@@ -1,8 +1,8 @@
 import { ImageRounded } from "@/components/atoms/ImageRounded";
 import Image from "next/image";
-import circulosection from "../../../public/circulosection.svg";
-import experiences from "../../../public/experiences.png";
-import sofa from "../../../public/sofa.png";
+import circulosection from "public/circulosection.svg";
+import experiences from "public/experiences.png";
+import sofa from "public/sofa.png";
 import { useTranslations } from "next-intl";
 
 type SectionExperiencesProps = {

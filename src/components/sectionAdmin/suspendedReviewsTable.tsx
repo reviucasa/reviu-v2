@@ -1,8 +1,8 @@
 "use client";
 import { BiChevronRight } from "react-icons/bi";
 import Image from "next/image";
-import thumbDown from "../../../public/thumbDown.svg";
-import thumbUp from "../../../public/thumbUp.svg";
+import thumbDown from "public/thumbDown.svg";
+import thumbUp from "public/thumbUp.svg";
 import {
   Review,
   ReviewStatus,

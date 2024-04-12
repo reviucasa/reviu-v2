@@ -1,7 +1,7 @@
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import Face from "../../../public/face.png";
+import Face from "public/face.png";
 import { Fragment } from "react";
 import { HiOutlineChevronUp } from "react-icons/hi";
 import { mutate } from "swr";

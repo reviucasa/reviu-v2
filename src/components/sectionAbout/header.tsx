@@ -1,6 +1,6 @@
 import Image from "next/image";
-import Union from "../../../public/Union.svg";
-import Vector from "../../../public/Vector.svg";
+import Union from "public/Union.svg";
+import Vector from "public/Vector.svg";
 import { useTranslations } from "next-intl";
 
 export type SectionsType = {

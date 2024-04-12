@@ -1,8 +1,7 @@
 "use client";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { LoginLayout } from "@/components/layouts/LoginLayout";
-import { useUser } from "@/hooks/swr/useUser";
-import LoginImg from "../../../../../public/login.png";
+import LoginImg from "public/login.png";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/auth";
