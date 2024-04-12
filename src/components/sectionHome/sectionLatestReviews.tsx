@@ -20,11 +20,14 @@ export function SectionLatestReviews() {
   const [latestReviews, setLatestReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
 
-  const fetchReviews = async (number?: number) => {
+  const fetchReviews = async (number: number) => {
     setLoading(true);
 
     try {
-      const response = await getReviews(number);
+      const response = await getReviews({
+        count: number,
+        startAfterTime: null,
+      });
       setLatestReviews(response);
     } catch (error) {
       console.log(error);

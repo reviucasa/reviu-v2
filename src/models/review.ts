@@ -17,11 +17,13 @@ import {
   where,
   serverTimestamp,
   Timestamp,
+  startAfter,
 } from "firebase/firestore";
 import { Apartment } from "./building";
+import { User, getUsersById } from "./user";
 
 export enum ReviewStatus {
-  Deleted = "deleted",
+  Suspended = "suspended",
   Reported = "reported",
   Published = "published",
 }
@@ -199,6 +201,15 @@ const updateReview = async (
   await updateDoc(ref, updatedFields);
 };
 
+// Suspend a review
+const suspendReview = async (id: string): Promise<void> => {
+  const ref = doc(db, "reviews", id);
+  await updateDoc(ref, {
+    status: ReviewStatus.Suspended,
+    timeUpdated: serverTimestamp(),
+  });
+};
+
 // Delete a review
 const deleteReview = async (id: string): Promise<void> => {
   const ref = doc(db, `reviews`, id);
@@ -206,13 +217,23 @@ const deleteReview = async (id: string): Promise<void> => {
 };
 
 // Retrieve reviews
-const getReviews = async (count?: number): Promise<Review[]> => {
+const getReviews = async ({
+  count,
+  startAfterTime,
+}: {
+  count: number;
+  startAfterTime: Timestamp | null;
+}): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  let q = query(ref, where("status", "!=", ReviewStatus.Deleted));
+  let q = query(ref, where("status", "!=", ReviewStatus.Suspended));
 
   // Conditionally add a limit
   if (count) {
     q = query(q, orderBy("timeCreated", "desc"), limit(count));
+  }
+
+  if (startAfterTime) {
+    q = query(q, startAfter(startAfterTime));
   }
 
   return getDocs(q)
@@ -222,6 +243,38 @@ const getReviews = async (count?: number): Promise<Review[]> => {
         return [];
       }
       return snapshot.docs.map((doc) => doc.data());
+    })
+    .catch((error) => {
+      console.error("Error fetching reviews:", error);
+      return [];
+    });
+};
+
+// Retrieve reviews
+const getReviewsWithUser = async ({
+  count,
+  startAfterTime,
+}: {
+  count: number;
+  startAfterTime: Timestamp | null;
+}): Promise<{ reviews: Review[]; users: User[] }> => {
+  const reviews = await getReviews({ count, startAfterTime });
+  const uids = Array.from(new Set(reviews.map((r) => r.userId)));
+  const users = await getUsersById(uids);
+  return { reviews, users };
+};
+// Retrieve suspended reviews
+const getSuspendedReviews = async (): Promise<Review[]> => {
+  const ref = collection(db, `reviews`).withConverter(reviewConverter);
+  let q = query(
+    ref,
+    orderBy("timeCreated", "desc"),
+    where("status", "==", ReviewStatus.Suspended)
+  );
+
+  return getDocs(q)
+    .then((snapshot) => {
+      return snapshot.empty ? [] : snapshot.docs.map((doc) => doc.data());
     })
     .catch((error) => {
       console.error("Error fetching reviews:", error);
@@ -253,8 +306,11 @@ export {
   getReview,
   publishReview,
   updateReview,
+  suspendReview,
   deleteReview,
   getReviews,
+  getReviewsWithUser,
+  getSuspendedReviews,
   getReviewsByBuidingId,
   getReviewsByAgencyId,
   reviewConverter,

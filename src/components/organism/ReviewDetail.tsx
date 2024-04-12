@@ -16,6 +16,10 @@ import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
 import { useRouter } from "next/navigation";
 import { DialogImage } from "../molecules/DialogImage";
+import { DialogDelete } from "../molecules/DialogDelete";
+import { Suspend } from "../atoms/Suspend";
+import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
+import { useAuth } from "@/context/auth";
 
 export const ReviewDetail = ({
   review,
@@ -24,13 +28,14 @@ export const ReviewDetail = ({
   openMoreInfo: boolean;
   setOpenMoreInfo: (value: boolean) => void;
 }) => {
+  const { claims } = useAuth();
   const t = useTranslations();
-  /* const { config } = useConfig(); */
   const router = useRouter();
   const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+  const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
   const [openModalImage, setOpenModalImage] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<ReviewImage>();
 
@@ -76,6 +81,11 @@ export const ReviewDetail = ({
                     className="lg:w-72 flex flex-col lg:gap-5 gap-2 lg:mt-4"
                     review={review}
                   />
+                  {claims.admin && ( // TODO: isAdmin?
+                    <div className="mt-8  pt-6 border-t border-gray-200">
+                      <ReviewStatusBadge status={review.status} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -417,12 +427,26 @@ export const ReviewDetail = ({
               setIsOpen={setOpenModalInfo}
               reviewId={review?.id}
             />
+            <DialogDelete
+              isOpen={openModalDelete}
+              setIsOpen={setOpenModalDelete}
+              reviewId={review?.id}
+            />
           </div>
-          <Report
-            onAction={() => {
-              setOpenModalInfo(!openModalInfo);
-            }}
-          />
+          <div className="flex flex-row justify-between">
+            <Report
+              onAction={() => {
+                setOpenModalInfo(!openModalInfo);
+              }}
+            />
+            {claims.admin && ( // TODO:
+              <Suspend
+                onAction={() => {
+                  setOpenModalDelete(!openModalDelete);
+                }}
+              />
+            )}
+          </div>
         </>
       )}
     </div>

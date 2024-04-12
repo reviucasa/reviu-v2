@@ -27,6 +27,7 @@ import React from "react";
 import { useState } from "react";
 import { BounceLoader } from "react-spinners";
 import lupa from "../../../../../public/lupa.png";
+import cardBannerImage from "../../../../../public/leave-review-banner.jpg";
 import { FieldError } from "@/components/atoms/FieldError";
 
 export default function BuildingPage({
@@ -226,6 +227,7 @@ export default function BuildingPage({
                 className="sticky top-10"
                 text={t("common.quieresDejarOpinion")}
                 textButton={t("common.escribeOpinion")}
+                image={cardBannerImage}
               />
             </div>
             <AreaResume

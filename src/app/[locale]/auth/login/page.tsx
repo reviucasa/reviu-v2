@@ -5,9 +5,10 @@ import { useUser } from "@/hooks/swr/useUser";
 import LoginImg from "../../../../../public/login.png";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth";
 
 export default function Login() {
-  const { user } = useUser();
+  const { user } = useAuth();
   const router = useRouter();
 
   useEffect(() => {

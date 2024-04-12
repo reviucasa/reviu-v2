@@ -5,6 +5,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/firebase/config";
+import { sendSignInLink } from "@/firebase/auth";
 
 let schema = yup.object().shape({
   email: yup.string().required().email(),
@@ -29,25 +30,25 @@ export const LoginForm = () => {
     const email = refEmail.current?.value;
     setLoading(true);
     if (validForm) {
-      /* await sendSignInLink(email!); */
-
-      const sendSignInLinkToEmail = httpsCallable(
-        functions,
-        "sendSignInLinkToEmail"
-      );
-      // Call the function and pass data
-      try {
-        const response = await sendSignInLinkToEmail({ email, locale });
-        window.localStorage.setItem("email", email || "none");
-        console.log(response);
+      if (window.location.hostname == "localhost") {
+        await sendSignInLink(email!);
         router.push("/auth/checkEmail");
-        /* const tx = result.data;
-          console.log(tx); */
-        /* await addTransaction({ ...tx } as Transaction); */
-      } catch (error) {
-        console.error("Function call failed:", error);
-        setLoading(false);
-        throw error;
+      } else {
+        const sendSignInLinkToEmail = httpsCallable(
+          functions,
+          "sendSignInLinkToEmail"
+        );
+        // Call the function and pass data
+        try {
+          const response = await sendSignInLinkToEmail({ email, locale });
+          window.localStorage.setItem("email", email || "none");
+          console.log(response);
+          router.push("/auth/checkEmail");
+        } catch (error) {
+          console.error("Function call failed:", error);
+          setLoading(false);
+          throw error;
+        }
       }
     }
     setLoading(false);

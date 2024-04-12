@@ -1,6 +1,6 @@
 "use client";
 import { Label } from "@/components/atoms/Label";
-import { RealStateLayout } from "@/components/layouts/realStateLayout";
+import { RealStateLayout } from "@/components/layouts/RealStateLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
 import green_house from "../../../../../public/green_house.png";
@@ -17,6 +17,7 @@ import { BounceLoader } from "react-spinners";
 import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { FieldError } from "@/components/atoms/FieldError";
+import cardBannerImage from "../../../../../public/real-state-banner.jpg";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
   const router = useRouter();
@@ -192,6 +193,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
                 textButton={t("agency.contactaNosotros")}
                 colorButton="btn-secondary-500"
                 bgCard="bg-secondary-200"
+                image={cardBannerImage}
               />
             </div>
           </div>

@@ -1,14 +1,20 @@
-import { doc, getDoc, Firestore } from "firebase/firestore";
+import {
+  doc,
+  getDoc,
+  Firestore,
+  FirestoreDataConverter,
+} from "firebase/firestore";
 import { storage } from "./config";
 import { getDownloadURL, ref, uploadString } from "firebase/storage";
 
 export async function getDocumentsByIds<T>(
   firestore: Firestore,
   collectionPath: string,
+  converter: FirestoreDataConverter<T>,
   ids: string[]
 ): Promise<T[]> {
   const promises = ids.map((id) => {
-    const docRef = doc(firestore, collectionPath, id);
+    const docRef = doc(firestore, collectionPath, id).withConverter(converter);
     return getDoc(docRef);
   });
 

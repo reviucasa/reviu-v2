@@ -79,7 +79,14 @@ export function Footer() {
             >
               {t("common.terminosYCondiciones")}
             </li>
-            <li>{t("common.cookies")}</li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/cookies");
+              }}
+            >
+              {t("common.cookies")}
+            </li>
           </ul>
         </div>
       </div>

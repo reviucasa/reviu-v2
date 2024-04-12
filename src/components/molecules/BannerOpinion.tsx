@@ -1,5 +1,4 @@
-import Image from "next/image";
-import cardBanner from "../../../public/cardbanner.png";
+import Image, { StaticImageData } from "next/image";
 import { Button } from "../atoms/Button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -11,6 +10,7 @@ export const BannerOpinion = ({
   textButton,
   colorButton = "btn-primary-500",
   bgCard = "bg-primary-100",
+  image,
 }: {
   className?: string;
   text?: string;
@@ -18,6 +18,7 @@ export const BannerOpinion = ({
   textButton?: string;
   colorButton?: string;
   bgCard?: string;
+  image: StaticImageData;
 }) => {
   const router = useRouter();
   const t = useTranslations();
@@ -41,7 +42,7 @@ export const BannerOpinion = ({
         </Button>
       </div>
       <div className="relative min-h-[180px]">
-        <Image src={cardBanner} fill alt="" className="object-cover" priority />
+        <Image src={image} fill alt="" className="object-cover" priority />
       </div>
     </div>
   );

@@ -7,6 +7,40 @@ import translations from "./translations";
 
 admin.initializeApp();
 
+export const addAdminRole = functions.region("europe-west1").https.onCall(
+  async (data: {email: string}, context: functions.https.CallableContext) => {
+    // Ensure the user is authenticated
+    if (!context.auth) {
+      throw new functions.https.HttpsError(
+        "unauthenticated",
+        "Request not authenticated"
+      );
+    }
+
+    // Check if the request is made by an admin
+    if (context.auth.token.admin !== true) {
+      throw new functions.https.HttpsError(
+        "permission-denied",
+        "Only admins can add other admins"
+      );
+    }
+
+    // Get the user by email and add the custom claim
+    return admin
+      .auth()
+      .getUserByEmail(data.email)
+      .then((user) => {
+        return admin.auth().setCustomUserClaims(user.uid, {admin: true});
+      })
+      .then(() => {
+        return {message: `Success! ${data.email} has been made an admin.`};
+      })
+      .catch((err) => {
+        throw new functions.https.HttpsError("internal", err.message);
+      });
+  }
+);
+
 const actionCodeSettings = {
   // URL must be in the authorized domains list in the Firebase Console.
   url: "https://reviu.vercel.app/" /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,

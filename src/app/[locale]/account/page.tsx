@@ -270,9 +270,9 @@ export default function Account() {
                       );
                     })}
                   </select>
-                  <div className="flex lg:flex-row lg:justify-between flex-col">
+                  <div className="flex lg:flex-row lg:justify-between flex-col"> {/* TODO: Linkejar amb la pagina de privacy */}
                     <p className="font-normal text-neutral-500 lg:w-3/4 w-full order-last lg:order-first">
-                      {t("account.textDataStatsFirstPart")}{" "}
+                      {t("account.textDataStatsFirstPart")}{" "} 
                       <span className="font-bold text-primary-900">
                         {t("common.politicaPrivacidad")}{" "}
                       </span>
@@ -307,7 +307,7 @@ export default function Account() {
                   </div>
                   <span
                     className="flex text-red-600 font-medium items-center cursor-pointer"
-                    onClick={() => {} /* deleteUser */}
+                    onClick={() => {} /* deleteUser */} // TODO: only delete account or account + reviews
                   >
                     {t("account.eliminarCuenta")}
                   </span>
