@@ -12,6 +12,7 @@ export const Dialog = ({
   panelClassName,
   className,
   iconClose,
+  onClose,
 }: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
@@ -21,12 +22,16 @@ export const Dialog = ({
   panelClassName?: string;
   className?: string;
   iconClose?: boolean;
+  onClose?: () => void;
 }) => {
   return (
     <HeadlessUIDialog
       className="relative z-50"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={() => {
+        setIsOpen(false);
+        if (onClose) onClose();
+      }}
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <HeadlessUIDialog.Backdrop
@@ -53,7 +58,7 @@ export const Dialog = ({
           )}
           <div
             className={clsx(
-              "overflow-auto lg:p-10 p-4 max-h-full mx-auto",
+              "overflow-auto lg:p-10 p-8 max-h-full mx-auto",
               className
             )}
           >

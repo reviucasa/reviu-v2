@@ -282,7 +282,7 @@ const getSuspendedReviews = async (): Promise<Review[]> => {
     });
 };
 
-// Retrieve a building by CatastroID
+// Retrieve building reviews
 const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
   const q = query(ref, where("buildingId", "==", buildingId));
@@ -295,6 +295,14 @@ const getReviewsByAgencyId = async (agencyId: string): Promise<Review[]> => {
   const q = query(ref, where("data.management.agencyId", "==", agencyId));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data() as Review); // Cast to Review type if necessary
+};
+
+// Retrieve user reviews
+const getReviewsFromUser = async (uid: string): Promise<Review[]> => {
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(ref, where("userId", "==", uid));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((e) => e.data());
 };
 
 export {
@@ -313,5 +321,6 @@ export {
   getSuspendedReviews,
   getReviewsByBuidingId,
   getReviewsByAgencyId,
+  getReviewsFromUser,
   reviewConverter,
 };
