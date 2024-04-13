@@ -382,10 +382,19 @@
     "howToDisableCookies4": "Google Chrome",
     "howToDisableCookies5": "Firefox",
     "howToDisableCookies6": "Safari",
-    
+
     "moreInfo": "5. MORE INFORMATION",
     "moreInfo1": "We hope we have clarified how and why we use cookies. If anything is still unclear, please do not hesitate to contact us at: ",
-    "infoEmail": "info@reviucasa.com"
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Type",
+    "ownership": "Ownership",
+    "definition": "Definition",
+    "retentionPeriod": "Retention Period",
+    "technicalCookie": "Technical",
+    "preferenceCookie": "Preference",
+    "localeCookieDefinition": "Record of user's preferred language",
+    "session": "Session"
   },
   "experiences": {
     "howItWork": "How does it work",

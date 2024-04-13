@@ -384,7 +384,16 @@
 
     "moreInfo": "5. MÁS INFORMACIÓN",
     "moreInfo1": "Esperamos haber aclarado cómo y por qué utilizamos cookies. En caso de que algo siga sin estar claro, no dude en ponerse en contacto con nosotros en: ",
-    "infoEmail": "info@reviucasa.com"
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Tipo",
+    "ownership": "Titularidad",
+    "definition": "Definición",
+    "retentionPeriod": "Plazo de conservación",
+    "technicalCookie": "Técnica",
+    "preferenceCookie": "Preferencia",
+    "localeCookieDefinition": "Registro del idioma de preferencia del usuario",
+    "session": "Sessión"
   },
   "experiences": {
     "howItWork": "Cómo funciona",

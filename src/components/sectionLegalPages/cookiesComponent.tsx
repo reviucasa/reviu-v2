@@ -1,6 +1,16 @@
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 
+const cookiesList = [
+  {
+    name: "NEXT_LOCALE",
+    type: "technicalCookie",
+    ownership: "reviuCasa",
+    definition: "localeCookieDefinition",
+    retentionPeriod: "session",
+  },
+];
+
 export function CookiesComponent({ className }: { className?: string }) {
   const t = useTranslations("cookies");
   const router = useRouter();
@@ -127,9 +137,77 @@ export function CookiesComponent({ className }: { className?: string }) {
         <h5 className="my-2 font-extrabold">{t("moreInfo")}</h5>
         <p>
           {t("moreInfo1")}
-          <span className="text-blue-500">{t("infoEmail")}</span>
-          .
+          <span className="text-blue-500">{t("infoEmail")}</span>.
         </p>
+      </div>
+      <div className="sm:flex sm:items-center">
+        <h5 className="my-2 font-extrabold">COOKIES</h5>
+      </div>
+      <div className="mt-6 flow-root">
+        <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
+          <div className="inline-block min-w-full py-2align-middle sm:px-6 lg:px-8">
+            <div className="overflow-hidden  ">
+              <table className="min-w-full divide-y divide-gray-300">
+                <thead className="bg-gray-50">
+                  <tr>
+                    <th
+                      scope="col"
+                      className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                    >
+                      Cookie
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      {t("type")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      {t("ownership")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      {t("definition")}
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      {t("retentionPeriod")}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-200 bg-white">
+                  {cookiesList.map((cookie) => (
+                    <tr key={cookie.name}>
+                      <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                        {cookie.name}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                        {t(cookie.type)}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                        {t(cookie.ownership)}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                        {t(cookie.definition)}
+                      </td>
+                      <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                        {t(cookie.retentionPeriod)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

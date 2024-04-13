@@ -346,7 +346,7 @@
     "users": "Usuaris",
     "ownershipAndUsage4": "'). Reviu Casa utilitza aquesta informació per a gestionar i millorar el bon funcionament del Lloc web.",
     "ownershipAndUsage5": "Aquesta política descriu quina informació recullen aquestes cookies, com s'utilitzen i per a què. També s'indica com l'Usuari pot restringir o bloquejar la descàrrega automàtica de les cookies, tanmateix, això podria reduir o fins i tot dificultar uns certs elements de la funcionalitat del Lloc web.",
-    
+
     "cookieDefinition": "1. DEFINICIÓ DE COOKIES",
     "cookieDefinition1": "Les cookies són petits arxius de text que es col·loquen en l'ordinador, telèfon intel·ligent o un altre dispositiu de l'Usuari quan accedeix a Internet. Això es fa per a millorar l'experiència de l'Usuari i per a altres fins, com reconèixer als Usuaris en l'accés al Lloc, garantir la seguretat del seu compte i oferir publicitat dirigida.",
     "cookieDefinition2": "Per a obtenir més informació general sobre les cookies, consulti el següent ",
@@ -373,7 +373,7 @@
     "preferenceCookiesDesc": ": són cookies que s'instal·len a fi de personalitzar l'experiència d'Usuari (això és, en la forma en la qual unes certes finestres emergiran o no en la navegació de l'Usuari) conforme als consentiments i preferències que, si és el cas, l'Usuari manifesti durant la seva navegació en el Lloc web, com ara realitzar un control sobre l'acceptació de la present Política de Cookies per part del propi Usuari (això suposarà que no apareixerà més el baner d'avís de cookies, amb la seva corresponent acceptació o no, per a l'Usuari). Com en el cas de les cookies analítiques, la base legítima que ens permet recollir aquestes dades de l'Usuari a través d'aquestes cookies de preferència és el consentiment de l'Usuari.",
 
     "typesOfCookiesUsed3": "Pot trobar la llista detallada de les cookies que utilitzem, la tipologia, la finalitat i la durada de cadascuna d'elles en la taula de cookies que apareix a continuació. (Annex I).",
-    
+
     "howToDisableCookies": "4. DESACTIVAR COOKIES",
     "howToDisableCookies1": "L'Usuari pot restringir o limitar la col·locació de cookies ajustant la configuració del seu navegador. No obstant això, si selecciona aquesta configuració, és possible que no pugui accedir a unes certes parts del Lloc web o la visualització deficient dels seus continguts, la qual cosa provocarà una navegació menys eficient i tal vegada no pot aprofitar alguns dels serveis disponibles. Per tant, es recomana que no les desactivi.",
     "howToDisableCookies2": "Si desitja desactivar les cookies, vagi al menú de Preferències del Navegador o a la configuració del Navegador i busqui la secció de Privacitat. A tall d'exemple, pot seguir les següents instruccions:",
@@ -381,10 +381,19 @@
     "howToDisableCookies4": "Google Chrome",
     "howToDisableCookies5": "Firefox",
     "howToDisableCookies6": "Safari",
-   
+
     "moreInfo": "5. MÉS INFORMACIÓ",
     "moreInfo1": "Esperem haver aclarit com i per què utilitzem cookies. En cas que alguna cosa segueixi sense ser clar, no dubti a posar-se en contacte amb nosaltres en: ",
-    "infoEmail": "info@reviucasa.com"
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Tipus",
+    "ownership": "Titularitat",
+    "definition": "Definició",
+    "retentionPeriod": "Plaç de conservació",
+    "technicalCookie": "Tècnica",
+    "preferenceCookie": "Preferència",
+    "localeCookieDefinition": "Registre de l'idioma de preferència de l'usuari",
+    "session": "Sessió"
   },
   "experiences": {
     "howItWork": "Com funciona",
