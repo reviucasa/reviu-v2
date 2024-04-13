@@ -81,17 +81,6 @@ export const RegisterForm = () => {
 
     setLoading(false);
 
-    /* await registerUser({
-      ...data,
-      birthday: dayjs(data.birthday).format("DD/MM/YYYY"),
-    });
-    revalidateUser();
-    const prevRoute = localStorage.getItem("prevRoute");
-    */
-
-    /* if (user) {
-      router.back();
-    } */
   };
 
   return (

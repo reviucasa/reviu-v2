@@ -178,13 +178,25 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                         className="!w-full"
                         buttonClassName="content-center"
                         onClick={() => {
-                          localStorage.setItem("prevRoute", pathname);
                           router.push("/account");
                         }}
                       >
                         {t("common.cuenta")}
                       </Button>
                     </Menu.Item>
+                    {auth.claims.admin == true && (
+                      <Menu.Item>
+                        <Button
+                          className="!w-full  text-secondary-500"
+                          buttonClassName="content-center"
+                          onClick={() => {
+                            router.push("/admin");
+                          }}
+                        >
+                          Admin
+                        </Button>
+                      </Menu.Item>
+                    )}
                     <Menu.Item>
                       {({ active }) => (
                         <Link

@@ -64,6 +64,22 @@ export const UserMenuNavbar = () => {
                     </span>
                   )}
                 </Menu.Item>
+                {auth.claims.admin == true && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <span
+                        className={`p-2 text-secondary-500 cursor-pointer ${
+                          active && "bg-secondary-200"
+                        }`}
+                        onClick={() => {
+                          router.push("/admin");
+                        }}
+                      >
+                        Admin
+                      </span>
+                    )}
+                  </Menu.Item>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <Link
