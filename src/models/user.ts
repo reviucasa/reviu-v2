@@ -28,6 +28,7 @@ export enum UserStatus {
 export enum UserType {
   User = "user",
   Agency = "agency",
+  Admin = "admin",
 }
 
 export type User = {

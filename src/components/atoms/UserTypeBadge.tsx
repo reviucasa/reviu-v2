@@ -2,12 +2,18 @@ import { UserStatus, UserType } from "@/models/user";
 
 export const UserTypeBadge = ({ type }: { type: UserType }) => {
   const color =
-    type == UserType.User
-      ? { bg: "bg-blue-100", text: "text-blue-800", fill: "fill-blue-500" }
+    type == UserType.Admin
+      ? { bg: "bg-purple-100", text: "text-purple-800", fill: "fill-purple-500" }
+      : type == UserType.User
+      ? {
+          bg: "bg-blue-100",
+          text: "text-blue-800",
+          fill: "fill-blue-500",
+        }
       : {
-          bg: "bg-purple-100",
-          text: "text-purple-800",
-          fill: "fill-purple-500",
+          bg: "bg-pink-100",
+          text: "text-pink-800",
+          fill: "fill-pink-500",
         };
 
   return (

@@ -1,29 +1,25 @@
 "use client";
-import { BiCheck, BiChevronRight, BiX } from "react-icons/bi";
-import Image from "next/image";
-import thumbDown from "public/thumbDown.svg";
-import thumbUp from "public/thumbUp.svg";
-import { Review, ReviewStatus, getReviews } from "@/models/review";
-import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
+import { BiCheck, BiX } from "react-icons/bi";
 import { useQuery } from "@tanstack/react-query";
 import { BounceLoader } from "react-spinners";
 import { useState } from "react";
-import { ModalInfo } from "../molecules/ModalInfo";
 import { Timestamp } from "firebase/firestore";
 import { User, UserStatus, UserType, getUsers } from "@/models/user";
 import { UserStatusBadge } from "../atoms/UserStatusBadge";
 import { UserTypeBadge } from "../atoms/UserTypeBadge";
+import { DropDownUserOptions } from "./DropDownUserOptions";
 
 export default function UsersTable() {
-  const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-  const [selectedReview, setSelectedReview] = useState<Review>();
-
   const [paginationIndex, setPaginationIndex] = useState<number>(0);
   const [paginationTimes, setPaginationTimes] = useState<Timestamp[]>([]);
 
   const [startAfterTime, setStartAfterTime] = useState<Timestamp | null>(null);
 
-  const { data: users, isFetching } = useQuery<User[] | undefined, Error>({
+  const {
+    data: users,
+    isFetching,
+    refetch,
+  } = useQuery<User[] | undefined, Error>({
     queryKey: ["users", startAfterTime],
     queryFn: () => getUsers({ count: 10, startAfterTime }),
   });
@@ -36,18 +32,18 @@ export default function UsersTable() {
       let firstReviewTime = firstUser.timeCreated.toDate();
       firstReviewTime.setSeconds(firstReviewTime.getSeconds() + 1);
       const time = Timestamp.fromDate(firstReviewTime);
-
-      setPaginationIndex(paginationIndex + 1);
-      setPaginationTimes((prev) => [...prev, time]);
+      if (paginationTimes.length == paginationIndex)
+        setPaginationTimes((prev) => [...prev, time]);
       const lastUser = users[users.length - 1];
       setStartAfterTime(lastUser.timeCreated);
+      setPaginationIndex(paginationIndex + 1);
     }
   };
 
   const fetchPrev = () => {
     if (users && users.length > 0) {
       setPaginationIndex(paginationIndex - 1);
-      setStartAfterTime(paginationTimes[paginationIndex]);
+      setStartAfterTime(paginationTimes[paginationIndex - 1]);
     }
   };
 
@@ -56,17 +52,17 @@ export default function UsersTable() {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Reviews
+            Users
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the reviews registered in the app.
+            A list of all the users registered in the app.
           </p>
         </div>
       </div>
       <div className="mt-6 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
@@ -74,13 +70,13 @@ export default function UsersTable() {
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      Name
+                      Email
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900 whitespace-nowrap "
                     >
-                      Last name
+                      Name
                     </th>
                     <th
                       scope="col"
@@ -126,14 +122,14 @@ export default function UsersTable() {
                       Created
                     </th>
                     <th scope="col" className="relative py-2 pl-3 pr-4 sm:pr-6">
-                      <span className="sr-only">See more</span>
+                      <span className="sr-only">Make Admin</span>
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {isFetching || !users ? (
                     <tr>
-                      <td colSpan={8}>
+                      <td colSpan={10}>
                         <div className="flex justify-center items-center h-[446px] z-50 bg-white opacity-90">
                           <BounceLoader color="#d8b4fe" size={140} />
                         </div>
@@ -143,10 +139,10 @@ export default function UsersTable() {
                     users.map((user) => (
                       <tr key={user.id}>
                         <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                          {user.name}
+                          {user.email}
                         </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          {user.lastname}
+                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                          {user.name + " " + user.lastname}
                         </td>
                         <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                           {user.birthday}
@@ -183,16 +179,8 @@ export default function UsersTable() {
                               month: "short", // Display an abbreviated version of the month
                             })}
                         </td>
-                        <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <div
-                            onClick={() => {
-                              /* setSelectedReview(review);
-                              setOpenMoreInfo(!openMoreInfo); */
-                            }}
-                            className="text-secondary-500 cursor-pointer hover:text-secondary-300"
-                          >
-                            <BiChevronRight className="h-6 w-6" />
-                          </div>
+                        <td className="whitespace-nowrap py-2.5 pl-3 pr-4 text-sm sm:pr-6">
+                          <DropDownUserOptions user={user} refetch={refetch} />
                         </td>
                       </tr>
                     ))
@@ -221,11 +209,6 @@ export default function UsersTable() {
           </div>
         </div>
       </div>
-      {/* <ModalInfo
-        openMoreInfo={openMoreInfo}
-        setOpenMoreInfo={setOpenMoreInfo}
-        review={selectedReview!}
-      /> */}
     </div>
   );
 }

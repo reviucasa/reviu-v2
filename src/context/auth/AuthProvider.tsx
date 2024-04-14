@@ -2,6 +2,8 @@
 import { auth } from "@/firebase/config";
 import {
   User as FirebaseUser,
+  IdTokenResult,
+  ParsedToken,
   getIdTokenResult,
   onAuthStateChanged,
 } from "firebase/auth";
@@ -19,6 +21,16 @@ export const protectedUrls = [
   "/review/neighbourhood",
   "/success",
   "/account",
+];
+
+export const adminUrls = [
+  "/admin",
+  "/admin/reviews",
+  "/admin/reviews/suspended",
+  "/admin/reviews/reported",
+  "/admin/users",
+  "/admin/blog",
+  "/admin/blog/new",
 ];
 
 interface AuthContextProps {
@@ -41,7 +53,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
 
   const [user, setUser] = useState<FirebaseUser | null>(null);
-  const [claims, setClaims] = useState({});
+  const [claims, setClaims] = useState<ParsedToken>();
   const [initializing, setInitializing] = useState(true);
 
   useEffect(() => {
@@ -49,12 +61,21 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (!user) {
         setUser(null);
         // User is signed out
+        if (adminUrls.includes(pathname)) {
+          router.replace("/");
+          return;
+        }
         if (protectedUrls.includes(pathname)) {
           router.push("/auth/login");
         }
       } else if (user) {
         const tokenResult = await getIdTokenResult(user);
         setClaims(tokenResult.claims);
+
+        if (tokenResult.claims.admin != true && adminUrls.includes(pathname)) {
+          router.replace("/");
+          return;
+        }
         // User is signed in
         if (
           user.displayName ===

@@ -1,11 +1,11 @@
 "use client";
 import AdminLayout from "@/components/layouts/AdminLayout";
-import SectionStats from "@/components/sectionAdmin/sectionStats";
+import UsersTable from "@/components/sectionAdmin/usersTable";
 
-export default function Admin() {
+export default function Page() {
   return (
     <AdminLayout>
-      <SectionStats />
+      <UsersTable />
     </AdminLayout>
   );
 }

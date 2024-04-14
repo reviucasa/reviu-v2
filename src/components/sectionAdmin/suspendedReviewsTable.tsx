@@ -1,5 +1,5 @@
 "use client";
-import { BiChevronRight } from "react-icons/bi";
+import { BiBlock, BiChevronRight, BiFlag } from "react-icons/bi";
 import Image from "next/image";
 import thumbDown from "public/thumbDown.svg";
 import thumbUp from "public/thumbUp.svg";
@@ -34,22 +34,22 @@ export default function SuspendedReviewsTable() {
   const fetchNext = () => {
     if (reviews && reviews.length > 0) {
       const firstReview = reviews[0];
-      // Add 1 second to the first review in every page so we don't miss that review
+      // Add 1 second to the first review time in every page so we don't miss that review
       let firstReviewTime = firstReview.timeCreated.toDate();
       firstReviewTime.setSeconds(firstReviewTime.getSeconds() + 1);
       const time = Timestamp.fromDate(firstReviewTime);
-
-      setPaginationIndex(paginationIndex + 1);
-      setPaginationTimes((prev) => [...prev, time]);
+      if (paginationTimes.length == paginationIndex)
+        setPaginationTimes((prev) => [...prev, time]);
       const lastReview = reviews[reviews.length - 1];
       setStartAfterTime(lastReview.timeCreated);
+      setPaginationIndex(paginationIndex + 1);
     }
   };
 
   const fetchPrev = () => {
     if (reviews && reviews.length > 0) {
       setPaginationIndex(paginationIndex - 1);
-      setStartAfterTime(paginationTimes[paginationIndex]);
+      setStartAfterTime(paginationTimes[paginationIndex - 1]);
     }
   };
 
@@ -57,11 +57,13 @@ export default function SuspendedReviewsTable() {
     <div className="">
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
+          {/* <BiBlock className="text-red-400 w-5 h-5 my-4 " /> */}
+
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Suspended Reviews
+            <span>Suspended Reviews</span>
           </h1>
           <p className="mt-2 text-sm text-gray-700">
-            A list of all the suspended reviews in the app.
+            A list of all the suspended reviews.
           </p>
         </div>
         {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
@@ -76,7 +78,7 @@ export default function SuspendedReviewsTable() {
       <div className="mt-6 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>

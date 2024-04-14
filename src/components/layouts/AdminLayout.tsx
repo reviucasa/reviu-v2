@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import Logo from "public/reviuLogo.svg";
-import { Fragment, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   BiBlock,
@@ -9,31 +9,30 @@ import {
   BiFolder,
   BiHome,
   BiMenu,
+  BiPencil,
   BiReceipt,
   BiUser,
   BiX,
 } from "react-icons/bi";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/context/auth";
 
 const navigation = [
-  { title: "", items: [{ name: "Dashboard", href: "admin", icon: BiHome }] },
+  { title: "", items: [{ name: "Dashboard", href: "/admin", icon: BiHome }] },
   {
     title: "Reviews",
-    items: [
-      { name: "Reviews", href: "admin/reviews/", icon: BiReceipt },
-      { name: "Reports", href: "admin/reviews/reports", icon: BiFlag },
-    ],
+    items: [{ name: "Reviews", href: "/admin/reviews/", icon: BiReceipt }],
   },
   {
     title: "Users",
-    items: [
-      { name: "Users", href: "admin/users/", icon: BiUser },
-      { name: "Blocked", href: "admin/users/blocked", icon: BiBlock },
-    ],
+    items: [{ name: "Users", href: "/admin/users/", icon: BiUser }],
   },
   {
     title: "Blog",
-    items: [{ name: "Posts", href: "admin/blog", icon: BiFolder }],
+    items: [
+      { name: "New Post", href: "/admin/blog/new", icon: BiPencil },
+      { name: "All Posts", href: "/admin/blog", icon: BiFolder },
+    ],
   },
 ];
 
@@ -44,6 +43,31 @@ export default function AdminLayout({
 }) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  /* useEffect(() => {
+    const handleVerify = async () => {
+      try {
+        if (!claims.admin) {
+          router.replace("/");
+        } else {
+          setIsLoading(false);
+        }
+      } catch (error) {
+        console.error("Error verifying admin status:", error);
+        router.replace("/");
+      }
+    };
+
+    if (user) {
+      handleVerify();
+    } else {
+      if (!initializing && !user) router.replace("/");
+    }
+  }, [claims, initializing, router, user]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  } */
 
   return (
     <div>
@@ -179,14 +203,12 @@ export default function AdminLayout({
                         <a
                           href={item.href}
                           className={
-                            " hover:text-primary-200 text-gray-800 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6"
+                            "  text-gray-800 hover:bg-gray-100 group flex gap-x-3 p-2 text-sm leading-6"
                           }
                           style={{ textDecoration: "none" }}
                         >
                           <item.icon
-                            className={
-                              "text-primary-300 group-hover:text-primary-200 h-5 w-5 shrink-0"
-                            }
+                            className={"text-primary-300  h-5 w-5 shrink-0"}
                             aria-hidden="true"
                           />
                           <span className="truncate">{item.name}</span>
@@ -224,7 +246,7 @@ export default function AdminLayout({
       </div>
 
       <main className="py-10 lg:pl-64">
-        <div className="px-4 sm:px-6 lg:px-8 space-y-10">{children}</div>
+        <div className="px-4 sm:px-6 lg:px-8 space-y-10 pb-10">{children}</div>
       </main>
     </div>
   );

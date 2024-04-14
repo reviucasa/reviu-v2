@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.6",
+    "@headlessui-float/react": "^0.13.3",
     "@headlessui/react": "^1.7.18",
     "@hookform/resolvers": "^3.3.4",
     "@tailwindcss/forms": "^0.5.7",

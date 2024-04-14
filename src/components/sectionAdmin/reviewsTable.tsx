@@ -42,22 +42,22 @@ export default function ReviewsTable() {
   const fetchNext = () => {
     if (data && data.reviews.length > 0) {
       const firstReview = data.reviews[0];
-      // Add 1 second to the first review in every page so we don't miss that review
+      // Add 1 second to the first review time in every page so we don't miss that review
       let firstReviewTime = firstReview.timeCreated.toDate();
       firstReviewTime.setSeconds(firstReviewTime.getSeconds() + 1);
       const time = Timestamp.fromDate(firstReviewTime);
-
-      setPaginationIndex(paginationIndex + 1);
-      setPaginationTimes((prev) => [...prev, time]);
+      if (paginationTimes.length == paginationIndex)
+        setPaginationTimes((prev) => [...prev, time]);
       const lastReview = data.reviews[data.reviews.length - 1];
       setStartAfterTime(lastReview.timeCreated);
+      setPaginationIndex(paginationIndex + 1);
     }
   };
 
   const fetchPrev = () => {
     if (data && data.reviews.length > 0) {
       setPaginationIndex(paginationIndex - 1);
-      setStartAfterTime(paginationTimes[paginationIndex]);
+      setStartAfterTime(paginationTimes[paginationIndex - 1]);
     }
   };
 
@@ -84,7 +84,7 @@ export default function ReviewsTable() {
       <div className="mt-6 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2align-middle sm:px-6 lg:px-8">
-            <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 sm:rounded-lg">
+            <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>

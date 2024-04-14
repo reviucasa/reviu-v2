@@ -1,11 +1,10 @@
 "use client";
 import AdminLayout from "@/components/layouts/AdminLayout";
-import SectionStats from "@/components/sectionAdmin/sectionStats";
 
-export default function Admin() {
+export default function Page() {
   return (
     <AdminLayout>
-      <SectionStats />
+      <div>All posts</div>
     </AdminLayout>
   );
 }

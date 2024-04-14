@@ -10,7 +10,10 @@ import {
   orderBy,
   where,
   setDoc,
+  serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
+import { UserType } from "./user";
 
 // Define the ReviewReport type
 export type ReviewReport = {
@@ -23,7 +26,7 @@ export type ReviewReport = {
     id: string;
     email: string;
     name: string;
-    isAgency?: boolean;
+    type: UserType;
   };
 };
 
@@ -77,7 +80,13 @@ const createReviewReport = async (
   const ref = doc(collection(db, "reports")).withConverter(
     reviewReportConverter
   );
-  await setDoc(ref, reviewReport);
+  await setDoc(ref, { ...reviewReport, timestamp: serverTimestamp() });
+};
+
+// Delete a report
+const deleteReport = async (id: string): Promise<void> => {
+  const ref = doc(db, `reports`, id);
+  await deleteDoc(ref);
 };
 
 export {
@@ -85,4 +94,5 @@ export {
   getReviewReports,
   getReviewReportsFromUser,
   createReviewReport,
+  deleteReport,
 };
