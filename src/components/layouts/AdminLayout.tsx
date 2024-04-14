@@ -44,31 +44,6 @@ export default function AdminLayout({
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  /* useEffect(() => {
-    const handleVerify = async () => {
-      try {
-        if (!claims.admin) {
-          router.replace("/");
-        } else {
-          setIsLoading(false);
-        }
-      } catch (error) {
-        console.error("Error verifying admin status:", error);
-        router.replace("/");
-      }
-    };
-
-    if (user) {
-      handleVerify();
-    } else {
-      if (!initializing && !user) router.replace("/");
-    }
-  }, [claims, initializing, router, user]);
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  } */
-
   return (
     <div>
       <Transition.Root show={sidebarOpen} as={Fragment}>

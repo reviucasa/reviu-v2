@@ -2,7 +2,7 @@ import { UserStatus } from "@/models/user";
 
 export const UserStatusBadge = ({ status }: { status: UserStatus }) => {
   const color =
-    status == UserStatus.Banned
+    status == UserStatus.Suspended
       ? { bg: "bg-red-100", text: "text-red-800", fill: "fill-red-500" }
       : { bg: "bg-green-100", text: "text-green-800", fill: "fill-green-500" };
 

@@ -20,6 +20,7 @@ import { DialogDelete } from "../molecules/DialogDelete";
 import { Suspend } from "../atoms/Suspend";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
+import { UserStatus } from "@/models/user";
 
 export const ReviewDetail = ({
   review,
@@ -28,7 +29,7 @@ export const ReviewDetail = ({
   openMoreInfo: boolean;
   setOpenMoreInfo: (value: boolean) => void;
 }) => {
-  const { claims } = useAuth();
+  const { user, claims } = useAuth();
   const t = useTranslations();
   const router = useRouter();
   const { wordCloud } = useContext(AnalysisContext);
@@ -81,7 +82,7 @@ export const ReviewDetail = ({
                     className="lg:w-72 flex flex-col lg:gap-5 gap-2 lg:mt-4"
                     review={review}
                   />
-                  {claims.admin && ( // TODO: isAdmin?
+                  {user && claims?.admin && (
                     <div className="mt-8  pt-6 border-t border-gray-200">
                       <ReviewStatusBadge status={review.status} />
                     </div>
@@ -111,7 +112,7 @@ export const ReviewDetail = ({
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">
                 <h6 className="mb-2 lg:text-xl font-bold">
                   {t("common.opinion")}{" "}
-                  {claims.admin == true ? " - " + review.id : ""}
+                  {claims?.admin == true ? " - " + review.id : ""}
                 </h6>
               </div>
               <div className="flex-1 mb-10">
@@ -441,12 +442,14 @@ export const ReviewDetail = ({
             />
           </div>
           <div className="flex flex-row justify-between">
-            <Report
-              onAction={() => {
-                setOpenModalInfo(!openModalInfo);
-              }}
-            />
-            {claims.admin && ( // TODO:
+            {user && claims.status != UserStatus.Suspended && (
+              <Report
+                onAction={() => {
+                  setOpenModalInfo(!openModalInfo);
+                }}
+              />
+            )}
+            {user && claims?.admin && (
               <Suspend
                 onAction={() => {
                   setOpenModalDelete(!openModalDelete);

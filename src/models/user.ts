@@ -22,7 +22,7 @@ import {
 
 export enum UserStatus {
   Active = "active",
-  Banned = "banned",
+  Suspended = "suspended",
 }
 
 export enum UserType {

@@ -4,13 +4,13 @@ import {
   BiBlock,
   BiCheckDouble,
   BiDotsHorizontalRounded,
-  BiShield,
   BiShieldMinus,
   BiSolidShield,
-  BiUser,
 } from "react-icons/bi";
 import { Float } from "@headlessui-float/react";
 import { QueryObserverResult, RefetchOptions } from "@tanstack/react-query";
+import { functions } from "@/firebase/config";
+import { httpsCallable } from "firebase/functions";
 
 export const DropDownUserOptions = ({
   user,
@@ -21,6 +21,62 @@ export const DropDownUserOptions = ({
     options?: RefetchOptions | undefined
   ) => Promise<QueryObserverResult<User[] | undefined, Error>>;
 }) => {
+  const onChangeUserType = async () => {
+    // Update type field in database
+    await updateUser(user.id, {
+      type: user.type == UserType.Admin ? UserType.User : UserType.Admin,
+    });
+    // Prepare claims and call cloud function to update claims
+    const claimsToUpdate = {
+      admin: !(user.type == UserType.Admin),
+    };
+    httpsCallable(
+      functions,
+      "addCustomClaim"
+    )({
+      email: user.email,
+      claims: claimsToUpdate,
+    })
+      .then((result: any) => {
+        console.log(result.data.message);
+      })
+      .catch((error) => {
+        console.error("Error updating claims:", error);
+      });
+    // Refetch
+    refetch();
+  };
+
+  const onChangeUserStatus = async () => {
+    const status =
+      user.status == UserStatus.Active
+        ? UserStatus.Suspended
+        : UserStatus.Active;
+    // Update status field in database
+    await updateUser(user.id, {
+      status,
+    });
+    // Prepare claims and call cloud function
+    const claimsToUpdate = {
+      status,
+    };
+    httpsCallable(
+      functions,
+      "addCustomClaim"
+    )({
+      email: user.email,
+      claims: claimsToUpdate,
+    })
+      .then((result: any) => {
+        console.log(result.data.message);
+      })
+      .catch((error) => {
+        console.error("Error updating claims:", error);
+      });
+    // Refetch
+    refetch();
+  };
+
   return (
     <Menu>
       <Float placement="bottom-end" offset={2}>
@@ -32,19 +88,10 @@ export const DropDownUserOptions = ({
             <Menu.Item>
               {({ active }) => (
                 <div
-                  className={`flex items-center py-2 px-3 rounded-t-lg cursor-pointer  ${
+                  className={`flex items-center py-2 px-3 rounded-t-lg cursor-pointer ${
                     active && " bg-gray-50"
                   }`}
-                  onClick={async () => {
-                    // TODO: call cloud function to make admin
-                    await updateUser(user.id, {
-                      type:
-                        user.type == UserType.Admin
-                          ? UserType.User
-                          : UserType.Admin,
-                    });
-                    refetch();
-                  }}
+                  onClick={onChangeUserType}
                 >
                   {user.type == UserType.Admin ? (
                     <BiShieldMinus className="text-gray-400" />
@@ -66,16 +113,7 @@ export const DropDownUserOptions = ({
                 className={`flex items-center py-2 px-3 rounded-b-lg cursor-pointer ${
                   active && " bg-gray-50"
                 }`}
-                onClick={async () => {
-                  // TODO: do through cloud function
-                  await updateUser(user.id, {
-                    status:
-                      user.status == UserStatus.Active
-                        ? UserStatus.Banned
-                        : UserStatus.Active,
-                  });
-                  refetch();
-                }}
+                onClick={onChangeUserStatus}
               >
                 {user.status == UserStatus.Active ? (
                   <BiBlock className="text-red-400" />
@@ -83,7 +121,7 @@ export const DropDownUserOptions = ({
                   <BiCheckDouble className="text-green-400" />
                 )}
                 <span className="ml-2">
-                  {user.status == UserStatus.Active ? "Ban User" : "Activate"}
+                  {user.status == UserStatus.Active ? "Suspend" : "Activate"}
                 </span>
               </div>
             )}

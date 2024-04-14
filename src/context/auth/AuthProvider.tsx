@@ -1,5 +1,6 @@
 "use client";
 import { auth } from "@/firebase/config";
+import { UserStatus } from "@/models/user";
 import {
   User as FirebaseUser,
   IdTokenResult,
@@ -71,6 +72,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       } else if (user) {
         const tokenResult = await getIdTokenResult(user);
         setClaims(tokenResult.claims);
+
+        if (
+          tokenResult.claims.status == UserStatus.Suspended &&
+          (adminUrls.includes(pathname) || protectedUrls.includes(pathname))
+        ) {
+          /* await auth.signOut(); */
+          router.replace("/suspended");
+          return;
+        }
 
         if (tokenResult.claims.admin != true && adminUrls.includes(pathname)) {
           router.replace("/");

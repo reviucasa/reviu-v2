@@ -42,7 +42,6 @@ export const LoginForm = () => {
         try {
           const response = await sendSignInLinkToEmail({ email, locale });
           window.localStorage.setItem("email", email || "none");
-          console.log(response);
           router.push("/auth/checkEmail");
         } catch (error) {
           console.error("Function call failed:", error);

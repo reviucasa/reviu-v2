@@ -80,7 +80,6 @@ export const AddressForm = () => {
     };
 
     const acceptedTerms = localStorage.getItem("acceptedReviewTerms");
-    console.log(acceptedTerms);
     // Check if the terms have not been accepted yet
     if (acceptedTerms == null) {
       setIsOpenReviewAuthenticityAlert(true);
