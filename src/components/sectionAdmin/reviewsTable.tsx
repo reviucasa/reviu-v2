@@ -3,12 +3,7 @@ import { BiChevronRight } from "react-icons/bi";
 import Image from "next/image";
 import thumbDown from "public/thumbDown.svg";
 import thumbUp from "public/thumbUp.svg";
-import {
-  Review,
-  ReviewStatus,
-  getReviews,
-  getReviewsWithUser,
-} from "@/models/review";
+import { Review, ReviewStatus, getReviewsWithUser } from "@/models/review";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useQuery } from "@tanstack/react-query";
 import { BounceLoader } from "react-spinners";
@@ -61,6 +56,12 @@ export default function ReviewsTable() {
     }
   };
 
+  const sortOptions = [
+    { name: "Most Popular", href: "#" },
+    { name: "Best Rating", href: "#" },
+    { name: "Newest", href: "#" },
+  ];
+
   return (
     <div className="">
       <div className="sm:flex sm:items-center">
@@ -72,14 +73,6 @@ export default function ReviewsTable() {
             A list of all the reviews registered in the app.
           </p>
         </div>
-        {/* <div className="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
-          <button
-            type="button"
-            className="block rounded-md bg-indigo-600 px-3 py-2 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Add user
-          </button>
-        </div> */}
       </div>
       <div className="mt-6 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">

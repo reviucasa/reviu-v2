@@ -21,10 +21,9 @@ import { useAuth } from "@/context/auth";
 import { findBuildingByAddress } from "@/models/building";
 import { AgencyComboBox } from "../atoms/AgencyComboBox";
 import { RealStateAgency } from "@/models/agency";
+import { classNames } from "@/helpers/classNames";
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();

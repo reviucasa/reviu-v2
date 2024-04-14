@@ -1,3 +1,4 @@
+import { classNames } from "@/helpers/classNames";
 import { BiArrowToBottom, BiArrowToTop } from "react-icons/bi";
 
 const stats = [
@@ -24,9 +25,7 @@ const stats = [
   },
 ];
 
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
+
 
 export default function SectionStats() {
   return (
