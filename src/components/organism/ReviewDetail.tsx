@@ -110,7 +110,8 @@ export const ReviewDetail = ({
               </div>
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">
                 <h6 className="mb-2 lg:text-xl font-bold">
-                  {t("common.opinion")}
+                  {t("common.opinion")}{" "}
+                  {claims.admin == true ? " - " + review.id : ""}
                 </h6>
               </div>
               <div className="flex-1 mb-10">
@@ -330,59 +331,65 @@ export const ReviewDetail = ({
                     </div>
                   </>
                 )}
-              <div className="border-b-2 lg:mb-8 mb-4 mt-4">
-                <h5 className="mb-2">{t("common.zona300")}</h5>
-              </div>
-              <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
-                <Label title={t("common.tipologiaAmbiente")}>
-                  {vibe
-                    ?.filter((vibes) => vibes.count > 1)
-                    .slice(0, 3)
-                    .map((vibes) => config(`neighbourhood.vibe.${vibes.word}`))
-                    .join(", ")}
-                </Label>
-                <Label title={t("common.turistas")}>
-                  {config(
-                    `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
-                  )}
-                </Label>
-                <Label title={t("common.ruido")}>
-                  {config(
-                    `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
-                  )}
-                </Label>
-                <Label title={t("common.seguridad")}>
-                  {config(
-                    `neighbourhood.security.${review?.data?.neighbourhood?.security}`
-                  )}
-                </Label>
-                <Label title={t("common.limpieza")}>
-                  {config(
-                    `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
-                  )}
-                </Label>
-                <Label title={t("common.services")}>
-                  {services
-                    ?.filter((services) => services.count > 2)
-                    .slice(0, 5)
-                    .map((services) =>
-                      config(
-                        `neighbourhood.buildingMaintenance.${services.word}`
-                      )
-                    )
-                    .join(", ")}
-                </Label>
-                <div className="grid col-span-2">
-                  {review?.data?.neighbourhood?.comments && (
-                    <div className="flex">
-                      <Image src={comillas} alt="20" className="h-fit" />
-                      <p className="pl-2 text-sm md:text-base">
-                        {review.data?.neighbourhood?.comments}
-                      </p>
+              {review && review.data && review.data.neighbourhood && (
+                <>
+                  <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                    <h5 className="mb-2">{t("common.zona300")}</h5>
+                  </div>
+                  <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
+                    <Label title={t("common.tipologiaAmbiente")}>
+                      {vibe
+                        ?.filter((vibes) => vibes.count > 1)
+                        .slice(0, 3)
+                        .map((vibes) =>
+                          config(`neighbourhood.vibe.${vibes.word}`)
+                        )
+                        .join(", ")}
+                    </Label>
+                    <Label title={t("common.turistas")}>
+                      {config(
+                        `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
+                      )}
+                    </Label>
+                    <Label title={t("common.ruido")}>
+                      {config(
+                        `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
+                      )}
+                    </Label>
+                    <Label title={t("common.seguridad")}>
+                      {config(
+                        `neighbourhood.security.${review?.data?.neighbourhood?.security}`
+                      )}
+                    </Label>
+                    <Label title={t("common.limpieza")}>
+                      {config(
+                        `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
+                      )}
+                    </Label>
+                    <Label title={t("common.services")}>
+                      {services
+                        ?.filter((services) => services.count > 2)
+                        .slice(0, 5)
+                        .map((services) =>
+                          config(
+                            `neighbourhood.buildingMaintenance.${services.word}`
+                          )
+                        )
+                        .join(", ")}
+                    </Label>
+                    <div className="grid col-span-2">
+                      {review?.data?.neighbourhood?.comments && (
+                        <div className="flex">
+                          <Image src={comillas} alt="20" className="h-fit" />
+                          <p className="pl-2 text-sm md:text-base">
+                            {review.data?.neighbourhood?.comments}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
 
               {review.data.opinion?.images && (
                 <div className="border-b-2 lg:mb-8 mb-4 mt-4">
