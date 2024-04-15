@@ -81,7 +81,7 @@ export const DialogReviewReport = ({
       setIsOpen={() => {
         setIsOpen(!isOpen);
       }}
-      className="max-w-[600px] border border-gray-500"
+      className="max-w-[600px] min-w-[400px] border border-gray-500"
     >
       <>
         <h5 className="lg:text-xl text-base">Review Report</h5>

@@ -5,17 +5,19 @@ import * as postmark from "postmark";
 import {MessageSendingResponse} from "postmark/dist/client/models";
 import translations from "./translations";
 
-const actionCodeSettings = {
-  // URL must be in the authorized domains list in the Firebase Console.
-  url: "https://reviu-git-admin-dashboard-and-improvements-nicolaufs-projects.vercel.app/" /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
-  // This must be true.
-  handleCodeInApp: true,
-};
-
 export const sendSignInLinkToEmail = functions
   .region("europe-west1")
   .https.onCall(async (data) => {
-    const {email, locale} = data;
+    const {email, locale, url} = data;
+
+    const actionCodeSettings = {
+      // URL must be in the authorized domains list in the Firebase Console.
+      url:
+        url ||
+        "https://reviu.vercel.app/" /* "https://reviu-git-admin-dashboard-and-improvements-nicolaufs-projects.vercel.app/" */ /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
+      // This must be true.
+      handleCodeInApp: true,
+    };
 
     return admin
       .auth()
