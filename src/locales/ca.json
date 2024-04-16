@@ -54,8 +54,12 @@
     "pisoYPuerta": "Pis/Porta",
     "empezar": "Començar",
 
-    "reviewAuthenticityTitle": "Avis Important Sobre la Verificació de Ressenyes",
-    "reviewAuthenticityContent": "Al continuar amb l'escriptura d'una ressenya, vostè accepta que, en cas que aquesta sigui reportada per ser inexacta o enganyosa, podríem sol·licitar prova de la seva residència a la propietat, com un contracte de lloguer, per verificar-ne l'autenticitat. Si no es proporciona la documentació requerida, la seva ressenya podria ser eliminada per mantenir la integritat de la nostra plataforma."
+    "reviewAuthenticityTitle": "Avís Important Sobre la Verificació de Ressenyes",
+    "reviewAuthenticityContent": "Al continuar amb l'escriptura d'una ressenya, vostè accepta que, en cas que aquesta sigui reportada per ser inexacta o enganyosa, podríem sol·licitar prova de la seva residència a la propietat, com un contracte de lloguer, per verificar-ne l'autenticitat. Si no es proporciona la documentació requerida, la seva ressenya podria ser eliminada per mantenir la integritat de la nostra plataforma.",
+
+    "reviewWarningTitle": "Avís important",
+    "reviewWarningContent": "Quan deixes una ressenya estàs acceptant que, en cas que sigui necessari, puguem sol·licitar proves per verificar-ne l'autenticitat."
+  
   },
   "areaResume": {
     "areaOverview": "Resum de la zona"

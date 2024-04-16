@@ -48,7 +48,6 @@ export type ReviewData = {
   stay: Stay;
   step: number;
   valuation?: Valuation;
-  timestamp: string;
   updated: string;
 };
 

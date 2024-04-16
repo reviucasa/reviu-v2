@@ -55,7 +55,10 @@
     "empezar": "Empezar",
 
     "reviewAuthenticityTitle": "Aviso Importante Sobre la Verificación de Reseñas",
-    "reviewAuthenticityContent": "Al continuar con la escritura de una reseña, usted acepta que, en caso de que ésta se reporte por ser inexacta o engañosa, podemos solicitar prueba de su residencia en la propiedad, como un contrato de alquiler, para verificar su autenticidad. Si no se proporciona la documentación requerida, su reseña podría ser eliminada para mantener la integridad de la plataforma."
+    "reviewAuthenticityContent": "Al continuar con la escritura de una reseña, usted acepta que, en caso de que ésta se reporte por ser inexacta o engañosa, podemos solicitar prueba de su residencia en la propiedad, como un contrato de alquiler, para verificar su autenticidad. Si no se proporciona la documentación requerida, su reseña podría ser eliminada para mantener la integridad de la plataforma.",
+
+    "reviewWarningTitle": "Aviso Importante",
+    "reviewWarningContent": "Al dejar una reseña, estás aceptando que, si es necesario, podemos solicitar pruebas para verificar su autenticidad."
   },
   "areaResume": {
     "areaOverview": "Resumen de la zona"

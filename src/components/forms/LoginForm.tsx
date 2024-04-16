@@ -40,7 +40,6 @@ export const LoginForm = () => {
         );
         // Call the function and pass data
         const url = `${window.location.protocol}//${window.location.host}`;
-        console.log(url)
         try {
           const response = await sendSignInLinkToEmail({ email, locale, url });
           window.localStorage.setItem("email", email || "none");

@@ -55,7 +55,10 @@
     "empezar": "Start",
 
     "reviewAuthenticityTitle": "Important Notice Regarding Review Verification",
-    "reviewAuthenticityContent": "By continuing to write a review, you agree that if it is reported as inaccurate or deceptive, we may request proof of your residence at the property, such as a rental agreement, to verify the its authenticity. If the required documentation is not provided, your review may be removed to maintain the integrity of our platform."
+    "reviewAuthenticityContent": "By continuing to write a review, you agree that if it is reported as inaccurate or deceptive, we may request proof of your residence at the property, such as a rental agreement, to verify the its authenticity. If the required documentation is not provided, your review may be removed to maintain the integrity of our platform.",
+
+    "reviewWarningTitle": "Important Notice",
+    "reviewWarningContent": "By leaving a review, you are agreeing that, if necessary, we may request evidence to verify its authenticity."
   },
   "areaResume": {
     "areaOverview": "Area overview"

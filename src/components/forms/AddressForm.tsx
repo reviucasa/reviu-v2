@@ -4,6 +4,7 @@ import { FieldError } from "@/components/atoms/FieldError";
 import { AcceptDialog } from "@/components/dialogs/AcceptDialog";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import Message from "public/message.png";
+import HappyHouse from "public/happyHouse.png";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
@@ -292,8 +293,10 @@ export const AddressForm = () => {
         isOpen={isOpenReviewAuthenticityAlert}
         setIsOpen={setIsOpenReviewAuthenticityAlert}
         acceptText={t("addressReview.deAcuerdo")}
-        description={t("addressReview.reviewAuthenticityContent")}
-        title={t("addressReview.reviewAuthenticityTitle")}
+        description={t("addressReview.reviewWarningContent")}
+        title={t("addressReview.reviewWarningTitle")}
+        image={HappyHouse}
+        imageBeforeContent={true}
         onAccept={() => {
           localStorage.setItem("acceptedReviewTerms", "true");
         }}

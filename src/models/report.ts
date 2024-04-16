@@ -19,7 +19,7 @@ import { UserType } from "./user";
 export type ReviewReport = {
   id: string;
   reviewId: string;
-  timestamp: Timestamp;
+  timeCreated: Timestamp;
   reason: string | null;
   comment?: string;
   user: {
@@ -57,7 +57,7 @@ const getReviewReport = async (
 const getReviewReports = async (): Promise<ReviewReport[]> => {
   const q = query(
     collection(db, "reports").withConverter(reviewReportConverter),
-    orderBy("timestamp", "desc")
+    orderBy("timeCreated", "desc")
   );
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data());
@@ -80,7 +80,7 @@ const createReviewReport = async (
   const ref = doc(collection(db, "reports")).withConverter(
     reviewReportConverter
   );
-  await setDoc(ref, { ...reviewReport, timestamp: serverTimestamp() });
+  await setDoc(ref, { ...reviewReport, timeCreated: serverTimestamp() });
 };
 
 // Delete a report

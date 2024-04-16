@@ -98,7 +98,7 @@ export default function ReportedReviewsTable() {
                     <tr>
                       <td colSpan={8}>
                         <div className="flex justify-center items-center h-[446px] z-50 bg-white opacity-90">
-                          <BounceLoader color="#d8b4fe" size={140} />
+                          <BounceLoader color="#d8b4fe" size={100} />
                         </div>
                       </td>
                     </tr>
@@ -132,7 +132,7 @@ export default function ReportedReviewsTable() {
                               {report.comment}
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                              {report.timestamp
+                              {report.timeCreated
                                 .toDate()
                                 .toLocaleDateString("en-US", {
                                   day: "2-digit", // Display the day as a two-digit number

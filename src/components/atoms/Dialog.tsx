@@ -1,5 +1,6 @@
 import { Dialog as HeadlessUIDialog } from "@headlessui/react";
 import clsx from "clsx";
+import Image, { StaticImageData } from "next/image";
 import { ReactNode } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -9,6 +10,7 @@ export const Dialog = ({
   children,
   title,
   description,
+  image,
   panelClassName,
   className,
   iconClose,
@@ -19,6 +21,7 @@ export const Dialog = ({
   children?: ReactNode;
   title?: string;
   description?: string;
+  image?: StaticImageData;
   panelClassName?: string;
   className?: string;
   iconClose?: boolean;
@@ -65,6 +68,15 @@ export const Dialog = ({
             <HeadlessUIDialog.Title as="h4" className="mb-4">
               {title}
             </HeadlessUIDialog.Title>
+            {image && (
+              <Image
+                src={image}
+                alt="dialogImage"
+                width={100}
+                height={100}
+                className="w-12 h-auto mx-auto mt-2 mb-6"
+              />
+            )}
             <HeadlessUIDialog.Description>
               {description}
             </HeadlessUIDialog.Description>

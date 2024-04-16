@@ -1,83 +1,139 @@
 import { classNames } from "@/helpers/classNames";
-import { BiArrowToBottom, BiArrowToTop } from "react-icons/bi";
+import { WeeklyStats, getAllWeeklyStats } from "@/models/stats";
+import { useQuery } from "@tanstack/react-query";
+import { BiArrowToBottom, BiArrowToTop, BiMinus } from "react-icons/bi";
+import { BounceLoader } from "react-spinners";
+import { StatBox } from "../atoms/StatBox";
 
-const stats = [
-  {
-    name: "Total Users",
-    stat: "2142",
-    previousStat: "1993",
-    change: "7.47%",
-    changeType: "increase",
-  },
-  {
-    name: "Total Reviews",
-    stat: "3658",
-    previousStat: "3305",
-    change: "10.68%",
-    changeType: "increase",
-  },
-  {
-    name: "Avg. Daily Reviews",
-    stat: "14",
-    previousStat: "18",
-    change: "22.3%",
-    changeType: "decrease",
-  },
-];
-
-
+export interface Stat {
+  name: string;
+  value: number;
+  previousValue: number;
+  change: number;
+  changeType: "increase" | "decrease" | "steady";
+  inverted?: boolean;
+}
 
 export default function SectionStats() {
+  const { data, isFetching } = useQuery<WeeklyStats[] | undefined, Error>({
+    queryKey: ["weeklyStats"],
+    queryFn: () => getAllWeeklyStats(),
+  });
+
+  let stats: Stat[] = [];
+  let avgStats: Stat[] = [];
+
+  if (!isFetching && data) {
+    const usersStat = formatStat(
+      "Total Users",
+      data.map((e) => e.usersCount)
+    );
+    stats.push(usersStat);
+
+    const reviewsStat = formatStat(
+      "Total Reviews",
+      data.map((e) => e.reviewsCount)
+    );
+    stats.push(reviewsStat);
+
+    const reportsStat = formatStat(
+      "Total Reports",
+      data.map((e) => e.reportsCount),
+      true
+    );
+    stats.push(reportsStat);
+
+    // Average Stats
+
+    const usersAvgStat = formatStat(
+      "New Users",
+      data.map((e) => e.usersWeekly)
+    );
+    avgStats.push(usersAvgStat);
+
+    const reviewsAvgStat = formatStat(
+      "New Reviews",
+      data.map((e) => e.reviewsWeekly)
+    );
+    avgStats.push(reviewsAvgStat);
+
+    const reportsAvgStat = formatStat(
+      "New Reports",
+      data.map((e) => e.reportsWeekly),
+      true
+    );
+    avgStats.push(reportsAvgStat);
+  }
+
   return (
     <div className="pb-6">
       <h3 className="text-base font-semibold leading-6 text-gray-900">
-        Last 30 days
+        Last Week Stats
       </h3>
-      <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
-        {stats.map((item) => (
-          <div key={item.name} className="px-4 py-5 sm:p-6">
-            <dt className="text-base font-normal text-gray-900">{item.name}</dt>
-            <dd className="mt-1 flex items-baseline justify-between md:block lg:flex">
-              <div className="flex items-baseline text-2xl font-semibold text-secondary-500">
-                {item.stat}
-                <span className="ml-2 text-sm font-medium text-gray-500">
-                  from {item.previousStat}
-                </span>
-              </div>
-
-              <div
-                className={classNames(
-                  item.changeType === "increase"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-red-100 text-red-800",
-                  "inline-flex items-baseline rounded-full px-2.5 py-0.5 text-sm font-medium md:mt-2 lg:mt-0"
-                )}
-              >
-                {item.changeType === "increase" ? (
-                  <BiArrowToTop
-                    className="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-green-500"
-                    aria-hidden="true"
-                  />
-                ) : (
-                  <BiArrowToBottom
-                    className="-ml-1 mr-0.5 h-5 w-5 flex-shrink-0 self-center text-red-500"
-                    aria-hidden="true"
-                  />
-                )}
-
-                <span className="sr-only">
-                  {" "}
-                  {item.changeType === "increase"
-                    ? "Increased"
-                    : "Decreased"}{" "}
-                  by{" "}
-                </span>
-                {item.change}
-              </div>
-            </dd>
-          </div>
-        ))}
-      </dl>
+      {isFetching || !data ? (
+        <div className="flex justify-center items-center h-[108px] mt-5 rounded-lg bg-white shadow ">
+          <BounceLoader color="#d8b4fe" size={60} />
+        </div>
+      ) : (
+        <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+          {stats.map((item) => (
+            <StatBox key={item.name} item={item} />
+          ))}
+        </dl>
+      )}
+      {/* <h3 className="text-base font-semibold leading-6 text-gray-900 mt-12">
+        Avg Week Stats
+      </h3> */}
+      {isFetching || !data ? (
+        <div className="flex justify-center items-center h-[108px] mt-5 rounded-lg bg-white shadow ">
+          <BounceLoader color="#d8b4fe" size={60} />
+        </div>
+      ) : (
+        <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+          {avgStats.map((item) => (
+            <StatBox key={item.name} item={item} />
+          ))}
+        </dl>
+      )}
     </div>
   );
 }
+
+/* const formatStat = (
+  name: string,
+  data: number[],
+  inverted?: boolean | undefined
+): Stat => {
+  console.log(data);
+  const total = data.reduce((prev, val) => prev + val);
+  const prev = data.slice(1).reduce((prev, val) => prev + val);
+
+  return {
+    name,
+    value: total,
+    previousValue: prev,
+    change: (total / prev - 1) * 100,
+    changeType:
+      total > prev ? "increase" : total < prev ? "decrease" : "steady",
+    inverted,
+  } as Stat;
+}; */
+
+const formatStat = (
+  name: string,
+  data: number[],
+  inverted?: boolean | undefined
+): Stat => {
+  const current = data[0];
+  const prev = data[1];
+
+  return {
+    name,
+    value: current,
+    previousValue: prev,
+    change: inverted ? current - prev : (current / prev - 1) * 100,
+    changeType:
+      current > prev ? "increase" : current < prev ? "decrease" : "steady",
+    inverted,
+  } as Stat;
+};

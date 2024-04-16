@@ -135,7 +135,7 @@ export default function SuspendedReviewsTable() {
                     <tr>
                       <td colSpan={8}>
                         <div className="flex justify-center items-center h-[446px] z-50 bg-white opacity-90">
-                          <BounceLoader color="#d8b4fe" size={140} />
+                          <BounceLoader color="#d8b4fe" size={100} />
                         </div>
                       </td>
                     </tr>
