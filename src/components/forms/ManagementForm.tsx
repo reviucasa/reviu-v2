@@ -29,6 +29,8 @@ export const ManagementForm = () => {
   const t = useTranslations();
   const config = useTranslations("config");
 
+  const [isRealStateAgencyManual, setIsRealStateAgencyManual] =
+    useState<boolean>(false);
   const [selectedRealStateAgency, setSelectedRealStateAgency] =
     useState<RealStateAgency>();
   const [error, setError] = useState<string>();
@@ -98,8 +100,18 @@ export const ManagementForm = () => {
       }
     };
 
-    if (draft?.data.management?.agencyId) {
+    if (
+      draft?.data.management?.agencyId &&
+      draft?.data.management?.agencyId !== ""
+    ) {
       fetchAgencyDetails(draft?.data.management?.agencyId);
+    } else if (draft?.data.management?.agencyId == "") {
+      setIsRealStateAgencyManual(true);
+      setSelectedRealStateAgency({
+        documentId: "",
+        id: "",
+        name: draft?.data.management?.realStateAgency,
+      });
     }
   }, [draft, draft?.data.management]);
 
@@ -116,7 +128,7 @@ export const ManagementForm = () => {
 
   type FormData = yup.InferType<typeof schema>;
   const watchIsRealStateAgency = watch("isRealStateAgency");
-  
+
   const isFormCompleted = isValid && !isDirty;
 
   const onSubmit: SubmitHandler<FormData> = (data) =>
@@ -164,10 +176,53 @@ export const ManagementForm = () => {
                 {t("managementReview.queInmobiliaria")}
               </label>
 
-              <AgencyComboBox
-                selectedRealStateAgency={selectedRealStateAgency}
-                setSelectedRealStateAgency={setSelectedRealStateAgency}
-              />
+              {isRealStateAgencyManual ? (
+                <Controller
+                  name="realStateAgency"
+                  control={control}
+                  render={({ field }) => (
+                    <input
+                      {...field}
+                      aria-invalid={!!errors.isRealStateAgency}
+                      type="text"
+                      className="w-full"
+                      placeholder={t(
+                        "managementReview.escribeImmobiliariaManualmente"
+                      )}
+                    />
+                  )}
+                />
+              ) : (
+                <AgencyComboBox
+                  selectedRealStateAgency={selectedRealStateAgency}
+                  setSelectedRealStateAgency={setSelectedRealStateAgency}
+                />
+              )}
+              <div className="relative flex items-start mt-2">
+                <div className="flex h-6 items-center">
+                  <input
+                    id="agencyNotFound"
+                    aria-describedby="comments-description"
+                    name="agencyNotFound"
+                    type="checkbox"
+                    checked={isRealStateAgencyManual}
+                    className="h-4 w-4 !rounded-md border-gray-300"
+                    onChange={() => {
+                      setSelectedRealStateAgency(undefined);
+                      setValue("realStateAgency", undefined);
+                      setIsRealStateAgencyManual(!isRealStateAgencyManual);
+                    }}
+                  />
+                </div>
+                <div className="ml-3 text-sm leading-6">
+                  <label
+                    htmlFor="agencyNotFound"
+                    className="font-normal text-gray-900"
+                  >
+                    {t("managementReview.noEncuentroInmobiliaria")}
+                  </label>
+                </div>
+              </div>
               {errors.isRealStateAgency && (
                 <FieldError>{errors.isRealStateAgency.message}</FieldError>
               )}

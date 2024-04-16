@@ -508,6 +508,8 @@
     "feedback": "Positive feedback is the best way of communicating and being heard",
     "gestionadoInmobiliaria": "¿Have you managed the apartment through a real estate agent?",
     "queInmobiliaria": "Which real estate agent has managed the apartment?",
+    "noEncuentroInmobiliaria": "I can't find the real state agency",
+    "escribeImmobiliariaManualmente": "Write the real state agency name",
     "escribeInmobiliaria": "Type in the name of the real estate agency",
     "tratoInmobiliaria": "How did the real estate agent treat you?",
     "tratoCasero": "How did the landlord treat you?",

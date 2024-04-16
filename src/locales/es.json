@@ -58,7 +58,7 @@
     "reviewAuthenticityContent": "Al continuar con la escritura de una reseña, usted acepta que, en caso de que ésta se reporte por ser inexacta o engañosa, podemos solicitar prueba de su residencia en la propiedad, como un contrato de alquiler, para verificar su autenticidad. Si no se proporciona la documentación requerida, su reseña podría ser eliminada para mantener la integridad de la plataforma.",
 
     "reviewWarningTitle": "Aviso Importante",
-    "reviewWarningContent": "Al dejar una reseña, estás aceptando que, si es necesario, podemos solicitar pruebas para verificar su autenticidad."
+    "reviewWarningContent": "Al dejar una reseña, estás aceptando que, si es necesario, podamos solicitar pruebas para verificar su autenticidad."
   },
   "areaResume": {
     "areaOverview": "Resumen de la zona"
@@ -508,6 +508,8 @@
     "gestionadoInmobiliaria": "¿Has alquilado el piso a través de una inmobiliaria?",
     "queInmobiliaria": "¿Qué inmobiliaria lleva o ha llevado la gestión del piso?",
     "escribeInmobiliaria": "Escribe el nombre de la inmobiliaria",
+    "noEncuentroInmobiliaria": "No encuentro la inmobiliaria",
+    "escribeImmobiliariaManualmente": "Escribe el nombre de la inmobiliaria",
     "tratoInmobiliaria": "¿Cómo ha sido el trato de la inmobiliaria?",
     "tratoCasero": "¿Cómo ha sido el trato del casero?",
     "respuestaProblema": "¿Y la respuesta cuando surgió un problema?",
