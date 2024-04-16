@@ -209,7 +209,9 @@ export const ManagementForm = () => {
                     className="h-4 w-4 !rounded-md border-gray-300"
                     onChange={() => {
                       setSelectedRealStateAgency(undefined);
-                      setValue("realStateAgency", undefined);
+                      setValue("realStateAgency", undefined, {
+                        shouldDirty: true,
+                      });
                       setIsRealStateAgencyManual(!isRealStateAgencyManual);
                     }}
                   />
