@@ -669,6 +669,22 @@
     "publicarOtraOpinion": "Publicar otra opinión",
     "menuPrincipal": "Ir a la página de inicio"
   },
+  "suspended": {
+    "title": "Tu cuenta ha sido suspendida",
+    "whySectionTitle": "¿Por qué fue suspendida mi cuenta?",
+    "whySectionStart": "Te hemos enviado un correo electrónico detallando las razones de la suspensión de tu cuenta. A continuación, se encuentran las razones más comunes por las cuales se suspenden las cuentas:",
+    "whySection1": "Participación en discursos de odio o comportamiento discriminatorio.",
+    "whySection2": "Publicación de reseñas falsas o información engañosa.",
+    "whySection3": "Publicación repetida de contenido no deseado o repetitivo para perturbar la experiencia del usuario.",
+    "whySection4": "Denuncias malintencionadas de contenido o de otros usuarios sin causa justificada.",
+    "whySection5": "Posar como otra persona u organización para engañar a los usuarios.",
+    "whySection6": "Fomentar o facilitar actividades ilegales a través de la plataforma.",
+    "whySection7": "Compartir o publicar información privada sin autorización.",
+    "whySectionEnd": "Mientras tu cuenta esté suspendida, no podrás acceder a ciertas funciones y páginas de nuestra plataforma. Ten en cuenta que, a menos que la decisión sea revocada, todos los datos asociados con tu cuenta serán eliminados permanentemente dentro de 30 días.",
+    "mistakeSectionTitle": "¿Crees que esto es un error?",
+    "mistakeSection1": "Nuestras decisiones de suspender cuentas implican una revisión cuidadosa y están respaldadas por una combinación de herramientas de IA y supervisión humana. Si crees que tu cuenta fue suspendida incorrectamente, o si hay circunstancias atenuantes que debamos considerar, por favor contáctanos directamente en",
+    "mistakeSection2": "Estamos comprometidos con garantizar la justicia y revisaremos tu caso lo más rápido posible."
+  },
   "valuationForm": {
     "estadoPiso": "Estado del piso y mantenimiento",
     "eligeTantasComoQuieras": "Elige tantas como quieras"

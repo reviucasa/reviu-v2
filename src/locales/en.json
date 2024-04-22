@@ -671,6 +671,22 @@
     "publicarOtraOpinion": "Leave another review",
     "menuPrincipal": "Go to home page"
   },
+  "suspended": {
+    "title": "Your Account Has Been Suspended",
+    "whySectionTitle": "Why Was My Account Suspended?",
+    "whySectionStart": "We have sent you an email detailing the reasons for the suspension of your account. Below are the most common reasons for account suspensions:",
+    "whySection1": "Engagement in hate speech or discriminatory behavior.",
+    "whySection2": "Posting of fake reviews or misleading information.",
+    "whySection3": "Repeated posting of unwanted or repetitive content to disrupt the user experience.",
+    "whySection4": "Maliciously reporting content or other users without just cause.",
+    "whySection5": "Posing as another individual or organization to deceive users.",
+    "whySection6": "Encouraging or facilitating illegal activities through the platform.",
+    "whySection7": "Unauthorized sharing or publication of private information.",
+    "whySectionEnd": "While your account is suspended, you will not be able to access certain features and pages of our platform. Please note that unless the decision is overturned, all data associated with your account will be permanently deleted within 30 days.",
+    "mistakeSectionTitle": "Believe This is a Mistake?",
+    "mistakeSection1": "Our decisions to suspend accounts involve careful review and are supported by a combination of AI tools and human oversight. If you believe your account was wrongly suspended, or if there are extenuating circumstances we should consider, please contact us directly at",
+    "mistakeSection2": "We are committed to ensuring fairness and will review your case as quickly as possible."
+  },
   "valuationForm": {
     "estadoPiso": "State and maintenance of the home",
     "eligeTantasComoQuieras": "Choose as many as you want"
