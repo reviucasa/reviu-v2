@@ -30,8 +30,8 @@ const navigation = [
   {
     title: "Blog",
     items: [
-      { name: "New Post", href: "/admin/blog/new", icon: BiPencil },
       { name: "All Posts", href: "/admin/blog", icon: BiFolder },
+      { name: "New Post", href: "/admin/blog/new", icon: BiPencil },
     ],
   },
 ];

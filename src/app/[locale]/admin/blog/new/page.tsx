@@ -1,10 +1,11 @@
 "use client";
+import { PostForm } from "@/components/forms/PostForm";
 import AdminLayout from "@/components/layouts/AdminLayout";
 
 export default function Page() {
   return (
     <AdminLayout>
-      <div>Post form</div>
+      <PostForm />
     </AdminLayout>
   );
 }

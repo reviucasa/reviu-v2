@@ -3,6 +3,7 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { SectionExperiences } from "@/components/sectionHome/SectionExperiences";
 import { SectionBanner } from "@/components/sectionHome/sectionBanner";
 import { SectionBannerOpinion } from "@/components/sectionHome/sectionBannerOpinion";
+import { SectionBlog } from "@/components/sectionHome/sectionBlog";
 import { SectionFaq } from "@/components/sectionHome/sectionFaq";
 import { SectionHeader } from "@/components/sectionHome/sectionHeader";
 import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestReviews";
@@ -38,6 +39,7 @@ export default function Home() {
       <SectionBanner />
       <div className="mx-4 lg:mx-40 my-32 flex flex-col gap-28">
         <SectionBannerOpinion />
+        <SectionBlog />
         <SectionFaq />
       </div>
     </MainLayout>

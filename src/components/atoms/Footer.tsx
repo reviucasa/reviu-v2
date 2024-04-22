@@ -44,6 +44,14 @@ export function Footer() {
             {/*<li>{t('common.eresPropietario', '¿Eres propietario?')}</li>*/}
             <li
               onClick={() => {
+                router.push("/blog");
+              }}
+              className="cursor-pointer"
+            >
+              Blog
+            </li>
+            <li
+              onClick={() => {
                 router.push("/faqs");
               }}
               className="cursor-pointer"

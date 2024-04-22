@@ -76,6 +76,13 @@
     "helpIdeal": "Ayuda a otros a encontrar su piso ideal",
     "WriteOpinion": "Escribe una opinión"
   },
+  "blog": {
+    "findOutTips": "Entérate de los consejos más útiles.",
+    "dingDong": "Ding Dong",
+    "theBlog": "El Blog Reviu",
+    "readme": "Léeme",
+    "seeAll": "Ver todos"
+  },
   "buildingId": {
     "valuationGeneral": "Valoración general"
   },
@@ -94,7 +101,6 @@
     "opcional": "Opcional",
     "dinosTuNacionalidad": "Nacionalidad",
     "genero": "Género",
-    "politicaPrivacidad": "política de privacidad",
     "guardar": "Guardar",
     "guardado": "Guardado",
     "publicar": "Publicar",
@@ -132,7 +138,7 @@
     "eresPropietario": "Soy propietario de una vivienda en alquiler. ¿Puedo participar?",
     "preguntasFecuentes": "Preguntas frecuentes",
     "legal": "Legal",
-    "PoliticaPrivacidad": "Política de privacidad",
+    "politicaPrivacidad": "Política de privacidad",
     "terminosYCondiciones": "Términos y condiciones",
     "legalNotice": "Aviso Legal",
     "cookies": "Cookies",
@@ -186,6 +192,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copiar enlace",
+    "copied": "Copiado",
     "compartir": "Compartir",
     "noHayOpiniones": "No hay opiniones en esta comunidad",
     "hasVividoAqui": "¿Has vivido aquí? Ayudémonos entre todos para que buscar piso sea una experiencia segura",

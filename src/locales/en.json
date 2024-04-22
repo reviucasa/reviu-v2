@@ -76,6 +76,14 @@
     "helpIdeal": "Help others find their ideal home.",
     "WriteOpinion": "Leave a review"
   },
+  "blog": {
+    "findOutTips": "Find out the most useful tips.",
+    "dingDong": "Ding Dong",
+    "theBlog": "The Reviu Blog",
+    "readme": "Read me",
+    "seeAll": "See all"
+
+  },
   "buildingId": {
     "valuationGeneral": "General overview"
   },
@@ -185,6 +193,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copy link",
+    "copied": "Copied",
     "compartir": "Share",
     "noHayOpiniones": "There are no reviews yet for this building",
     "hasVividoAqui": "Have you lived here? let’s help each other make the best informed decision when it comes to renting a home.",

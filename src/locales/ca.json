@@ -59,7 +59,6 @@
 
     "reviewWarningTitle": "Avís important",
     "reviewWarningContent": "Quan deixes una ressenya estàs acceptant que, en cas que sigui necessari, puguem sol·licitar proves per verificar-ne l'autenticitat."
-  
   },
   "areaResume": {
     "areaOverview": "Resum de la zona"
@@ -76,6 +75,13 @@
     "experienceAndShare": "Reviu la teva experiència i comparteix-la",
     "helpIdeal": "Ajuda els altres a trobar el seu pis ideal",
     "WriteOpinion": "Deixa una opinió anònima"
+  },
+  "blog": {
+    "findOutTips": "Informa't dels consells més útils.",
+    "dingDong": "Ding Dong",
+    "theBlog": "El Blog Reviu",
+    "readme": "Llegeix-me",
+    "seeAll": "Veure'ls tots"
   },
   "buildingId": {
     "valuationGeneral": "Valoració general"
@@ -184,6 +190,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copiar enllaç",
+    "copied": "Copiat",
     "compartir": "Compartir",
     "noHayOpiniones": "No hi ha opinions d'aquesta comunitat",
     "hasVividoAqui": "Has viscut aquí? Ajudem-nos entre tots perquè buscar pis sigui una experiència segura",
