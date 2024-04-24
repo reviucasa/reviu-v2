@@ -86,13 +86,13 @@ export default function SuspendedReviewsTable() {
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      Address
+                      Street
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900 whitespace-nowrap "
                     >
-                      Postal Code
+                      Number
                     </th>
                     <th
                       scope="col"

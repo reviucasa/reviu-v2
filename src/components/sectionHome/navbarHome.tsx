@@ -23,8 +23,6 @@ import { AgencyComboBox } from "../atoms/AgencyComboBox";
 import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 
-
-
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
 
@@ -43,8 +41,10 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   const [error, setError] = useState<string>();
 
   const onSelectAddress = async (address: string) => {
+    setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
+      console.log(address);
       setLoading(true);
       const building = await findBuildingByAddress(address);
       if (building) {
@@ -110,7 +110,12 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
               <FieldError className="absolute mx-10 top-[74px] hidden md:block">
                 {error}
               </FieldError>
-              <div className="absolute top-[24px] self-end mx-12 hidden lg:block">
+              <div
+                className={classNames(
+                  "absolute  self-end mx-12 hidden lg:block",
+                  error ? "top-[32px]" : "top-[24px]"
+                )}
+              >
                 <Switch
                   checked={enabled}
                   onChange={(v) => {

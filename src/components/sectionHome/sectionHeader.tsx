@@ -36,6 +36,7 @@ export function SectionHeader() {
   const [error, setError] = useState<string>();
 
   const onSelectAddress = async (address: string) => {
+    setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);

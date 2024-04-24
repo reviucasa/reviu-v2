@@ -59,7 +59,7 @@ export const OpinionCard = ({
         </Chip>
       </div>
 
-      <div className="flex flex-col lg:flex-row lg:mx-6 lg:p-0 px-4 py-6 border-b-2 gap-6">
+      <div className="flex flex-col lg:flex-row lg:mx-6 lg:p-0 lg:pb-4 px-4 py-6 border-b-2 gap-6">
         <div className="grid grid-cols-[1fr_auto] lg:w-1/3">
           <ApartmentLocation
             className="flex flex-col lg:gap-5 gap-3"
@@ -111,6 +111,7 @@ export const OpinionCard = ({
           </div>
         </div>
       </div>
+
       <div className="relative flex justify-between mx-6">
         <div
           className="py-2 text-primary-500 cursor-pointer text-sm md:text-base"

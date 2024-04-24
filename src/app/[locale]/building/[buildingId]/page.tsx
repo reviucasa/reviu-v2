@@ -80,6 +80,7 @@ export default function BuildingPage({
     useState<string>("valuationGeneral");
 
   const onSelectAddress = async (address: string) => {
+    setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
       const building = await findBuildingByAddress(address);
