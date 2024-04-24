@@ -143,7 +143,6 @@ const findBuildingByAddress = async (
   fullAddress: string
 ): Promise<Building | null> => {
   try {
-    console.log(fullAddress);
     // Regular expression to extract street name and number from an address
     // Adjust regex as needed based on expected address formats
     const addressRegex = /^(.*?),\s*(\d+)/;
@@ -156,10 +155,6 @@ const findBuildingByAddress = async (
     const buildingsCol = collection(db, "buildings").withConverter(
       buildingConverter
     );
-
-    console.log(streetName.trim());
-
-    console.log(removePostAposSpace(removeVowelAccents2(streetName.trim())));
 
     const q = query(
       buildingsCol,
