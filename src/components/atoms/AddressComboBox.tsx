@@ -4,7 +4,7 @@ import { Combobox, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
-import { Fragment, useCallback, useEffect, useMemo, useState } from "react";
+import { Fragment, useCallback, useEffect, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
 type AddressComboBoxProps = {
@@ -57,6 +57,7 @@ export const AddressComboBox = ({
     status: google.maps.places.PlacesServiceStatus
   ) {
     if (status === "OK") {
+      console.log(predictions);
       // handle autocomplete suggestions
       const autocompleteSuggestions = predictions!.map((prediction) => {
         return {
@@ -83,7 +84,7 @@ export const AddressComboBox = ({
     debounce(async (query: string) => {
       setLoading(true);
 
-      if (query === "") {
+      if (query === "" || query.length < 2) {
         setSearchResult({
           autocompleteSuggestions: [],
           status: "",
@@ -95,20 +96,31 @@ export const AddressComboBox = ({
 
       if (!service || !sessionToken) return;
 
-      const request = {
-        input: query, // + " Barcelona",
+      // Create a bounding box with sides away from the center point
+      const center = { lat: 41.40855, lng: 2.17114 };
+      const bounds = {
+        north: center.lat + 0.08,
+        south: center.lat - 0.05,
+        east: center.lng + 0.075,
+        west: center.lng - 0.075,
+      };
+
+      const request: google.maps.places.AutocompletionRequest = {
+        input: query,
         sessionToken: sessionToken,
         language: "ca",
-        /* region: "ca",
         componentRestrictions: {
           country: "es",
-        }, */
-        origin: new google!.maps.LatLng(41.3874, 2.1686),
-        /* radius: 5000, */
+        },
+        //fields: ["name", "formatted_address"], //"address_components",
+        types: ["address"],
+        locationRestriction: bounds,
+        //strictBounds: true,
       };
 
       // getQueryPredictions()
-      service.getQueryPredictions(request, handlePredictions);
+      service.getPlacePredictions(request, handlePredictions);
+
       setLoading(false);
     }, 300),
     [service, sessionToken]
@@ -120,6 +132,7 @@ export const AddressComboBox = ({
     <Combobox value={selectedAddress} onChange={setSelectedAddress} nullable>
       <div className={`relative ${className}`}>
         <Combobox.Input
+          id="query"
           className={`w-full ${icon && "!pl-10"}`}
           placeholder={placeholder ?? t("common.enQueDirección")}
           onChange={(event) => fetchAddressList(event.target.value)}
@@ -130,7 +143,7 @@ export const AddressComboBox = ({
             alt="lupa"
             className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
             aria-hidden="true"
-          ></Image>
+          />
         )}
         <Transition
           as={Fragment}
@@ -171,10 +184,6 @@ export const AddressComboBox = ({
                       >
                         {e.address.string}
                       </Combobox.Option>
-                      /*  <li key={item.id}>
-                    <p>{item.name.string}</p>
-                    <p>{item.address.string}</p>
-                  </li> */
                     );
                   })
                 : null

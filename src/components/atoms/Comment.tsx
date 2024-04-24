@@ -1,5 +1,5 @@
 import Image, { StaticImageData } from 'next/image'
-import triangle from '../../../public/triangle.png'
+import triangle from 'public/triangle.png'
 
 export const Comment = ({
   className,

@@ -1,9 +1,9 @@
 "use client";
-import CheckEmailImg from "../../../../../public/check-email.png";
+import CheckEmailImg from "public/check-email.png";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import Logo from "../../../../../public/reviuLogo.svg";
+import Logo from "public/reviuLogo.svg";
 
 export default function CheckEmail() {
   const t = useTranslations();

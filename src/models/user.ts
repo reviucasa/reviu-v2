@@ -1,4 +1,5 @@
 import { db } from "@/firebase/config";
+import { getDocumentsByIds } from "@/firebase/helpers";
 import {
   DocumentData,
   FirestoreDataConverter,
@@ -12,7 +13,23 @@ import {
   query,
   getDocs,
   setDoc,
+  Timestamp,
+  orderBy,
+  limit,
+  startAfter,
+  serverTimestamp,
 } from "firebase/firestore";
+
+export enum UserStatus {
+  Active = "active",
+  Suspended = "suspended",
+}
+
+export enum UserType {
+  User = "user",
+  Agency = "agency",
+  Admin = "admin",
+}
 
 export type User = {
   acceptedTerms: boolean;
@@ -21,9 +38,13 @@ export type User = {
   dateAcceptedTerms: string | null;
   gender: string | null;
   id: string;
+  email: string;
   lastname: string;
   name: string;
+  status: UserStatus;
+  type: UserType;
   subscribedToNewsletter: boolean;
+  timeCreated: Timestamp;
 };
 
 /* class User {
@@ -64,8 +85,9 @@ export type User = {
 } */
 
 const userConverter: FirestoreDataConverter<User> = {
-  toFirestore(user: User): DocumentData {
-    return {
+  toFirestore(u: User): DocumentData {
+    const { id, ...user } = u;
+    return user /* {
       name: user.name,
       lastname: user.lastname,
       country: user.country ?? null,
@@ -74,7 +96,7 @@ const userConverter: FirestoreDataConverter<User> = {
       acceptedTerms: user.acceptedTerms,
       dateAcceptedTerms: user.dateAcceptedTerms ?? null,
       subscribedToNewsletter: user.subscribedToNewsletter,
-    };
+    } */;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): User {
     const data = snapshot.data();
@@ -88,10 +110,13 @@ const userConverter: FirestoreDataConverter<User> = {
 // Create a new user
 const createUser = async (uid: string, user: Partial<User>): Promise<void> => {
   const ref = doc(db, `users/${uid}`).withConverter(userConverter); // Get a reference to the document with the specific ID
-  await setDoc(ref, user);
-
-  /* const ref = collection(db, `users`).withConverter(userConverter);
-  await addDoc(ref, user); */
+  const data = {
+    ...user,
+    status: UserStatus.Active,
+    type: UserType.User,
+    timeCreated: serverTimestamp(),
+  };
+  await setDoc(ref, data);
 };
 
 // Retrieve a user
@@ -99,6 +124,45 @@ const getUser = async (uid: string): Promise<User | undefined> => {
   const ref = doc(db, `users/${uid}`).withConverter(userConverter);
   const snapshot = await getDoc(ref);
   return snapshot.exists() ? snapshot.data() : undefined;
+};
+
+const getUsersById = async (uids: string[]): Promise<User[]> => {
+  const users = await getDocumentsByIds<User>(db, "users", userConverter, uids);
+  return users;
+};
+
+// Retrieve users
+const getUsers = async ({
+  count,
+  startAfterTime,
+}: {
+  count: number;
+  startAfterTime: Timestamp | null;
+}): Promise<User[]> => {
+  const ref = collection(db, `users`).withConverter(userConverter);
+  let q = query(ref);
+
+  // Conditionally add a limit
+  if (count) {
+    q = query(q, orderBy("timeCreated", "desc"), limit(count));
+  }
+
+  if (startAfterTime) {
+    q = query(q, startAfter(startAfterTime));
+  }
+
+  return getDocs(q)
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log("No users.");
+        return [];
+      }
+      return snapshot.docs.map((doc) => doc.data());
+    })
+    .catch((error) => {
+      console.error("Error fetching users:", error);
+      return [];
+    });
 };
 
 // Update an existing user
@@ -138,6 +202,8 @@ export {
   userConverter,
   createUser,
   getUser,
+  getUsers,
+  getUsersById,
   updateUser,
   deleteUser,
   searchUsers,

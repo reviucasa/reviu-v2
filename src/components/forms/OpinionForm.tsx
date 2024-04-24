@@ -1,6 +1,6 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
-import smileHouse from "../../../public/smile_house.png";
+import smileHouse from "public/smile_house.png";
 import { useEffect } from "react";
 import {
   Controller,
@@ -19,7 +19,7 @@ import { useTranslations } from "next-intl";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
-import { PiImage, PiTrash } from "react-icons/pi";
+import { PiImage } from "react-icons/pi";
 import Image from "next/image";
 import {
   Opinion,
@@ -32,6 +32,7 @@ import {
 import { auth } from "@/firebase/config";
 import { uploadImage } from "@/firebase/helpers";
 import { resizeImage } from "@/helpers/resizeImage";
+import { BiTrash, BiX } from "react-icons/bi";
 
 export const OpinionForm = () => {
   const { draft } = useDraft();
@@ -80,14 +81,11 @@ export const OpinionForm = () => {
     const imageDataPromises = data.images.map(async (image: ReviewImage) => {
       if (!image.url.includes("https://")) {
         try {
-          console.log("resizing...");
           const file = await resizeImage(image.url);
-          console.log("uploading...");
           const url = await uploadImage(
             file,
             `reviews/${auth.currentUser!.uid}/${Date.now()}`
           );
-          console.log(url);
           return {
             url,
             caption: image.caption,
@@ -115,13 +113,8 @@ export const OpinionForm = () => {
   }
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
-
     try {
       const opinionData = await uploadImagesAndPrepareData(data);
-
-      console.log(opinionData);
-
       await onSubmitDraft(opinionData);
       let finalDraft = await getDraft(auth.currentUser?.uid!);
 
@@ -208,10 +201,7 @@ export const OpinionForm = () => {
         </div>
         {/* Images section */}
         <div className="">
-          <label htmlFor="images">
-            Share the most relevant pictures about the area, the building and
-            the property
-          </label>
+          <label htmlFor="images">{t("opinionReview.añadeImágenes")}</label>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0">
             {fields.map((field, index) => (
               <div key={field.id} className="text-center ">
@@ -226,11 +216,11 @@ export const OpinionForm = () => {
                           src={field.url || value}
                           width={100}
                           height={100}
-                          className="rounded-md object-cover border border-dashed border-gray-400 w-auto h-48"
+                          className="rounded-lg object-cover border border-dashed border-gray-400 w-auto h-48"
                           alt="selected image"
                         />
                       ) : (
-                        <div className="rounded-lg border border-dashed border-gray-400 hover:border-secondary-500 px-6 py-16 h-48">
+                        <div className="rounded-lg border border-dashed border-gray-400 hover:border-secondary-500 px-6 py-12 h-48">
                           <PiImage
                             className="mx-auto h-6 w-6 text-gray-300"
                             aria-hidden="true"
@@ -241,7 +231,9 @@ export const OpinionForm = () => {
                               htmlFor={`images.${index}.image`}
                               className="cursor-pointer font-semibold text-primary-300 focus-within:outline-none focus-within:ring-0 hover:text-primary-500"
                             >
-                              <p className="mt-4 w-full">Upload a file</p>
+                              <p className="mt-4 w-full">
+                                {t("opinionReview.subeArchivo")}
+                              </p>
                               <input
                                 id={`images.${index}.image`}
                                 type="file"
@@ -250,19 +242,8 @@ export const OpinionForm = () => {
                                 onChange={(
                                   e: React.ChangeEvent<HTMLInputElement>
                                 ) => {
-                                  console.log("Pressed");
                                   if (e.target.files && e.target.files[0]) {
-                                    console.log("file chosen");
                                     const file = e.target.files[0];
-
-                                    /* if (file.size > 1 * 2000 * 1024) {
-                                      setError(`images.${index}.file`, {
-                                        type: "size",
-                                        message:
-                                          "File size should not exceed 2MB",
-                                      });
-                                      return;
-                                    } else { */
                                     clearErrors(`images.${index}.url`);
                                     const reader = new FileReader();
                                     if (file) {
@@ -284,14 +265,13 @@ export const OpinionForm = () => {
                                       };
                                       reader.readAsDataURL(file);
                                     }
-                                    /* } */
                                   }
                                 }}
                               />
                             </label>
                           </div>
                           <p className="text-xs leading-5 text-gray-600">
-                            PNG or JPG up to 2MB
+                            {t("opinionReview.specsArchivos")}
                           </p>
                         </div>
                       )
@@ -303,7 +283,7 @@ export const OpinionForm = () => {
                     render={({ field: { onChange, value } }) => (
                       <input
                         {...field}
-                        placeholder="Image description"
+                        placeholder={t("opinionReview.descripciónImágen")}
                         value={value}
                         className=" h-10"
                         maxLength={80}
@@ -311,9 +291,9 @@ export const OpinionForm = () => {
                       />
                     )}
                   />
-                  <PiTrash
-                    color="rgb(248, 113, 113)"
-                    className="absolute top-2 right-2 p-1 w-6 h-6"
+                  <BiX
+                    color="gray"
+                    className="absolute top-2 right-2 w-6 h-6 cursor-pointer p-1 rounded-md bg-white"
                     onClick={() => remove(index)}
                   />
                 </div>
@@ -327,7 +307,7 @@ export const OpinionForm = () => {
             }`}
             onClick={() => append({ url: null, caption: "" })}
           >
-            Add Image
+            {t("opinionReview.añadirImágen")}
           </button>
         </div>
         <div className="flex flex-col">

@@ -1,8 +1,8 @@
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import Image from "next/image";
-import building from "../../../public/building.png";
+import building from "public/building.png";
 import { useState } from "react";
-import comillas from "../../../public/comillas.png";
+import comillas from "public/comillas.png";
 import { Label } from "../atoms/Label";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";

@@ -17,7 +17,7 @@ export const Button = ({ children, className, icon, loading, buttonClassName, ..
           <ReactLoading type="spin" width={30} height={30} color="black" />
         </div>
       )}
-      <button className={`flex items-center ${buttonClassName}`} {...others}>
+      <button className={`flex items-center outline-none ${buttonClassName}`} {...others}>
         {children}
         {icon && <span className="ml-2">{icon}</span>}
       </button>

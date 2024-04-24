@@ -1,5 +1,6 @@
 import { Dialog as HeadlessUIDialog } from "@headlessui/react";
 import clsx from "clsx";
+import Image, { StaticImageData } from "next/image";
 import { ReactNode } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
@@ -9,24 +10,31 @@ export const Dialog = ({
   children,
   title,
   description,
+  image,
   panelClassName,
   className,
   iconClose,
+  onClose,
 }: {
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   children?: ReactNode;
   title?: string;
   description?: string;
+  image?: StaticImageData;
   panelClassName?: string;
   className?: string;
   iconClose?: boolean;
+  onClose?: () => void;
 }) => {
   return (
     <HeadlessUIDialog
       className="relative z-50"
       open={isOpen}
-      onClose={() => setIsOpen(false)}
+      onClose={() => {
+        setIsOpen(false);
+        if (onClose) onClose();
+      }}
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
       <HeadlessUIDialog.Backdrop
@@ -53,13 +61,22 @@ export const Dialog = ({
           )}
           <div
             className={clsx(
-              "overflow-auto lg:p-10 p-4 max-h-full mx-auto",
+              "overflow-auto lg:p-10 p-8 max-h-full mx-auto",
               className
             )}
           >
             <HeadlessUIDialog.Title as="h4" className="mb-4">
               {title}
             </HeadlessUIDialog.Title>
+            {image && (
+              <Image
+                src={image}
+                alt="dialogImage"
+                width={100}
+                height={100}
+                className="w-12 h-auto mx-auto mt-2 mb-6"
+              />
+            )}
             <HeadlessUIDialog.Description>
               {description}
             </HeadlessUIDialog.Description>

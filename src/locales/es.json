@@ -52,7 +52,13 @@
     "ayuda": "Ayuda",
     "escalera": "Escalera",
     "pisoYPuerta": "Piso/Puerta",
-    "empezar": "Empezar"
+    "empezar": "Empezar",
+
+    "reviewAuthenticityTitle": "Aviso Importante Sobre la Verificación de Reseñas",
+    "reviewAuthenticityContent": "Al continuar con la escritura de una reseña, usted acepta que, en caso de que ésta se reporte por ser inexacta o engañosa, podemos solicitar prueba de su residencia en la propiedad, como un contrato de alquiler, para verificar su autenticidad. Si no se proporciona la documentación requerida, su reseña podría ser eliminada para mantener la integridad de la plataforma.",
+
+    "reviewWarningTitle": "Aviso Importante",
+    "reviewWarningContent": "Al dejar una reseña, estás aceptando que, si es necesario, podamos solicitar pruebas para verificar su autenticidad."
   },
   "areaResume": {
     "areaOverview": "Resumen de la zona"
@@ -69,6 +75,14 @@
     "experienceAndShare": "Revive tu experiencia y compártela",
     "helpIdeal": "Ayuda a otros a encontrar su piso ideal",
     "WriteOpinion": "Escribe una opinión"
+  },
+  "blog": {
+    "findOutTips": "Entérate de los consejos más útiles.",
+    "dingDong": "Ding Dong",
+    "theBlog": "El Blog Reviu",
+    "readme": "Léeme",
+    "gotIdeas": "¿Tienes ideas o temas sobre los que te muere por leer? ¡Estamos atentos! Contáctanos y dinos qué te gustaría ver a continuación!",
+    "seeAll": "Ver todos"
   },
   "buildingId": {
     "valuationGeneral": "Valoración general"
@@ -88,7 +102,6 @@
     "opcional": "Opcional",
     "dinosTuNacionalidad": "Nacionalidad",
     "genero": "Género",
-    "politicaPrivacidad": "política de privacidad",
     "guardar": "Guardar",
     "guardado": "Guardado",
     "publicar": "Publicar",
@@ -126,7 +139,7 @@
     "eresPropietario": "Soy propietario de una vivienda en alquiler. ¿Puedo participar?",
     "preguntasFecuentes": "Preguntas frecuentes",
     "legal": "Legal",
-    "PoliticaPrivacidad": "Política de privacidad",
+    "politicaPrivacidad": "Política de privacidad",
     "terminosYCondiciones": "Términos y condiciones",
     "legalNotice": "Aviso Legal",
     "cookies": "Cookies",
@@ -180,6 +193,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copiar enlace",
+    "copied": "Copiado",
     "compartir": "Compartir",
     "noHayOpiniones": "No hay opiniones en esta comunidad",
     "hasVividoAqui": "¿Has vivido aquí? Ayudémonos entre todos para que buscar piso sea una experiencia segura",
@@ -337,6 +351,64 @@
     "leyAplicable": "13. JURISDICCIÓN Y LEY APLICABLE",
     "leyAplicableP1": "Dado que el Sitio Web, con sus servicios incluidos, están destinados a ser utilizados y ofrecidos en España, en la medida en que lo permita la normativa imperativa, la legislación aplicable será el derecho común español. Cualquier procedimiento relacionado con los derechos y obligaciones que pudieran surgir en virtud de, o en relación con, estos Términos y Condiciones se someterán a la jurisdicción de los Tribunales y Juzgados de Barcelona."
   },
+  "cookies": {
+    "title": "POLÍTICA DE COOKIES",
+    "ownershipAndUsage": "La Hidra Cooperativa, SCCL",
+    "ownershipAndUsage1": ", (en adelante “",
+    "reviuCasa": "Reviu Casa",
+    "ownershipAndUsage2": "”) es la propietaria del Sitio Web reviucasa.com (en adelante el “",
+    "webSite": "Sitio Web",
+    "ownershipAndUsage3": "”) y utiliza cookies que recogen información relacionada con la conexión, navegadores y los dispositivos que utilizan los usuarios de Internet que acceden y usan el Sitio Web (en adelante los “",
+    "users": "Usuarios",
+    "ownershipAndUsage4": "”). Reviu Casa utiliza esta información para gestionar y mejorar el buen funcionamiento del Sitio Web.",
+    "ownershipAndUsage5": "Esta política describe qué información recogen esas cookies, cómo se utilizan y para qué. También se indica cómo el Usuario puede restringir o bloquear la descarga automática de las cookies, sin embargo, esto podría reducir o incluso dificultar ciertos elementos de la funcionalidad del Sitio Web. Asimismo, el Usuario puede elegir la categoría de cookies que desea activar en el banner de cookies que aparece la primera vez que accede al Sitio Web.",
+
+    "cookieDefinition": "1. DEFINICIÓN DE COOKIES",
+    "cookieDefinition1": "Las cookies son pequeños archivos de texto que se colocan en el ordenador, smartphone u otro dispositivo del Usuario cuando accede a Internet. Esto se hace para mejorar la experiencia del Usuario y para otros fines, como reconocer a los Usuarios en el acceso al Sitio, garantizar la seguridad de su cuenta y ofrecer publicidad dirigida.",
+    "cookieDefinition2": "Para obtener más información general sobre las cookies, consulte el siguiente ",
+    "articleLink": "artículo",
+    "cookieDefinition3": ".",
+
+    "howWeUseCookies": "2. ¿CÓMO UTILIZAMOS LAS COOKIES?",
+    "howWeUseCookies1": "En resumen, Reviu Casa utiliza las cookies listadas en el Anexo I de esta Política para hacer un seguimiento de cómo se utiliza el Sitio Web y así poder optimizar su funcionamiento.",
+    "typesOfCookiesUsed": "3. ¿QUÉ COOKIES UTILIZAMOS? ",
+    "typesOfCookiesUsed1": "El Sitio Web utiliza tanto cookies propias como de terceros:",
+
+    "firstPartyCookies": "Cookies propias",
+    "firstPartyCookiesDesc": ": son las cookies enviadas a su dispositivo por Reviu Casa a través del dominio web.",
+    "thirdPartyCookies": "Cookies de terceros",
+    "thirdPartyCookiesDesc": ": son enviadas a su dispositivo por dominios que no son gestionados por Reviu Casa sino por otra entidad que trata los datos recogidos mediante las cookies.",
+
+    "typesOfCookiesUsed2": "De acuerdo con la finalidad de las cookies, las cookies utilizadas por Reviu Casa pueden dividirse en las siguientes categorías:",
+
+    "technicalCookies": "Cookies técnicas (necesarias)",
+    "technicalCookiesDesc": ": cookies necesarias para la navegación y para el correcto funcionamiento del Sitio Web. Su uso permite funciones básicas, tales como el acceso, la navegación segura. La base legal que permite recoger los datos a través de estas cookies es el interés legítimo de Reviu Casa en la gestión del Sitio Web. No se comparte ninguna información recogida mediante estas cookies con terceros. Consulte la tabla de cookies a continuación para conocer los detalles de estas.",
+    "preferenceCookies": "Cookies de preferencia",
+    "preferenceCookiesDesc": ": son cookies que se instalan con el objeto de personalizar la experiencia de Usuario (esto es, en la forma en la que ciertas ventanas emergerán o no en la navegación del Usuario) conforme a los consentimientos y preferencias que, en su caso, el Usuario manifieste durante su navegación en el Sitio Web, tales como realizar un control sobre la aceptación de la presente Política de Cookies por parte del propio Usuario (ello supondrá que no aparecerá más el banner de aviso de cookies, con su correspondiente aceptación o no, para el Usuario). Como en el caso de las cookies analíticas, la base legítima que nos permite recoger dichos datos del Usuario a través de estas cookies de preferencia es el consentimiento del Usuario.",
+
+    "typesOfCookiesUsed3": "Puede encontrar la lista detallada de las cookies que utilizamos, la tipología, la finalidad y la duración de cada una de ellas en la tabla de cookies que aparece a continuación. (Anexo I)",
+
+    "howToDisableCookies": "4. DESACTIVAR COOKIES",
+    "howToDisableCookies1": "El Usuario puede restringir o limitar la colocación de cookies ajustando la configuración de su navegador. Sin embargo, si selecciona esta configuración, es posible que no pueda acceder a ciertas partes del Sitio Web o la visualización deficiente de sus contenidos, lo que provocará una navegación menos eficiente y tal vez no pueda aprovechar algunos de los servicios disponibles. Por lo tanto, se recomienda que no las desactive.",
+    "howToDisableCookies2": "Si desea desactivar las cookies, vaya al menú de Preferencias del Navegador o a la configuración del Navegador y busque la sección de Privacidad. A modo de ejemplo, puede seguir las siguientes instrucciones:",
+    "howToDisableCookies3": "Microsoft Edge",
+    "howToDisableCookies4": "Google Chrome",
+    "howToDisableCookies5": "Firefox",
+    "howToDisableCookies6": "Safari",
+
+    "moreInfo": "5. MÁS INFORMACIÓN",
+    "moreInfo1": "Esperamos haber aclarado cómo y por qué utilizamos cookies. En caso de que algo siga sin estar claro, no dude en ponerse en contacto con nosotros en: ",
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Tipo",
+    "ownership": "Titularidad",
+    "definition": "Definición",
+    "retentionPeriod": "Plazo de conservación",
+    "technicalCookie": "Técnica",
+    "preferenceCookie": "Preferencia",
+    "localeCookieDefinition": "Registro del idioma de preferencia del usuario",
+    "session": "Sessión"
+  },
   "experiences": {
     "howItWork": "Cómo funciona",
     "shareAndFind": "Comparte y encuentra opiniones sobre los pisos de tu ciudad de forma anónima",
@@ -444,6 +516,8 @@
     "gestionadoInmobiliaria": "¿Has alquilado el piso a través de una inmobiliaria?",
     "queInmobiliaria": "¿Qué inmobiliaria lleva o ha llevado la gestión del piso?",
     "escribeInmobiliaria": "Escribe el nombre de la inmobiliaria",
+    "noEncuentroInmobiliaria": "No encuentro la inmobiliaria, la quiero introducir manualmente.",
+    "escribeImmobiliariaManualmente": "Escribe el nombre de la inmobiliaria",
     "tratoInmobiliaria": "¿Cómo ha sido el trato de la inmobiliaria?",
     "tratoCasero": "¿Cómo ha sido el trato del casero?",
     "respuestaProblema": "¿Y la respuesta cuando surgió un problema?",
@@ -469,7 +543,12 @@
     "cuentanosCosasBuenas": "Cuéntanos las cosas buenas que tiene la vivienda",
     "cuentanosMejorias": "Cuéntanos las cosas que mejorarías de la vivienda",
     "conciso": "Sé conciso y educado",
-    "estaInformacion": "Esta información va dirigida a otra persona que quiera vivir en tu piso. Explícale las cosas buenas y malas que tiene vivir en él. "
+    "estaInformacion": "Esta información va dirigida a otra persona que quiera vivir en tu piso. Explícale las cosas buenas y malas que tiene vivir en él. ",
+    "añadeImágenes": "Comparte fotos clave del área, el edificio y la propiedad.",
+    "subeArchivo": "Sube un archivo",
+    "specsArchivos": "PNG o JPG hasta 2MB",
+    "descripciónImágen": "Descripción de la imagen",
+    "añadirImágen": "Añadir imagen"
   },
   "privacy": {
     "title": "Política de privacidad",
@@ -576,7 +655,7 @@
   "stayReview": {
     "estancia": "Estancia",
     "opinionAnonima": "¡Tu opinión es anónima!",
-    "informacionAnonima": "La información que compartas, incluyendo la fecha de estancia no se mostrará de forma exacta. Nadie sabrá quién eres",
+    "informacionAnonima": "La información que compartas no se mostrará de forma exacta. Nadie sabrá quién eres",
     "residesActualmente": "¿Resides actualmente en esta dirección?",
     "cuandoEmpezasteVivir": "¿Cuándo empezaste a vivir en esta vivienda?",
     "cuandoDejasteVivir": "¿Cuándo dejaste de vivir en esta vivienda?",
@@ -589,6 +668,22 @@
     "enBrevesSaldremos": "Anima a tus amigos a dejar sus opiniones para que buscar piso deje de ser una pesadilla.",
     "publicarOtraOpinion": "Publicar otra opinión",
     "menuPrincipal": "Ir a la página de inicio"
+  },
+  "suspended": {
+    "title": "Tu cuenta ha sido suspendida",
+    "whySectionTitle": "¿Por qué fue suspendida mi cuenta?",
+    "whySectionStart": "Te hemos enviado un correo electrónico detallando las razones de la suspensión de tu cuenta. A continuación, se encuentran las razones más comunes por las cuales se suspenden las cuentas:",
+    "whySection1": "Participación en discursos de odio o comportamiento discriminatorio.",
+    "whySection2": "Publicación de reseñas falsas o información engañosa.",
+    "whySection3": "Publicación repetida de contenido no deseado o repetitivo para perturbar la experiencia del usuario.",
+    "whySection4": "Denuncias malintencionadas de contenido o de otros usuarios sin causa justificada.",
+    "whySection5": "Posar como otra persona u organización para engañar a los usuarios.",
+    "whySection6": "Fomentar o facilitar actividades ilegales a través de la plataforma.",
+    "whySection7": "Compartir o publicar información privada sin autorización.",
+    "whySectionEnd": "Mientras tu cuenta esté suspendida, no podrás acceder a ciertas funciones y páginas de nuestra plataforma. Ten en cuenta que, a menos que la decisión sea revocada, todos los datos asociados con tu cuenta serán eliminados permanentemente dentro de 30 días.",
+    "mistakeSectionTitle": "¿Crees que esto es un error?",
+    "mistakeSection1": "Nuestras decisiones de suspender cuentas implican una revisión cuidadosa y están respaldadas por una combinación de herramientas de IA y supervisión humana. Si crees que tu cuenta fue suspendida incorrectamente, o si hay circunstancias atenuantes que debamos considerar, por favor contáctanos directamente en",
+    "mistakeSection2": "Estamos comprometidos con garantizar la justicia y revisaremos tu caso lo más rápido posible."
   },
   "valuationForm": {
     "estadoPiso": "Estado del piso y mantenimiento",

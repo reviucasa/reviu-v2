@@ -1,10 +1,10 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
-import Instagram from "../../../public/IconInstagram.svg";
-import TikTok from "../../../public/IconTikTok.svg";
-import Twitter from "../../../public/IconTwitter.svg";
-import LogoWhite from "../../../public/reviuLogoWhite.svg";
+import Instagram from "public/IconInstagram.svg";
+import TikTok from "public/IconTikTok.svg";
+import Twitter from "public/IconTwitter.svg";
+import LogoWhite from "public/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -44,6 +44,14 @@ export function Footer() {
             {/*<li>{t('common.eresPropietario', '¿Eres propietario?')}</li>*/}
             <li
               onClick={() => {
+                router.push("/blog");
+              }}
+              className="cursor-pointer"
+            >
+              Blog
+            </li>
+            <li
+              onClick={() => {
                 router.push("/faqs");
               }}
               className="cursor-pointer"
@@ -79,7 +87,14 @@ export function Footer() {
             >
               {t("common.terminosYCondiciones")}
             </li>
-            <li>{t("common.cookies")}</li>
+            <li
+              className="cursor-pointer"
+              onClick={() => {
+                router.push("/cookies");
+              }}
+            >
+              {t("common.cookies")}
+            </li>
           </ul>
         </div>
       </div>

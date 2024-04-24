@@ -1,16 +1,12 @@
 "use client";
 import { Button } from "@/components/atoms/Button";
-import { useUser } from "@/hooks/swr/useUser";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
-import okhand from "../../../../public/ok-hand.png";
-import { auth } from "@/firebase/config";
+import okhand from "public/ok-hand.png";
 import { useRouter } from "next/navigation";
 
 export default function Success() {
   const router = useRouter();
-  const { user } = useUser();
-  //   const { clearReview } = useDraft();
   const t = useTranslations();
 
   return (
@@ -27,7 +23,8 @@ export default function Success() {
         />
         <h3>{t("success.graciasDejarOpinion")}</h3>
         <p>
-          {t("success.enBrevesSaldremos")}{"  "}
+          {t("success.enBrevesSaldremos")}
+          {"  "}
           {/* <span className="font-bold">{auth.currentUser?.email}</span> */}
         </p>
         <div className="flex gap-5">
@@ -35,9 +32,6 @@ export default function Success() {
             buttonClassName="btn-primary-500"
             className="mt-7 w-full lg:w-auto"
             onClick={async () => {
-              // TODO: clear draft
-              //   await revalidateUser();
-              //   await clearReview();
               router.push("/review");
             }}
           >

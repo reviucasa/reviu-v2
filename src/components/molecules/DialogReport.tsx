@@ -1,14 +1,14 @@
 import Image from "next/image";
 import { useState } from "react";
-import IconAcoso from "../../../public/IconAcoso.svg";
-import IconAcosoRed from "../../../public/IconAcosoRed.svg";
-import IconFireRed from "../../../public/IconFireRed.png";
-import IconInfoFalse from "../../../public/IconInfoFalse.svg";
-import IconInfoFalseRed from "../../../public/IconInfoFalseRed.png";
-import IconSpam from "../../../public/IconSpam.svg";
-import IconSpamRed from "../../../public/IconSpamRed.png";
-import backArrow from "../../../public/backArrow.png";
-import IconFire from "../../../public/iconFire.svg";
+import IconAcoso from "public/IconAcoso.svg";
+import IconAcosoRed from "public/IconAcosoRed.svg";
+import IconFireRed from "public/IconFireRed.png";
+import IconInfoFalse from "public/IconInfoFalse.svg";
+import IconInfoFalseRed from "public/IconInfoFalseRed.png";
+import IconSpam from "public/IconSpam.svg";
+import IconSpamRed from "public/IconSpamRed.png";
+import backArrow from "public/backArrow.png";
+import IconFire from "public/iconFire.svg";
 import { Button } from "../atoms/Button";
 import { Dialog } from "../atoms/Dialog";
 import { useTranslations } from "next-intl";
@@ -28,19 +28,16 @@ export const DialogReport = ({
   // const [openModalInfo, setOpenModalInfo] = useState<boolean>(false)
   const [openModalReport, setOpenModalReport] = useState<boolean>(false);
   const [textReport, setTextReport] = useState("");
-  const [selectedReportType, setSelectedReportType] = useState<{
-    id: number;
-    text: string;
-  }>();
+  const [selectedOption, setSelectedOption] = useState<number>();
   const { user } = useUser();
   const t = useTranslations();
 
-  const handleSelectedReportType = (value: { id: number; text: string }) => {
-    setSelectedReportType(value);
+  const handleSelectedReportType = (id: number) => {
+    setSelectedOption(id);
   };
   const handleModalReport = () => {
     setOpenModalReport(!openModalReport);
-    setSelectedReportType(undefined);
+    setSelectedOption(undefined);
   };
   const handleModalTextReport = () => {
     if (!textReport) {
@@ -60,6 +57,7 @@ export const DialogReport = ({
       IconRed: IconAcosoRed,
       Icon: IconAcoso,
       text: t("common.informacionAtaca"),
+      code: "acoso",
     },
     {
       id: 2,
@@ -67,6 +65,7 @@ export const DialogReport = ({
       IconRed: IconFireRed,
       Icon: IconFire,
       text: t("common.lenguajeOfensivo"),
+      code: "discriminacion",
     },
     {
       id: 3,
@@ -74,6 +73,7 @@ export const DialogReport = ({
       IconRed: IconSpamRed,
       Icon: IconSpam,
       text: "",
+      code: "spam",
     },
     {
       id: 4,
@@ -81,20 +81,21 @@ export const DialogReport = ({
       IconRed: IconInfoFalseRed,
       Icon: IconInfoFalse,
       text: "",
+      code: "informacionFalsa",
     },
   ];
 
   const handleReviewReport = async () => {
     if (user) {
       const report: Partial<ReviewReport> = {
-        reason: selectedReportType?.text ?? null,
+        reason: Options.find((o) => o.id == selectedOption)?.code || "other",
         reviewId,
         comment: textReport,
         user: {
           id: user!.id,
           email: auth.currentUser!.email!,
           name: [user.name, user.lastname].join(" "),
-          isAgency: false, // TODO: fer usuaris amb diferents permisos (admin, agency, owner, user)
+          type: user.type,
         },
       };
       createReviewReport(report);
@@ -122,16 +123,16 @@ export const DialogReport = ({
               <div
                 key={title}
                 className={`${
-                  selectedReportType?.id === id ? "bg-primary-100" : "bg-white"
+                  selectedOption === id ? "bg-primary-100" : "bg-white"
                 }`}
-                onClick={() => handleSelectedReportType({ id, text })}
+                onClick={() => handleSelectedReportType(id)}
               >
                 <div className="p-4 border border-gray-300 rounded-md cursor-pointer">
                   <div className="grid grid-cols-[1fr_auto] leading-6">
                     <p className="text-gray-500 font-bold lg:text-base text-sm">
                       {title}
                     </p>
-                    {selectedReportType?.id === id ? (
+                    {selectedOption === id ? (
                       <Image
                         src={IconRed}
                         width={24}
@@ -174,7 +175,7 @@ export const DialogReport = ({
 
               <Button
                 buttonClassName="btn-primary-500 content-center overflow-hidden"
-                disabled={!selectedReportType}
+                disabled={!selectedOption}
                 onClick={() => {
                   handleReviewReport();
                   setIsOpen(!isOpen);
@@ -218,6 +219,7 @@ export const DialogReport = ({
               buttonClassName="btn-primary-500 content-center overflow-hidden"
               disabled={!textReport}
               onClick={() => {
+                setSelectedOption(0)
                 handleModalTextReport();
                 handleReviewReport();
               }}

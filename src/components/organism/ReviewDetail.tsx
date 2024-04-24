@@ -1,10 +1,10 @@
 import Image from "next/image";
-import happy from "../../../public/happy.png";
-import sad from "../../../public/sad.png";
+import happy from "public/happy.png";
+import sad from "public/sad.png";
 import { useContext, useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
-import comillas from "../../../public/comillas.png";
-import GreenHouse from "../../../public/green_house.png";
+import comillas from "public/comillas.png";
+import GreenHouse from "public/green_house.png";
 import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { Chip } from "../atoms/Chip";
 import { Label } from "../atoms/Label";
@@ -16,6 +16,11 @@ import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { Config, ConfigValue } from "@/models/types";
 import { useRouter } from "next/navigation";
 import { DialogImage } from "../molecules/DialogImage";
+import { DialogDelete } from "../molecules/DialogDelete";
+import { Suspend } from "../atoms/Suspend";
+import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
+import { useAuth } from "@/context/auth";
+import { UserStatus } from "@/models/user";
 
 export const ReviewDetail = ({
   review,
@@ -24,13 +29,14 @@ export const ReviewDetail = ({
   openMoreInfo: boolean;
   setOpenMoreInfo: (value: boolean) => void;
 }) => {
+  const { user, claims } = useAuth();
   const t = useTranslations();
-  /* const { config } = useConfig(); */
   const router = useRouter();
   const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
+  const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
   const [openModalImage, setOpenModalImage] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<ReviewImage>();
 
@@ -76,6 +82,11 @@ export const ReviewDetail = ({
                     className="lg:w-72 flex flex-col lg:gap-5 gap-2 lg:mt-4"
                     review={review}
                   />
+                  {user && claims?.admin && (
+                    <div className="mt-8  pt-6 border-t border-gray-200">
+                      <ReviewStatusBadge status={review.status} />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -100,7 +111,8 @@ export const ReviewDetail = ({
               </div>
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">
                 <h6 className="mb-2 lg:text-xl font-bold">
-                  {t("common.opinion")}
+                  {t("common.opinion")}{" "}
+                  {claims?.admin == true ? " - " + review.id : ""}
                 </h6>
               </div>
               <div className="flex-1 mb-10">
@@ -320,59 +332,65 @@ export const ReviewDetail = ({
                     </div>
                   </>
                 )}
-              <div className="border-b-2 lg:mb-8 mb-4 mt-4">
-                <h5 className="mb-2">{t("common.zona300")}</h5>
-              </div>
-              <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
-                <Label title={t("common.tipologiaAmbiente")}>
-                  {vibe
-                    ?.filter((vibes) => vibes.count > 1)
-                    .slice(0, 3)
-                    .map((vibes) => config(`neighbourhood.vibe.${vibes.word}`))
-                    .join(", ")}
-                </Label>
-                <Label title={t("common.turistas")}>
-                  {config(
-                    `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
-                  )}
-                </Label>
-                <Label title={t("common.ruido")}>
-                  {config(
-                    `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
-                  )}
-                </Label>
-                <Label title={t("common.seguridad")}>
-                  {config(
-                    `neighbourhood.security.${review?.data?.neighbourhood?.security}`
-                  )}
-                </Label>
-                <Label title={t("common.limpieza")}>
-                  {config(
-                    `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
-                  )}
-                </Label>
-                <Label title={t("common.services")}>
-                  {services
-                    ?.filter((services) => services.count > 2)
-                    .slice(0, 5)
-                    .map((services) =>
-                      config(
-                        `neighbourhood.buildingMaintenance.${services.word}`
-                      )
-                    )
-                    .join(", ")}
-                </Label>
-                <div className="grid col-span-2">
-                  {review?.data?.neighbourhood?.comments && (
-                    <div className="flex">
-                      <Image src={comillas} alt="20" className="h-fit" />
-                      <p className="pl-2 text-sm md:text-base">
-                        {review.data?.neighbourhood?.comments}
-                      </p>
+              {review && review.data && review.data.neighbourhood && (
+                <>
+                  <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                    <h5 className="mb-2">{t("common.zona300")}</h5>
+                  </div>
+                  <div className="flex-1 grid grid-cols-2 gap-8 mb-10">
+                    <Label title={t("common.tipologiaAmbiente")}>
+                      {vibe
+                        ?.filter((vibes) => vibes.count > 1)
+                        .slice(0, 3)
+                        .map((vibes) =>
+                          config(`neighbourhood.vibe.${vibes.word}`)
+                        )
+                        .join(", ")}
+                    </Label>
+                    <Label title={t("common.turistas")}>
+                      {config(
+                        `neighbourhood.tourists.${review?.data?.neighbourhood?.tourists}`
+                      )}
+                    </Label>
+                    <Label title={t("common.ruido")}>
+                      {config(
+                        `neighbourhood.noise.${review?.data?.neighbourhood?.noise}`
+                      )}
+                    </Label>
+                    <Label title={t("common.seguridad")}>
+                      {config(
+                        `neighbourhood.security.${review?.data?.neighbourhood?.security}`
+                      )}
+                    </Label>
+                    <Label title={t("common.limpieza")}>
+                      {config(
+                        `neighbourhood.cleaning.${review?.data?.neighbourhood?.cleaning}`
+                      )}
+                    </Label>
+                    <Label title={t("common.services")}>
+                      {services
+                        ?.filter((services) => services.count > 2)
+                        .slice(0, 5)
+                        .map((services) =>
+                          config(
+                            `neighbourhood.buildingMaintenance.${services.word}`
+                          )
+                        )
+                        .join(", ")}
+                    </Label>
+                    <div className="grid col-span-2">
+                      {review?.data?.neighbourhood?.comments && (
+                        <div className="flex">
+                          <Image src={comillas} alt="20" className="h-fit" />
+                          <p className="pl-2 text-sm md:text-base">
+                            {review.data?.neighbourhood?.comments}
+                          </p>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
 
               {review.data.opinion?.images && (
                 <div className="border-b-2 lg:mb-8 mb-4 mt-4">
@@ -417,12 +435,28 @@ export const ReviewDetail = ({
               setIsOpen={setOpenModalInfo}
               reviewId={review?.id}
             />
+            <DialogDelete
+              isOpen={openModalDelete}
+              setIsOpen={setOpenModalDelete}
+              reviewId={review?.id}
+            />
           </div>
-          <Report
-            onAction={() => {
-              setOpenModalInfo(!openModalInfo);
-            }}
-          />
+          <div className="flex flex-row justify-between">
+            {user && claims.status != UserStatus.Suspended && (
+              <Report
+                onAction={() => {
+                  setOpenModalInfo(!openModalInfo);
+                }}
+              />
+            )}
+            {user && claims?.admin && (
+              <Suspend
+                onAction={() => {
+                  setOpenModalDelete(!openModalDelete);
+                }}
+              />
+            )}
+          </div>
         </>
       )}
     </div>

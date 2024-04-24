@@ -3,7 +3,8 @@ import { Button } from "@/components/atoms/Button";
 import { FieldError } from "@/components/atoms/FieldError";
 import { AcceptDialog } from "@/components/dialogs/AcceptDialog";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
-import Message from "../../../public/message.png";
+import Message from "public/message.png";
+import HappyHouse from "public/happyHouse.png";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
@@ -14,7 +15,13 @@ import {
   getPositionUrlReview,
   getUrlReview,
 } from "@/helpers/stepper";
-import { createDraft, updateDraft } from "@/models/review";
+import {
+  createDraft,
+  getReviews,
+  getReviewsByAgencyId,
+  getReviewsFromUser,
+  updateDraft,
+} from "@/models/review";
 import { auth } from "@/firebase/config";
 import {
   Apartment,
@@ -55,6 +62,8 @@ export const AddressForm = () => {
   const [error, setError] = useState<string>();
   const [stairSelected, setStairSelected] = useState<string>();
   const [apartmentSelected, setApartmentSelected] = useState<Apartment>();
+  const [isOpenReviewAuthenticityAlert, setIsOpenReviewAuthenticityAlert] =
+    useState(false);
   const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlertsetIsOpen] =
     useState(false);
   const [isOpenAddressIncorrectAlert, setIsOpenAddressIncorrectAlert] =
@@ -70,6 +79,12 @@ export const AddressForm = () => {
       );
       setApartmentSelected(draft?.apartment);
     };
+
+    const acceptedTerms = localStorage.getItem("acceptedReviewTerms");
+    // Check if the terms have not been accepted yet
+    if (acceptedTerms == null) {
+      setIsOpenReviewAuthenticityAlert(true);
+    }
 
     if (draft?.address) {
       setSelectedAddress(draft.address);
@@ -104,10 +119,18 @@ export const AddressForm = () => {
     [building?.apartments]
   );
 
-  const onSelectWholeAddress = (event: ChangeEvent<HTMLSelectElement>) => {
-    setApartmentSelected(
-      aparmentList.find((a) => a.id == event.currentTarget.value)
+  const onSelectWholeAddress = async (
+    event: ChangeEvent<HTMLSelectElement>
+  ) => {
+    const apartment = aparmentList.find(
+      (a) => a.id == event.currentTarget.value
     );
+    const reviews = await getReviewsFromUser(auth.currentUser!.uid);
+    if (reviews.find((r) => r.apartment?.id == apartment?.id)) {
+      setIsOpenExistingReviewAlertsetIsOpen(true);
+    } else {
+      setApartmentSelected(apartment);
+    }
   };
 
   const currentUrlPosition = getPositionUrlReview(pathname);
@@ -121,7 +144,6 @@ export const AddressForm = () => {
     setLoading(true);
     if (building && apartmentSelected) {
       if (draft?.address) {
-        // TODO: add popup when if draft confirming they want to create a new draft with a new address
         await updateDraft(auth.currentUser!.uid, {
           apartment: apartmentSelected,
           buildingId: building.id,
@@ -223,6 +245,7 @@ export const AddressForm = () => {
           </Button>
         )}
       </div>
+
       <AcceptDialog
         isOpen={isOpenExistingReviewAlert}
         setIsOpen={setIsOpenExistingReviewAlertsetIsOpen}
@@ -240,32 +263,44 @@ export const AddressForm = () => {
           {t("addressReview.posiblesErrores")}
         </div>
         <div className="grid lg:grid-cols-2 gap-5 ">
-          <p className="p-4 border border-gray-300 rounded-md">
+          <div className="p-4 border border-gray-300 rounded-md">
             <div className="font-bold mb-2">
               {t("addressReview.redaccionIncorrecta")}
             </div>
             <div>{t("addressReview.revisaErrores")}</div>
-          </p>
-          <p className="p-4 border border-gray-300 rounded-md">
+          </div>
+          <div className="p-4 border border-gray-300 rounded-md">
             <div className="font-bold mb-2">
               {t("addressReview.noHayViviendas")}
             </div>
             <div>{t("addressReview.baseDatosInmuebles")}</div>
-          </p>
+          </div>
         </div>
 
         <div className="text-sm font-bold mt-8 mb-4">
           {t("addressReview.formaCorrecta")}
         </div>
-        <p className="p-4 border border-gray-300 rounded-md">
+        <div className="p-4 border border-gray-300 rounded-md">
           <div className="font-bold mb-2">
             {t("addressReview.formaCorrecta")}
           </div>
           <div className="bg-gray-100 py-2 px-4 rounded-md">
             {t("addressReview.direccionCorrecta")}
           </div>
-        </p>
+        </div>
       </Dialog>
+      <AcceptDialog
+        isOpen={isOpenReviewAuthenticityAlert}
+        setIsOpen={setIsOpenReviewAuthenticityAlert}
+        acceptText={t("addressReview.deAcuerdo")}
+        description={t("addressReview.reviewWarningContent")}
+        title={t("addressReview.reviewWarningTitle")}
+        image={HappyHouse}
+        imageBeforeContent={true}
+        onAccept={() => {
+          localStorage.setItem("acceptedReviewTerms", "true");
+        }}
+      />
     </ReviewFormLayout>
   );
 };

@@ -1,6 +1,12 @@
 import { db } from "@/firebase/config";
 import { parseLocation } from "@/helpers/parseLocation";
-import { removeAccents, removeAccents2 } from "@/helpers/removeAccents";
+import {
+  removeAccents,
+  removeAccents2,
+  removeVowelAccents,
+  removeVowelAccents2,
+} from "@/helpers/removeAccents";
+import { removePostAposSpace } from "@/helpers/removePostAposSpace";
 import {
   FirestoreDataConverter,
   DocumentData,
@@ -149,9 +155,14 @@ const findBuildingByAddress = async (
     const buildingsCol = collection(db, "buildings").withConverter(
       buildingConverter
     );
+
     const q = query(
       buildingsCol,
-      where("address", "==", removeAccents(streetName.trim())),
+      where(
+        "address",
+        "==",
+        removePostAposSpace(removeVowelAccents2(streetName.trim()))
+      ),
       where("streetNumber", "==", streetNumber.trim())
     );
 

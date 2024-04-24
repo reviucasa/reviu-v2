@@ -1,14 +1,12 @@
 "use client";
 import { Label } from "@/components/atoms/Label";
-import { RealStateLayout } from "@/components/layouts/realStateLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
-import green_house from "../../../../../public/green_house.png";
-import comillas from "../../../../../public/comillas.png";
-import lupa from "../../../../../public/lupa.png";
+import green_house from "public/green_house.png";
+import comillas from "public/comillas.png";
+import lupa from "public/lupa.png";
 import { useTranslations } from "next-intl";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
-import { reviewConfigParams } from "@/staticData";
 import { Review, getReviewsByAgencyId } from "@/models/review";
 import { RealStateAgency, getAgency } from "@/models/agency";
 import React, { useState } from "react";
@@ -17,6 +15,8 @@ import { BounceLoader } from "react-spinners";
 import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { FieldError } from "@/components/atoms/FieldError";
+import cardBannerImage from "public/real-state-banner.jpg";
+import { MainLayout } from "@/components/layouts/MainLayout";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {
   const router = useRouter();
@@ -50,7 +50,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
 
   if (!reviews || !agency) {
     return (
-      <RealStateLayout>
+      <MainLayout>
         {agencyError ? (
           <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
             <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
@@ -75,7 +75,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
             <BounceLoader color="#d8b4fe" size={140} />
           </div>
         )}
-      </RealStateLayout>
+      </MainLayout>
     );
   }
 
@@ -84,7 +84,7 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
   ).length;
 
   return (
-    <RealStateLayout>
+    <MainLayout>
       <div className="lg:px-16 px-4 pt-10 pb-20 bg-white">
         <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
           {t("agency.informacionInmobiliaria")}
@@ -192,11 +192,12 @@ export default function Agency({ params }: { params: { agencyId: string } }) {
                 textButton={t("agency.contactaNosotros")}
                 colorButton="btn-secondary-500"
                 bgCard="bg-secondary-200"
+                image={cardBannerImage}
               />
             </div>
           </div>
         </div>
       </div>
-    </RealStateLayout>
+    </MainLayout>
   );
 }

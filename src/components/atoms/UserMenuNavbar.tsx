@@ -1,8 +1,8 @@
 import { Menu, Transition } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import Face from "../../../public/face.png";
-import { Fragment, Suspense } from "react";
+import Face from "public/face.png";
+import { Fragment } from "react";
 import { HiOutlineChevronUp } from "react-icons/hi";
 import { mutate } from "swr";
 import { Button } from "./Button";
@@ -64,6 +64,22 @@ export const UserMenuNavbar = () => {
                     </span>
                   )}
                 </Menu.Item>
+                {auth.claims.admin == true && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <span
+                        className={`p-2 text-secondary-500 cursor-pointer ${
+                          active && "bg-secondary-200"
+                        }`}
+                        onClick={() => {
+                          router.push("/admin");
+                        }}
+                      >
+                        Admin
+                      </span>
+                    )}
+                  </Menu.Item>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <Link

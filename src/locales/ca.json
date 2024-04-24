@@ -52,7 +52,13 @@
     "ayuda": "Ajuda",
     "escalera": "Escala",
     "pisoYPuerta": "Pis/Porta",
-    "empezar": "Començar"
+    "empezar": "Començar",
+
+    "reviewAuthenticityTitle": "Avís Important Sobre la Verificació de Ressenyes",
+    "reviewAuthenticityContent": "Al continuar amb l'escriptura d'una ressenya, vostè accepta que, en cas que aquesta sigui reportada per ser inexacta o enganyosa, podríem sol·licitar prova de la seva residència a la propietat, com un contracte de lloguer, per verificar-ne l'autenticitat. Si no es proporciona la documentació requerida, la seva ressenya podria ser eliminada per mantenir la integritat de la nostra plataforma.",
+
+    "reviewWarningTitle": "Avís important",
+    "reviewWarningContent": "Quan deixes una ressenya estàs acceptant que, en cas que sigui necessari, puguem sol·licitar proves per verificar-ne l'autenticitat."
   },
   "areaResume": {
     "areaOverview": "Resum de la zona"
@@ -69,6 +75,14 @@
     "experienceAndShare": "Reviu la teva experiència i comparteix-la",
     "helpIdeal": "Ajuda els altres a trobar el seu pis ideal",
     "WriteOpinion": "Deixa una opinió anònima"
+  },
+  "blog": {
+    "findOutTips": "Informa't dels consells més útils.",
+    "dingDong": "Ding Dong",
+    "theBlog": "El Blog Reviu",
+    "readme": "Llegeix-me",
+    "gotIdeas": "Tens idees o temes sobre els quals estàs desitjant llegir? Estem atents! Contacta'ns i fes-nos saber què t'agradaria veure!",
+    "seeAll": "Veure'ls tots"
   },
   "buildingId": {
     "valuationGeneral": "Valoració general"
@@ -177,6 +191,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copiar enllaç",
+    "copied": "Copiat",
     "compartir": "Compartir",
     "noHayOpiniones": "No hi ha opinions d'aquesta comunitat",
     "hasVividoAqui": "Has viscut aquí? Ajudem-nos entre tots perquè buscar pis sigui una experiència segura",
@@ -262,7 +277,7 @@
     "communityValuations": "Valoracions de la comunitat"
   },
   "conditions": {
-    "title": "Termes y condicions",
+    "title": "Termes i condicions",
     "identificacion": "1. IDENTIFICACIÓ",
     "identificacionP1": "La pàgina web reviucasa.com (d'ara endavant la “Pàgina Web”) es titularitat de l'Hidra Cooperativa SCCL, (d'ara endavant “Reviu Casa”) domiciliada en Carretera Bordeta, 58 - 60 PLT BX, Barcelona, 08014 amb NIF F67368431.",
     "identificacionP2": "L'accés i l'ús a la Pàgina Web concedeix a qui estigui duent a terme aquestes accions la condició de “Usuari”, quedant sotmès a les disposicions dels “Textos Legals”, inclosos l'",
@@ -334,6 +349,66 @@
     "reclamacionesP4": ", per a la retirada d'aquesta informació. Una vegada presentada la sol·licitud, Reviu Casa procedirà a analitzar-la a partir dels protocols interns i de conformitat amb la legislació vigent. En cas que aquesta informació vulneri efectivament els drets de l'Usuari, Reviu Casa procedirà a l'eliminació d'aquesta.",
     "leyAplicable": "12. JURISDICCIÓ I LLEI APLICABLE.",
     "leyAplicableP1": "Atès que la Pàgina Web, amb els seus serveis inclosos, està destinada a ser utilitzada i oferta a Espanya, en la mesura en què ho permeti la normativa imperativa, la legislació aplicable serà el dret comú espanyol. Qualsevol procediment relacionat amb els drets i obligacions que poguessin sorgir en virtut de, o en relació amb, aquests Termes i Condicions se sotmetran a la jurisdicció dels Tribunals i Jutjats de Barcelona."
+  },
+  "cookies": {
+    "title": "POLÍTICA DE COOKIES",
+    "ownershipAndUsage": "L'Hidra Cooperativa, SCCL",
+    "ownershipAndUsage1": ", (d'ara endavant '",
+    "reviuCasa": "Reviu Casa",
+    "ownershipAndUsage2": "') és la propietària del Lloc web reviucasa.com (d'ara endavant el '",
+    "webSite": "Lloc Web",
+    "ownershipAndUsage3": "') i utilitza cookies que recullen informació relacionada amb la connexió, navegadors i els dispositius que utilitzen els usuaris d'Internet que accedeixen i usen el Lloc web (d'ara endavant els '",
+    "users": "Usuaris",
+    "ownershipAndUsage4": "'). Reviu Casa utilitza aquesta informació per a gestionar i millorar el bon funcionament del Lloc web.",
+    "ownershipAndUsage5": "Aquesta política descriu quina informació recullen aquestes cookies, com s'utilitzen i per a què. També s'indica com l'Usuari pot restringir o bloquejar la descàrrega automàtica de les cookies, tanmateix, això podria reduir o fins i tot dificultar uns certs elements de la funcionalitat del Lloc web.",
+
+    "cookieDefinition": "1. DEFINICIÓ DE COOKIES",
+    "cookieDefinition1": "Les cookies són petits arxius de text que es col·loquen en l'ordinador, telèfon intel·ligent o un altre dispositiu de l'Usuari quan accedeix a Internet. Això es fa per a millorar l'experiència de l'Usuari i per a altres fins, com reconèixer als Usuaris en l'accés al Lloc, garantir la seguretat del seu compte i oferir publicitat dirigida.",
+    "cookieDefinition2": "Per a obtenir més informació general sobre les cookies, consulti el següent ",
+    "articleLink": "article",
+    "cookieDefinition3": ".",
+
+    "howWeUseCookies": "2. COM UTILITZEM LES COOKIES?",
+    "howWeUseCookies1": "En resum, Reviu Casa utilitza les cookies llistades en l'Annex I d'aquesta Política per a fer un seguiment de com s'utilitza el Lloc web i així poder optimitzar el seu funcionament",
+    "typesOfCookiesUsed": "3. QUINES COOKIES UTILITZEM?",
+    "typesOfCookiesUsed1": "El Lloc web utilitza tant cookies pròpies com de tercers:",
+
+    "firstPartyCookies": "Cookies pròpies",
+    "firstPartyCookiesDesc": ": són les cookies enviades al seu dispositiu per Reviu Casa a través del domini web.",
+
+    "thirdPartyCookies": "Cookies de tercers",
+    "thirdPartyCookiesDesc": ": són enviades al seu dispositiu per dominis que no són gestionats per Reviu Casa sinó per una altra entitat que tracta les dades recollides mitjançant les cookies.",
+
+    "typesOfCookiesUsed2": "D'acord amb la finalitat de les cookies, les cookies utilitzades per Reviu Casa poden dividir-se en les següents categories:",
+
+    "technicalCookies": "Cookies tècniques (necessàries)",
+    "technicalCookiesDesc": ": cookies necessàries per a la navegació i per al correcte funcionament del Lloc web. El seu ús permet funcions bàsiques, com ara l'accés, la navegació segura. La base legal que permet recollir les dades a través d'aquestes cookies és l'interès legítim de Reviu Casa en la gestió del Lloc web. No es comparteix cap informació recollida mitjançant aquestes cookies amb tercers. Consulti la taula de cookies a continuació per a conèixer els detalls d'aquestes.",
+
+    "preferenceCookies": "Cookies de preferència",
+    "preferenceCookiesDesc": ": són cookies que s'instal·len a fi de personalitzar l'experiència d'Usuari (això és, en la forma en la qual unes certes finestres emergiran o no en la navegació de l'Usuari) conforme als consentiments i preferències que, si és el cas, l'Usuari manifesti durant la seva navegació en el Lloc web, com ara realitzar un control sobre l'acceptació de la present Política de Cookies per part del propi Usuari (això suposarà que no apareixerà més el baner d'avís de cookies, amb la seva corresponent acceptació o no, per a l'Usuari). Com en el cas de les cookies analítiques, la base legítima que ens permet recollir aquestes dades de l'Usuari a través d'aquestes cookies de preferència és el consentiment de l'Usuari.",
+
+    "typesOfCookiesUsed3": "Pot trobar la llista detallada de les cookies que utilitzem, la tipologia, la finalitat i la durada de cadascuna d'elles en la taula de cookies que apareix a continuació. (Annex I).",
+
+    "howToDisableCookies": "4. DESACTIVAR COOKIES",
+    "howToDisableCookies1": "L'Usuari pot restringir o limitar la col·locació de cookies ajustant la configuració del seu navegador. No obstant això, si selecciona aquesta configuració, és possible que no pugui accedir a unes certes parts del Lloc web o la visualització deficient dels seus continguts, la qual cosa provocarà una navegació menys eficient i tal vegada no pot aprofitar alguns dels serveis disponibles. Per tant, es recomana que no les desactivi.",
+    "howToDisableCookies2": "Si desitja desactivar les cookies, vagi al menú de Preferències del Navegador o a la configuració del Navegador i busqui la secció de Privacitat. A tall d'exemple, pot seguir les següents instruccions:",
+    "howToDisableCookies3": "Microsoft Edge",
+    "howToDisableCookies4": "Google Chrome",
+    "howToDisableCookies5": "Firefox",
+    "howToDisableCookies6": "Safari",
+
+    "moreInfo": "5. MÉS INFORMACIÓ",
+    "moreInfo1": "Esperem haver aclarit com i per què utilitzem cookies. En cas que alguna cosa segueixi sense ser clar, no dubti a posar-se en contacte amb nosaltres en: ",
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Tipus",
+    "ownership": "Titularitat",
+    "definition": "Definició",
+    "retentionPeriod": "Plaç de conservació",
+    "technicalCookie": "Tècnica",
+    "preferenceCookie": "Preferència",
+    "localeCookieDefinition": "Registre de l'idioma de preferència de l'usuari",
+    "session": "Sessió"
   },
   "experiences": {
     "howItWork": "Com funciona",
@@ -442,6 +517,8 @@
     "feedback": "El feedback positiu és la millor manera de comunicar i ser escoltat",
     "gestionadoInmobiliaria": "Has llogat el pis a través d'una immobiliària?",
     "queInmobiliaria": "Quina immobiliària gestiona el pis?",
+    "noEncuentroInmobiliaria": "No trobo la immobiliària, la vull introduïr manualment.",
+    "escribeImmobiliariaManualmente": "Escriu el nom de la immobiliària",
     "escribeInmobiliaria": "Escriu el nom de la immobiliària",
     "tratoInmobiliaria": "Com valores el tracte per part de la immobiliària?",
     "tratoCasero": "Com valores el tracte per part del propietari del pis?",
@@ -468,7 +545,12 @@
     "cuentanosCosasBuenas": "Explica'ns les coses bones d'aquest pis",
     "cuentanosMejorias": "Explica'ns les coses que milloraries d'aquest pis",
     "conciso": "Sigues concís i educat",
-    "estaInformacion": "Aquesta informació va dirigida a una altra persona que vulgui viure al teu pis. Explica-li les coses bones i dolentes que hi té viure. "
+    "estaInformacion": "Aquesta informació va dirigida a una altra persona que vulgui viure al teu pis. Explica-li les coses bones i dolentes que hi té viure. ",
+    "añadeImágenes": "Comparteix fotos clau de la zona, l'edifici i la propietat.",
+    "subeArchivo": "Puja un fitxer",
+    "specsArchivos": "PNG o JPG fins a 2MB",
+    "descripciónImágen": "Descripció de la imatge",
+    "añadirImágen": "Afegeix imatge"
   },
   "privacy": {
     "title": "Política de privacidad",
@@ -575,7 +657,7 @@
   "stayReview": {
     "estancia": "Estada",
     "opinionAnonima": "La teva opinió és anònima!",
-    "informacionAnonima": "La informació que comparteixis, incloent la data d'estada, no es publicarà de manera exacta. Ningú sabrà qui ets.",
+    "informacionAnonima": "La informació que comparteixis no es publicarà de manera exacta. Ningú sabrà qui ets.",
     "residesActualmente": "Vius en aquest pis actualment?",
     "cuandoEmpezasteVivir": "Quan hi vas començar a viure?",
     "cuandoDejasteVivir": "Quan hi vas deixar de viure?",
@@ -588,6 +670,22 @@
     "enBrevesSaldremos": "Anima els teus amics a deixar les seves opinions perquè buscar pis deixi de ser un malson.",
     "publicarOtraOpinion": "Publicar una altra opinió",
     "menuPrincipal": "Anar a la pàgina d'inici"
+  },
+  "suspended": {
+    "title": "El teu compte ha estat suspès",
+    "whySectionTitle": "Per què s'ha suspès el meu compte?",
+    "whySectionStart": "T'hem enviat un correu electrònic detallant les raons de la suspensió del teu compte. A continuació, es mostren les raons més comuns per les quals es suspenen els comptes:",
+    "whySection1": "Participació en discursos d'odi o comportament discriminatori.",
+    "whySection2": "Publicació de ressenyes falses o informació enganyosa.",
+    "whySection3": "Publicació repetida de contingut no desitjat o repetitiu per pertorbar l'experiència de l'usuari.",
+    "whySection4": "Denunciar maliciosament contingut o altres usuaris sense causa justificada.",
+    "whySection5": "Fer-se passar per una altra persona o organització per enganyar els usuaris.",
+    "whySection6": "Fomentar o facilitar activitats il·legals a través de la plataforma.",
+    "whySection7": "Compartició o publicació no autoritzada d'informació privada.",
+    "whySectionEnd": "Mentre el teu compte estigui suspès, no podràs accedir a certes funcions i pàgines de la nostra plataforma. Si us plau, tingues en compte que, llevat que la decisió sigui revocada, totes les dades associades amb el teu compte seran eliminades permanentment dins de 30 dies.",
+    "mistakeSectionTitle": "Creus que això és un error?",
+    "mistakeSection1": "Les nostres decisions de suspendre comptes impliquen una revisió acurada i estan recolzades per una combinació d'eines d'IA i supervisió humana. Si creus que el teu compte ha estat suspès incorrectament, o si hi ha circumstàncies atenuants que hauríem de considerar, si us plau contacta'ns directament a",
+    "mistakeSection2": "Estem compromesos a garantir la justícia i revisarem el teu cas el més ràpid possible."
   },
   "valuationForm": {
     "estadoPiso": "Estat del pis i manteniment",

@@ -1,6 +1,6 @@
 import { Menu } from "@headlessui/react";
 import Image from "next/image";
-import Flag from "../../../public/IconFlag.svg";
+import Flag from "public/IconFlag.svg";
 import { useTranslations } from "next-intl";
 
 export const Report = ({

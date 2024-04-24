@@ -51,7 +51,7 @@ export const CardSlide = ({
               {currentSection.text[currentDataIndex]}
             </h2>
           </div>
-          <div className={`w-full flex justify-center mb-12`}>
+          <div className={`w-full flex justify-center mb-0 sm:mb-12`}>
             {currentSection.children}
           </div>
           <ProgressBarSlide

@@ -67,6 +67,7 @@ export const RegisterForm = () => {
         await updateAuthUser(data.name + " " + data.lastname);
         await createUser(auth.user.uid, {
           ...data,
+          email: auth.user.email!,
           birthday: dayjs(data.birthday).format("DD/MM/YYYY"),
           dateAcceptedTerms: dayjs(Date.now()).format("DD/MM/YYYY"),
         });
@@ -80,17 +81,6 @@ export const RegisterForm = () => {
 
     setLoading(false);
 
-    /* await registerUser({
-      ...data,
-      birthday: dayjs(data.birthday).format("DD/MM/YYYY"),
-    });
-    revalidateUser();
-    const prevRoute = localStorage.getItem("prevRoute");
-    */
-
-    /* if (user) {
-      router.back();
-    } */
   };
 
   return (
@@ -100,7 +90,7 @@ export const RegisterForm = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="mt-4 flex flex-col gap-6"
       >
-        <div className="grid lg:grid-cols-2 gap-y-6 gap-x-2 child:flex child:flex-col">
+        <div className="grid xl:grid-cols-2 gap-y-6 gap-x-2 child:flex child:flex-col">
           <div>
             <label>{t("common.nombre")}</label>
             <input
@@ -135,7 +125,7 @@ export const RegisterForm = () => {
             )}
           </div>
           <div>
-            <div className="flex justify-between items-baseline">
+            <div className="flex justify-between items-baseline max-w-64">
               <label>{t("registerForm.nacionalidad")}</label>
               <span className="text-sm text-gray-500">
                 {t("common.opcional")}
@@ -144,6 +134,7 @@ export const RegisterForm = () => {
             <select
               aria-invalid={!!errors.country}
               defaultValue=""
+              className="max-w-64"
               {...register("country")}
             >
               <option disabled value="">
@@ -164,7 +155,7 @@ export const RegisterForm = () => {
             )}
           </div>
         </div>
-        <div className="relative flex flex-col">
+        <div className="relative flex flex-col max-w-64">
           <div className="flex justify-between items-baseline">
             <label>{t("common.genero")}</label>
             <span className="text-sm text-gray-500">

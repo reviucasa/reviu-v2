@@ -1,5 +1,6 @@
 import {
   isSignInWithEmailLink,
+  sendSignInLinkToEmail,
   signInWithEmailLink,
   updateProfile,
 } from "firebase/auth";
@@ -11,30 +12,28 @@ export async function updateAuthUser(displayName: string) {
       displayName,
     });
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
     console.error("Error updating user", error);
   }
 }
 
-// const actionCodeSettings = {
-//   // URL you want to redirect back to. The domain (www.example.com) for this
-//   // URL must be in the authorized domains list in the Firebase Console.
-//   url: "https://reviu.vercel.app/" /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* "http://localhost:3000/" */ /* "https://www.reviucasa.com/", */,
-//   // This must be true.
-//   handleCodeInApp: true,
-// };
+const actionCodeSettings = {
+  // URL you want to redirect back to. The domain (www.example.com) for this
+  // URL must be in the authorized domains list in the Firebase Console.
+  url: "http://localhost:3000/",
+  // This must be true.
+  handleCodeInApp: true,
+};
 
-// export async function sendSignInLink(email: string) {
-//   try {
-//     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
-//     window.localStorage.setItem("email", email);
-//   } catch (error: any) {
-//     const errorCode = error.code;
-//     const errorMessage = error.message;
-//     console.error("Error signing in with email link", error);
-//   }
-// }
+export async function sendSignInLink(email: string) {
+  try {
+    await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+    window.localStorage.setItem("email", email);
+  } catch (error: any) {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.error("Error signing in with email link", error);
+  }
+}
 
 export const verifyEmailLinkAndAuthenticate = async () => {
   const continueUrl = window.location.href;

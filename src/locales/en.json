@@ -52,7 +52,13 @@
     "ayuda": "Help",
     "escalera": "Staircase",
     "pisoYPuerta": "Floor and door number",
-    "empezar": "Start"
+    "empezar": "Start",
+
+    "reviewAuthenticityTitle": "Important Notice Regarding Review Verification",
+    "reviewAuthenticityContent": "By continuing to write a review, you agree that if it is reported as inaccurate or deceptive, we may request proof of your residence at the property, such as a rental agreement, to verify the its authenticity. If the required documentation is not provided, your review may be removed to maintain the integrity of our platform.",
+
+    "reviewWarningTitle": "Important Notice",
+    "reviewWarningContent": "By leaving a review, you are agreeing that, if necessary, we may request evidence to verify its authenticity."
   },
   "areaResume": {
     "areaOverview": "Area overview"
@@ -69,6 +75,14 @@
     "experienceAndShare": "Re-live your experience and share it.",
     "helpIdeal": "Help others find their ideal home.",
     "WriteOpinion": "Leave a review"
+  },
+  "blog": {
+    "findOutTips": "Find out the most useful tips.",
+    "dingDong": "Ding Dong",
+    "theBlog": "The Reviu Blog",
+    "readme": "Read me",
+    "gotIdeas": "Got ideas or topics you're dying to read about? We're all ears! Reach out and let us know what you want to see next!",
+    "seeAll": "See all"
   },
   "buildingId": {
     "valuationGeneral": "General overview"
@@ -179,6 +193,7 @@
     "twitter": "Twitter",
     "whatsapp": "Whatsapp",
     "copiarenlace": "Copy link",
+    "copied": "Copied",
     "compartir": "Share",
     "noHayOpiniones": "There are no reviews yet for this building",
     "hasVividoAqui": "Have you lived here? let’s help each other make the best informed decision when it comes to renting a home.",
@@ -336,6 +351,66 @@
     "leyAplicable": "13. JURISDICTION AND APPLICABLE LAW.",
     "leyAplicableP1": "Given that the Website, with its services included, are intended to be used and offered in Spain, to the extent permitted by mandatory regulations, the applicable law shall be Spanish common law. Any proceedings relating to the rights and obligations that may arise under or in connection with these Terms and Conditions shall be subject to the jurisdiction of the Courts of Barcelona."
   },
+  "cookies": {
+    "title": "COOKIES POLICY",
+    "ownershipAndUsage": "La Hidra Cooperativa, SCCL",
+    "ownershipAndUsage1": ",  (hereinafter '",
+    "reviuCasa": "Reviu Casa",
+    "ownershipAndUsage2": "') is the owner of the Web Site reviucasa.com (hereinafter the '",
+    "webSite": "Web Site",
+    "ownershipAndUsage3": "') and uses cookies that collect information related to the connection, browsers and devices used by Internet users who access and use the Web Site (hereinafter the '",
+    "users": "Users",
+    "ownershipAndUsage4": "'). Reviu Casa uses this information to manage and improve the proper functioning of the Website.  ",
+    "ownershipAndUsage5": "This policy describes what information these cookies collect, how they are used and for what purpose. It also indicates how the User can restrict or block the automatic downloading of cookies, however, this could reduce or even hinder certain elements of the functionality of the Website. Likewise, the User can choose the category of cookies that he/she wishes to activate in the cookies banner that appears the first time he/she accesses the Website.",
+
+    "cookieDefinition": "1. DEFINITION OF COOKIES",
+    "cookieDefinition1": "Cookies are small text files that are placed on the User's computer, smartphone or other device when accessing the Internet. This is done to improve the User's experience and for other purposes, such as recognizing Users when accessing the Site, ensuring the security of your account and delivering targeted advertising.",
+    "cookieDefinition2": "For more general information about cookies, please see the following ",
+    "articleLink": "article",
+    "cookieDefinition3": ".",
+
+    "howWeUseCookies": "2. HOW WE USE COOKIES",
+    "howWeUseCookies1": "In summary, Reviu Casa uses the cookies listed in Annex I of this Policy to track how the Website is used in order to optimize its operation.",
+    "typesOfCookiesUsed": "3. WHAT COOKIES WE USE",
+    "typesOfCookiesUsed1": "The Web Site uses both its own and third-party cookies:",
+
+    "firstPartyCookies": "First-party cookies",
+    "firstPartyCookiesDesc": ": cookies sent to your device by Reviu Casa through the web domain.",
+
+    "thirdPartyCookies": "Third-party cookies",
+    "thirdPartyCookiesDesc": ": these are sent to your device by domains that are not managed by Reviu Casa but by another entity that processes the data collected through cookies. ",
+
+    "typesOfCookiesUsed2": "According to the purpose of the cookies, the cookies used by Reviu Casa can be divided into the following categories:",
+
+    "technicalCookies": "Technical cookies (necessary)",
+    "technicalCookiesDesc": ": cookies necessary for navigation and for the proper functioning of the Website. Their use allows basic functions, such as access, secure navigation. The legal basis that allows the collection of data through these cookies is the legitimate interest of Reviu Casa in the management of the Website. No information collected through these cookies is shared with third parties. See the cookie table below for details of these cookies. ",
+
+    "preferenceCookies": "Preference cookies",
+    "preferenceCookiesDesc": ": these are cookies that are installed in order to customize the User's experience (that is, the way in which certain windows will appear or not in the User's navigation) according to the consents and preferences that, where appropriate, the User expresses while browsing the Website, such as control over the acceptance of this Cookies Policy by the User (this will mean that the cookie warning banner will no longer appear, with its corresponding acceptance or not, for the User). As in the case of analytical cookies, the legitimate basis that allows us to collect such data from the User through these preference cookies is the consent of the User.",
+
+    "typesOfCookiesUsed3": "You can find the detailed list of the cookies we use, the type, purpose and duration of each one of them in the table of cookies below (Annex I).",
+
+    "howToDisableCookies": "4. DISABLE COOKIES",
+    "howToDisableCookies1": "The User may restrict or limit the placement of cookies by adjusting the settings of your browser. However, if you select this setting, you may not be able to access certain parts of the Website or the poor display of its contents, which will result in less efficient browsing and you may not be able to take advantage of some of the services available. Therefore, it is recommended that you do not disable them.",
+    "howToDisableCookies2": "If you wish to disable cookies, go to the Browser Preferences menu or Browser settings and look for the Privacy section. As an example, you can follow the instructions below:",
+    "howToDisableCookies3": "Microsoft Edge",
+    "howToDisableCookies4": "Google Chrome",
+    "howToDisableCookies5": "Firefox",
+    "howToDisableCookies6": "Safari",
+
+    "moreInfo": "5. MORE INFORMATION",
+    "moreInfo1": "We hope we have clarified how and why we use cookies. If anything is still unclear, please do not hesitate to contact us at: ",
+    "infoEmail": "info@reviucasa.com",
+
+    "type": "Type",
+    "ownership": "Ownership",
+    "definition": "Definition",
+    "retentionPeriod": "Retention Period",
+    "technicalCookie": "Technical",
+    "preferenceCookie": "Preference",
+    "localeCookieDefinition": "Record of user's preferred language",
+    "session": "Session"
+  },
   "experiences": {
     "howItWork": "How does it work",
     "shareAndFind": "Share and find reviews about homes in your city.",
@@ -442,6 +517,8 @@
     "feedback": "Positive feedback is the best way of communicating and being heard",
     "gestionadoInmobiliaria": "¿Have you managed the apartment through a real estate agent?",
     "queInmobiliaria": "Which real estate agent has managed the apartment?",
+    "noEncuentroInmobiliaria": "I can't find the real state agency, I want to set it manually.",
+    "escribeImmobiliariaManualmente": "Write the real state agency name",
     "escribeInmobiliaria": "Type in the name of the real estate agency",
     "tratoInmobiliaria": "How did the real estate agent treat you?",
     "tratoCasero": "How did the landlord treat you?",
@@ -468,7 +545,12 @@
     "cuentanosCosasBuenas": "Tell us about the positive things of the home ",
     "cuentanosMejorias": "Tell us about the improvements you would make to the house",
     "conciso": "Be concise and polite.",
-    "estaInformacion": "This information is addressed to other people who want to live in your apartment. Let them know the good and bad things about living there. "
+    "estaInformacion": "This information is addressed to other people who want to live in your apartment. Let them know the good and bad things about living there.",
+    "añadeImágenes": "Share key photos of the area, building, and property.",
+    "subeArchivo": "Upload a file",
+    "specsArchivos": "PNG or JPG up to 2MB",
+    "descripciónImágen": "Image description",
+    "añadirImágen": "Add image"
   },
   "privacy": {
     "title": "Privacy Policy",
@@ -575,7 +657,7 @@
   "stayReview": {
     "estancia": "Stay",
     "opinionAnonima": "Your review is anonymous.",
-    "informacionAnonima": "The information you share including the dates will not be displayed accurately. No one will know who you are.",
+    "informacionAnonima": "The information you share will not be displayed accurately. No one will know who you are.",
     "residesActualmente": "Are you currently living in this home?",
     "cuandoEmpezasteVivir": "Since when have you been living here",
     "cuandoDejasteVivir": "When did you stop living here?",
@@ -588,6 +670,22 @@
     "enBrevesSaldremos": " Encourage your friends to leave a review so that house hunting is no longer a nightmare ",
     "publicarOtraOpinion": "Leave another review",
     "menuPrincipal": "Go to home page"
+  },
+  "suspended": {
+    "title": "Your Account Has Been Suspended",
+    "whySectionTitle": "Why Was My Account Suspended?",
+    "whySectionStart": "We have sent you an email detailing the reasons for the suspension of your account. Below are the most common reasons for account suspensions:",
+    "whySection1": "Engagement in hate speech or discriminatory behavior.",
+    "whySection2": "Posting of fake reviews or misleading information.",
+    "whySection3": "Repeated posting of unwanted or repetitive content to disrupt the user experience.",
+    "whySection4": "Maliciously reporting content or other users without just cause.",
+    "whySection5": "Posing as another individual or organization to deceive users.",
+    "whySection6": "Encouraging or facilitating illegal activities through the platform.",
+    "whySection7": "Unauthorized sharing or publication of private information.",
+    "whySectionEnd": "While your account is suspended, you will not be able to access certain features and pages of our platform. Please note that unless the decision is overturned, all data associated with your account will be permanently deleted within 30 days.",
+    "mistakeSectionTitle": "Believe This is a Mistake?",
+    "mistakeSection1": "Our decisions to suspend accounts involve careful review and are supported by a combination of AI tools and human oversight. If you believe your account was wrongly suspended, or if there are extenuating circumstances we should consider, please contact us directly at",
+    "mistakeSection2": "We are committed to ensuring fairness and will review your case as quickly as possible."
   },
   "valuationForm": {
     "estadoPiso": "State and maintenance of the home",

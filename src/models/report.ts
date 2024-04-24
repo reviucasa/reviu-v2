@@ -10,20 +10,23 @@ import {
   orderBy,
   where,
   setDoc,
+  serverTimestamp,
+  deleteDoc,
 } from "firebase/firestore";
+import { UserType } from "./user";
 
 // Define the ReviewReport type
 export type ReviewReport = {
   id: string;
   reviewId: string;
-  timestamp: Timestamp;
+  timeCreated: Timestamp;
   reason: string | null;
   comment?: string;
   user: {
     id: string;
     email: string;
     name: string;
-    isAgency?: boolean;
+    type: UserType;
   };
 };
 
@@ -54,7 +57,7 @@ const getReviewReport = async (
 const getReviewReports = async (): Promise<ReviewReport[]> => {
   const q = query(
     collection(db, "reports").withConverter(reviewReportConverter),
-    orderBy("timestamp", "desc")
+    orderBy("timeCreated", "desc")
   );
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data());
@@ -77,7 +80,13 @@ const createReviewReport = async (
   const ref = doc(collection(db, "reports")).withConverter(
     reviewReportConverter
   );
-  await setDoc(ref, reviewReport);
+  await setDoc(ref, { ...reviewReport, timeCreated: serverTimestamp() });
+};
+
+// Delete a report
+const deleteReport = async (id: string): Promise<void> => {
+  const ref = doc(db, `reports`, id);
+  await deleteDoc(ref);
 };
 
 export {
@@ -85,4 +94,5 @@ export {
   getReviewReports,
   getReviewReportsFromUser,
   createReviewReport,
+  deleteReport,
 };

@@ -1,6 +1,6 @@
 "use client";
 import Image, { StaticImageData } from "next/image";
-import Logo from "../../../public/reviuLogo.svg";
+import Logo from "public/reviuLogo.svg";
 import { useRouter } from "next/navigation";
 
 export const LoginLayout = ({
