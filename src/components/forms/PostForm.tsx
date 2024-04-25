@@ -59,7 +59,6 @@ export const PostForm = () => {
         status: PostStatus.active,
       };
 
-      // TODO: await create/update post;
       await createPost(post);
 
       router.push("/admin/blog"); // /admin/blog/postId

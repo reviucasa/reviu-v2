@@ -57,6 +57,23 @@ button {
     }
   }
 }
+
+.btn-secondary-300 {
+  @apply border border-secondary-300 bg-secondary-300 text-white cursor-pointer;
+  &:hover {
+    @apply bg-secondary-500 text-secondary-500;
+  }
+  &:disabled {
+    @apply opacity-50 cursor-not-allowed;
+  }
+  &.btn-alternate {
+    @apply text-secondary-500 bg-white;
+    &:hover {
+      @apply bg-secondary-500 text-white;
+    }
+  }
+}
+
 .btn-terciary-500 {
   @apply border border-terciary bg-terciary text-primary-500;
   &:hover {

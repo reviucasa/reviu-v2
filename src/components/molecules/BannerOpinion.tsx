@@ -26,11 +26,11 @@ export const BannerOpinion = ({
   return (
     <div className={`grid rounded-lg overflow-hidden w-80 ${className}`}>
       <div
-        className={`flex text-center justify-center items-center flex-col order-last pb-10 px-4 pt-8 ${bgCard} overflow-hidden`}
+        className={`flex text-center justify-center items-center flex-col order-last pb-8 px-4 pt-8 ${bgCard} overflow-hidden`}
       >
         <h4 className={`${textColor} block mt-1`}>{text}</h4>
         <Button
-          buttonClassName={`${colorButton}  mt-6 content-center overflow-hidden`}
+          buttonClassName={`${colorButton} mt-6 content-center overflow-hidden`}
           className="!w-full"
           onClick={() =>
             textButton == t("agency.contactaNosotros")

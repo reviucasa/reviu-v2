@@ -127,7 +127,7 @@ export const SlideReview = ({
           onClick={handlePrevReviews}
           disabled={currentIndex === 0}
           className="flex justify-center w-[72px] h-[40px]"
-          buttonClassName="btn-secondary-200 button w-[72px] h-[40px] rounded-[40px]"
+          buttonClassName="btn-secondary-300 button w-[72px] h-[40px] rounded-[40px]"
         >
           <Image
             quality={100}
@@ -141,7 +141,7 @@ export const SlideReview = ({
           onClick={handleNextReviews}
           disabled={currentIndex + numberOfCards >= reviews.length}
           className="flex justify-center w-[72px] h-[40px]"
-          buttonClassName="btn-secondary-200 button w-[72px] h-[40px] rounded-[40px]"
+          buttonClassName="btn-secondary-300 button w-[72px] h-[40px] rounded-[40px]"
         >
           <Image
             quality={100}

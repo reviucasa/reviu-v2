@@ -1,4 +1,5 @@
 import {
+  deleteUser,
   isSignInWithEmailLink,
   sendSignInLinkToEmail,
   signInWithEmailLink,
@@ -16,6 +17,15 @@ export async function updateAuthUser(displayName: string) {
   }
 }
 
+export async function deleteAuthUser() {
+  if (auth.currentUser)
+    try {
+      await deleteUser(auth.currentUser!);
+    } catch (error: any) {
+      console.error("Error updating user", error);
+    }
+}
+
 const actionCodeSettings = {
   // URL you want to redirect back to. The domain (www.example.com) for this
   // URL must be in the authorized domains list in the Firebase Console.
@@ -29,8 +39,6 @@ export async function sendSignInLink(email: string) {
     await sendSignInLinkToEmail(auth, email, actionCodeSettings);
     window.localStorage.setItem("email", email);
   } catch (error: any) {
-    const errorCode = error.code;
-    const errorMessage = error.message;
     console.error("Error signing in with email link", error);
   }
 }

@@ -77,17 +77,19 @@
     "WriteOpinion": "Deixa una opinió anònima"
   },
   "blog": {
-    "findOutTips": "Informa't dels consells més útils.",
+    "findOutTips": "Informa't dels consells més útils",
     "dingDong": "Ding Dong",
-    "theBlog": "El Blog Reviu",
+    "theBlog": "Consells a l'hora de llogar",
     "readme": "Llegeix-me",
-    "gotIdeas": "Tens idees o temes sobre els quals estàs desitjant llegir? Estem atents! Contacta'ns i fes-nos saber què t'agradaria veure!",
+    "gotIdeas": "Trobes a faltar algun consell? Contacta'ns i diga'ns què t'agradaria saber!",
     "seeAll": "Veure'ls tots"
   },
   "buildingId": {
     "valuationGeneral": "Valoració general"
   },
   "common": {
+    "Address": "Adreça",
+    "Agency": "Immobiliària",
     "results": "Resultats",
     "writeReview": "Escriu una opinió",
     "logIn": "Iniciar sessió",
@@ -517,7 +519,7 @@
     "feedback": "El feedback positiu és la millor manera de comunicar i ser escoltat",
     "gestionadoInmobiliaria": "Has llogat el pis a través d'una immobiliària?",
     "queInmobiliaria": "Quina immobiliària gestiona el pis?",
-    "noEncuentroInmobiliaria": "No trobo la immobiliària, la vull introduïr manualment.",
+    "noEncuentroInmobiliaria": "No trobo la immobiliària, la vull introduir manualment.",
     "escribeImmobiliariaManualmente": "Escriu el nom de la immobiliària",
     "escribeInmobiliaria": "Escriu el nom de la immobiliària",
     "tratoInmobiliaria": "Com valores el tracte per part de la immobiliària?",

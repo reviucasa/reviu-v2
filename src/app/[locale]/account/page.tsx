@@ -15,9 +15,10 @@ import smallPadlock from "public/smallPadlock.png";
 import { useUser } from "@/hooks/swr/useUser";
 import { useLocale, useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { updateUser } from "@/models/user";
+import { deleteUser, updateUser } from "@/models/user";
 import { useAuth } from "@/context/auth";
 import { Genders, countries } from "@/staticData";
+import { deleteAuthUser } from "@/firebase/auth";
 
 const schema = yup.object({
   name: yup.string(),
@@ -69,6 +70,7 @@ type EditData = {
 }; */
 
 export default function Account() {
+  const router = useRouter();
   const auth = useAuth();
   const { user } = useUser();
   const [enabled, setEnabled] = useState<boolean | undefined>(
@@ -167,7 +169,7 @@ export default function Account() {
                   commentTitle={t("account.protectIdentity")}
                   comment={t("account.dataNoVisible")}
                   image={padlock}
-                  className="sticky top-10 lg:w-72 w-full md:rounded-full mb-6"
+                  className="sticky top-10 lg:w-72 w-full mb-6"
                   tailSign={false}
                 />
               </div>
@@ -177,7 +179,12 @@ export default function Account() {
                   <Switch
                     as="div"
                     checked={enabled}
-                    onChange={setEnabled}
+                    onChange={async (val) => {
+                      setEnabled(val);
+                      await updateUser(user!.id, {
+                        subscribedToNewsletter: val,
+                      });
+                    }}
                     className={`${
                       enabled ? "bg-purple-100" : "bg-primary-200"
                     } relative inline-flex h-3 w-11 items-center rounded-full`}
@@ -272,13 +279,15 @@ export default function Account() {
                   </select>
                   <div className="flex lg:flex-row lg:justify-between flex-col">
                     {" "}
-                    {/* TODO: Linkejar amb la pagina de privacy */}
                     <p className="font-normal text-neutral-500 lg:w-3/4 w-full order-last lg:order-first">
                       {t("account.textDataStatsFirstPart")}{" "}
-                      <span className="font-bold text-primary-900">
-                        {t("common.politicaPrivacidad")}{" "}
+                      <span
+                        onClick={() => router.push("/privacyPolicy")}
+                        className="font-bold text-primary-900 cursor-pointer hover:underline"
+                      >
+                        {t("common.politicaPrivacidad")}
                       </span>
-                      {t("account.textDataStatsSecondPart")}
+                      {". "}{t("account.textDataStatsSecondPart")}
                     </p>
                     <Button
                       className="!w-full lg:!w-fit mb-6"
@@ -309,7 +318,13 @@ export default function Account() {
                   </div>
                   <span
                     className="flex text-red-600 font-medium items-center cursor-pointer"
-                    onClick={() => {} /* deleteUser */} // TODO: only delete account or account + reviews
+                    onClick={async () => {
+                      console.log("delete user");
+                      await deleteUser(user!.id);
+                      await deleteAuthUser();
+                      router.push("/");
+                      // TODO: enviar email al correu confirmant deletion
+                    }}
                   >
                     {t("account.eliminarCuenta")}
                   </span>
@@ -320,7 +335,7 @@ export default function Account() {
               <Comment
                 commentTitle={t("account.protectIdentity")}
                 comment={t("account.dataNoVisible")}
-                className="sticky top-10 mb-8 w-80"
+                className="sticky top-10 mb-8 w-80 "
                 classNameText="w-full"
                 image={padlock}
               />

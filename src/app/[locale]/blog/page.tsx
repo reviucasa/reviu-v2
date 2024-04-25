@@ -34,7 +34,7 @@ export default function Blog() {
           <div className="w-auto">
             <div className="w-auto hidden md:block">
               <BannerOpinion
-                className="sticky top-10 "
+                className="sticky top-10"
                 text={t("blog.gotIdeas")}
                 textColor="black"
                 textButton={t("agency.contactaNosotros")}

@@ -15,7 +15,7 @@ import { FieldError } from "../atoms/FieldError";
 import { UserMenuNavbar } from "../atoms/UserMenuNavbar";
 import { useUser } from "@/hooks/swr/useUser";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
 import { findBuildingByAddress } from "@/models/building";
@@ -33,6 +33,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     useState<RealStateAgency>();
 
   const router = useRouter();
+  const locale = useLocale();
   const params = useSearchParams();
   const pathname = usePathname();
 
@@ -124,21 +125,39 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                   }}
                   className={classNames(
                     enabled ? "bg-primary-100" : "bg-secondary-200",
-                    "relative inline-flex flex-row items-center justify-start h-8 w-32 cursor-pointer rounded-md ring-1 ring-gray-300 transition-colors duration-200 ease-in-out focus:outline-none"
+                    ["es", "ca"].includes(locale) ? "w-40" : "w-36",
+                    "relative inline-flex flex-row items-center justify-start h-8  cursor-pointer rounded-md ring-1 ring-gray-300 transition-colors duration-200 ease-in-out focus:outline-none"
                   )}
                 >
-                  <span className="text-xs font-normal text-gray-800 absolute right-2">
-                    Agency
+                  <span
+                    className={classNames(
+                      "text-xs font-normal text-gray-800 absolute",
+                      ["es", "en"].includes(locale) ? "right-3" : "right-2"
+                    )}
+                  >
+                    {t("common.Agency")}
                   </span>
-                  <span className="text-xs font-normal text-gray-800 absolute left-2">
-                    Address
+                  <span
+                    className={classNames(
+                      "text-xs font-normal text-gray-800 absolute",
+                      locale == "es"
+                        ? "left-2"
+                        : locale == "en"
+                        ? "left-3"
+                        : "left-4"
+                    )}
+                  >
+                    {t("common.Address")}
                   </span>
                   <span
                     aria-hidden="true"
                     className={classNames(
-                      enabled ? "translate-x-[50px]" : "-translate-x-[14px]",
+                      enabled ? "translate-x-[58px]" : "-translate-x-[14px]",
                       enabled ? "border-primary-500" : "border-secondary-500",
-                      "pointer-events-none block h-7 w-[60px] transform bg-white/0 border-2  rounded-md ring-0 transition duration-200 ease-in-out"
+                      ["es", "ca"].includes(locale) && enabled
+                        ? "w-[84px]"
+                        : "w-[68px]",
+                      "pointer-events-none block h-7  transform bg-white/0 border-2 rounded-md ring-0 transition duration-200 ease-in-out"
                     )}
                   />
                 </Switch>

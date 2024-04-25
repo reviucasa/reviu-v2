@@ -101,6 +101,7 @@ export const DialogReport = ({
       createReviewReport(report);
     }
   };
+  
   // TODO: (crear trigger perque senvii un email del report)
   // limitar el numero de reports al mes que pot tenir un usuari?
 
