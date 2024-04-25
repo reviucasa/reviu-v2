@@ -32,7 +32,7 @@ export function Footer() {
             >
               {t("common.sobreNosotros")}
             </li>
-            <li>{t("common.contacto")}</li>
+            <li>info@reviucasa.com</li>{/* {t("common.contacto")} */}
           </ul>
         </div>
         <div className="lg:text-left">
