@@ -9,8 +9,6 @@ import { BounceLoader } from "react-spinners";
 export default function PostPage({ params }: { params: { postId: string } }) {
   const router = useRouter();
 
-  console.log(params.postId);
-
   const {
     data: post,
     isError,

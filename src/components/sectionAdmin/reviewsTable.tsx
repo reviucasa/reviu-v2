@@ -143,13 +143,14 @@ export default function ReviewsTable() {
                       const user = data.users.find(
                         (u) => u.id == review.userId
                       );
+
                       return (
                         <tr key={review.id}>
                           <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {review.address.split(",")[0]}
+                            {review.address?.split(",")[0]}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                            {review.address.split(",")[1]}
+                            {review.address?.split(",")[1]}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                             {user ? user.email : review.userId}

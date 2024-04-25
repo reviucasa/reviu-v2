@@ -57,7 +57,6 @@ export const AddressComboBox = ({
     status: google.maps.places.PlacesServiceStatus
   ) {
     if (status === "OK") {
-      console.log(predictions);
       // handle autocomplete suggestions
       const autocompleteSuggestions = predictions!.map((prediction) => {
         return {

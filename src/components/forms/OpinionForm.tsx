@@ -1,7 +1,7 @@
 "use client";
 import { yupResolver } from "@hookform/resolvers/yup";
 import smileHouse from "public/smile_house.png";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   Controller,
   SubmitHandler,
@@ -39,17 +39,21 @@ export const OpinionForm = () => {
   const { onSubmitDraft } = useSubmitDraft("opinion");
   const router = useRouter();
   const t = useTranslations();
+  const [loading, setLoading] = useState(false);
 
   const schema = yup.object({
     title: yup.string().required(t("common.tituloRequerido")),
     positive: yup.string().required(t("common.tuValoracionPositiva")),
     negative: yup.string().required(t("common.tuValoracionNegativa")),
-    images: yup.array().of(
-      yup.object({
-        url: yup.mixed(),
-        caption: yup.string(),
-      })
-    ),
+    images: yup
+      .array()
+      .of(
+        yup.object({
+          url: yup.mixed(),
+          caption: yup.string(),
+        })
+      )
+      .nullable(),
     recomend: yup.boolean().required(t("common.recomendariasVivienda")),
   });
 
@@ -78,27 +82,30 @@ export const OpinionForm = () => {
   }, [draft?.data.opinion, reset]);
 
   async function uploadImagesAndPrepareData(data: any): Promise<Opinion> {
-    const imageDataPromises = data.images.map(async (image: ReviewImage) => {
-      if (!image.url.includes("https://")) {
-        try {
-          const file = await resizeImage(image.url);
-          const url = await uploadImage(
-            file,
-            `reviews/${auth.currentUser!.uid}/${Date.now()}`
-          );
-          return {
-            url,
-            caption: image.caption,
-          } as ReviewImage;
-        } catch (error) {
-          console.log(error);
+    let images: ReviewImage[] = [];
+    if (data.images) {
+      const imageDataPromises = data.images.map(async (image: ReviewImage) => {
+        if (!image.url.includes("https://")) {
+          try {
+            const file = await resizeImage(image.url);
+            const url = await uploadImage(
+              file,
+              `reviews/${auth.currentUser!.uid}/${Date.now()}`
+            );
+            return {
+              url,
+              caption: image.caption,
+            } as ReviewImage;
+          } catch (error) {
+            console.log(error);
+          }
+        } else {
+          return image;
         }
-      } else {
-        return image;
-      }
-    });
+      });
 
-    const images: ReviewImage[] = await Promise.all(imageDataPromises);
+      images = await Promise.all(imageDataPromises);
+    }
 
     const opinionData: Opinion = {
       title: data.title,
@@ -114,19 +121,21 @@ export const OpinionForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     try {
+      setLoading(true);
       const opinionData = await uploadImagesAndPrepareData(data);
       await onSubmitDraft(opinionData);
       let finalDraft = await getDraft(auth.currentUser?.uid!);
 
-      publishReview(auth.currentUser!.uid, {
+      await publishReview(auth.currentUser!.uid, {
         ...finalDraft!,
         status: ReviewStatus.Published,
       });
-      deleteDraft(auth.currentUser!.uid);
       router.push("/success");
+      deleteDraft(auth.currentUser!.uid);
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -335,7 +344,7 @@ export const OpinionForm = () => {
           <div>
             <Back className="lg:hidden" />
           </div>
-          <Button buttonClassName={"btn-secondary-500"}>
+          <Button buttonClassName={"btn-secondary-500"} loading={loading}>
             {t("common.publicar")}
           </Button>
         </div>
