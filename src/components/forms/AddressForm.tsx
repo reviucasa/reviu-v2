@@ -204,7 +204,7 @@ export const AddressForm = () => {
                   <option value="">{t("addressReview.escalera")}</option>
                   {getBuildingStairs(building).map((stair) => (
                     <option key={stair} value={stair}>
-                      {stair == "" ? "-" : stair}
+                      {stair == "" ? t("addressReview.main") : stair}
                     </option>
                   ))}
                 </select>
