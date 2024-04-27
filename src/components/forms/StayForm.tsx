@@ -206,7 +206,7 @@ export const StayForm = () => {
                   {...register("startYear")}
                 >
                   <option value="">{t("common.año")}</option>
-                  {range(2023, 1980, -1).map((year) => (
+                  {range(new Date().getFullYear(), 1980, -1).map((year) => (
                     <option key={year} value={year}>
                       {year}
                     </option>
@@ -248,7 +248,7 @@ export const StayForm = () => {
                   {...register("endYear")}
                 >
                   <option value="">{t("common.año")}</option>
-                  {range(2023, 1980, -1).map((year) => (
+                  {range(new Date().getFullYear(), 1980, -1).map((year) => (
                     <option key={year} value={year}>
                       {year}
                     </option>
