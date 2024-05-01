@@ -154,7 +154,7 @@ async function sendSignInEmail(
         >
           <div style="display: flex; margin: 20px auto">
             <a
-              href="https://www.instagram.com/reviucasa"
+              href="https://www.instagram.com/reviu_casa"
               target="_blank"
               rel="nofollow noreferrer"
             >
@@ -178,7 +178,7 @@ async function sendSignInEmail(
               </div>
             </a>
             <a
-              href="https://twitter.com/reviucasa"
+              href="https://twitter.com/reviu_casa"
               target="_blank"
               rel="nofollow noreferrer"
             >
@@ -201,7 +201,7 @@ async function sendSignInEmail(
               </div>
             </a>
             <a
-              href="https://www.tiktok.com/@reviucasa"
+              href="https://www.tiktok.com/@reviu_casa"
               target="_blank"
               rel="nofollow noreferrer"
             >

@@ -2,14 +2,15 @@ import { NavbarHome } from "@/components/sectionHome/navbarHome";
 import { Footer } from "../atoms/Footer";
 
 type MainLayoutProps = {
+  className?: string;
   children: React.ReactNode;
 };
 
-export const MainLayout = ({ children }: MainLayoutProps) => {
+export const MainLayout = ({ className, children }: MainLayoutProps) => {
   return (
     <div>
       <NavbarHome />
-      <div>{children}</div>
+      <div className={`${className}`}>{children}</div>
       <Footer />
     </div>
   );

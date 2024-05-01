@@ -257,7 +257,7 @@
     "price": "Preu",
     "startPrice": "Preu inicial",
     "endPrice": "Preu final",
-    "enEsaDireccion": "en aquesta direcció",
+    "enEsaDireccion": "en aquesta adreça",
     "añoVar": "any",
     "añosVar": "anys",
     "reseñasYOpiniones": "Ressenyes i opinions de pisos reals",
@@ -648,7 +648,7 @@
   "slide": {
     "titleSearchOpinion": "Descobreix si la immobiliària et tractarà bé abans de signar el contracte",
     "titleWriteOpinion": "Deixa la teva opinió sobre el pis i la immobiliària. Qualsevol detall pot ajudar qui s’hi està a punt de mudar",
-    "titleSearchAgency": "Cerca ressenyes sobre qualsevol immobiliària.",
+    "titleSearchAgency": "Cerca ressenyes sobre qualsevol immobiliària",
     "noTeLlevesSorpresas": "No t'emportis sorpreses. Que t'expliqui com és el pis qui hi ha viscut",
     "hazUnRepaso": "Fes memòria dels llocs on has viscut",
     "tabs": {

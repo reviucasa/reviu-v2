@@ -171,7 +171,8 @@ export default function BuildingPage({
           {notOpinions ? (
             <div className="flex flex-col gap-2 mb-7">
               <h5 className="lg:text-3xl  font-secondary">
-                {analysis.address.split(",").slice(0, 2).join(" ")}
+                {analysis.address.split(",").slice(0, 2).join(" ")}{" - "}
+                {building?.id}
               </h5>
               <p className="text-sm tracking-widest">
                 0{building?.postalCode} /{" "}

@@ -13,7 +13,6 @@ import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
 import { Review, ReviewImage } from "@/models/review";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
-import { Config, ConfigValue } from "@/models/types";
 import { useRouter } from "next/navigation";
 import { DialogImage } from "../molecules/DialogImage";
 import { DialogDelete } from "../molecules/DialogDelete";
@@ -166,9 +165,9 @@ export const ReviewDetail = ({
                     `buildingQuality.winterTemperature.${review?.data?.valuation?.winterTemperature}`
                   )}
                 </Label>
-                <Label title={t("common.relacionVecinal")}>
+                <Label title={t("common.ruido")}>
                   {config(
-                    `neighbors.neighborsRelationship.${review.data?.community?.neighborsRelationship}`
+                    `buildingQuality.noise.${review.data?.valuation?.noise}`
                   )}
                 </Label>
                 <Label title={t("common.luz")}>
@@ -179,7 +178,7 @@ export const ReviewDetail = ({
 
                 <Label title={t("common.estadoYMantenimiento")}>
                   {config(
-                    `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
+                    `buildingQuality.maintenance.${review?.data?.valuation?.maintenance}`
                   )}
                 </Label>
                 <Label title={t("common.services")}>
@@ -284,43 +283,55 @@ export const ReviewDetail = ({
                       </h6>
                     </div>
                     <div className="flex-1 grid grid-cols-2 gap-8">
-                      <Label title={t("common.tipologiaResidentes")}>
-                        {review.data?.community?.buildingNeighborhood
-                          ?.map((type: string) =>
-                            config(`neighbors.buildingNeighborhood.${type}`)
-                          )
-                          .join(", ")}
-                      </Label>
+                      {review.data.community.buildingNeighborhood && (
+                        <Label title={t("common.tipologiaResidentes")}>
+                          {review.data?.community?.buildingNeighborhood
+                            ?.map((type: string) =>
+                              config(`neighbors.buildingNeighborhood.${type}`)
+                            )
+                            .join(", ")}
+                        </Label>
+                      )}
 
-                      <Label title={t("common.pisosTuristicos")}>
-                        {config(
-                          `neighbors.touristicApartments.${review?.data?.community?.touristicApartments}`
-                        )}
-                      </Label>
-                      <Label title={t("common.relacionVecinal")}>
-                        {config(
-                          `neighbors.neighborsRelationship.${review?.data?.community?.neighborsRelationship}`
-                        )}
-                      </Label>
-                      <Label title={t("common.estadoYMantenimiento")}>
-                        {config(
-                          `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
-                        )}
-                      </Label>
-                      <Label title={t("common.limpieza")}>
-                        {config(
-                          `neighbors.buildingCleaning.${review?.data?.community?.buildingCleaning}`
-                        )}
-                      </Label>
-                      <Label title={t("common.services")}>
-                        {review.data?.community?.services
-                          ?.map((type: string) =>
-                            config(`neighbors.services.${type}`)
-                          )
-                          .join(", ")}
-                      </Label>
+                      {review?.data?.community?.touristicApartments && (
+                        <Label title={t("common.pisosTuristicos")}>
+                          {config(
+                            `neighbors.touristicApartments.${review?.data?.community?.touristicApartments}`
+                          )}
+                        </Label>
+                      )}
+                      {review?.data?.community?.neighborsRelationship && (
+                        <Label title={t("common.relacionVecinal")}>
+                          {config(
+                            `neighbors.neighborsRelationship.${review?.data?.community?.neighborsRelationship}`
+                          )}
+                        </Label>
+                      )}
+                      {review?.data?.community?.buildingMaintenance && (
+                        <Label title={t("common.estadoYMantenimiento")}>
+                          {config(
+                            `neighbors.buildingMaintenance.${review?.data?.community?.buildingMaintenance}`
+                          )}
+                        </Label>
+                      )}
+                      {review?.data?.community?.buildingCleaning && (
+                        <Label title={t("common.limpieza")}>
+                          {config(
+                            `neighbors.buildingCleaning.${review?.data?.community?.buildingCleaning}`
+                          )}
+                        </Label>
+                      )}
+                      {review.data?.community?.services && (
+                        <Label title={t("common.services")}>
+                          {review.data?.community?.services
+                            ?.map((type: string) =>
+                              config(`neighbors.services.${type}`)
+                            )
+                            .join(", ")}
+                        </Label>
+                      )}
                       <div className="grid col-span-2">
-                        {review.data?.community?.comment && (
+                        {review.data.community.comment && (
                           <div className="flex">
                             <Image src={comillas} alt="20" className="h-fit" />
                             <p className="pl-2 text-sm md:text-base">

@@ -109,7 +109,7 @@ export function Footer() {
         <div className="flex items-center lg:justify-between justify-evenly my-10 gap-3 xs:gap-5 xs:flex-col">
           <div className="flex gap-3">
             <Link
-              href=" https://www.instagram.com/reviucasa"
+              href=" https://www.instagram.com/reviu_casa"
               target="_blank"
               rel="no-follow noreferrer"
             >
@@ -123,7 +123,7 @@ export function Footer() {
               </div>
             </Link>
             <Link
-              href="https://twitter.com/reviucasa"
+              href="https://twitter.com/reviu_casa"
               target="_blank"
               rel="no-follow noreferrer"
             >
@@ -137,7 +137,7 @@ export function Footer() {
               </div>
             </Link>
             <Link
-              href="https://www.tiktok.com/@reviucasa"
+              href="https://www.tiktok.com/@reviu_casa"
               target="_blank"
               rel="no-follow noreferrer"
             >

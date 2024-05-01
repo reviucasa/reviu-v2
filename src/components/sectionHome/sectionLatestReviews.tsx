@@ -43,7 +43,7 @@ export function SectionLatestReviews() {
   return (
     <div className="w-full">
       {loading && (
-        <div className="flex justify-center items-center fixed  w-full h-full z-50 bg-white opacity-90">
+        <div className="flex justify-center items-center fixed w-full h-full z-50 bg-white opacity-90">
           <BounceLoader color="#d8b4fe" size={140} />
         </div>
       )}

@@ -26,20 +26,22 @@ export default function Home() {
   }, [router]);
 
   return (
-    <MainLayout>
+    <MainLayout className="flex flex-col gap-20">
       <div className="px-5 pb-28">
         <SectionHeader />
       </div>
       <div className="flex justify-center">
         <SectionLatestReviews />
       </div>
+      <div className="mx-4 lg:mx-40 flex flex-col">
+        <SectionBlog />
+      </div>
       <div className="flex justify-center">
-        <SectionExperiences className="mx-12 lg:mx-0 mb-32 w-[870px]" />
+        <SectionExperiences className="mx-12 lg:mx-0 w-[870px]" />
       </div>
       <SectionBanner />
-      <div className="mx-4 lg:mx-40 my-32 flex flex-col gap-28">
+      <div className="mx-4 lg:mx-40 my-16 flex flex-col gap-20">
         <SectionBannerOpinion />
-        <SectionBlog />
         <SectionFaq />
       </div>
     </MainLayout>

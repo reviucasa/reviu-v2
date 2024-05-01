@@ -83,7 +83,7 @@ export const SlideReview = ({
     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1));
   };
   return (
-    <div className="flex flex-col md:items-center mb-32 ">
+    <div className="flex flex-col md:items-center">
       <div className="flex justify-center mb-10">
         <h2 className="text-2xl lg:text-[40px]">{title}</h2>
       </div>
