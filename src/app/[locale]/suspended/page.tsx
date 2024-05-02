@@ -20,6 +20,7 @@ export default function SuspendedPage() {
               <li>{t("whySection5")}</li>
               <li>{t("whySection6")}</li>
               <li>{t("whySection7")}</li>
+              <li>{t("whySection8")}</li>
             </ol>
 
             <p>{t("whySectionEnd")}</p>
