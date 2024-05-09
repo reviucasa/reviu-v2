@@ -1,10 +1,10 @@
 import Image from "next/image";
-import happy from "public/happy.png";
-import sad from "public/sad.png";
+import happy from "public/images/happy.png";
+import sad from "public/images/sad.png";
 import { useContext, useState } from "react";
 import { FaRegThumbsDown, FaRegThumbsUp } from "react-icons/fa";
-import comillas from "public/comillas.png";
-import GreenHouse from "public/green_house.png";
+import comillas from "public/images/comillas.png";
+import GreenHouse from "public/images/green_house.png";
 import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { Chip } from "../atoms/Chip";
 import { Label } from "../atoms/Label";

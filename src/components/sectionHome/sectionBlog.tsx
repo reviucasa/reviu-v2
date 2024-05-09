@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import circulosection from "public/circulosection.svg";
+import circulosection from "public/images/circulosection.svg";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { Post, PostStatus, getPosts } from "@/models/post";

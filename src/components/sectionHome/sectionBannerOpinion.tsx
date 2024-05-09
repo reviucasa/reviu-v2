@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import opinion from "public/imgOpinion.svg";
+import opinion from "public/images/imgOpinion.svg";
 import { Button } from "../atoms/Button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

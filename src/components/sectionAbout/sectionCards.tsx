@@ -1,6 +1,6 @@
 import { useTranslations } from "next-intl";
-import FaceGreen from "public/faceGreen.svg";
-import FacePink from "public/facePink.svg";
+import FaceGreen from "public/images/faceGreen.svg";
+import FacePink from "public/images/facePink.svg";
 import { Card } from "../molecules/Card";
 
 type SectionCardsProps = {

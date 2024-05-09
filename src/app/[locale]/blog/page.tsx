@@ -6,7 +6,8 @@ import { Post, PostStatus, getPosts } from "@/models/post";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { unstable_setRequestLocale } from "next-intl/server";
-import cardBannerImage from "public/kid-reading.jpg";
+import Head from "next/head";
+import cardBannerImage from "public/images/kid-reading.jpg";
 
 export default function Blog() {
   const t = useTranslations();
@@ -18,6 +19,10 @@ export default function Blog() {
 
   return (
     <MainLayout>
+      <Head>
+        <title>Reviu Blog</title>
+        <meta name="robots" content="all" />
+      </Head>
       <div className="lg:px-16 px-4 pt-10 pb-20 ">
         <h3>{t("blog.theBlog")}</h3>
         <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1 lg:pt-10 pt-4">

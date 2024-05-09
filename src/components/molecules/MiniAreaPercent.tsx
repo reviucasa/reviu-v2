@@ -1,6 +1,4 @@
-import Image from "next/image";
 import { useEffect, useState } from "react";
-import IconInfo from "public/IconInfo.png";
 import { Dialog } from "../atoms/Dialog";
 import { ConfigValue } from "@/models/types";
 import { Stat, Value } from "@/models/analysis";

@@ -8,20 +8,14 @@ import {
 } from "@/models/post";
 import Image from "next/image";
 import { formatFirebaseTimestamp } from "../../helpers/formatTimestamp";
-import Enlace from "public/Icon_Enlace.svg";
-import Share from "public/IconShare.svg";
+import Enlace from "public/images/Icon_Enlace.svg";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { BiCheck, BiHide, BiShow, BiTrash } from "react-icons/bi";
 import { useAuth } from "@/context/auth";
-import {
-  QueryObserverResult,
-  RefetchOptions,
-  useQuery,
-} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { classNames } from "@/helpers/classNames";
-import { normalizeString } from "@/helpers/normalizeString";
 
 export const PostView = ({ post }: { post: Post }) => {
   const { claims } = useAuth();
@@ -152,8 +146,6 @@ export const PostView = ({ post }: { post: Post }) => {
           </button>
         </div>
       )}
-
-      {/* <p className=" text-gray-900 ">{post.content}</p> */}
     </div>
   );
 };

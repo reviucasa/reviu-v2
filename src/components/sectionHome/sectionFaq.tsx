@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import circulosection from "public/circulosection.svg";
+import circulosection from "public/images/circulosection.svg";
 import { FaqUnit } from "../atoms/FaqUnit";
 import { useTranslations } from "next-intl";
 interface PropsFaq {

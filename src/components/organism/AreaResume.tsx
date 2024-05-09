@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useContext } from "react";
-import maskGroup from "public/maskGroup.png";
+import maskGroup from "public/images/maskGroup.png";
 import { AreaResumeCardAmbience } from "../molecules/AreaResumeCardAmbience";
 import { AreaResumeCardService } from "../molecules/AreaResumeCardServices";
 import { MiniAreaPercent } from "../molecules/MiniAreaPercent";

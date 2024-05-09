@@ -8,6 +8,7 @@ import { SectionFaq } from "@/components/sectionHome/sectionFaq";
 import { SectionHeader } from "@/components/sectionHome/sectionHeader";
 import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestReviews";
 import { verifyEmailLinkAndAuthenticate } from "@/firebase/auth";
+import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -27,6 +28,10 @@ export default function Home() {
 
   return (
     <MainLayout className="flex flex-col gap-20">
+      <Head>
+        <title>Reviu</title>
+        <meta name="robots" content="all" />
+      </Head>
       <div className="px-5 pb-28">
         <SectionHeader />
       </div>

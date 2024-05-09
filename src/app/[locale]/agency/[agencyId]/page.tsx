@@ -2,9 +2,9 @@
 import { Label } from "@/components/atoms/Label";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
-import green_house from "public/green_house.png";
-import comillas from "public/comillas.png";
-import lupa from "public/lupa.png";
+import green_house from "public/images/green_house.png";
+import comillas from "public/images/comillas.png";
+import lupa from "public/images/lupa.png";
 import { useTranslations } from "next-intl";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import { Review, getReviewsByAgencyId } from "@/models/review";
@@ -15,7 +15,7 @@ import { BounceLoader } from "react-spinners";
 import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
 import { useRouter } from "next/navigation";
 import { FieldError } from "@/components/atoms/FieldError";
-import cardBannerImage from "public/real-state-banner.jpg";
+import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
 
 export default function Agency({ params }: { params: { agencyId: string } }) {

@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import Logo from "public/reviuLogo.svg";
+import Logo from "public/images/reviuLogo.svg";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {

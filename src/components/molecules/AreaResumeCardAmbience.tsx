@@ -1,10 +1,10 @@
 import Image from "next/image";
 import { useContext } from "react";
-import familiar from "public/AmbienteFamiliar.svg";
-import ludico from "public/AmbienteLudico.svg";
-import nocturno from "public/AmbienteNocturno.svg";
-import quiet from "public/quiet.svg";
-import student from "public/student-oriented'.svg";
+import familiar from "public/images/AmbienteFamiliar.svg";
+import ludico from "public/images/AmbienteLudico.svg";
+import nocturno from "public/images/AmbienteNocturno.svg";
+import quiet from "public/images/quiet.svg";
+import student from "public/images/student-oriented'.svg";
 import { useTranslations } from "next-intl";
 import { Config, ConfigValue } from "@/models/types";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";

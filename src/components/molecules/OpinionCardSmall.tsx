@@ -1,9 +1,9 @@
 import { Chip } from "@/components/atoms/Chip";
 import Image from "next/image";
 import { useState } from "react";
-import points from "public/3points.png";
-import thumbDown from "public/thumbDown.svg";
-import thumbUp from "public/thumbUp.svg";
+import points from "public/images/3points.png";
+import thumbDown from "public/images/thumbDown.svg";
+import thumbUp from "public/images/thumbUp.svg";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";

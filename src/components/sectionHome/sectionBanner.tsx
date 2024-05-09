@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import Mano from "public/Frame.png";
-import Banner from "public/imgBanner.png";
+import Mano from "public/images/Frame.png";
+import Banner from "public/images/imgBanner.png";
 import { Button } from "../atoms/Button";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";

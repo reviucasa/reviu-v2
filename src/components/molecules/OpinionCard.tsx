@@ -1,12 +1,12 @@
 import { Chip } from "@/components/atoms/Chip";
 import Image from "next/image";
-import green_house from "public/green_house.png";
-import happy from "public/happy.png";
-import sad from "public/sad.png";
+import green_house from "public/images/green_house.png";
+import happy from "public/images/happy.png";
+import sad from "public/images/sad.png";
 import { useState } from "react";
-import points from "public/3points.png";
-import thumbDown from "public/thumbDown.svg";
-import thumbUp from "public/thumbUp.svg";
+import points from "public/images/3points.png";
+import thumbDown from "public/images/thumbDown.svg";
+import thumbUp from "public/images/thumbUp.svg";
 import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "./DialogReport";

@@ -1,8 +1,8 @@
 import { useTranslations } from "next-intl";
-import Cactus from "public/BgCactus.svg";
-import circulosection from "public/circulosection.svg";
-import Justicia from "public/justicia.svg";
-import KeyCommunity from "public/keyCommunty.svg";
+import Cactus from "public/images/BgCactus.svg";
+import circulosection from "public/images/circulosection.svg";
+import Justicia from "public/images/justicia.svg";
+import KeyCommunity from "public/images/keyCommunty.svg";
 import { ImageRounded } from "../atoms/ImageRounded";
 import Image from "next/image";
 
