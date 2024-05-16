@@ -17,7 +17,7 @@ function OpenStreetMap({ latitude, longitude }: MapProps) {
   };
 
   const icon = L.icon({
-    iconUrl: "/marker-icon.png",
+    iconUrl: "/images/marker-icon.png",
     iconSize: [45,51], iconAnchor: [22.5,51]
   });
 

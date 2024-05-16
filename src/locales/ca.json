@@ -126,6 +126,7 @@
     "skip": "Saltar",
     "enQueDirección": "A quina adreça es troba?",
     "searchError": "Error de cerca",
+    "missingStreetNumber": "Cal que indiquis el carrer i el número",
     "noSeEncontroDirección": "No s'ha trobat l'adreça",
     "buildingNotFound": "No s'ha trobat l'edifici",
     "agencyNotFound": "No s'ha trobat la immobiliària",
@@ -201,7 +202,7 @@
     "homereview": "Opinió de la casa",
     "resumenZona": "Resum de la zona",
     "recopilandoDatos": "Estem recopilant dades de la zona. Anima els teus a deixar una opinió!",
-    "buscar": "Buscar una adreça a Barcelona",
+    "buscar": "Buscar una adreça a Barcelona (ex: Balmes 13)",
     "searchAgency": "Buscar una immobiliària a Barcelona",
     "barrio": "Barri o zona",
     "Català": "Català",
@@ -556,7 +557,7 @@
     "añadirImágen": "Afegeix imatge"
   },
   "privacy": {
-    "title": "Política de privacidad",
+    "title": "Política de privacitat",
     "privacidadP1": "La Hidra Cooperativa, SCCL",
     "privacidadP2": "(d’ara endavant ",
     "privacidadP3": "“Reviu Casa”)",

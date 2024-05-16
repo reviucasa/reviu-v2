@@ -44,7 +44,13 @@ export function SectionHeader() {
       if (building) {
         router.push(`/building/${building.id}`);
       } else {
-        setError(t("common.noSeEncontroDirección"));
+        const addressRegex = /^(.*?),\s*(\d+)/;
+        const match = address.match(addressRegex);
+        if (!match) {
+          setError(t("common.missingStreetNumber"));
+        } else {
+          setError(t("common.noSeEncontroDirección"));
+        }
       }
       setLoading(false);
     }

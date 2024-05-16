@@ -284,7 +284,7 @@ const getSuspendedReviews = async (): Promise<Review[]> => {
 // Retrieve building reviews
 const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
-  const q = query(ref, where("buildingId", "==", buildingId));
+  const q = query(ref, where("buildingId", "==", buildingId), where("status", "==", ReviewStatus.Published));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((e) => e.data());
 };

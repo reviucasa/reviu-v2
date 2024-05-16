@@ -179,9 +179,9 @@ const findBuildingByAddress = async (
   } catch (error) {
     if (error instanceof FirestoreError) {
       console.error("Firestore error:", error.message);
-    } else {
+    } /* else {
       console.error("Error:", error);
-    }
+    } */
     return null;
   }
 };

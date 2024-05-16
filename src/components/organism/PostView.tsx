@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { formatFirebaseTimestamp } from "../../helpers/formatTimestamp";
 import Enlace from "public/images/Icon_Enlace.svg";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { BiCheck, BiHide, BiShow, BiTrash } from "react-icons/bi";
 import { useAuth } from "@/context/auth";
@@ -20,6 +20,7 @@ import { classNames } from "@/helpers/classNames";
 export const PostView = ({ post }: { post: Post }) => {
   const { claims } = useAuth();
   const router = useRouter();
+  const locale = useLocale();
   const [statusActive, setStatusActive] = useState(
     post.status != PostStatus.archived
   );
@@ -58,7 +59,10 @@ export const PostView = ({ post }: { post: Post }) => {
         <h2 className="text-4xl font-bold text-gray-900 ">{post.title}</h2>
         <div className="flex justify-between items-end">
           <p className="text-xs text-gray-400 ">
-            {formatFirebaseTimestamp(post.timeCreated)}
+            {formatFirebaseTimestamp(post.timeCreated, locale, {
+              onlyDate: true,
+              ignoreYear: false,
+            })}
           </p>
           <div
             className={

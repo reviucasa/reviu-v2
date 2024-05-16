@@ -111,7 +111,7 @@ export const ReviewDetail = ({
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">
                 <h6 className="mb-2 lg:text-xl font-bold">
                   {t("common.opinion")}{" "}
-                  {claims?.admin == true ? " - " + review.id : ""}
+                  {claims && claims.admin == true ? " - " + review.id : ""}
                 </h6>
               </div>
               <div className="flex-1 mb-10">

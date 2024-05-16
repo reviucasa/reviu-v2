@@ -104,10 +104,16 @@ export const AddressForm = () => {
       if (buildingData) {
         setBuilding(buildingData);
       } else {
-        setError("No matching address found");
+        const addressRegex = /^(.*?),\s*(\d+)/;
+        const match = selectedAddress.match(addressRegex);
+        if (!match) {
+          setError(t("common.missingStreetNumber"));
+        } else {
+          setError(t("common.noSeEncontroDirección"));
+        }
       }
     }
-  }, [selectedAddress]);
+  }, [selectedAddress, t]);
 
   const onSelectStair = useCallback(
     (selectedStair: string) => {

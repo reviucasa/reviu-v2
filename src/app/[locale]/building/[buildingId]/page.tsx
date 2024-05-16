@@ -29,6 +29,7 @@ import { BounceLoader } from "react-spinners";
 import lupa from "public/images/lupa.png";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import { FieldError } from "@/components/atoms/FieldError";
+import { useAuth } from "@/context/auth";
 
 export default function BuildingPage({
   params,
@@ -36,6 +37,7 @@ export default function BuildingPage({
   params: { buildingId: string };
 }) {
   const router = useRouter();
+  const { claims } = useAuth();
   const t = useTranslations();
   const [selectedAddress, setSelectedAddress] = useState<string>();
   const [error, setError] = useState<string>();
@@ -87,7 +89,13 @@ export default function BuildingPage({
       if (building) {
         router.push(`/building/${building.id}`);
       } else {
-        setError(t("common.noSeEncontroDirección"));
+        const addressRegex = /^(.*?),\s*(\d+)/;
+        const match = address.match(addressRegex);
+        if (!match) {
+          setError(t("missingStreetNumber"));
+        } else {
+          setError(t("common.noSeEncontroDirección"));
+        }
       }
     }
   };
@@ -171,8 +179,8 @@ export default function BuildingPage({
           {notOpinions ? (
             <div className="flex flex-col gap-2 mb-7">
               <h5 className="lg:text-3xl  font-secondary">
-                {analysis.address.split(",").slice(0, 2).join(" ")}{" - "}
-                {building?.id}
+                {analysis.address.split(",").slice(0, 2)}{" "}
+                {claims && claims.admin == true ? " - " + building?.id : ""}
               </h5>
               <p className="text-sm tracking-widest">
                 0{building?.postalCode} /{" "}
