@@ -1,7 +1,11 @@
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-export function PrivacyPolicyComponent({ className }: { className?: string }) {
-  const t = useTranslations();
+export async function PrivacyPolicyComponent({
+  className,
+}: {
+  className?: string;
+}) {
+  const t = await getTranslations();
 
   return (
     <div className={className}>
@@ -89,9 +93,7 @@ export function PrivacyPolicyComponent({ className }: { className?: string }) {
           </table>
         </div>
         <div className="flex flex-col gap-3">
-          <h5 className="my-2 font-extrabold">
-            {t("privacy.destinatarios")}
-          </h5>
+          <h5 className="my-2 font-extrabold">{t("privacy.destinatarios")}</h5>
           <p>{t("privacy.destinatariosP1")}</p>
           <ol className="list-disc list-inside ml-8">
             <li className="mb-3"> {t("privacy.destinatariosL1")}</li>

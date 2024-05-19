@@ -287,7 +287,8 @@ export default function Account() {
                       >
                         {t("common.politicaPrivacidad")}
                       </span>
-                      {". "}{t("account.textDataStatsSecondPart")}
+                      {". "}
+                      {t("account.textDataStatsSecondPart")}
                     </p>
                     <Button
                       className="!w-full lg:!w-fit mb-6"

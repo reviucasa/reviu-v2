@@ -1,5 +1,4 @@
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 const cookiesList = [
   {
@@ -11,9 +10,8 @@ const cookiesList = [
   },
 ];
 
-export function CookiesComponent({ className }: { className?: string }) {
-  const t = useTranslations("cookies");
-  const router = useRouter();
+export async function CookiesComponent({ className }: { className?: string }) {
+  const t = await getTranslations("cookies");
   return (
     <div className={className}>
       <h2 className="mb-10">{t("title")}</h2>

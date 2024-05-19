@@ -1,16 +1,21 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { CookiesComponent } from "@/components/sectionLegalPages/cookiesComponent";
+import { unstable_setRequestLocale } from "next-intl/server";
 
-import { useEffect } from "react";
+/* import { useEffect } from "react"; */
 
-export default function Cookies() {
-  useEffect(() => {
+export default function Cookies({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+  /* useEffect(() => {
     document.body.className = "bg-white";
     return () => {
       document.body.className = "unset";
     };
-  }, []);
+  }, []); */
 
   return (
     <MainLayout>

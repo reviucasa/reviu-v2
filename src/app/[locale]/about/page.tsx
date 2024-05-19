@@ -2,9 +2,15 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { Header } from "@/components/sectionAbout/header";
 import { OurValues } from "@/components/sectionAbout/ourValues";
 import { SectionCards } from "@/components/sectionAbout/sectionCards";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-export default async function About() {
+export default async function About({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+
   const t = await getTranslations();
 
   return (

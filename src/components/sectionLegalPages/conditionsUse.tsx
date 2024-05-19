@@ -1,9 +1,11 @@
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
-export function ConditionsUseComponent({ className }: { className?: string }) {
-  const t = useTranslations();
-  const router = useRouter();
+export async function ConditionsUseComponent({
+  className,
+}: {
+  className?: string;
+}) {
+  const t = await getTranslations();
   return (
     <div className={className}>
       <h2 className="mb-10">{t("conditions.title")}</h2>
@@ -14,30 +16,18 @@ export function ConditionsUseComponent({ className }: { className?: string }) {
         <p>{t("conditions.identificacionP1")}</p>
         <p>
           {t("conditions.identificacionP2")}
-          <a
-            className="text-blue-500 cursor-pointer"
-            onClick={() => {
-              router.push("/legalNotice");
-            }}
-          >
+          <a className="text-blue-500 cursor-pointer" href="/legalNotice">
             {t("conditions.identificacionA1")}
           </a>
           ,{" "}
-          <a
-            className="text-blue-500 cursor-pointer"
-            onClick={() => {
-              router.push("/privacyPolicy");
-            }}
-          >
+          <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
             {t("conditions.identificacionA2")}
           </a>
           , <a className="text-blue-500">{t("conditions.identificacionA3")}</a>{" "}
           {t("conditions.identificacionT")}{" "}
           <a
             className="text-blue-500 cursor-pointer"
-            onClick={() => {
-              router.push("/termsAndConditions");
-            }}
+            href="/termsAndConditions"
           >
             {t("conditions.identificacionA4")}
           </a>{" "}

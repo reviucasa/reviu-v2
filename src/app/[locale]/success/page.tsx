@@ -1,14 +1,15 @@
-"use client";
-import { Button } from "@/components/atoms/Button";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-export default function Success() {
-  const router = useRouter();
-  const t = useTranslations();
+export default async function Success({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations();
 
   return (
     <div className="grid lg:px-14 lg:py-14 lg:grid-rows-1 lg:grid-cols-[3fr_6fr_3fr]">

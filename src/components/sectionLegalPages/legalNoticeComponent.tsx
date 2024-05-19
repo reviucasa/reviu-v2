@@ -1,15 +1,13 @@
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
-export function LegalNoticeComponent({
+export async function LegalNoticeComponent({
   className,
   withTitle = true,
 }: {
   className?: string;
   withTitle?: boolean;
 }) {
-  const t = useTranslations();
-  const router = useRouter();
+  const t = await getTranslations();
 
   return (
     <div className={`${className}`}>
@@ -50,19 +48,12 @@ export function LegalNoticeComponent({
               {t("legalNotice.sitioWebP3")}{" "}
               <a
                 className="text-blue-500 cursor-pointer"
-                onClick={() => {
-                  router.push("/termsAndConditions");
-                }}
+                href="/termsAndConditions"
               >
                 {t("legalNotice.sitioWebP4")}
               </a>{" "}
               {t("legalNotice.sitioWebP6")}{" "}
-              <a
-                className="text-blue-500 cursor-pointer"
-                onClick={() => {
-                  router.push("/privacyPolicy");
-                }}
-              >
+              <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
                 {t("legalNotice.sitioWebP7")}
               </a>
               {t("legalNotice.sitioWebP8")}{" "}
@@ -76,12 +67,7 @@ export function LegalNoticeComponent({
           <h5 className="my-2 font-extrabold">{t("legalNotice.privacidad")}</h5>
           <p>
             {t("legalNotice.privacidadP1")}
-            <a
-              className="text-blue-500 cursor-pointer"
-              onClick={() => {
-                router.push("/privacyPolicy");
-              }}
-            >
+            <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
               {" "}
               {t("legalNotice.privacidadP2")}
             </a>
@@ -110,9 +96,7 @@ export function LegalNoticeComponent({
             {t("legalNotice.responibilidadP2")}{" "}
             <a
               className="text-blue-500 cursor-pointer"
-              onClick={() => {
-                router.push("/termsAndConditions");
-              }}
+              href="/termsAndConditions"
             >
               {t("legalNotice.responibilidadP3")}
             </a>{" "}
@@ -148,19 +132,12 @@ export function LegalNoticeComponent({
             {t("legalNotice.modificacionesP1")}{" "}
             <a
               className="text-blue-500 cursor-pointer"
-              onClick={() => {
-                router.push("/termsAndConditions");
-              }}
+              href="/termsAndConditions"
             >
               {t("legalNotice.modificacionesP2")}
             </a>{" "}
             {t("legalNotice.modificacionesP3")}{" "}
-            <a
-              className="text-blue-500 cursor-pointer"
-              onClick={() => {
-                router.push("/privacyPolicy");
-              }}
-            >
+            <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
               {t("legalNotice.modificacionesP4")}
             </a>{" "}
             {t("legalNotice.modificacionesP5")}{" "}

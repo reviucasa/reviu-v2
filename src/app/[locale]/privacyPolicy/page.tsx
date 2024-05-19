@@ -1,15 +1,19 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { PrivacyPolicyComponent } from "@/components/sectionLegalPages/privacyPolicyComponent";
-import { useEffect } from "react";
+import { unstable_setRequestLocale } from "next-intl/server";
 
-export default function PrivacyPolicy() {
-  useEffect(() => {
+export default function PrivacyPolicy({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+  /* useEffect(() => {
     document.body.className = "bg-white";
     return () => {
       document.body.className = "unset";
     };
-  }, []);
+  }, []); */
 
   return (
     <MainLayout>

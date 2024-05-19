@@ -56,7 +56,7 @@ export const SlideReview = ({
       leftSlidePosition,
       numberOfCards,
     };
-  }, [sizeCard, sizeGapCard, sizeScreen, wrapperRef.current]);
+  }, [sizeCard, sizeGapCard, sizeGapCardMobile]);
 
   const {
     sizeTransitionCard,

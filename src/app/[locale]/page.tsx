@@ -64,8 +64,7 @@ import { SectionFaq } from "@/components/sectionHome/sectionFaq";
 import { SectionHeader } from "@/components/sectionHome/sectionHeader";
 import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestReviews";
 import AuthCheck from "./AuthCheck";
-import { GetStaticProps } from "next";
-import { getTranslations } from "next-intl/server";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 export const metadata = {
   title: "Reviu",
@@ -73,10 +72,11 @@ export const metadata = {
 };
 
 export default function Home({
-  translations,
+  params: { locale },
 }: {
-  translations: { [key: string]: string };
+  params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
   return (
     <MainLayout className="flex flex-col gap-20">
       <AuthCheck />

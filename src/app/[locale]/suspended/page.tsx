@@ -1,9 +1,13 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
-import { useTranslations } from "next-intl";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
-export default function SuspendedPage() {
-  const t = useTranslations("suspended");
+export default async function SuspendedPage({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+  const t = await getTranslations("suspended");
   return (
     <MainLayout>
       <div className="mx-4 lg:mx-40 my-32 flex flex-col gap-28">

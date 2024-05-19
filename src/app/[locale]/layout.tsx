@@ -4,6 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import getRequestConfig from "../../i18n";
 import { Providers } from "@/context";
 import { Suspense } from "react";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
+  unstable_setRequestLocale(locale);
   const { messages } = await getRequestConfig({ locale });
 
   return (

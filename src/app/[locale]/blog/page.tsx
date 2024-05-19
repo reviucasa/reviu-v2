@@ -2,11 +2,16 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { PostStatus, getPosts } from "@/models/post";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
 
-export default async function Blog() {
+export default async function Blog({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations();
 
   const posts = await getPosts();
