@@ -1,3 +1,4 @@
+"use client";
 import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
 import { Combobox, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";

@@ -5,8 +5,7 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
-import { useUser } from "@/hooks/swr/useUser";
-import { useLocale, useTranslations, useMessages } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Genders, countries } from "@/staticData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRouter } from "next/navigation";
@@ -80,7 +79,6 @@ export const RegisterForm = () => {
     }
 
     setLoading(false);
-
   };
 
   return (

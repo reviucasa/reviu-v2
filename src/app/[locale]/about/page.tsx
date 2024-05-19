@@ -1,20 +1,11 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Header } from "@/components/sectionAbout/header";
 import { OurValues } from "@/components/sectionAbout/ourValues";
 import { SectionCards } from "@/components/sectionAbout/sectionCards";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
-import { useEffect } from "react";
-
-export default function About() {
-  useEffect(() => {
-    document.body.className = "bg-white";
-    return () => {
-      document.body.className = "unset";
-    };
-  }, []);
-  const t = useTranslations();
+export default async function About() {
+  const t = await getTranslations();
 
   return (
     <MainLayout>

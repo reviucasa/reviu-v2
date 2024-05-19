@@ -1,13 +1,13 @@
-import { useTranslations } from "next-intl";
 import Cactus from "public/images/BgCactus.svg";
 import circulosection from "public/images/circulosection.svg";
 import Justicia from "public/images/justicia.svg";
 import KeyCommunity from "public/images/keyCommunty.svg";
 import { ImageRounded } from "../atoms/ImageRounded";
 import Image from "next/image";
+import { getTranslations } from "next-intl/server";
 
-export function OurValues() {
-  const t = useTranslations();
+export async function OurValues() {
+  const t = await getTranslations();
 
   return (
     <div>

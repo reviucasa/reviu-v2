@@ -12,8 +12,8 @@ type Translations = {
 
 const translations: Translations = {
   en: {
-    subject: "Sign In to Reviucasa.com",
-    welcome: "Welcome to Reviucasa.com!",
+    subject: "Sign In to Reviu",
+    welcome: "Welcome to Reviu!",
     clickComment: "Click the link below to sign in to your account.",
     signIn: "Sign In",
     copyComment: `If you're on a mobile device, you can also copy the link 
@@ -21,8 +21,8 @@ const translations: Translations = {
   },
   es: {
     // Spanish translations
-    subject: "Inicia sesión en Reviucasa.com",
-    welcome: "¡Bienvenido a Reviucasa.com!",
+    subject: "Inicia sesión en Reviu",
+    welcome: "¡Bienvenido a Reviu!",
     clickComment: `Haz clic en el enlace de abajo para iniciar 
     sesión en tu cuenta.`,
     signIn: "Iniciar Sesión",
@@ -31,8 +31,8 @@ const translations: Translations = {
   },
   ca: {
     // Catalan translations
-    subject: "Inicia sessió a Reviucasa.com",
-    welcome: "Benvingut a Reviucasa.com!",
+    subject: "Inicia sessió a Reviu",
+    welcome: "Benvingut a Reviu!",
     clickComment: `Clica el següent enllaç per iniciar 
       sessió al teu compte.`,
     signIn: "Inicia Sessió",

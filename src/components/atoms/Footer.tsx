@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
 import Instagram from "public/images/IconInstagram.svg";
@@ -6,12 +5,10 @@ import TikTok from "public/images/IconTikTok.svg";
 import Twitter from "public/images/IconTwitter.svg";
 import LogoWhite from "public/images/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
-export function Footer() {
-  const t = useTranslations();
-  const router = useRouter();
+export async function Footer() {
+  const t = await getTranslations();
 
   return (
     <div className="flex flex-col justify-between w-full bg-black lg:px-44 lg:py-24 p-6 text-white">
@@ -24,15 +21,11 @@ export function Footer() {
         <div className="lg:text-left">
           <ul className="flex flex-col gap-4">
             <li className="text-purple-300 font-bold">{t("common.empresa")}</li>
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/about");
-              }}
-            >
-              {t("common.sobreNosotros")}
+            <li className="cursor-pointer">
+              <Link href="/about">{t("common.sobreNosotros")}</Link>
             </li>
-            <li>info@reviucasa.com</li>{/* {t("common.contacto")} */}
+            <li>info@reviucasa.com</li>
+            {/* {t("common.contacto")} */}
           </ul>
         </div>
         <div className="lg:text-left">
@@ -42,58 +35,32 @@ export function Footer() {
             </li>
             {/*<li>{t('common.eresInmobiliaria', '¿Eres una inmobiliaria?')}</li>*/}
             {/*<li>{t('common.eresPropietario', '¿Eres propietario?')}</li>*/}
-            <li
-              onClick={() => {
-                router.push("/blog");
-              }}
-              className="cursor-pointer"
-            >
-              Blog
+            <li className="cursor-pointer">
+              <Link href="/blog">Blog</Link>
             </li>
-            <li
-              onClick={() => {
-                router.push("/faqs");
-              }}
-              className="cursor-pointer"
-            >
-              {t("common.preguntasFecuentes")}
+            <li className="cursor-pointer">
+              <Link href="/faqs">{t("common.preguntasFecuentes")}</Link>
             </li>
           </ul>
         </div>
         <div className="lg:text-left">
           <ul className="flex flex-col gap-4">
             <li className="text-purple-300 font-bold">{t("common.legal")}</li>
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/privacyPolicy");
-              }}
-            >
-              {t("common.politicaPrivacidad")}
+            <li className="cursor-pointer">
+              <Link href="/privacyPolicy">
+                {t("common.politicaPrivacidad")}
+              </Link>
             </li>
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/legalNotice");
-              }}
-            >
-              {t("common.legalNotice")}
+            <li className="cursor-pointer">
+              <Link href="/legalNotice">{t("common.legalNotice")}</Link>
             </li>
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/termsAndConditions");
-              }}
-            >
-              {t("common.terminosYCondiciones")}
+            <li className="cursor-pointer">
+              <Link href="/termsAndConditions">
+                {t("common.terminosYCondiciones")}
+              </Link>
             </li>
-            <li
-              className="cursor-pointer"
-              onClick={() => {
-                router.push("/cookies");
-              }}
-            >
-              {t("common.cookies")}
+            <li className="cursor-pointer">
+              <Link href="/cookies">{t("common.cookies")}</Link>
             </li>
           </ul>
         </div>

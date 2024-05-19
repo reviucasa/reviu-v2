@@ -1,21 +1,22 @@
-"use client";
 import Image from "next/image";
 import circulosection from "public/images/circulosection.svg";
 import { FaqUnit } from "../atoms/FaqUnit";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
+
 interface PropsFaq {
   question: string;
   answer: string;
 }
 
-export function SectionFaq({
+export async function SectionFaq({
   className,
   withTitle = true,
 }: {
   className?: string;
   withTitle?: boolean;
 }) {
-  const t = useTranslations();
+  const t = await getTranslations();
+
   const datosFaq = [
     {
       question: t("faq.whatIsHomeReview"),
@@ -58,12 +59,7 @@ export function SectionFaq({
           <p className="flex self-center absolute text-xs font-bold uppercase">
             {t("faq.frequentQuestion")}
           </p>
-          <Image
-            src={circulosection}
-            alt=""
-            width={152}
-            className="h-auto"
-          ></Image>
+          <Image src={circulosection} alt="" width={152} className="h-auto" />
         </div>
       )}
       <div className="flex justify-center mt-6 mb-14 ">
@@ -71,11 +67,7 @@ export function SectionFaq({
       </div>
       <div className="h-full relative">
         {datosFaq.map((obj: PropsFaq, index) => (
-          <FaqUnit
-            key={index}
-            question={obj.question}
-            answer={obj.answer}
-          ></FaqUnit>
+          <FaqUnit key={index} question={obj.question} answer={obj.answer} />
         ))}
       </div>
     </div>

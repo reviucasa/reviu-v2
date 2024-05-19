@@ -1,14 +1,11 @@
-"use client";
 import Image from "next/image";
 import Mano from "public/images/Frame.png";
 import Banner from "public/images/imgBanner.png";
-import { Button } from "../atoms/Button";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-export function SectionBanner({ className }: { className?: string }) {
-  const t = useTranslations();
-  const router = useRouter();
+export async function SectionBanner({ className }: { className?: string }) {
+  const t = await getTranslations();
 
   return (
     <div className={`w-full h-full lg:h-96 relative ${className}`}>
@@ -19,14 +16,12 @@ export function SectionBanner({ className }: { className?: string }) {
             {t("banner.informationPower")}.
             <br /> {t("banner.changesRules")}
           </h2>
-          <Button
-            buttonClassName="btn-primary-500 mt-8 content-center"
-            onClick={() => {
-              router.push("/about");
-            }}
+          <Link
+            className="btn btn-primary-500 mt-8 content-center"
+            href="/about"
           >
             {t("banner.knowus")}
-          </Button>
+          </Link>
         </div>
         <div className="grid content-center place-content-end p-6 pr-0 ">
           <div className="">

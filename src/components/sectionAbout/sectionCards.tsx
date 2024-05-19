@@ -1,14 +1,14 @@
-import { useTranslations } from "next-intl";
 import FaceGreen from "public/images/faceGreen.svg";
 import FacePink from "public/images/facePink.svg";
 import { Card } from "../molecules/Card";
+import { getTranslations } from "next-intl/server";
 
 type SectionCardsProps = {
   className?: string;
 };
 
-export function SectionCards({ className }: SectionCardsProps) {
-  const t = useTranslations();
+export async function SectionCards({ className }: SectionCardsProps) {
+  const t = await getTranslations();
 
   return (
     <div className={`${className} grid lg:grid-cols-2 justify-center gap-6`}>

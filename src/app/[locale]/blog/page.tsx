@@ -1,21 +1,15 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
-import { Post, PostStatus, getPosts } from "@/models/post";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { PostStatus, getPosts } from "@/models/post";
+import { getTranslations } from "next-intl/server";
 import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
 
-export default function Blog() {
-  const t = useTranslations();
+export default async function Blog() {
+  const t = await getTranslations();
 
-  const { data: posts } = useQuery<Post[] | undefined, Error>({
-    queryKey: ["posts"],
-    queryFn: () => getPosts(),
-  });
+  const posts = await getPosts();
 
   return (
     <MainLayout>

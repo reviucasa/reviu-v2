@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Union from "public/images/Union.svg";
 import Vector from "public/images/Vector.svg";
-import { useTranslations } from "next-intl";
+import { getTranslations } from "next-intl/server";
 
 export type SectionsType = {
   [name: string]: {
@@ -11,8 +11,8 @@ export type SectionsType = {
     bg: Array<any>;
   };
 };
-export function Header() {
-  const t = useTranslations();
+export async function Header() {
+  const t = await getTranslations();
 
   return (
     <div

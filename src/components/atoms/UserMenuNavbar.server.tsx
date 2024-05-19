@@ -4,20 +4,14 @@ import Link from "next/link";
 import Face from "public/images/face.png";
 import { Fragment } from "react";
 import { HiOutlineChevronUp } from "react-icons/hi";
-import { mutate } from "swr";
-import { Button } from "./Button";
-import { useUser } from "@/hooks/swr/useUser";
+import UserMenuClient from "./UserMenuClient";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
+import { useUser } from "@/hooks/swr/useUser";
 
 export const UserMenuNavbar = () => {
   const auth = useAuth();
   const { user } = useUser();
-  const router = useRouter();
-  const pathname = usePathname();
-  const params = useSearchParams();
   const t = useTranslations();
 
   return auth.user ? (
@@ -52,31 +46,27 @@ export const UserMenuNavbar = () => {
               <Menu.Items className="bg-white flex flex-col absolute right-0 mt-2 w-52 p-1 rounded-lg z-10 border border-gray-200 ">
                 <Menu.Item>
                   {({ active }) => (
-                    <span
-                      className={`p-2 cursor-pointer ${
+                    <Link
+                      href="/account"
+                      className={`p-2 hover:no-underline ${
                         active && "bg-secondary-200"
                       }`}
-                      onClick={() => {
-                        router.push("/account");
-                      }}
                     >
                       {t("common.cuenta")}
-                    </span>
+                    </Link>
                   )}
                 </Menu.Item>
                 {auth.claims.admin == true && (
                   <Menu.Item>
                     {({ active }) => (
-                      <span
-                        className={`p-2 text-secondary-500 cursor-pointer ${
+                      <Link
+                        href="/admin"
+                        className={`p-2 text-secondary-500 hover:no-underline ${
                           active && "bg-secondary-200"
                         }`}
-                        onClick={() => {
-                          router.push("/admin");
-                        }}
                       >
                         Admin
-                      </span>
+                      </Link>
                     )}
                   </Menu.Item>
                 )}
@@ -92,32 +82,7 @@ export const UserMenuNavbar = () => {
                     </Link>
                   )}
                 </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <span
-                      className={`p-2 cursor-pointer ${
-                        active && "bg-secondary-200"
-                      }`}
-                      onClick={async () => {
-                        localStorage.clear();
-                        await signOut();
-                        mutate(
-                          () => true, // which cache keys are updated
-                          undefined, // update cache data to `undefined`
-                          { revalidate: false } // do not revalidate
-                        );
-
-                        pathname.includes("/review")
-                          ? router.push("/")
-                          : params.toString().includes("mode=signIn")
-                          ? router.replace("/")
-                          : router.refresh();
-                      }}
-                    >
-                      {t("common.cerrarSesión")}
-                    </span>
-                  )}
-                </Menu.Item>
+                <UserMenuClient />
               </Menu.Items>
             </Transition.Child>
           </Transition>
@@ -125,30 +90,16 @@ export const UserMenuNavbar = () => {
       )}
     </Menu>
   ) : (
-    <div className="lg:flex hidden">
-      <Button
-        buttonClassName="content-center"
-        onClick={() => {
-          router.push("/auth/login");
-        }}
-      >
+    <div className="md:flex hidden ">
+      <Link href="/auth/login" className="content-center hover:no-underline pr-8">
         {t("common.logIn")}
-      </Button>
-      <Button
-        buttonClassName="content-center"
-        onClick={() => {
-          router.push("/auth/login");
-        }}
-      >
+      </Link>
+      {/* <Link href="/auth/login" className="content-center hover:no-underline px-8">
         {t("common.signIn")}
-      </Button>
-      <Button
-        className="pl-8"
-        buttonClassName="btn-primary-500"
-        onClick={() => router.push("/review")}
-      >
+      </Link> */}
+      <Link href="/review" className="btn btn-primary-500 ">
         {t("common.writeReview")}
-      </Button>
+      </Link>
     </div>
   );
 };

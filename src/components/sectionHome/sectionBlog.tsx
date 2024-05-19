@@ -1,21 +1,14 @@
-"use client";
 import Image from "next/image";
 import circulosection from "public/images/circulosection.svg";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { Post, PostStatus, getPosts } from "@/models/post";
-import { useQuery } from "@tanstack/react-query";
-import { PostVerticalCard } from "../molecules/PostVerticalCard";
-import { Button } from "../atoms/Button";
+import { PostStatus, getPosts } from "@/models/post";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
+import PostVerticalCard from "../molecules/PostVerticalCard";
 
-export function SectionBlog() {
-  const t = useTranslations();
-  const router = useRouter();
+export async function SectionBlog() {
+  const t = await getTranslations();
 
-  const { data: posts } = useQuery<Post[] | undefined, Error>({
-    queryKey: ["posts"],
-    queryFn: () => getPosts(),
-  });
+  const posts = await getPosts();
 
   return (
     <div className="flex flex-col items-center my-4">
@@ -35,12 +28,9 @@ export function SectionBlog() {
             .slice(0, 3)
             .map((p) => <PostVerticalCard key={p.id} post={p} />)}
       </div>
-      <Button
-        className="btn-primary-500 mt-14"
-        onClick={() => router.push("/blog")}
-      >
+      <Link className="btn btn-primary-500 mt-14" href="/blog">
         {t("blog.seeAll")}
-      </Button>
+      </Link>
     </div>
   );
 }

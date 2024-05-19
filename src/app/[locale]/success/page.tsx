@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Success() {
   const router = useRouter();
@@ -28,24 +29,15 @@ export default function Success() {
           {/* <span className="font-bold">{auth.currentUser?.email}</span> */}
         </p>
         <div className="flex gap-5">
-          <Button
-            buttonClassName="btn-primary-500"
-            className="mt-7 w-full lg:w-auto"
-            onClick={async () => {
-              router.push("/review");
-            }}
+          <Link
+            className="btn btn-primary-500 mt-7 w-full lg:w-auto"
+            href="/review"
           >
             {t("success.publicarOtraOpinion")}
-          </Button>
-          <Button
-            buttonClassName="btn-terciary-500"
-            className="mt-7 w-full lg:w-auto"
-            onClick={() => {
-              router.push("/");
-            }}
-          >
+          </Link>
+          <Link className="btn btn-terciary-500 mt-7 w-full lg:w-auto" href="/">
             {t("success.menuPrincipal")}
-          </Button>
+          </Link>
         </div>
       </div>
       <div />

@@ -1,15 +1,12 @@
 import Image from "next/image";
-import { useState } from "react";
-import { useTranslations } from "next-intl";
 import { Post, PostStatus, getPosts } from "@/models/post";
-import { Button } from "../atoms/Button";
-import { PostModal } from "./PostModal";
 import { classNames } from "@/helpers/classNames";
-import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 
-export const PostHorizontalCard = ({ post }: { post: Post }) => {
-  const [openPostModal, setOpenPostModal] = useState<boolean>(false);
-  const t = useTranslations();
+export const PostHorizontalCard = async ({ post }: { post: Post }) => {
+  // const [openPostModal, setOpenPostModal] = useState<boolean>(false);
+  const t = await getTranslations();
 
   return (
     <div
@@ -40,19 +37,25 @@ export const PostHorizontalCard = ({ post }: { post: Post }) => {
           </p>
         </section>
         <section aria-labelledby="options-heading" className="mt-6 text-start">
-          <Button
+          {/* <Button
             onClick={() => setOpenPostModal(!openPostModal)}
             className="btn-primary-500"
           >
             {t("blog.readme")}
-          </Button>
+          </Button> */}
+          <Link
+            href={`blog/${post.id}`}
+            className="text-primary-500 underline cursor-pointer hover:text-primary-300"
+          >
+            {t("common.verMás")}
+          </Link>
         </section>
       </div>
-      <PostModal
+      {/* <PostModal
         openModal={openPostModal}
         setOpenModal={setOpenPostModal}
         post={post}
-      />
+      /> */}
     </div>
   );
 };

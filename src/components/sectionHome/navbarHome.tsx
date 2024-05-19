@@ -12,8 +12,7 @@ import { mutate } from "swr";
 import lupa from "public/images/lupa.png";
 import lupaGreen from "public/images/lupa-green.png";
 import { FieldError } from "../atoms/FieldError";
-import { UserMenuNavbar } from "../atoms/UserMenuNavbar";
-import { useUser } from "@/hooks/swr/useUser";
+import { UserMenuNavbar } from "../atoms/UserMenuNavbar.server";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
@@ -189,7 +188,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             <Menu.Button>
               <GiHamburgerMenu />
             </Menu.Button>
-            {/* <Transition> */}
             <div //Transition.Child
               className="absolute top-[80px] left-0 w-full z-10"
               // enter="transition ease-out duration-500"
@@ -203,27 +201,29 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                 {auth.user != null ? (
                   <>
                     <Menu.Item>
-                      <Button
-                        className="!w-full"
-                        buttonClassName="content-center"
-                        onClick={() => {
-                          router.push("/account");
-                        }}
+                      <Link
+                        href="/account"
+                        className="hover:no-underline"
+                        // buttonClassName="content-center"
+                        // onClick={() => {
+                        //   router.push("/account");
+                        // }}
                       >
                         {t("common.cuenta")}
-                      </Button>
+                      </Link>
                     </Menu.Item>
                     {auth.claims.admin == true && (
                       <Menu.Item>
-                        <Button
-                          className="!w-full  text-secondary-500"
-                          buttonClassName="content-center"
-                          onClick={() => {
-                            router.push("/admin");
-                          }}
+                        <Link
+                          href="/admin"
+                          className=" text-secondary-500 hover:no-underline"
+                          // buttonClassName="content-center"
+                          // onClick={() => {
+                          //   router.push("/admin");
+                          // }}
                         >
                           Admin
-                        </Button>
+                        </Link>
                       </Menu.Item>
                     )}
                     <Menu.Item>
@@ -266,8 +266,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     </Menu.Item>
                     <Menu.Item>
                       <Button
-                        className="w-full"
-                        buttonClassName="btn-primary-500"
+                        className="btn-primary-500 w-full"
                         onClick={() => router.push("/review")}
                       >
                         {t("common.writeReview")}
@@ -277,40 +276,40 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                 ) : (
                   <>
                     <Menu.Item>
-                      <Button
-                        buttonClassName="content-center"
-                        onClick={() => {
-                          router.push("/auth/login");
-                        }}
+                      <Link
+                        href="/auth/login"
+                        className="content-center hover:no-underline"
+                        // onClick={() => {
+                        //   router.push("/auth/login");
+                        // }}
                       >
                         {t("common.logIn")}
-                      </Button>
+                      </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Button
-                        buttonClassName="content-center"
-                        onClick={() => {
-                          router.push("/auth/login");
-                        }}
+                      <Link
+                        href="/auth/login"
+                        className="content-center hover:no-underline"
+                        // onClick={() => {
+                        //   router.push("/auth/login");
+                        // }}
                       >
                         {t("common.signIn")}
-                      </Button>
+                      </Link>
                     </Menu.Item>
                     <Menu.Item>
-                      <Button
-                        className="!w-full"
-                        buttonClassName="btn-primary-500 content-center"
-                        onClick={() => router.push("/review")}
+                      <Link
+                        href="/review"
+                        className="btn btn-primary-500 content-center !w-full"
+                        // onClick={() => router.push("/review")}
                       >
                         {t("common.writeReview")}
-                      </Button>
+                      </Link>
                     </Menu.Item>
                   </>
                 )}
               </Menu.Items>
             </div>{" "}
-            {/*  Transition.Child> */}
-            {/* </Transition> */}
           </Menu>
         </div>
       </div>

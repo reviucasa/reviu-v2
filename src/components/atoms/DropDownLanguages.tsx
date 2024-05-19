@@ -1,3 +1,4 @@
+"use client";
 import { Idioms } from "@/staticData";
 import { Menu, Transition } from "@headlessui/react";
 import { useLocale, useTranslations } from "next-intl";
@@ -11,7 +12,6 @@ export const DropDownLanguages = () => {
   const pathname = usePathname();
   const locale = useLocale();
   const currentLanguage = locale || "es";
-
 
   return (
     <Menu as="div" className="relative max-w-[168px]">
