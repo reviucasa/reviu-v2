@@ -128,6 +128,7 @@
     "searchError": "Error de cerca",
     "missingStreetNumber": "Cal que indiquis el carrer i el número",
     "noSeEncontroDirección": "No s'ha trobat l'adreça",
+    "pageNotFound": "No s'ha trobat la pàgina",
     "buildingNotFound": "No s'ha trobat l'edifici",
     "agencyNotFound": "No s'ha trobat la immobiliària",
     "1AñoViviendo": "1 any vivint-hi",

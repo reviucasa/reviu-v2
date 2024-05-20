@@ -129,6 +129,7 @@
     "searchError": "Search error",
     "missingStreetNumber": "You need to specify the street and the number.",
     "noSeEncontroDirección": "Address not found",
+    "pageNotFound": "Page not found",
     "buildingNotFound": "Building not found",
     "agencyNotFound": "Agency not found",
     "1AñoViviendo": "1 year living there",

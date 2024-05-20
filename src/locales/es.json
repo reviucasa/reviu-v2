@@ -128,6 +128,7 @@
     "searchError": "Error de búsqueda",
     "missingStreetNumber": "Es necesario que indiques la calle y el número",
     "noSeEncontroDirección": "No se encontró la dirección",
+    "pageNotFound": "No se encontró la página",
     "buildingNotFound": "No se encontró el edificio",
     "agencyNotFound": "No se encontró la inmobiliaria",
     "1AñoViviendo": "1 año viviendo ahí",

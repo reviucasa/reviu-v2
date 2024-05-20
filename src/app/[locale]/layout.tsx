@@ -24,15 +24,15 @@ export async function generateMetadata({
     locale == "en"
       ? "Home reviews you can trust"
       : locale == "es"
-      ? "Reseñas de hogares real"
-      : "Ressenyes de llars reals";
+      ? "Reseñas de pisos real"
+      : "Ressenyes de pisos reals";
 
   const description =
     locale == "en"
-      ? "Share and find anonymous opinions about the apartments in your city."
+      ? "Share and find anonymous reviews about the homes in your city."
       : locale == "es"
-      ? "Comparte y encuentra opiniones anónimas sobre los pisos de tu ciudad."
-      : "Comparteix i troba opinions anònimes sobre els pisos de la teva ciutat.";
+      ? "Comparte y encuentra reseñas anónimas sobre los pisos de tu ciudad."
+      : "Comparteix i troba ressenyes anònimes sobre els pisos de la teva ciutat.";
   return {
     title: "Reviu | " + titleDetail,
     description,

@@ -11,7 +11,6 @@ import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations } from "next-intl/server";
-import { HeaderAgencyComboBox } from "@/components/molecules/HeaderAgencyComboBox";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 
 export default async function Agency({
