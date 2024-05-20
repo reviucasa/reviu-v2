@@ -5,11 +5,13 @@ import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import { Fragment, useCallback, useState } from "react";
+import ReactLoading from "react-loading";
 
 type AddressComboBoxProps = {
   placeholder?: string;
   className?: string;
   selectedRealStateAgency?: RealStateAgency;
+  selectedAgencyLoading?: boolean;
   icon?: StaticImageData;
   setSelectedRealStateAgency?: (value: RealStateAgency) => void;
 };
@@ -19,6 +21,7 @@ export const AgencyComboBox = ({
   selectedRealStateAgency,
   setSelectedRealStateAgency,
   icon,
+  selectedAgencyLoading,
   placeholder,
 }: AddressComboBoxProps) => {
   const [agenciesList, setAgenciesList] = useState<RealStateAgency[]>([]);
@@ -53,13 +56,19 @@ export const AgencyComboBox = ({
           }
           displayValue={(agency: any) => agency.name}
         />
-        {icon && (
+        {icon && !selectedAgencyLoading && (
           <Image
             src={icon}
             alt="lupa"
             className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
             aria-hidden="true"
-          ></Image>
+          />
+        )}
+
+        {selectedAgencyLoading && (
+          <div className="opacity-90 absolute left-3 top-3.5">
+            <ReactLoading type="spin" width={20} height={20} color="#124A36" />
+          </div>
         )}
         <Transition
           as={Fragment}

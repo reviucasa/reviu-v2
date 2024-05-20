@@ -1,74 +1,41 @@
-"use client";
 import { Label } from "@/components/atoms/Label";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import Image from "next/image";
 import green_house from "public/images/green_house.png";
 import comillas from "public/images/comillas.png";
-import lupa from "public/images/lupa.png";
-import { useTranslations } from "next-intl";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
-import { Review, getReviewsByAgencyId } from "@/models/review";
-import { RealStateAgency, getAgency } from "@/models/agency";
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { getReviewsByAgencyId } from "@/models/review";
+import { getAgency } from "@/models/agency";
+import React from "react";
 import { BounceLoader } from "react-spinners";
-import { AgencyComboBox } from "@/components/atoms/AgencyComboBox";
-import { useRouter } from "next/navigation";
-import { FieldError } from "@/components/atoms/FieldError";
 import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
+import { getTranslations } from "next-intl/server";
+import { HeaderAgencyComboBox } from "@/components/molecules/HeaderAgencyComboBox";
+import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 
-export default function Agency({ params }: { params: { agencyId: string } }) {
-  const router = useRouter();
-  const t = useTranslations();
-  const config = useTranslations("config");
-  const [selectedRealStateAgency, setSelectedRealStateAgency] =
-    useState<RealStateAgency>();
-  const [error, setError] = useState<string>();
+export default async function Agency({
+  params,
+}: {
+  params: { agencyId: string };
+}) {
+  const t = await getTranslations();
+  const config = await getTranslations("config");
 
-  const { data: agency, error: agencyError } = useQuery<
-    RealStateAgency | undefined,
-    Error
-  >({
-    queryKey: ["agency", params.agencyId],
-    queryFn: () => getAgency(params.agencyId),
-  });
+  const agency = await getAgency(params.agencyId);
 
-  const { data: reviews } = useQuery<Review[] | undefined, Error>({
-    queryKey: ["reviews", params.agencyId],
-    queryFn: () => getReviewsByAgencyId(params.agencyId),
-  });
-
-  const onSelectRealStateAgency = async (agency: RealStateAgency) => {
-    setSelectedRealStateAgency(agency);
-    if (agency) {
-      router.push(`/agency/${agency.documentId}`);
-    } else {
-      setError(t("common.noSeEncontroLaInmobiliaria"));
-    }
-  };
+  const reviews = await getReviewsByAgencyId(params.agencyId);
 
   if (!reviews || !agency) {
     return (
       <MainLayout>
-        {agencyError ? (
-          <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
+        {!agency ? (
+          <div className="lg:px-16 px-8 pt-20 pb-40 bg-white  md:text-start">
             <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
               {t("common.searchError")}
             </span>
             <h3>{t("common.agencyNotFound")}</h3>
-            <div className="flex flex-col w-full md:w-1/2 items-center md:items-start mt-12	">
-              <AgencyComboBox
-                icon={lupa}
-                placeholder={t("common.searchAgency")}
-                className="lg:w-3/4 w-full"
-                selectedRealStateAgency={selectedRealStateAgency}
-                setSelectedRealStateAgency={onSelectRealStateAgency}
-              />
-              <div className="flex lg:w-3/4 w-full">
-                <FieldError className=" my-3">{error}</FieldError>
-              </div>
-            </div>
+            <AgencyComboBoxClient className="flex flex-col w-full md:w-1/2 items-center md:items-start mt-12" />
           </div>
         ) : (
           <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">

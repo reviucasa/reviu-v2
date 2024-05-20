@@ -1,17 +1,12 @@
-"use client";
-
-import { useState } from "react";
-import { BounceLoader } from "react-spinners";
-import lupa from "public/images/lupa.png";
-import { AddressComboBox } from "../atoms/AddressComboBox";
-import { Button } from "../atoms/Button";
-import { FieldError } from "../atoms/FieldError";
-import { CardSlide } from "../organism/CardSlide";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { findBuildingByAddress } from "@/models/building";
-import { AgencyComboBox } from "../atoms/AgencyComboBox";
-import { RealStateAgency } from "@/models/agency";
+import Image from "next/image";
+import ImageBgLeft from "../../../public/images/ImgSlideLeft.svg";
+import ImageBgRigth from "../../../public/images/ImgSlideRigth.svg";
+import IconHouseLima from "../../../public/images/houseLima.svg";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { HeaderAddressComboBox } from "../molecules/HeaderAddressComboBox";
+import { HeaderAgencyComboBox } from "../molecules/HeaderAgencyComboBox";
+import CardSlideClient from "../organism/CardSlideClient";
 
 export type SectionType = {
   title: string;
@@ -23,68 +18,17 @@ export type SectionType = {
 
 export type SectionsType = Array<SectionType>;
 
-export function SectionHeader() {
-  const t = useTranslations();
-  const [selectedAddress, setSelectedAddress] = useState<string>();
-  const [selectedRealStateAgency, setSelectedRealStateAgency] =
-    useState<RealStateAgency>();
-  const router = useRouter();
+export async function SectionHeader() {
+  const t = await getTranslations();
   const tabSearchOpinion = t("slide.tabs.searchOpinion");
   const tabWriteOpinion = t("common.writeReview");
   const tabSearchAgency = t("slide.tabs.searchAgency");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string>();
-
-  const onSelectAddress = async (address: string) => {
-    setError(undefined);
-    setSelectedAddress(address);
-    if (address && address != "") {
-      setLoading(true);
-      const building = await findBuildingByAddress(address);
-      if (building) {
-        router.push(`/building/${building.id}`);
-      } else {
-        const addressRegex = /^(.*?),\s*(\d+)/;
-        const match = address.match(addressRegex);
-        if (!match) {
-          setError(t("common.missingStreetNumber"));
-        } else {
-          setError(t("common.noSeEncontroDirección"));
-        }
-      }
-      setLoading(false);
-    }
-  };
-
-  const onSelectRealStateAgency = async (agency: RealStateAgency) => {
-    setSelectedRealStateAgency(agency);
-    if (agency) {
-      setLoading(true);
-      router.push(`/agency/${agency.documentId}`);
-    } else {
-      setError(t("common.noSeEncontroLaInmobiliaria"));
-    }
-    setLoading(false);
-  };
 
   const dataContentSlide: SectionsType = [
     {
       title: tabSearchOpinion,
       text: [t("slide.titleSearchOpinion"), t("slide.titleWriteOpinion")],
-      children: (
-        <div className="flex flex-col w-full items-center	">
-          <AddressComboBox
-            icon={lupa}
-            placeholder={t("common.buscar")}
-            className="lg:w-3/4 w-full"
-            selectedAddress={selectedAddress}
-            setSelectedAddress={onSelectAddress}
-          />
-          <div className="flex lg:w-3/4 w-full">
-            <FieldError className=" my-3">{error}</FieldError>
-          </div>
-        </div>
-      ),
+      children: <HeaderAddressComboBox />,
       styleBorder: "border-b-secondary-500",
       bg: "bg-secondary-300",
     },
@@ -92,12 +36,9 @@ export function SectionHeader() {
       title: tabWriteOpinion,
       text: [t("slide.hazUnRepaso"), t("slide.noTeLlevesSorpresas")],
       children: (
-        <Button
-          buttonClassName="btn-primary-500 content-center"
-          onClick={() => router.push("/review")}
-        >
+        <Link className="btn btn-primary-500 content-center" href="/review">
           {t("common.writeReview")}
-        </Button>
+        </Link>
       ),
       styleBorder: "border-b-primary-500",
       bg: "bg-primary-100",
@@ -105,35 +46,28 @@ export function SectionHeader() {
     {
       title: tabSearchAgency,
       text: [t("slide.titleSearchOpinion"), t("slide.titleSearchAgency")],
-      children: (
-        <div className="flex flex-col w-full items-center	">
-          <AgencyComboBox
-            icon={lupa}
-            placeholder={t("common.searchAgency")}
-            className="lg:w-3/4 w-full"
-            selectedRealStateAgency={selectedRealStateAgency}
-            setSelectedRealStateAgency={onSelectRealStateAgency}
-          />
-          <div className="flex lg:w-3/4 w-full">
-            <FieldError className=" my-3">{error}</FieldError>
-          </div>
-        </div>
-      ),
+      children: <HeaderAgencyComboBox />,
       styleBorder: "border-b-secondary-500",
       bg: "bg-secondary-300",
     },
   ];
 
+  const currentSection = dataContentSlide[0]; // Initial section for SSR
+
   return (
-    <>
-      {loading && (
-        <div className="fixed top-0 left-0 flex justify-center items-center w-full h-full z-50 bg-white opacity-90">
-          <BounceLoader color="#d8b4fe" size={140} />
-        </div>
-      )}
-      <div>
-        <CardSlide dataContentSlide={dataContentSlide}></CardSlide>
+    <div
+      className={`w-full flex flex-col lg:justify-between justify-center lg:h-[700px] rounded-[32px] overflow-hidden `}
+    >
+      <div className="flex h-12 justify-center items-center gap-2 bg-black">
+        <Image
+          src={IconHouseLima}
+          alt="icon house lima"
+          className="h-4 w-4  lg:h-6 lg:w-6"
+        />
+        <span className="text-lime">{t("common.reseñasYOpiniones")}</span>
       </div>
-    </>
+      <h1 className="sr-only">{currentSection.text[0]}</h1>
+      <CardSlideClient dataContentSlide={dataContentSlide} />
+    </div>
   );
 }

@@ -1,6 +1,5 @@
 import Image from "next/image";
 import opinion from "public/images/imgOpinion.svg";
-import { Button } from "../atoms/Button";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 

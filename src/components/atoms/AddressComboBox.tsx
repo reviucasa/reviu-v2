@@ -6,12 +6,14 @@ import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import ReactLoading from "react-loading";
 
 type AddressComboBoxProps = {
   placeholder?: string;
   className?: string;
   selectedAddress?: string;
   icon?: StaticImageData;
+  selectedAddressLoading?: boolean;
   setSelectedAddress?: (value: string) => void;
 };
 
@@ -20,6 +22,7 @@ export const AddressComboBox = ({
   selectedAddress,
   setSelectedAddress,
   icon,
+  selectedAddressLoading,
   placeholder,
 }: AddressComboBoxProps) => {
   const [searchResult, setSearchResult] = useState<{
@@ -136,13 +139,18 @@ export const AddressComboBox = ({
           placeholder={placeholder ?? t("common.enQueDirección")}
           onChange={(event) => fetchAddressList(event.target.value)}
         />
-        {icon && (
+        {icon && !selectedAddressLoading && (
           <Image
             src={icon}
             alt="lupa"
             className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
             aria-hidden="true"
           />
+        )}
+        {selectedAddressLoading && (
+          <div className="opacity-90 absolute left-3 top-3.5">
+            <ReactLoading type="spin" width={20} height={20} color="#9E80F7" />
+          </div>
         )}
         <Transition
           as={Fragment}

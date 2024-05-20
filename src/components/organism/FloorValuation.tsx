@@ -1,3 +1,4 @@
+"use client";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";

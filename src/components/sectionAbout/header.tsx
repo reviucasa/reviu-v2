@@ -25,9 +25,9 @@ export async function Header() {
         <h1 className="lg:text-5xl text-[32px] leading-10	">
           {t("about.informacionPoder")}
         </h1>
-        <p className="lg:text-base text-sm text-gray-500">
+        <h3 className="lg:text-base text-sm text-gray-500">
           {t("about.imaginasEncontrarPiso")}
-        </p>
+        </h3>
       </div>
       <Image src={Union} alt="Slide image" className="lg:flex hidden" />
     </div>

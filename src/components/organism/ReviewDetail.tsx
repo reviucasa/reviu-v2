@@ -20,6 +20,7 @@ import { Suspend } from "../atoms/Suspend";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
+import Link from "next/link";
 
 export const ReviewDetail = ({
   review,
@@ -200,16 +201,12 @@ export const ReviewDetail = ({
                     <div className="flex flex-col gap-2 text-sm md:text-base">
                       <label>{t("common.inmobiliaria")}</label>
                       {review.data.management.agencyId ? (
-                        <a
-                          className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold"
-                          onClick={() => {
-                            router.push(
-                              `/agency/${review.data.management?.agencyId}`
-                            );
-                          }}
+                        <Link
+                          className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
+                          href={`/agency/${review.data.management?.agencyId}`}
                         >
                           {review.data?.management?.realStateAgency}
-                        </a>
+                        </Link>
                       ) : (
                         <span>{review.data?.management?.realStateAgency}</span>
                       )}

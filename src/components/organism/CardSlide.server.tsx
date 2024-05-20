@@ -1,4 +1,4 @@
-import Image from "next/image";
+/* import Image from "next/image";
 import { useState } from "react";
 import ImageBgLeft from "../../../public/images/ImgSlideLeft.svg";
 import ImageBgRigth from "../../../public/images/ImgSlideRigth.svg";
@@ -38,7 +38,6 @@ export const CardSlide = ({
           className="xl:flex hidden"
         />
         <div className="min-h-[520px] w-full sm:h-full justify-between lg:px-0 px-4  md:pt-14 pt-6  flex flex-col lg:justify-between">
-          {/* /section tab */}
           <TabMenuSlide
             sectionActive={sectionActive}
             dataContentSlide={dataContentSlide}
@@ -47,9 +46,9 @@ export const CardSlide = ({
           <div
             className={`w-full lg:h-[300px] h-[220px] flex items-center justify-center`}
           >
-            <h2 className="min-h-[180px] lg:text-5xl text-3xl xs:text-2xl font-extrabold text-center">
+            <h1 className="min-h-[180px] lg:text-5xl text-3xl xs:text-2xl font-extrabold text-center">
               {currentSection.text[currentDataIndex]}
-            </h2>
+            </h1>
           </div>
           <div className={`w-full flex justify-center mb-0 sm:mb-12`}>
             {currentSection.children}
@@ -70,3 +69,4 @@ export const CardSlide = ({
     </div>
   );
 };
+ */

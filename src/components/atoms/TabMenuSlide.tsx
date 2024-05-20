@@ -20,7 +20,7 @@ export const TabMenuSlide = ({
           <span
             key={index}
             onClick={() => setSectionActive(index)}
-            className={`cursor-pointer border-transparent text-center border-b-2 ${
+            className={`cursor-pointer border-transparent text-center border-b-2  ${
               sectionActive === index ? dataContentSlide[index].styleBorder : ""
             }`}
           >

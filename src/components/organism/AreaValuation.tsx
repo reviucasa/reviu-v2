@@ -1,3 +1,4 @@
+"use client";
 import { useTranslations } from "next-intl";
 import { AreaCard } from "../molecules/AreaCard";
 import { Review } from "@/models/review";

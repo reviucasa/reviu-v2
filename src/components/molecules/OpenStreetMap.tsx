@@ -1,3 +1,4 @@
+"use client";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
@@ -8,7 +9,10 @@ type MapProps = {
   longitude: number;
 };
 function OpenStreetMap({ latitude, longitude }: MapProps) {
-  const [center, setCenter] = useState({ lat: latitude/* +0.00025 */, lng: longitude });
+  const [center, setCenter] = useState({
+    lat: latitude /* +0.00025 */,
+    lng: longitude,
+  });
   const ZOOM_LEVEL = 15;
   const windowWidth = window.innerWidth;
   const purpleOptions = {
@@ -18,7 +22,8 @@ function OpenStreetMap({ latitude, longitude }: MapProps) {
 
   const icon = L.icon({
     iconUrl: "/images/marker-icon.png",
-    iconSize: [45,51], iconAnchor: [22.5,51]
+    iconSize: [45, 51],
+    iconAnchor: [22.5, 51],
   });
 
   /* const customIcon = L.icon({

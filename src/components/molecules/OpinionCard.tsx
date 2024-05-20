@@ -1,3 +1,4 @@
+"use client";
 import { Chip } from "@/components/atoms/Chip";
 import Image from "next/image";
 import green_house from "public/images/green_house.png";

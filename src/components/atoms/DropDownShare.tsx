@@ -1,3 +1,4 @@
+"use client";
 import { Menu, Transition } from "@headlessui/react";
 import { useTranslations } from "next-intl";
 import Image from "next/image";

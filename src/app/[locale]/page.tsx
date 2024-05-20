@@ -66,10 +66,8 @@ import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestRevi
 import AuthCheck from "./AuthCheck";
 import { unstable_setRequestLocale } from "next-intl/server";
 
-export const metadata = {
-  title: "Reviu",
-  robots: "all",
-};
+
+
 
 export default function Home({
   params: { locale },

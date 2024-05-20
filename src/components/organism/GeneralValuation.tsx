@@ -1,3 +1,4 @@
+"use client";
 import { CommunityCard } from "@/components/molecules/CommunityCard";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";

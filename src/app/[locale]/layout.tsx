@@ -20,14 +20,22 @@ export async function generateMetadata({
 }: {
   params: { locale: string };
 }) {
+  const titleDetail =
+    locale == "en"
+      ? "Home reviews you can trust"
+      : locale == "es"
+      ? "Reseñas de hogares real"
+      : "Ressenyes de llars reals";
+
+  const description =
+    locale == "en"
+      ? "Share and find anonymous opinions about the apartments in your city."
+      : locale == "es"
+      ? "Comparte y encuentra opiniones anónimas sobre los pisos de tu ciudad."
+      : "Comparteix i troba opinions anònimes sobre els pisos de la teva ciutat.";
   return {
-    title: "Reviu",
-    description:
-      locale == "en"
-        ? "Share and find anonymous opinions about the apartments in your city."
-        : locale == "es"
-        ? "Comparte y encuentra opiniones anónimas sobre los pisos de tu ciudad."
-        : "Comparteix i troba opinions anònimes sobre els pisos de la teva ciutat.",
+    title: "Reviu | " + titleDetail,
+    description,
   };
 }
 

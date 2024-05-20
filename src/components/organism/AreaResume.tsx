@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import { useContext } from "react";
 import maskGroup from "public/images/maskGroup.png";
@@ -10,21 +11,18 @@ import { Review } from "@/models/review";
 import { Stat } from "@/models/analysis";
 
 type AreaResume = {
-  reviews: Array<Review>;
   stats: Array<Stat>;
   className?: string;
   notEnoughStats: boolean;
 };
 
 export const AreaResume = ({
-  reviews,
   stats,
   className,
   notEnoughStats,
 }: AreaResume) => {
-  const { analysisSectionActive } = useContext(AnalysisContext);
+  const { sections, analysisSectionActive } = useContext(AnalysisContext);
   const t = useTranslations();
-  const { sections } = useContext(AnalysisContext);
 
   return analysisSectionActive === Object.keys(sections)[0] ? (
     <div className={`grid lg:gap-6 grid-col gap-4 ${className}`}>

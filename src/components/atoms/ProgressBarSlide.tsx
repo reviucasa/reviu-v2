@@ -35,6 +35,7 @@ export const ProgressBarSlide = ({
           key={index}
           id={`file-${index}`}
           max={100}
+          color="red"
           value={index === currentDataIndex ? progress : 0} //preceso actual del value, asi la barrita siempre esta en 0 si no esta en el index actual
           className={`w-[60px] h-1 cursor-pointer [&::-webkit-progress-bar]:rounded-lg [&::-webkit-progress-value]:rounded-lg `}
           onClick={() => {
