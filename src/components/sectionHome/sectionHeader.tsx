@@ -1,6 +1,4 @@
 import Image from "next/image";
-import ImageBgLeft from "../../../public/images/ImgSlideLeft.svg";
-import ImageBgRigth from "../../../public/images/ImgSlideRigth.svg";
 import IconHouseLima from "../../../public/images/houseLima.svg";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";

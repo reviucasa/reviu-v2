@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import ImageBgLeft from "../../../public/images/ImgSlideLeft.svg";
-import ImageBgRigth from "../../../public/images/ImgSlideRigth.svg";
+import ImageBgLeft from "../../../public/images/ImgSlideLeft.png";
+import ImageBgRigth from "../../../public/images/ImgSlideRigth.png";
 import { useState } from "react";
 import { ProgressBarSlide } from "../atoms/ProgressBarSlide";
 import { TabMenuSlide } from "../atoms/TabMenuSlide";

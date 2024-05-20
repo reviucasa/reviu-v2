@@ -1,5 +1,5 @@
 import Image from "next/image";
-import opinion from "public/images/imgOpinion.svg";
+import opinion from "public/images/imgOpinion.png";
 import { getTranslations } from "next-intl/server";
 import Link from "next/link";
 
