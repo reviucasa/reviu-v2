@@ -29,10 +29,10 @@ export async function generateMetadata({
 
   const description =
     locale == "en"
-      ? "Share and find anonymous reviews about the homes in your city. Access experiences of those who have already lived in the home you are looking for and share your own experiences about the places you have lived."
+      ? "Share and find anonymous reviews about homes in your city. Access experiences of those who have already lived in the home you are looking for and share your own experiences about the places you have lived."
       : locale == "es"
-      ? "Comparte y encuentra reseñas anónimas sobre los pisos de tu ciudad. Infórmate de cómo es vivir en la casa que te interesa antes de mudarte y comparte opiniones sobre los lugares donde has vivido."
-      : "Comparteix i troba ressenyes anònimes sobre els pisos de la teva ciutat. Informa't de com és viure a la casa que t'interessa abans de mudar-t'hi i comparteix opinions sobre els llocs on has viscut.";
+      ? "Comparte y encuentra reseñas anónimas sobre pisos de tu ciudad. Infórmate de cómo es vivir en la casa que te interesa antes de mudarte y comparte opiniones sobre los lugares donde has vivido."
+      : "Comparteix i troba ressenyes anònimes sobre pisos de la teva ciutat. Informa't de com és viure a la casa que t'interessa abans de mudar-t'hi i comparteix opinions sobre els llocs on has viscut.";
   return {
     title: "Reviu | " + titleDetail,
     description,

@@ -36,11 +36,13 @@ export async function ConditionsUseComponent({
         <p>{t("conditions.identificacionP3")}</p>
         <p>{t("conditions.identificacionP4")}</p>
         <span>
-          <strong>{t("conditions.identificacionP5")}</strong>{" "}
+          <strong>{t("conditions.identificacionP5")}</strong>
+          &nbsp;
           {t("conditions.identificacionP6")}
         </span>
         <span>
-          <strong>{t("conditions.identificacionP7")}:</strong> +34 633553943
+          <strong>{t("conditions.identificacionP7")}</strong>&nbsp;
+          {t("legalNotice.identificacionP8")}
         </span>
       </div>
       <div className="flex flex-col gap-3 mb-10">

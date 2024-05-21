@@ -27,15 +27,16 @@ export async function LegalNoticeComponent({
           <p> {t("legalNotice.identificacionP5")}</p>
           <div className="ml-12">
             <span className="flex">
-              <strong>{t("legalNotice.identificacionP6")}: </strong>{" "}
+              <strong>{t("legalNotice.identificacionP6")}</strong>
               <a className="text-blue-500">
-                {" "}
+                &nbsp;
                 {t("legalNotice.identificacionP9")}
               </a>
             </span>
             <span className="flex">
-              <strong>{t("legalNotice.identificacionP7")}:</strong>{" "}
-              {t("legalNotice.identificacionP8")}{" "}
+              <strong>{t("legalNotice.identificacionP7")}</strong>
+              &nbsp;
+              {t("legalNotice.identificacionP8")}
             </span>
           </div>
         </div>
