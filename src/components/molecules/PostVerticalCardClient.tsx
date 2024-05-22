@@ -1,11 +1,11 @@
 "use client";
 import { useState } from "react";
-import { Post } from "@/models/post";
 import { PostModal } from "./PostModal";
 import { useTranslations } from "use-intl";
+import { PostPlain } from "../organism/PostView";
 
 interface PostVerticalCardClientProps {
-  post: Post;
+  post: PostPlain;
 }
 
 export default function PostVerticalCardClient({
