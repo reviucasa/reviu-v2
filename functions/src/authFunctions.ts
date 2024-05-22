@@ -120,7 +120,7 @@ async function sendSignInEmail(
     </head>
     <body class="email-container">
       <img
-        src="https://reviu.vercel.app/logo.png"
+        src="https://reviu.vercel.app/images/logo.png"
         alt="Check Email"
         width="120"
         style="margin: 20px auto"
@@ -134,7 +134,7 @@ async function sendSignInEmail(
           >${translation.signIn}</a
         >
         <img
-          src="https://reviu.vercel.app/check-email2.png"
+          src="https://reviu.vercel.app/images/check-email2.png"
           alt="Check Email"
           width="120"
           style="margin: 0px auto 32px auto; padding-left: 14px"
@@ -171,7 +171,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconInstagram.png"
+                  src="https://reviu.vercel.app/images/IconInstagram.png"
                   alt="icon instagram"
                   style="height: auto; width: 36px"
                 />
@@ -194,7 +194,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconTwitter.png"
+                  src="https://reviu.vercel.app/images/IconTwitter.png"
                   alt="icon twitter"
                   style="height: auto; width: 36px"
                 />
@@ -218,7 +218,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/IconTikTok.png"
+                  src="https://reviu.vercel.app/images/IconTikTok.png"
                   alt="icon tiktok"
                   style="height: auto; width: 36px"
                 />

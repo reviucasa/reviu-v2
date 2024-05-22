@@ -31,14 +31,13 @@ export const ReviewDetail = ({
 }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
-  const router = useRouter();
   const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
   const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
   const [openModalImage, setOpenModalImage] = useState<boolean>(false);
-  const [selectedImage, setSelectedImage] = useState<ReviewImage>();
+  const [selectedImage, setSelectedImage] = useState<number>(0);
 
   const config = useTranslations("config");
 
@@ -409,18 +408,18 @@ export const ReviewDetail = ({
               )}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 xl:grid-cols-2 gap-6 px-4 sm:px-0 lg:px-4 xl:px-0 pt-2 pb-10">
                 {review.data.opinion?.images &&
-                  review.data.opinion?.images.map((image, index) => (
+                  review.data.opinion?.images.map((image, idx) => (
                     <div
-                      key={index}
+                      key={idx}
                       className="text-center cursor-pointer"
-                      onClick={() => {
-                        setSelectedImage(image);
+                      onClick={async () => {
+                        setSelectedImage(idx);
                         setOpenModalImage(!openModalImage);
                       }}
                     >
                       <div className="flex flex-col relative text-center gap-y-2">
                         <Image
-                          id={`image-preview-${index}`}
+                          id={`image-preview-${idx}`}
                           src={image.url}
                           width={300}
                           height={300}
@@ -436,7 +435,8 @@ export const ReviewDetail = ({
             <DialogImage
               isOpen={openModalImage}
               setIsOpen={setOpenModalImage}
-              image={selectedImage}
+              images={review.data.opinion?.images}
+              index={selectedImage}
             />
             <DialogReport
               isOpen={openModalInfo}

@@ -16,6 +16,7 @@ export type CardReviewType = {
 export type SectionsType = Array<CardReviewType>;
 
 export function SectionLatestReviews() {
+  const reviewsCount = 12;
   const t = useTranslations();
   const [latestReviews, setLatestReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
@@ -37,7 +38,7 @@ export function SectionLatestReviews() {
   };
 
   useEffect(() => {
-    fetchReviews(12);
+    fetchReviews(reviewsCount);
   }, []);
 
   return (

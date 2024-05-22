@@ -66,11 +66,11 @@ export const SlideReview = ({
     numberOfCards,
   } = memoizedValues;
 
-  useEffect(() => {
+  /* useEffect(() => {
     const handleResize = () => setSizeScreen(window.innerWidth);
     window.addEventListener("resize", debounce(handleResize, 200));
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, []); */
 
   const shuffleData = useMemo(() => {
     return reviews && shuffle(reviews);
@@ -87,10 +87,14 @@ export const SlideReview = ({
       <div className="flex justify-center mb-10">
         <h2 className="text-2xl lg:text-[40px]">{title}</h2>
       </div>
-      <div ref={wrapperRef} id="wrapper" className="w-full flex justify-center">
+      <div
+        ref={wrapperRef}
+        id="wrapper"
+        className="w-full flex justify-center "
+      >
         <div
           id="window"
-          className="flex justify-start overflow-hidden"
+          className="flex justify-start overflow-hidden px-8"
           style={{
             width: `${windowWidth}px`,
           }}
@@ -139,7 +143,10 @@ export const SlideReview = ({
         </Button>
         <Button
           onClick={handleNextReviews}
-          disabled={currentIndex + numberOfCards >= reviews.length}
+          disabled={
+            currentIndex ==
+            reviews.length - (wrapperRef.current?.offsetWidth < 600 ? 1 : 2)
+          }
           className="flex justify-center w-[72px] h-[40px]"
           buttonClassName="btn-secondary-300 button w-[72px] h-[40px] rounded-[40px]"
         >
