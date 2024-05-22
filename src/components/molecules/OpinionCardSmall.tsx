@@ -60,13 +60,29 @@ export const OpinionCardSmall = ({
               )}
             </Chip>
           </div>
-          <div className="flex h-full pb-4 justify-start">
+          <div className="flex pb-4 justify-start">
             <p className="font-bold text-xl text-ellipsis	">
               {review.data?.opinion?.title}
             </p>
           </div>
+          <div className="flex flex-row justify-start h-20 w-full gap-2">
+            {review.data.opinion?.images &&
+              review.data.opinion?.images
+                .slice(0, 6)
+                .map((image, idx) => (
+                  <Image
+                    key={idx}
+                    id={`image-preview-${idx}`}
+                    src={image.url}
+                    width={80}
+                    height={80}
+                    className="rounded-md object-cover border border-gray-200 w-12 h-20"
+                    alt="selected image"
+                  />
+                ))}
+          </div>
         </div>
-        <div className="relative border-t-2 mt-2 pt-2 items-center flex justify-between">
+        <div className="relative border-t-2 pt-2 items-center flex justify-between">
           <div
             className=" text-primary-500 cursor-pointer text-sm md:text-base"
             onClick={() => {
