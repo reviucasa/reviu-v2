@@ -61,14 +61,16 @@ export const AddressComboBox = ({
   ) {
     if (status === "OK") {
       // handle autocomplete suggestions
-      const autocompleteSuggestions = predictions!.map((prediction) => {
-        return {
-          id: prediction.place_id,
-          address: {
-            string: prediction.description,
-          },
-        };
-      });
+      const autocompleteSuggestions = predictions!
+        .map((prediction) => {
+          return {
+            id: prediction.place_id,
+            address: {
+              string: prediction.description,
+            },
+          };
+        })
+        .filter((e) => e.address.string.includes("Barcelona"));
       setSearchResult({
         autocompleteSuggestions: autocompleteSuggestions,
         status: "OK",
