@@ -17,7 +17,7 @@ const CardSlideClient = ({
   const currentSection = dataContentSlide[sectionActive];
 
   return (
-    <div className={`flex ${currentSection.bg}`}>
+    <div className={`flex ${currentSection.bg} `}>
       <Image
         src={ImageBgLeft}
         alt="Slide image"
@@ -31,9 +31,9 @@ const CardSlideClient = ({
           setSectionActive={setSectionActive}
         />
         <div className="w-full lg:h-[300px] h-[220px] flex items-center justify-center">
-          <h2 className="min-h-[180px] lg:text-5xl text-3xl xs:text-2xl font-extrabold text-center">
+          <h1 className="min-h-[180px] lg:text-5xl text-3xl xs:text-2xl font-extrabold text-center">
             {currentSection.text[currentDataIndex]}
-          </h2>
+          </h1>
         </div>
         <div className={`w-full flex justify-center mb-0 sm:mb-12`}>
           {currentSection.children}

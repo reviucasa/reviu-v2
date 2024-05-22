@@ -28,7 +28,7 @@ export async function SectionExperiences({
           {t("experiences.shareAndFind")}
         </h2>
       </div>
-      <div className="grid lg:grid-cols-2 justify-center gap-6 ">
+      <div className="grid md:grid-cols-2 justify-center gap-6 ">
         <ImageRounded image={sofa}>
           <h3 className="mt-7 text-center xs:text-xl">
             {t("experiences.shareExperiences")}

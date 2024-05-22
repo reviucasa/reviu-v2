@@ -54,7 +54,7 @@ export async function SectionHeader() {
 
   return (
     <div
-      className={`w-full flex flex-col lg:justify-between justify-center lg:h-[700px] rounded-[32px] overflow-hidden `}
+      className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-hidden mt-12`}
     >
       <div className="flex h-12 justify-center items-center gap-2 bg-black">
         <Image

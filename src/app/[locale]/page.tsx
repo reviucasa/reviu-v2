@@ -78,10 +78,10 @@ export default function Home({
   return (
     <MainLayout className="flex flex-col gap-20">
       <AuthCheck />
-      <div className="px-5 pb-28">
+      <div className="px-5 pb-16 xl:pb-24">
         <SectionHeader />
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center ">
         <SectionLatestReviews />
       </div>
       <div className="mx-4 lg:mx-40 flex flex-col">

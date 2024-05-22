@@ -85,7 +85,7 @@ export const SlideReview = ({
   return (
     <div className="flex flex-col md:items-center">
       <div className="flex justify-center mb-10">
-        <h2 className="text-2xl lg:text-[40px]">{title}</h2>
+        <h2 className="xs:text-2xl">{title}</h2>
       </div>
       <div ref={wrapperRef} id="wrapper" className="w-full flex justify-center">
         <div

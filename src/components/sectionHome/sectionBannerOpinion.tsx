@@ -15,7 +15,7 @@ export async function SectionBannerOpinion() {
           {t("bannerOpinion.helpIdeal")}
         </h4>
         <Link
-          className="btn w-full btn-primary-500 mt-10 content-center overflow-hidden whitespace-nowrap"
+          className="btn  btn-primary-500 mt-10 content-center overflow-hidden whitespace-nowrap"
           href="/review"
         >
           {t("bannerOpinion.WriteOpinion")}

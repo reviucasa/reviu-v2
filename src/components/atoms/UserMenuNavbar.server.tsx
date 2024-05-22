@@ -28,7 +28,7 @@ export const UserMenuNavbar = () => {
                 width={17}
               />
             </div>
-            <span className="m-2">{user?.name}</span>
+            <span className="m-2 hidden xl:block">{user?.name}</span>
             <HiOutlineChevronUp
               className={`${open ? "" : "rotate-180 transform"} m-2`}
             />
