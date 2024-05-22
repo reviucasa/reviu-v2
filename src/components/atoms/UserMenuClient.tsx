@@ -1,6 +1,6 @@
 "use client";
 
-import { Menu } from "@headlessui/react";
+import { Menu, MenuItem } from "@headlessui/react";
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
 import { mutate } from "swr";
 import { signOut } from "@/firebase/auth";
@@ -29,16 +29,16 @@ const UserMenuClient = () => {
   };
 
   return (
-    <Menu.Item>
-      {({ active }) => (
+    <MenuItem>
+      {({ focus }) => (
         <span
-          className={`p-2 cursor-pointer ${active && "bg-secondary-200"}`}
+          className={`p-2 cursor-pointer ${focus && "bg-secondary-200"}`}
           onClick={handleSignOut}
         >
           {t("common.cerrarSesión")}
         </span>
       )}
-    </Menu.Item>
+    </MenuItem>
   );
 };
 

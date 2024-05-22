@@ -1,5 +1,9 @@
 "use client";
-import { Disclosure } from "@headlessui/react";
+import {
+  Disclosure,
+  DisclosureButton,
+  DisclosurePanel,
+} from "@headlessui/react";
 import { BiChevronUp } from "react-icons/bi";
 
 interface PropsFaq {
@@ -12,7 +16,7 @@ export const FaqUnit = ({ question, answer }: PropsFaq) => {
     <Disclosure>
       {({ open }) => (
         <>
-          <Disclosure.Button className="flex justify-between text-left bg-white w-full border-solid border rounded-md font-bold mt-2 py-4 px-6">
+          <DisclosureButton className="flex justify-between text-left bg-white w-full border-solid border rounded-md font-bold mt-2 py-4 px-6">
             {question}
             <BiChevronUp
               size={22}
@@ -20,10 +24,10 @@ export const FaqUnit = ({ question, answer }: PropsFaq) => {
                 open ? "" : "rotate-180 transform"
               } text-primary-300`}
             />
-          </Disclosure.Button>
-          <Disclosure.Panel className="bg-gray-100 w-full py-2 px-4 rounded-md mt-1 mb-3 font-normal">
+          </DisclosureButton>
+          <DisclosurePanel className="bg-gray-100 w-full py-2 px-4 rounded-md mt-1 mb-3 font-normal">
             {answer}
-          </Disclosure.Panel>
+          </DisclosurePanel>
         </>
       )}
     </Disclosure>

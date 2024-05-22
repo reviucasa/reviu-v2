@@ -1,4 +1,11 @@
-import { Menu, Transition } from "@headlessui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import Face from "public/images/face.png";
@@ -18,7 +25,7 @@ export const UserMenuNavbar = () => {
     <Menu as="div" className="relative hidden md:block">
       {({ open }) => (
         <>
-          <Menu.Button className="flex items-center bg-white rounded-full p-1 border w-auto">
+          <MenuButton className="flex items-center bg-white rounded-full p-1 border w-auto">
             <div className="rounded-full bg-secondary-300 w-10 h-10 flex items-center justify-center cursor-pointer">
               <Image
                 quality={100}
@@ -32,66 +39,70 @@ export const UserMenuNavbar = () => {
             <HiOutlineChevronUp
               className={`${open ? "" : "rotate-180 transform"} m-2`}
             />
-          </Menu.Button>
+          </MenuButton>
           <Transition as={Fragment}>
-            <Transition.Child
-              className="absolute top-[48px] left-0 w-full z-10"
-              enter="transition ease-out duration-500"
-              enterFrom="opacity-20 -translate-y-10"
-              enterTo="opacity-100 translate-y-0"
-              leave="transition ease-in duration-75"
-              leaveFrom="transform opacity-100 scale-100"
-              leaveTo="transform opacity-0 scale-95"
-            >
-              <Menu.Items className="bg-white flex flex-col absolute right-0 mt-2 w-52 p-1 rounded-lg z-10 border border-gray-200 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      href="/account"
-                      className={`p-2 hover:no-underline ${
-                        active && "bg-secondary-200"
-                      }`}
-                    >
-                      {t("common.cuenta")}
-                    </Link>
-                  )}
-                </Menu.Item>
-                {auth.claims.admin == true && (
-                  <Menu.Item>
-                    {({ active }) => (
+            <div className="absolute top-[48px] left-0 w-full z-10">
+              <TransitionChild
+                enter="transition ease-out duration-500"
+                enterFrom="opacity-20 -translate-y-10"
+                enterTo="opacity-100 translate-y-0"
+                leave="transition ease-in duration-75"
+                leaveFrom="transform opacity-100 scale-100"
+                leaveTo="transform opacity-0 scale-95"
+              >
+                <MenuItems className="bg-white flex flex-col absolute right-0 mt-2 w-52 p-1 rounded-lg z-10 border border-gray-200 ">
+                  <MenuItem>
+                    {({ focus }) => (
                       <Link
-                        href="/admin"
-                        className={`p-2 text-secondary-500 hover:no-underline ${
-                          active && "bg-secondary-200"
+                        href="/account"
+                        className={`p-2 hover:no-underline ${
+                          focus && "bg-secondary-200"
                         }`}
                       >
-                        Admin
+                        {t("common.cuenta")}
                       </Link>
                     )}
-                  </Menu.Item>
-                )}
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link
-                      className={`p-2 hover:no-underline ${
-                        active && "bg-secondary-200"
-                      }`}
-                      href="mailto:info@reviucasa.com"
-                    >
-                      {t("common.soporte")}
-                    </Link>
+                  </MenuItem>
+                  {auth.claims.admin == true && (
+                    <MenuItem>
+                      {({ focus }) => (
+                        <Link
+                          href="/admin"
+                          className={`p-2 text-secondary-500 hover:no-underline ${
+                            focus && "bg-secondary-200"
+                          }`}
+                        >
+                          Admin
+                        </Link>
+                      )}
+                    </MenuItem>
                   )}
-                </Menu.Item>
-                <UserMenuClient />
-              </Menu.Items>
-            </Transition.Child>
+                  <MenuItem>
+                    {({ focus }) => (
+                      <Link
+                        className={`p-2 hover:no-underline ${
+                          focus && "bg-secondary-200"
+                        }`}
+                        href="mailto:info@reviucasa.com"
+                      >
+                        {t("common.soporte")}
+                      </Link>
+                    )}
+                  </MenuItem>
+                  <UserMenuClient />
+                </MenuItems>
+              </TransitionChild>
+            </div>
           </Transition>
         </>
       )}
     </Menu>
   ) : (
     <div className="md:flex hidden ">
-      <Link href="/auth/login" className="content-center hover:no-underline pr-8">
+      <Link
+        href="/auth/login"
+        className="content-center hover:no-underline pr-8"
+      >
         {t("common.logIn")}
       </Link>
       {/* <Link href="/auth/login" className="content-center hover:no-underline px-8">

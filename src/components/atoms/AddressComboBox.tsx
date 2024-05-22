@@ -1,6 +1,6 @@
 "use client";
 import { Address } from "@/models/types";
-import { Combobox, Transition } from "@headlessui/react";
+import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
@@ -135,7 +135,7 @@ export const AddressComboBox = ({
   return (
     <Combobox value={selectedAddress} onChange={setSelectedAddress} nullable>
       <div className={`relative ${className}`}>
-        <Combobox.Input
+        <ComboboxInput
           id="query"
           className={`w-full ${icon && "!pl-10"}`}
           placeholder={placeholder ?? t("common.enQueDirección")}
@@ -160,39 +160,39 @@ export const AddressComboBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+          <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
             {loading && (
-              <Combobox.Option
+              <ComboboxOption
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                 key=""
                 value={undefined}
                 disabled
               >
                 {t("common.buscandoDirección")}
-              </Combobox.Option>
+              </ComboboxOption>
             )}
             {searchResult.autocompleteSuggestions.length === 0 && !loading && (
-              <Combobox.Option
+              <ComboboxOption
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                 key=""
                 value={undefined}
                 disabled
               >
                 {t("common.noSeEncontroDirección")}
-              </Combobox.Option>
+              </ComboboxOption>
             )}
 
             {
               !loading && searchResult.autocompleteSuggestions.length > 0
                 ? searchResult.autocompleteSuggestions.map((e) => {
                     return (
-                      <Combobox.Option
+                      <ComboboxOption
                         className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                         key={e.id}
                         value={e.address.string}
                       >
                         {e.address.string}
-                      </Combobox.Option>
+                      </ComboboxOption>
                     );
                   })
                 : null
@@ -206,7 +206,7 @@ export const AddressComboBox = ({
                 </Combobox.Option>
               )) */
             }
-          </Combobox.Options>
+          </ComboboxOptions>
         </Transition>
       </div>
     </Combobox>

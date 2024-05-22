@@ -1,6 +1,6 @@
 "use client";
 import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
-import { Combobox, Transition } from "@headlessui/react";
+import { Combobox, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
@@ -76,38 +76,38 @@ export const AgencyComboBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <Combobox.Options className="absolute mt-1 max-h-40  w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-50">
+          <ComboboxOptions className="absolute mt-1 max-h-40  w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-50">
             {loading && (
-              <Combobox.Option
+              <ComboboxOption
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                 key=""
                 value={undefined}
                 disabled
               >
                 {t("common.buscandoInmobiliaria")}
-              </Combobox.Option>
+              </ComboboxOption>
             )}
             {agenciesList?.length === 0 && !loading && (
-              <Combobox.Option
+              <ComboboxOption
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                 key=""
                 value={undefined}
                 disabled
               >
                 {t("common.noSeEncontroLaInmobiliaria")}
-              </Combobox.Option>
+              </ComboboxOption>
             )}
             {!loading &&
               agenciesList?.slice(0, 3).map((agency) => (
-                <Combobox.Option
+                <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={agency.id}
                   value={agency}
                 >
                   {agency.name}
-                </Combobox.Option>
+                </ComboboxOption>
               ))}
-          </Combobox.Options>
+          </ComboboxOptions>
         </Transition>
       </div>
     </Combobox>

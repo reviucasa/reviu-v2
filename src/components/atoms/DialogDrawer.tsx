@@ -1,6 +1,13 @@
-import { Dialog as HeadlessUIDialog, Transition } from '@headlessui/react'
-import { Fragment, ReactNode, useRef } from 'react'
-import { AiOutlineClose } from 'react-icons/ai'
+import {
+  Description,
+  DialogPanel,
+  DialogTitle,
+  Dialog as HeadlessUIDialog,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
+import { Fragment, ReactNode, useRef } from "react";
+import { AiOutlineClose } from "react-icons/ai";
 
 export const DialogDrawer = ({
   isOpen,
@@ -9,17 +16,17 @@ export const DialogDrawer = ({
   title,
   description,
   className,
-  iconClose
+  iconClose,
 }: {
-  isOpen: boolean
-  setIsOpen: (value: boolean) => void
-  children?: ReactNode
-  title?: string
-  description?: string
-  className?: string
-  iconClose?: boolean
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
+  children?: ReactNode;
+  title?: string;
+  description?: string;
+  className?: string;
+  iconClose?: boolean;
 }) => {
-  const initialFocus = useRef(null)
+  const initialFocus = useRef(null);
   return (
     <Transition appear={true} show={isOpen}>
       <HeadlessUIDialog
@@ -29,10 +36,10 @@ export const DialogDrawer = ({
         onClose={() => setIsOpen(false)}
       >
         {/* The backdrop, rendered as a fixed sibling to the panel container */}
-        <HeadlessUIDialog.Backdrop className="fixed inset-0 z-10 bg-black/50" aria-hidden="true" />
+        <div className="fixed inset-0  bg-black/50" aria-hidden="true" />
 
         {/* Full-screen container to center the panel */}
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="transform transition ease-in-out duration-1000 sm:duration-700"
           enterFrom="translate-x-full"
@@ -43,7 +50,7 @@ export const DialogDrawer = ({
         >
           <div className="fixed inset-0 flex items-center justify-center p-4">
             {/* The actual dialog panel  */}
-            <HeadlessUIDialog.Panel
+            <DialogPanel
               ref={initialFocus}
               className={`${className} max-h-full  rounded-2xl bg-white  drop-shadow-guzzu `}
             >
@@ -64,16 +71,16 @@ export const DialogDrawer = ({
                 </>
               )}
               <div className="overflow-auto lg:p-10 p-4 pt-12 max-h-full mx-auto">
-                <HeadlessUIDialog.Title as="h4" className="mb-4">
+                <DialogTitle as="h4" className="mb-4">
                   {title}
-                </HeadlessUIDialog.Title>
-                <HeadlessUIDialog.Description>{description}</HeadlessUIDialog.Description>
+                </DialogTitle>
+                <Description>{description}</Description>
                 {children}
               </div>
-            </HeadlessUIDialog.Panel>
+            </DialogPanel>
           </div>
-        </Transition.Child>
+        </TransitionChild>
       </HeadlessUIDialog>
     </Transition>
-  )
-}
+  );
+};

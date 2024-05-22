@@ -1,7 +1,7 @@
 "use client";
 import { AddressComboBox } from "@/components/atoms/AddressComboBox";
 import { Button } from "@/components/atoms/Button";
-import { Menu, Switch, Transition } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems, Switch } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "public/images/reviuLogo.svg";
@@ -185,9 +185,9 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
         <UserMenuNavbar />
         <div className="md:hidden">
           <Menu as="div">
-            <Menu.Button>
+            <MenuButton>
               <GiHamburgerMenu />
-            </Menu.Button>
+            </MenuButton>
             <div //Transition.Child
               className="absolute top-[80px] left-0 w-full z-10"
               // enter="transition ease-out duration-500"
@@ -197,10 +197,10 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
               // leaveFrom="transform opacity-100 scale-100"
               // leaveTo="transform opacity-0 scale-95"
             >
-              <Menu.Items className="bg-gray-100 flex flex-col items-center gap-5 p-4">
+              <MenuItems className="bg-gray-100 flex flex-col items-center gap-5 p-4">
                 {auth.user != null ? (
                   <>
-                    <Menu.Item>
+                    <MenuItem>
                       <Link
                         href="/account"
                         className="hover:no-underline"
@@ -211,9 +211,9 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                       >
                         {t("common.cuenta")}
                       </Link>
-                    </Menu.Item>
+                    </MenuItem>
                     {auth.claims.admin == true && (
-                      <Menu.Item>
+                      <MenuItem>
                         <Link
                           href="/admin"
                           className=" text-secondary-500 hover:no-underline"
@@ -224,21 +224,21 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                         >
                           Admin
                         </Link>
-                      </Menu.Item>
+                      </MenuItem>
                     )}
-                    <Menu.Item>
-                      {({ active }) => (
+                    <MenuItem>
+                      {({ focus }) => (
                         <Link
                           className={`p-2 hover:no-underline ${
-                            active && "bg-secondary-200"
+                            focus && "bg-secondary-200"
                           }`}
                           href="mailto:info@reviucasa.com"
                         >
                           {t("common.soporte")}
                         </Link>
                       )}
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <Button
                         className="!w-full"
                         buttonClassName="content-center"
@@ -263,19 +263,19 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                           {t("common.cerrarSesión")}
                         </span>
                       </Button>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <Button
                         className="btn-primary-500 w-full"
                         onClick={() => router.push("/review")}
                       >
                         {t("common.writeReview")}
                       </Button>
-                    </Menu.Item>
+                    </MenuItem>
                   </>
                 ) : (
                   <>
-                    <Menu.Item>
+                    <MenuItem>
                       <Link
                         href="/auth/login"
                         className="content-center hover:no-underline"
@@ -285,8 +285,8 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                       >
                         {t("common.logIn")}
                       </Link>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <Link
                         href="/auth/login"
                         className="content-center hover:no-underline"
@@ -296,8 +296,8 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                       >
                         {t("common.signIn")}
                       </Link>
-                    </Menu.Item>
-                    <Menu.Item>
+                    </MenuItem>
+                    <MenuItem>
                       <Link
                         href="/review"
                         className="btn btn-primary-500 content-center !w-full"
@@ -305,10 +305,10 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                       >
                         {t("common.writeReview")}
                       </Link>
-                    </Menu.Item>
+                    </MenuItem>
                   </>
                 )}
-              </Menu.Items>
+              </MenuItems>
             </div>{" "}
           </Menu>
         </div>

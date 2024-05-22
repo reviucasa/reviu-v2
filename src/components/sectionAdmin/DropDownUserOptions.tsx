@@ -1,5 +1,5 @@
 import { User, UserStatus, UserType, updateUser } from "@/models/user";
-import { Menu } from "@headlessui/react";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import {
   BiBlock,
   BiCheckDouble,
@@ -80,16 +80,16 @@ export const DropDownUserOptions = ({
   return (
     <Menu>
       <Float placement="bottom-end" offset={2}>
-        <Menu.Button className="text-gray-500 cursor-pointer hover:text-secondary-300">
+        <MenuButton className="text-gray-500 cursor-pointer hover:text-secondary-300">
           <BiDotsHorizontalRounded className="h-6 w-6" />
-        </Menu.Button>
-        <Menu.Items className="bg-white flex flex-col w-min rounded-lg border border-gray-200">
+        </MenuButton>
+        <MenuItems className="bg-white flex flex-col w-min rounded-lg border border-gray-200">
           {user.type != UserType.Agency && (
-            <Menu.Item>
-              {({ active }) => (
+            <MenuItem>
+              {({ focus }) => (
                 <div
                   className={`flex items-center py-2 px-3 rounded-t-lg cursor-pointer ${
-                    active && " bg-gray-50"
+                    focus && " bg-gray-50"
                   }`}
                   onClick={onChangeUserType}
                 >
@@ -105,13 +105,13 @@ export const DropDownUserOptions = ({
                   </span>
                 </div>
               )}
-            </Menu.Item>
+            </MenuItem>
           )}
-          <Menu.Item>
-            {({ active }) => (
+          <MenuItem>
+            {({ focus }) => (
               <div
                 className={`flex items-center py-2 px-3 rounded-b-lg cursor-pointer ${
-                  active && " bg-gray-50"
+                  focus && " bg-gray-50"
                 }`}
                 onClick={onChangeUserStatus}
               >
@@ -125,8 +125,8 @@ export const DropDownUserOptions = ({
                 </span>
               </div>
             )}
-          </Menu.Item>
-        </Menu.Items>
+          </MenuItem>
+        </MenuItems>
       </Float>
     </Menu>
   );

@@ -1,4 +1,9 @@
-import { Dialog as HeadlessUIDialog } from "@headlessui/react";
+import {
+  Description,
+  Dialog as HeadlessUIDialog,
+  DialogPanel,
+  DialogTitle,
+} from "@headlessui/react";
 import clsx from "clsx";
 import Image, { StaticImageData } from "next/image";
 import { ReactNode } from "react";
@@ -37,17 +42,14 @@ export const Dialog = ({
       }}
     >
       {/* The backdrop, rendered as a fixed sibling to the panel container */}
-      <HeadlessUIDialog.Backdrop
-        className="fixed inset-0 bg-black/50 z-40"
-        aria-hidden="true"
-      />
+      <div className="fixed inset-0 bg-black/50" aria-hidden="true" />
 
       {/* Full-screen container to center the panel */}
       <div className="fixed inset-0 flex items-center justify-center lg:p-4 p-0">
         {/* The actual dialog panel  */}
-        <HeadlessUIDialog.Panel
+        <DialogPanel
           className={clsx(
-            "max-h-full  rounded-2xl bg-white  drop-shadow-guzzu ",
+            "max-h-full rounded-2xl bg-white drop-shadow-guzzu overflow-hidden",
             panelClassName
           )}
         >
@@ -65,9 +67,9 @@ export const Dialog = ({
               className
             )}
           >
-            <HeadlessUIDialog.Title as="h4" className="mb-4">
+            <DialogTitle as="h4" className="mb-4">
               {title}
-            </HeadlessUIDialog.Title>
+            </DialogTitle>
             {image && (
               <Image
                 src={image}
@@ -77,12 +79,10 @@ export const Dialog = ({
                 className="w-12 h-auto mx-auto mt-2 mb-6"
               />
             )}
-            <HeadlessUIDialog.Description>
-              {description}
-            </HeadlessUIDialog.Description>
+            <Description>{description}</Description>
             {children}
           </div>
-        </HeadlessUIDialog.Panel>
+        </DialogPanel>
       </div>
     </HeadlessUIDialog>
   );
