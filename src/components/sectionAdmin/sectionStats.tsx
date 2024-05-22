@@ -1,7 +1,6 @@
-import { classNames } from "@/helpers/classNames";
+"use client";
 import { WeeklyStats, getAllWeeklyStats } from "@/models/stats";
 import { useQuery } from "@tanstack/react-query";
-import { BiArrowToBottom, BiArrowToTop, BiMinus } from "react-icons/bi";
 import { BounceLoader } from "react-spinners";
 import { StatBox } from "../atoms/StatBox";
 

@@ -91,7 +91,7 @@ export default function Home({
         <SectionExperiences className="mx-12 lg:mx-0 w-[870px]" />
       </div>
       <SectionBanner />
-      <div className="mx-4 lg:mx-40 my-16 flex flex-col gap-20">
+      <div className="mx-4 lg:mx-40 my-16 pb-8 flex flex-col gap-20">
         <SectionBannerOpinion />
         <SectionFaq />
       </div>

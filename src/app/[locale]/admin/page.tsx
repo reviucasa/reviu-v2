@@ -1,4 +1,3 @@
-"use client";
 import AdminLayout from "@/components/layouts/AdminLayout";
 import SectionStats from "@/components/sectionAdmin/sectionStats";
 

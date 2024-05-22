@@ -4,8 +4,6 @@ import Logo from "public/images/reviuLogo.svg";
 import { Fragment, useEffect, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
-  BiBlock,
-  BiFlag,
   BiFolder,
   BiHome,
   BiMenu,
@@ -15,7 +13,6 @@ import {
   BiX,
 } from "react-icons/bi";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/context/auth";
 
 const navigation = [
   { title: "", items: [{ name: "Dashboard", href: "/admin", icon: BiHome }] },

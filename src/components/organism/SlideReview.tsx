@@ -37,8 +37,8 @@ export const SlideReview = ({
     const preCalculatedNumberOfCards = Math.trunc(
       widthWrapper / (sizeCard + sizeGapCard)
     );
-    const numberOfCards =
-      preCalculatedNumberOfCards < 1 ? 1 : preCalculatedNumberOfCards;
+    const numberOfCards = reviews.length > 12 ? 12 : reviews.length; /* 
+      preCalculatedNumberOfCards < 1 ? 1 : preCalculatedNumberOfCards */
     let windowWidth = numberOfCards * (sizeCard + sizeGapCard) - sizeGapCard;
     if (numberOfCards === 1) {
       //Mobile mode
@@ -56,7 +56,7 @@ export const SlideReview = ({
       leftSlidePosition,
       numberOfCards,
     };
-  }, [sizeCard, sizeGapCard, sizeGapCardMobile]);
+  }, [sizeCard, sizeGapCard, sizeGapCardMobile, reviews]);
 
   const {
     sizeTransitionCard,
@@ -82,15 +82,20 @@ export const SlideReview = ({
   const handlePrevReviews = () => {
     setCurrentIndex((prevIndex) => Math.max(0, prevIndex - 1));
   };
+
   return (
     <div className="flex flex-col md:items-center">
       <div className="flex justify-center mb-10">
         <h2 className="xs:text-2xl">{title}</h2>
       </div>
-      <div ref={wrapperRef} id="wrapper" className="w-full flex justify-center">
+      <div
+        ref={wrapperRef}
+        id="wrapper"
+        className="w-full flex justify-center "
+      >
         <div
           id="window"
-          className="flex justify-start overflow-hidden"
+          className="flex justify-start overflow-hidden "
           style={{
             width: `${windowWidth}px`,
           }}
@@ -106,7 +111,7 @@ export const SlideReview = ({
                   : sizeGapCard
               }px`,
             }}
-            className={`flex justify-center  transition-transform duration-700	`}
+            className={`flex justify-center transition-transform duration-700  px-6`}
           >
             {shuffleData?.map((review: Review) => (
               <OpinionCardSmall

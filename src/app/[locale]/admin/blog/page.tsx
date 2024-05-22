@@ -1,14 +1,9 @@
-"use client";
 import AdminLayout from "@/components/layouts/AdminLayout";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
-import { Post, getPosts } from "@/models/post";
-import { useQuery } from "@tanstack/react-query";
+import { getPosts } from "@/models/post";
 
-export default function Page() {
-  const { data: posts } = useQuery<Post[] | undefined, Error>({
-    queryKey: ["posts"],
-    queryFn: () => getPosts(),
-  });
+export default async function Page() {
+  const posts = await getPosts();
 
   return (
     <AdminLayout>
@@ -20,7 +15,7 @@ export default function Page() {
         </div>
         <div className="my-6 space-y-6 sm:max-w-3xl lg:max-w-4xl">
           {posts?.map((post) => (
-            <PostHorizontalCard key={post.id} post={post} />
+            <PostHorizontalCard key={post.id} post={post} isModal={true} />
           ))}
         </div>
       </div>

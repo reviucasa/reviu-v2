@@ -1,11 +1,22 @@
 import Image from "next/image";
-import { Post, PostStatus, getPosts } from "@/models/post";
+import { Post, PostStatus } from "@/models/post";
 import { classNames } from "@/helpers/classNames";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { PostModalButton } from "../atoms/PostModalButton";
+import { toPlainObject } from "lodash";
+import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
+import { useLocale } from "next-intl";
 
-export const PostHorizontalCard = async ({ post }: { post: Post }) => {
+export const PostHorizontalCard = async ({
+  post,
+  isModal,
+}: {
+  post: Post;
+  isModal?: boolean;
+}) => {
   // const [openPostModal, setOpenPostModal] = useState<boolean>(false);
+  const locale = useLocale();
   const t = await getTranslations();
 
   return (
@@ -43,12 +54,31 @@ export const PostHorizontalCard = async ({ post }: { post: Post }) => {
           >
             {t("blog.readme")}
           </Button> */}
-          <Link
-            href={`blog/${post.id}`}
-            className="text-primary-500 underline cursor-pointer hover:text-primary-300"
-          >
-            {t("common.verMás")}
-          </Link>
+          {isModal && (
+            <PostModalButton
+              post={{
+                ...post,
+                timeCreated: formatFirebaseTimestamp(post.timeCreated, locale, {
+                  onlyDate: true,
+                  ignoreYear: false,
+                }),
+                timeUpdated:
+                  post.timeUpdated &&
+                  formatFirebaseTimestamp(post.timeUpdated, locale, {
+                    onlyDate: true,
+                    ignoreYear: false,
+                  }),
+              }}
+            />
+          )}
+          {!isModal && (
+            <Link
+              href={`blog/${post.id}`}
+              className="text-primary-500 underline cursor-pointer hover:text-primary-300"
+            >
+              {t("common.verMás")}
+            </Link>
+          )}
         </section>
       </div>
       {/* <PostModal
