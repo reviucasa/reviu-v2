@@ -19,6 +19,8 @@ export const DropDownLanguages = () => {
   const locale = useLocale();
   const currentLanguage = locale || "es";
 
+  console.log(pathname);
+
   return (
     <Menu as="div" className="relative max-w-[168px]">
       <div>
@@ -47,7 +49,7 @@ export const DropDownLanguages = () => {
                   className={`text-gray-800 p-2 cursor-pointer ${
                     focus && "bg-secondary-200"
                   }`}
-                  href={`${idiom.code}/${pathname}`}
+                  href={`/${idiom.code}/${pathname}`}
                 >
                   {t(`common.${idiom.label}`)}
                 </Link>
