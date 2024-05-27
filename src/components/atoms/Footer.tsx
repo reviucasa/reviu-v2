@@ -127,12 +127,13 @@ export async function Footer() {
           </div>
         </div>
       </div>
-      <div className="flex flex-row justify-between px-16 py-8 bg-white items-center">
-        <p>2024 - © IDRA</p>
-        <div className="flex flex-row justify-end gap-16">
-          <Image src={Nextgen} className="w-auto" height={36}  alt="icon next-gen" />
-          <Image src={Idra} className="w-auto" height={36} alt="icon idra" />
+      <div className="flex flex-col md:flex-row justify-between px-16 py-8 gap-6 md:gap-0 bg-white items-center">
+        <p className="hidden md:block">2024 - © IDRA</p>
+        <div className="flex flex-col md:flex-row justify-end gap-6">
+          <Image src={Nextgen} className="h-12 w-auto"   alt="icon next-gen" />
+          <Image src={Idra} className="h-12 w-auto mx-auto " alt="icon idra" />
         </div>
+        <p className="md:hidden block">2024 - © IDRA</p>
       </div>
     </div>
   );
