@@ -513,7 +513,9 @@
     "textDescubre": "Descobreix com es viu en aquest pis abans d’entrar-hi i comparteix la teva experiència per ajudar els altres",
     "escribeTuCorreo": "Escriu la teva adreça de correu electrònic",
     "enlaceEnviado": "Hem enviat un enllaç al teu correu",
-    "revisaCorreo": "Entra, revisa el correu electrònic que t'hem enviat i segueix les instruccions per iniciar sessió. Pots tancar aquesta pestanya."
+    "revisaCorreo": "Entra, revisa el correu electrònic que t'hem enviat i segueix les instruccions per iniciar sessió.",
+    "revisaSpam": "Si us plau, revisa també la carpeta de correu no desitjat per si el correu no és a la teva safata d'entrada.",
+    "cierraVentana": "Pots tancar aquesta pestanya."
   },
 
   "managementReview": {

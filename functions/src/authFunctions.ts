@@ -244,7 +244,7 @@ async function sendSignInEmail(
 
   const res = await client
     .sendEmail({
-      From: "hello@nicolau.xyz",
+      From: "info@reviucasa.com",
       To: email,
       Subject: translation.subject,
       HtmlBody: htmlContent,

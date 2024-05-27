@@ -511,8 +511,10 @@
     "iniciaORegistrate": "Inicia sesión o regístrate",
     "textDescubre": "Descubre cómo se vive en este piso antes de entrar y comparte tu experiencia para ayudar a los demás.",
     "escribeTuCorreo": "Escribe tu dirección de correo",
-    "enlaceEnviado": "We have sent a link to your email",
-    "revisaCorreo": "Log in, check the email we have sent you, and follow the instructions to sign in. You can close this tab now."
+    "enlaceEnviado": "Hemos enviado un enlace a tu correo",
+    "revisaCorreo": "Entra, revisa el email que te hemos enviado y sigue las instrucciones para iniciar sesión.",
+    "revisaSpam": "Por favor, revisa también tu carpeta de spam por si el correo no está en tu bandeja de entrada.",
+    "cierraVentana": "Puedes cerrar esta pestaña ahora."
   },
   "managementReview": {
     "gestion": "Gestión",

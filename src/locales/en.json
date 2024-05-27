@@ -513,8 +513,10 @@
     "iniciaORegistrate": "Log in or sign in",
     "textDescubre": "Find out what it's like to live there before you move in and share your experience to help others",
     "escribeTuCorreo": "Type in your email address",
-    "enlaceEnviado": "Hemos enviado un enlace a tu correo",
-    "revisaCorreo": "Entra, revisa el email que te hemos enviado y sigue las instrucciones para iniciar sesión. Puedes cerrar esta pestaña."
+    "enlaceEnviado": "We have sent a link to your email",
+    "revisaCorreo": "Log in, check the email we have sent you, and follow the instructions to sign in.",
+    "revisaSpam": "Please also check your spam folder in case the email is not in your inbox.",
+    "cierraVentana": "You can close this tab now."
   },
   "managementReview": {
     "gestion": "Management",

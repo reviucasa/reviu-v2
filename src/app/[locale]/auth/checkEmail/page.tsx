@@ -16,7 +16,11 @@ export default function CheckEmail() {
           <div className="flex flex-col h-full justify-center lg:justify-start max-w-96 md:max-w-full ">
             <div>
               <h3>{t("loginForm.enlaceEnviado")}</h3>
-              <p className="mt-5">{t("loginForm.revisaCorreo")}</p>
+              <p className="mt-5">
+                {t("loginForm.revisaCorreo")}{" "}
+                <span className=" underline">{t("loginForm.revisaSpam")}</span>{" "}
+                {t("loginForm.cierraVentana")}
+              </p>
             </div>
           </div>
         </div>
