@@ -54,7 +54,7 @@ export async function SectionHeader() {
 
   return (
     <div
-      className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-hidden mt-12`}
+      className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-hidden`}
     >
       <div className="flex h-12 justify-center items-center gap-2 bg-black">
         <Image
@@ -64,7 +64,6 @@ export async function SectionHeader() {
         />
         <span className="text-lime">{t("common.reseñasYOpiniones")}</span>
       </div>
-      <h1 className="sr-only">{currentSection.text[0]}</h1>
       <CardSlideClient dataContentSlide={dataContentSlide} />
     </div>
   );

@@ -78,7 +78,7 @@ export default function Home({
   return (
     <MainLayout className="flex flex-col gap-20">
       <AuthCheck />
-      <div className="px-5 pb-16 xl:pb-24">
+      <div className="px-5 py-4 xl:py-8">
         <SectionHeader />
       </div>
       <div className="flex justify-center ">
