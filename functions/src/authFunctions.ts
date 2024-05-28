@@ -139,10 +139,10 @@ async function sendSignInEmail(
           width="120"
           style="margin: 0px auto 32px auto; padding-left: 14px"
         />
-        <p style="padding: 0 24px; max-width: 400px; margin: 0 auto">
+        <!--  <p style="padding: 0 24px; max-width: 400px; margin: 0 auto">
           ${translation.copyComment}
-        </p>
-        <p class="signin-link" style="padding-top: 0px;">${link}</p>
+        </p>  -->
+        <!-- <p class="signin-link" style="padding-top: 0px;">${link}</p> -->
       </div>
       <div>
         <div

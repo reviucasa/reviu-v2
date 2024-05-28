@@ -13,7 +13,8 @@
     "hagamosEncontrar": "Let's turn finding a new home into an abuse-free experience.",
     "informacionPoder": "Information is power, let’s help each other make the best informed decision when it comes to renting a home.",
     "imaginasEncontrarPiso": "Do you like the sound of finding a home and being able to know the experience of someone who has actually lived there before? Being able to know what the neighbors and the area are like?",
-    "somosMasQueUnPortal": "We want to turn the rental jungle into a safer space, helping you make informed decisions and distinguishing those who do things right."
+    "somosMasQueUnPortal": "We want to turn the rental jungle into a safer space, helping you make informed decisions and distinguishing those who do things right.",
+    "confíanEnNosotros": "They trust us"
   },
   "account": {
     "account": "Account",
@@ -285,7 +286,7 @@
   "conditions": {
     "title": "Terms and conditions",
     "identificacion": "1. IDENTIFICATION",
-    "identificacionP1": "The website reviucasa.com (hereinafter the 'Website'),is owned by La Hidra Cooperativa SCCL, (hereinafter 'Reviu Casa') with registered office at Carretera Bordeta, 58 - 60 PLT BX, Barcelona, 08014 with NIF F67368431.",
+    "identificacionP1": "The website reviucasa.com (hereinafter the 'Website'), is owned by IDRA BARCELONA INSTITUTE, SCCL, (hereinafter 'Reviu Casa') with registered office at Cr Balmes, Nº 13, 08007, BARCELONA with NIF F67368431.",
     "identificacionP2": "The access and use of the Website grants the condition of 'User', being subject to the provisions of the 'Legal Texts', including the",
     "identificacionA1": " Legal Notice",
     "identificacionA2": "Privacy Policy",
@@ -358,7 +359,7 @@
   },
   "cookies": {
     "title": "COOKIES POLICY",
-    "ownershipAndUsage": "La Hidra Cooperativa, SCCL",
+    "ownershipAndUsage": "IDRA BARCELONA INSTITUTE, SCCL",
     "ownershipAndUsage1": ",  (hereinafter '",
     "reviuCasa": "Reviu Casa",
     "ownershipAndUsage2": "') is the owner of the Web Site reviucasa.com (hereinafter the '",
@@ -453,10 +454,10 @@
   "legalNotice": {
     "title": "Legal Notice",
     "identificacion": "1. Who we are",
-    "identificacionP1": "La Hidra Cooperativa, SCCL",
-    "identificacionP2": "(hereinafter ",
+    "identificacionP1": "IDRA BARCELONA INSTITUTE, SCCL",
+    "identificacionP2": " (hereinafter ",
     "identificacionP3": "“Reviu Casa”",
-    "identificacionP4": ")is the owner of the web site reviucasa.com (hereinafter the 'Web Site'). Reviu Casa is a commercial company of Spanish nationality with registered office Carretera La Bordeta, Nº 58, BARCELONA, with Zip Code 08014, with N.I.F. F67368431 and is registered in the Cooperative Registry of of Barcelona with the number of settlement 1 in the inscription sheet number 15215.",
+    "identificacionP4": ") is the owner of the web site reviucasa.com (hereinafter the 'Web Site'). Reviu Casa is a commercial company of Spanish nationality with registered office Cr Balmes, Nº 13, 08007, BARCELONA, with N.I.F. F67368431 and is registered in the Cooperative Registry of of Barcelona with the number of settlement 1 in the inscription sheet number 15215.",
     "identificacionP5": "You can contact Reviu Casa at: ",
     "identificacionP6": "E-mail: ",
     "identificacionP9": "info@reviucasa.com",
@@ -561,18 +562,18 @@
   },
   "privacy": {
     "title": "Privacy Policy",
-    "privacidadP1": "La Hidra Cooperativa, SCCL",
+    "privacidadP1": "IDRA BARCELONA INSTITUTE, SCCL",
     "privacidadP2": "(hereinafter ",
     "privacidadP3": "“Reviu Casa”)",
     "privacidadP4": "is the owner of the website reviucasa.com (hereinafter the 'Website') and is responsible for the processing of personal data of its users (hereinafter the 'Users').",
     "privacidadP5": "Through this Privacy Policy, and in compliance with Articles 12 and 13 of Regulation (EU) 2016/679 (hereinafter 'GDPR') and Article 11 of the Organic Law 3/2018, of December 5, on the Protection of Personal Data and guarantee of digital rights ('LOPDPGDD'), Reviu Casa informs Users using the Website about the processing of their personal data that may be collected through this and processed by Reviu Casa.",
     "responsable": "1. Information about the Data Controller",
     "responsableP1": "Data Controller:",
-    "responsableP2": "La Hidra Cooperativa, SCCL",
+    "responsableP2": "IDRA BARCELONA INSTITUTE, SCCL",
     "responsablep3": "VAT Nº",
     "responsableP4": "F67368431",
     "responsablep5": "Registered Office",
-    "responsableP6": "Cr Bordeta, Nº 58, 08014, BARCELONA",
+    "responsableP6": "Cr Balmes, Nº 13, 08007, BARCELONA",
     "responsablep6": "Contact",
     "responsableP7": "info@reviucasa.com",
     "conservación": "2. Data processed, legal bases, purposes and retention period.",

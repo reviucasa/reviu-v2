@@ -1,0 +1,29 @@
+import Cactus from "public/images/BgCactus.svg";
+import circulosection from "public/images/circulosection.svg";
+import Justicia from "public/images/justicia.svg";
+import KeyCommunity from "public/images/keyCommunty.svg";
+import { ImageRounded } from "../atoms/ImageRounded";
+import Image from "next/image";
+import { getTranslations } from "next-intl/server";
+import Idra from "public/images/IDRA-trans.png";
+import Nextgen from "public/images/eu-nextgen.png";
+import GobEs from "public/images/gob-es.png";
+import GenCat from "public/images/gencat.png";
+
+export async function Partners() {
+  const t = await getTranslations();
+
+  return (
+    <div >
+      <h3 className="lg:text-[20px] lg:leading-10 text-sm leading-7 text-center">
+        {t("about.confíanEnNosotros")}
+      </h3>
+
+      <div className="flex flex-col w-full md:flex-row items-center justify-between gap-12 md:gap-6 mt-12 max-w-lg mx-auto">
+        <Image src={Nextgen} className="h-auto w-36" alt="icon next-gen" />
+        <Image src={GobEs} className="h-auto w-36" alt="icon gobes" />
+        <Image src={GenCat} className="h-auto w-36" alt="icon gencat" />
+      </div>
+    </div>
+  );
+}

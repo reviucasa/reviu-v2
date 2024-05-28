@@ -4,7 +4,6 @@ import Instagram from "public/images/IconInstagram.svg";
 import TikTok from "public/images/IconTikTok.svg";
 import Twitter from "public/images/IconTwitter.svg";
 import Idra from "public/images/IDRA-trans.png";
-import Nextgen from "public/images/eu-nextgen.png";
 import LogoWhite from "public/images/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { getTranslations } from "next-intl/server";
@@ -130,8 +129,8 @@ export async function Footer() {
       <div className="flex flex-col md:flex-row justify-between px-16 py-8 gap-6 md:gap-0 bg-white items-center">
         <p className="hidden md:block">2024 - © IDRA</p>
         <div className="flex flex-col md:flex-row justify-end gap-6">
-          <Image src={Nextgen} className="h-12 w-auto"   alt="icon next-gen" />
-          <Image src={Idra} className="h-12 w-auto mx-auto " alt="icon idra" />
+          {/* <Image src={Nextgen} className="h-12 w-auto"   alt="icon next-gen" /> */}
+          <Image src={Idra} className="h-10 w-auto mx-auto " alt="icon idra" />
         </div>
         <p className="md:hidden block">2024 - © IDRA</p>
       </div>

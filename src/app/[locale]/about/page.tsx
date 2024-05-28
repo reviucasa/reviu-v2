@@ -1,6 +1,7 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { Header } from "@/components/sectionAbout/header";
 import { OurValues } from "@/components/sectionAbout/ourValues";
+import { Partners } from "@/components/sectionAbout/partners";
 import { SectionCards } from "@/components/sectionAbout/sectionCards";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 
@@ -28,6 +29,9 @@ export default async function About({
       </div>
       <div className="mx-4 lg:mx-40 my-32 flex flex-col gap-28">
         <OurValues />
+      </div>
+      <div className=" py-12 flex flex-col bg-white">
+        <Partners />
       </div>
     </MainLayout>
   );
