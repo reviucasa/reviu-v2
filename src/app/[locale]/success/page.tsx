@@ -2,6 +2,36 @@ import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
 import Link from "next/link";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { locales } from "../layout";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const titleDetail =
+    locale == "en"
+      ? "Success: Your review has been submitted"
+      : locale == "es"
+      ? "Éxito: Tu reseña ha sido enviada"
+      : "Èxit: La teva ressenya ha estat enviada";
+
+  const description =
+    locale == "en"
+      ? "Thank you for submitting your review on Reviu. Your feedback helps others find reliable rental homes in Barcelona. Check your email for confirmation and further details."
+      : locale == "es"
+      ? "Gracias por enviar tu reseña en Reviu. Tu opinión ayuda a otros a encontrar viviendas de alquiler confiables en Barcelona. Revisa tu correo para la confirmación y más detalles."
+      : "Gràcies per enviar la teva ressenya a Reviu. La teva opinió ajuda a altres a trobar habitatges de lloguer fiables a Barcelona. Revisa el teu correu per a la confirmació i més detalls.";
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function Success({
   params: { locale },

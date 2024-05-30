@@ -8,7 +8,7 @@ export async function ConditionsUseComponent({
   const t = await getTranslations();
   return (
     <div className={className}>
-      <h2 className="mb-10">{t("conditions.title")}</h2>
+      <h1 className="mb-10 text-4xl">{t("conditions.title")}</h1>
       <div className="flex flex-col gap-3 mb-10">
         <h5 className="my-2 font-extrabold">
           {t("conditions.identificacion")}

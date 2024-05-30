@@ -1,13 +1,43 @@
-"use client";
 import CheckEmailImg from "public/images/check-email.png";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
+import { locales } from "../../layout";
+import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
-export default function CheckEmail() {
-  const t = useTranslations();
-  const router = useRouter();
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const titleDetail =
+    locale == "en"
+      ? "Check Email: Access Your Account"
+      : locale == "es"
+      ? "Check Email: Accede a tu cuenta"
+      : "Check Email: Accedeix al teu compte";
+
+  const description =
+    locale == "en"
+      ? "Log in to your Reviu account to access your dashboard, submit reviews, and manage your profile. Stay connected with the latest updates on rental homes in Barcelona."
+      : locale == "es"
+      ? "Inicia sesión en tu cuenta de Reviu para acceder a tu panel de control, enviar reseñas y gestionar tu perfil. Mantente conectado con las últimas actualizaciones sobre viviendas de alquiler en Barcelona."
+      : "Inicia sessió al teu compte de Reviu per accedir al teu tauler, enviar ressenyes i gestionar el teu perfil. Mantén-te connectat amb les últimes actualitzacions sobre habitatges de lloguer a Barcelona.";
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
+
+export default async function CheckEmail() {
+  const t = await getTranslations();
 
   return (
     <>
@@ -34,16 +64,15 @@ export default function CheckEmail() {
           />
         </div>
         <div className="absolute top-8 left-8">
-          <Image
-            src={Logo}
-            quality={100}
-            alt="Home review"
-            className="object-contain cursor-pointer h-auto"
-            width={120}
-            onClick={() => {
-              router.push("/");
-            }}
-          />
+          <Link href={"/"}>
+            <Image
+              src={Logo}
+              quality={100}
+              alt="Home review"
+              className="object-contain cursor-pointer h-auto"
+              width={120}
+            />
+          </Link>
         </div>
       </div>
     </>

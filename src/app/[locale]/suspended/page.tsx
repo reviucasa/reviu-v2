@@ -1,5 +1,34 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { locales } from "../layout";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const titleDetail =
+    locale == "en"
+      ? "Suspended: Your account has been suspended"
+      : locale == "es"
+      ? "Suspendido: Tu cuenta ha sido suspendida"
+      : "Suspès: El teu compte ha estat suspès";
+
+  const description =
+    locale == "en"
+      ? "our account has been temporarily suspended. Please contact support for more information and assistance in reactivating your account."
+      : locale == "es"
+      ? "Tu cuenta ha sido suspendida temporalmente. Por favor, contacta al soporte para más información y asistencia para reactivar tu cuenta."
+      : "El teu compte ha estat suspès temporalment. Si us plau, contacta amb el suport per obtenir més informació i assistència per reactivar el teu compte.";
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function SuspendedPage({
   params: { locale },

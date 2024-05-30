@@ -4,6 +4,35 @@ import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
 import { useLocale } from "next-intl";
 import { notFound } from "next/navigation";
+import { locales } from "../../layout";
+
+export async function generateMetadata({
+  params: { locale, postId },
+}: {
+  params: { locale: string; postId: string };
+}) {
+  // Fetch blog post data using the postId
+  const post = await getPost(postId);
+
+  const titleDetail =
+    locale == "en"
+      ? `Reviu Post: ${post?.title}`
+      : locale == "es"
+      ? `Reviu: ${post?.title}`
+      : `Reviu: ${post?.title}`;
+
+  const description =
+    locale == "en"
+      ? `${post?.title} Read more on Reviu.`
+      : locale == "es"
+      ? `${post?.title} Lee más en Reviu.`
+      : `${post?.title} Llegeix més a Reviu.`;
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function PostPage({
   params,

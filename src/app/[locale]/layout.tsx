@@ -9,7 +9,7 @@ import { unstable_setRequestLocale } from "next-intl/server";
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
 // Can be imported from a shared config
-const locales = ["es", "ca", "en"];
+export const locales = ["es", "ca", "en"];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

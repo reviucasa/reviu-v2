@@ -5,6 +5,36 @@ import { PostStatus, getPosts } from "@/models/post";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
+import { locales } from "../layout";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  const titleDetail =
+    locale == "en"
+      ? "Reviu Blog: Latest Posts and Updates"
+      : locale == "es"
+      ? "Blog de Reviu: Últimas publicaciones y actualizaciones"
+      : "Blog de Reviu: Últimes publicacions i actualitzacions";
+
+  const description =
+    locale == "en"
+      ? "Explore the latest posts and updates on the Reviu blog. Stay informed with our latest news, tips, and insights on finding the best rental homes in Barcelona."
+      : locale == "es"
+      ? "Explora las últimas publicaciones y actualizaciones en el blog de Reviu. Mantente informado con nuestras últimas noticias, consejos y perspectivas sobre cómo encontrar las mejores viviendas de alquiler en Barcelona."
+      : "Explora les últimes publicacions i actualitzacions al blog de Reviu. Mantén-te informat amb les nostres últimes notícies, consells i perspectives sobre com trobar els millors habitatges de lloguer a Barcelona.";
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function Blog({
   params: { locale },

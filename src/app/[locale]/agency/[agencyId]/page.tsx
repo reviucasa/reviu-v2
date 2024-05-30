@@ -12,6 +12,39 @@ import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
+import { locales } from "../../layout";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale, agencyId },
+}: {
+  params: { locale: string; agencyId: string };
+}) {
+  // Fetch agency data using the agencyId
+  const agency = await getAgency(agencyId);
+
+  const titleDetail =
+    locale == "en"
+      ? `Real Estate Agency: ${agency?.name}`
+      : locale == "es"
+      ? `Agencia Inmobiliaria: ${agency?.name}`
+      : `Agència Immobiliària: ${agency?.name}`;
+
+  const description =
+    locale == "en"
+      ? `Learn more about ${agency?.name}, a trusted real estate agency in Barcelona. Explore their listings, read reviews, and find your ideal rental home with Reviu.`
+      : locale == "es"
+      ? `Conoce más sobre ${agency?.name}, una agencia inmobiliaria de confianza en Barcelona. Explora sus listados, lee reseñas y encuentra tu vivienda de alquiler ideal con Reviu.`
+      : `Coneix més sobre ${agency?.name}, una agència immobiliària de confiança a Barcelona. Explora els seus llistats, llegeix ressenyes i troba el teu habitatge de lloguer ideal amb Reviu.`;
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function Agency({
   params,

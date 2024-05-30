@@ -5,12 +5,55 @@ import { HeaderAddressComboBox } from "@/components/molecules/HeaderAddressCombo
 
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { getBuilding } from "@/models/building";
-import { getReviewsByBuidingId, reviewConverter } from "@/models/review";
+import { getReviewsByBuidingId } from "@/models/review";
 import { getTranslations } from "next-intl/server";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
 import { toPlainObject } from "lodash";
+import { locales } from "../../layout";
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
+
+export async function generateMetadata({
+  params: { locale, buildingId },
+}: {
+  params: { locale: string; buildingId: string };
+}) {
+  // Fetch building data using the buildingId
+  const building = await getBuilding(buildingId);
+
+  const titleDetail =
+    locale == "en"
+      ? `Building Details: ${building?.address + ", " + building?.postalCode}`
+      : locale == "es"
+      ? `Detalles del Edificio: ${
+          building?.address + ", " + building?.postalCode
+        }`
+      : `Detalls de l'Edifici: ${
+          building?.address + ", " + building?.postalCode
+        }`;
+
+  const description =
+    locale == "en"
+      ? `Learn more about ${
+          building?.address + ", " + building?.postalCode
+        }. Read reviews and see detailed information about this rental property on Reviu.`
+      : locale == "es"
+      ? `Conoce más sobre ${
+          building?.address + ", " + building?.postalCode
+        }. Lee reseñas y consulta información detallada sobre esta propiedad de alquiler en Reviu.`
+      : `Coneix més sobre ${
+          building?.address + ", " + building?.postalCode
+        }. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`;
+
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function BuildingPage({
   params,

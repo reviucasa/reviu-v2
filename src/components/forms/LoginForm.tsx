@@ -1,3 +1,4 @@
+"use client";
 import { useCallback, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
