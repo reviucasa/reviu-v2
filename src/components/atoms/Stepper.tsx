@@ -54,7 +54,7 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
             ></div>
           )}
           <Link
-            title={tLinks(url)} // TODO
+            title={tLinks(url)}
             href={isStepDisabled(index) ? "" : url}
             className={`ml-4 font-medium text-sm p-2 hover:no-underline ${
               isStepDisabled(index) ? "text-gray-400 cursor-default" : ""

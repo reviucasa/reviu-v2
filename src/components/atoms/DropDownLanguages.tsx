@@ -51,6 +51,7 @@ export const DropDownLanguages = () => {
                     focus && "bg-secondary-200"
                   }`}
                   href={`/${idiom.code}/${pathname}`}
+                  hrefLang={idiom.code}
                   title={tLinks(pathname)}
                 >
                   {t(`common.${idiom.label}`)}

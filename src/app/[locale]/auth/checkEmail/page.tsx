@@ -1,10 +1,8 @@
 import CheckEmailImg from "public/images/check-email.png";
-import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
 import { locales } from "../../layout";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Link from "next/link";
 
 export function generateStaticParams() {
@@ -36,7 +34,13 @@ export async function generateMetadata({
   };
 }
 
-export default async function CheckEmail() {
+export default async function CheckEmail({
+  params: { locale },
+}: {
+  params: { locale: string };
+}) {
+  unstable_setRequestLocale(locale);
+
   const t = await getTranslations();
   const tLinks = await getTranslations("linksTitles");
 
