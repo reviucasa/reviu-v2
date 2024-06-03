@@ -165,7 +165,7 @@ export default async function Agency({
                         )}
                         <div className="grid col-span-2">
                           <div className="flex  gap-4">
-                            <Image src={comillas} alt="20" className="h-fit" />
+                            <Image src={comillas} alt="quote" className="h-fit"/>
                             <div>
                               <p className="font-bold text-sm md:text-base">
                                 {t("agency.queConsejosDarias")}

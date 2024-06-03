@@ -15,6 +15,7 @@ import { HiOutlineChevronDown } from "react-icons/hi";
 
 export const DropDownLanguages = () => {
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
   const pathname = usePathname();
   const locale = useLocale();
   const currentLanguage = locale || "es";
@@ -50,6 +51,7 @@ export const DropDownLanguages = () => {
                     focus && "bg-secondary-200"
                   }`}
                   href={`/${idiom.code}/${pathname}`}
+                  title={tLinks(pathname)}
                 >
                   {t(`common.${idiom.label}`)}
                 </Link>

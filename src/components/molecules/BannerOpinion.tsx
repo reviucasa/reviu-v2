@@ -20,6 +20,7 @@ export const BannerOpinion = async ({
   image: StaticImageData;
 }) => {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className={`grid rounded-lg overflow-hidden w-80 ${className}`}>
@@ -34,12 +35,24 @@ export const BannerOpinion = async ({
               ? "mailto:info@reviucasa.com"
               : "/review"
           }
+          title={
+            textButton == t("agency.contactaNosotros")
+              ? "Email"
+              : tLinks("/review")
+          }
         >
           {textButton}
         </Link>
       </div>
       <div className="relative min-h-[180px]">
-        <Image src={image} sizes="auto" fill alt="" className="object-cover" priority />
+        <Image
+          src={image}
+          sizes="auto"
+          fill
+          alt=""
+          className="object-cover"
+          priority
+        />
       </div>
     </div>
   );

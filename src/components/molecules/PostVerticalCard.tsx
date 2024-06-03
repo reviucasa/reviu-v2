@@ -34,6 +34,7 @@ export default async function PostVerticalCard({ post }: { post: Post }) {
           {/* <PostVerticalCardClient post={post} /> */}
           <Link
             href={`blog/${post.id}`}
+            title={post.id.replaceAll("-", " ").toLocaleUpperCase()}
             className="text-primary-500 underline cursor-pointer hover:text-primary-300"
           >
             {t("common.verMás")}

@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
-import ImageBgLeft from "../../../public/images/ImgSlideLeft.svg";
-import ImageBgRigth from "../../../public/images/ImgSlideRigth.svg";
+import ImageBgLeft from "../../../public/images/ImgSlideLeft.png";
+import ImageBgRigth from "../../../public/images/ImgSlideRigth.png";
 import { useState } from "react";
 import { ProgressBarSlide } from "../atoms/ProgressBarSlide";
 import { TabMenuSlide } from "../atoms/TabMenuSlide";
@@ -17,12 +17,12 @@ const CardSlideClient = ({
   const currentSection = dataContentSlide[sectionActive];
 
   return (
-    <div className={`flex ${currentSection.bg} `}>
+    <div className={`flex ${currentSection.bg} rounded-b-[32px] overflow-hidden`}>
       <Image
         src={ImageBgLeft}
         alt="Slide image"
         priority
-        className="xl:flex hidden"
+        className="xl:flex hidden overflow-hidden"
       />
       <div className="min-h-[520px] w-full sm:h-full justify-between lg:px-0 px-4 md:pt-14 pt-6 flex flex-col lg:justify-between">
         <TabMenuSlide
@@ -48,7 +48,7 @@ const CardSlideClient = ({
         src={ImageBgRigth}
         alt="Slide image"
         priority
-        className="xl:flex hidden"
+        className="xl:flex hidden overflow-hidden"
       />
     </div>
   );

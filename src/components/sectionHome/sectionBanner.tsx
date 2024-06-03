@@ -6,6 +6,7 @@ import { getTranslations } from "next-intl/server";
 
 export async function SectionBanner({ className }: { className?: string }) {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className={`w-full h-full lg:h-96 relative ${className}`}>
@@ -19,6 +20,7 @@ export async function SectionBanner({ className }: { className?: string }) {
           <Link
             className="btn btn-primary-500 mt-8 content-center"
             href="/about"
+            title={tLinks("/about")}
           >
             {t("banner.knowus")}
           </Link>

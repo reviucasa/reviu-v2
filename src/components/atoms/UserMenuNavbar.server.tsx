@@ -20,6 +20,7 @@ export const UserMenuNavbar = () => {
   const auth = useAuth();
   const { user } = useUser();
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   return auth.user ? (
     <Menu as="div" className="relative hidden md:block">
@@ -55,6 +56,7 @@ export const UserMenuNavbar = () => {
                     {({ focus }) => (
                       <Link
                         href="/account"
+                        title={tLinks("/account")}
                         className={`p-2 hover:no-underline ${
                           focus && "bg-secondary-200"
                         }`}
@@ -68,6 +70,7 @@ export const UserMenuNavbar = () => {
                       {({ focus }) => (
                         <Link
                           href="/admin"
+                          title={tLinks("/admin")}
                           className={`p-2 text-secondary-500 hover:no-underline ${
                             focus && "bg-secondary-200"
                           }`}
@@ -84,6 +87,7 @@ export const UserMenuNavbar = () => {
                           focus && "bg-secondary-200"
                         }`}
                         href="mailto:info@reviucasa.com"
+                        title="Email"
                       >
                         {t("common.soporte")}
                       </Link>
@@ -101,6 +105,7 @@ export const UserMenuNavbar = () => {
     <div className="md:flex hidden ">
       <Link
         href="/auth/login"
+        title={tLinks("/auth/login")}
         className="content-center hover:no-underline pr-8"
       >
         {t("common.logIn")}
@@ -108,7 +113,7 @@ export const UserMenuNavbar = () => {
       {/* <Link href="/auth/login" className="content-center hover:no-underline px-8">
         {t("common.signIn")}
       </Link> */}
-      <Link href="/review" className="btn btn-primary-500 ">
+      <Link href="/review" title={tLinks("/review")} className="btn btn-primary-500 ">
         {t("common.writeReview")}
       </Link>
     </div>

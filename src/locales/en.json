@@ -510,6 +510,33 @@
     "modificacionesP6": "Cookies Policy",
     "modificacionesP7": " will be explicitly notified to the User through a notice on the Website."
   },
+
+  "linksTitles": {
+    "/": "Home - Reviu, reviews and homes valuations",
+    "/about": "About Reviu",
+    "/account": "User account page",
+    "/agency": "Reviews of the real estate agency",
+    "/auth/login": "Log in",
+    "/auth/register": "Register on Reviu",
+    "/auth/checkEmail": "Check your email to register or log in",
+    "/blog": "Reviu blog posts",
+    "/building": "Reviews of the building and its ratings",
+    "/cookies": "Cookies page",
+    "/faqs": "FAQs page",
+    "/legalNotice": "Reviu legal notice",
+    "/privacyPolicy": "Privacy policy",
+    "/review": "Create a new review on Reviu",
+    "/review/address": "Address information for the review",
+    "/review/community": "Information about neighbors and the building state",
+    "/review/management": "Treatment by owner/real estate agency",
+    "/review/neighbourhood": "Neighborhood information",
+    "/review/opinion": "User personal opinion and comments",
+    "/review/stay": "Stay conditions and duration",
+    "/review/valuation": "Home valuation (isolation, noise, etc.)",
+    "/success": "Review submitted successfully",
+    "/suspend": "Account suspended",
+    "/termsAndConditions": "Terms and conditions of use"
+  },
   "loginForm": {
     "iniciaORegistrate": "Log in or sign in",
     "textDescubre": "Find out what it's like to live there before you move in and share your experience to help others",

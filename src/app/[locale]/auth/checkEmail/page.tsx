@@ -38,6 +38,7 @@ export async function generateMetadata({
 
 export default async function CheckEmail() {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <>
@@ -64,7 +65,7 @@ export default async function CheckEmail() {
           />
         </div>
         <div className="absolute top-8 left-8">
-          <Link href={"/"}>
+          <Link href={"/"} title={tLinks("/")}>
             <Image
               src={Logo}
               quality={100}

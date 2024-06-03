@@ -40,6 +40,7 @@ export default async function Success({
 }) {
   unstable_setRequestLocale(locale);
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className="grid lg:px-14 lg:py-14 lg:grid-rows-1 lg:grid-cols-[3fr_6fr_3fr]">
@@ -63,10 +64,11 @@ export default async function Success({
           <Link
             className="btn btn-primary-500 mt-7 w-full lg:w-auto"
             href="/review"
+            title={tLinks("/review")}
           >
             {t("success.publicarOtraOpinion")}
           </Link>
-          <Link className="btn btn-terciary-500 mt-7 w-full lg:w-auto" href="/">
+          <Link className="btn btn-terciary-500 mt-7 w-full lg:w-auto" href="/" title={tLinks("/")}>
             {t("success.menuPrincipal")}
           </Link>
         </div>

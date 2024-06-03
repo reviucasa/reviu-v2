@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 export async function ConditionsUseComponent({
   className,
@@ -6,6 +7,8 @@ export async function ConditionsUseComponent({
   className?: string;
 }) {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
+
   return (
     <div className={className}>
       <h1 className="mb-10 text-4xl">{t("conditions.title")}</h1>
@@ -16,21 +19,22 @@ export async function ConditionsUseComponent({
         <p>{t("conditions.identificacionP1")}</p>
         <p>
           {t("conditions.identificacionP2")}
-          <a className="text-blue-500 cursor-pointer" href="/legalNotice">
+          <Link className="text-blue-500 cursor-pointer" href="/legalNotice" title={tLinks("/legalNotice")}>
             {t("conditions.identificacionA1")}
-          </a>
+          </Link>
           ,{" "}
-          <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
+          <Link className="text-blue-500 cursor-pointer" href="/privacyPolicy" title={tLinks("/privacyPolicy")}>
             {t("conditions.identificacionA2")}
-          </a>
-          , <a className="text-blue-500">{t("conditions.identificacionA3")}</a>{" "}
+          </Link>
+          , <span className="text-blue-500">{t("conditions.identificacionA3")}</span>{" "}
           {t("conditions.identificacionT")}{" "}
-          <a
+          <Link
             className="text-blue-500 cursor-pointer"
             href="/termsAndConditions"
+            title={tLinks("/termsAndConditions")}
           >
             {t("conditions.identificacionA4")}
-          </a>{" "}
+          </Link>{" "}
           {t("conditions.identificacionP2B")}
         </p>
         <p>{t("conditions.identificacionP3")}</p>

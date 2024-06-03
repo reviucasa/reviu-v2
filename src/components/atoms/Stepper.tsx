@@ -30,6 +30,7 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
 
   const activeStepIndex = getActiveStepIndex();
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   return (
     <div className={`flex flex-col ${className}`}>
@@ -53,6 +54,7 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
             ></div>
           )}
           <Link
+            title={tLinks(url)} // TODO
             href={isStepDisabled(index) ? "" : url}
             className={`ml-4 font-medium text-sm p-2 hover:no-underline ${
               isStepDisabled(index) ? "text-gray-400 cursor-default" : ""

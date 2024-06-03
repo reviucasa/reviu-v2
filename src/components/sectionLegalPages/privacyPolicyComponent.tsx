@@ -37,7 +37,7 @@ export async function PrivacyPolicyComponent({
             </span>
             <span className="flex">
               <strong className="mr-2">{t("privacy.responsablep6")}:</strong>{" "}
-              <a className="text-blue-500">{t("privacy.responsableP7")}</a>{" "}
+              <span className="text-blue-500">{t("privacy.responsableP7")}</span>{" "}
             </span>
           </div>
         </div>
@@ -127,11 +127,11 @@ export async function PrivacyPolicyComponent({
           <h5 className="my-2 font-extrabold">{t("privacy.derechos")}</h5>
           <p>
             {t("privacy.derechosP1")}{" "}
-            <a className="text-blue-500"> {t("privacy.derechosA1")}</a>{" "}
+            <span className="text-blue-500"> {t("privacy.derechosA1")}</span>{" "}
           </p>
           <p>
             {t("privacy.derechosP2")}
-            <a className="text-blue-500">{t("privacy.derechosA2")}</a>
+            <span className="text-blue-500">{t("privacy.derechosA2")}</span>
             {t("privacy.derechosP3")}
           </p>
         </div>

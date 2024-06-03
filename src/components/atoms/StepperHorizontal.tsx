@@ -38,6 +38,7 @@ const StepperHorizontal: React.FC<StepperProps> = ({ steps }) => {
   const activeStepIndex = getActiveStepIndex();
 
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   return (
     <div
@@ -65,6 +66,7 @@ const StepperHorizontal: React.FC<StepperProps> = ({ steps }) => {
           />
 
           <Link
+            title={tLinks(url)}
             href={isStepDisabled(index) ? "#" : url}
             className={`mt-4 text-sm p-1.5 hover:no-underline ${
               isStepDisabled(index) ? "text-gray-400 cursor-default" : ""

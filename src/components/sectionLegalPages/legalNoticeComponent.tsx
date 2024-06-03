@@ -1,4 +1,5 @@
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
 
 export async function LegalNoticeComponent({
   className,
@@ -8,6 +9,7 @@ export async function LegalNoticeComponent({
   withTitle?: boolean;
 }) {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className={`${className}`}>
@@ -28,10 +30,10 @@ export async function LegalNoticeComponent({
           <div className="ml-12">
             <span className="flex">
               <strong>{t("legalNotice.identificacionP6")}</strong>
-              <a className="text-blue-500">
+              <span className="text-blue-500">
                 &nbsp;
                 {t("legalNotice.identificacionP9")}
-              </a>
+              </span>
             </span>
             <span className="flex">
               <strong>{t("legalNotice.identificacionP7")}</strong>
@@ -47,18 +49,25 @@ export async function LegalNoticeComponent({
               {t("legalNotice.sitioWebP1")}
               {t("legalNotice.sitioWebP2")}
               {t("legalNotice.sitioWebP3")}{" "}
-              <a
+              <Link
                 className="text-blue-500 cursor-pointer"
                 href="/termsAndConditions"
+                title={tLinks("/termsAndConditions")}
               >
                 {t("legalNotice.sitioWebP4")}
-              </a>{" "}
+              </Link>{" "}
               {t("legalNotice.sitioWebP6")}{" "}
-              <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
+              <Link
+                className="text-blue-500 cursor-pointer"
+                href="/privacyPolicy"
+                title={tLinks("/privacyPolicy")}
+              >
                 {t("legalNotice.sitioWebP7")}
-              </a>
+              </Link>
               {t("legalNotice.sitioWebP8")}{" "}
-              <a className="text-blue-500">{t("legalNotice.sitioWebP9")}</a>
+              <span className="text-blue-500">
+                {t("legalNotice.sitioWebP9")}
+              </span>
             </p>
             <p>{t("legalNotice.sitioWebP10")} </p>
             <p>{t("legalNotice.sitioWebP11")} </p>
@@ -68,17 +77,21 @@ export async function LegalNoticeComponent({
           <h5 className="my-2 font-extrabold">{t("legalNotice.privacidad")}</h5>
           <p>
             {t("legalNotice.privacidadP1")}
-            <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
+            <Link
+              className="text-blue-500 cursor-pointer"
+              href="/privacyPolicy"
+              title={tLinks("/privacyPolicy")}
+            >
               {" "}
               {t("legalNotice.privacidadP2")}
-            </a>
+            </Link>
           </p>
         </div>
         <div className="flex flex-col gap-3 mb-10">
           <h5 className="my-2 font-extrabold">{t("legalNotice.cookies")}</h5>
           <p>
             {t("legalNotice.cookiesP1")}
-            <a className="text-blue-500"> {t("legalNotice.cookiesP2")}</a>
+            <span className="text-blue-500"> {t("legalNotice.cookiesP2")}</span>
           </p>
         </div>
         <div className="flex flex-col gap-3 mb-10">
@@ -115,7 +128,9 @@ export async function LegalNoticeComponent({
           <p>{t("legalNotice.comercialesP1")}</p>
           <p>
             {t("legalNotice.comercialesP2")}{" "}
-            <a className="text-blue-500">{t("legalNotice.comercialesP3")}</a>{" "}
+            <span className="text-blue-500">
+              {t("legalNotice.comercialesP3")}
+            </span>{" "}
           </p>
         </div>
         <div className="flex flex-col gap-3 mb-10">
@@ -138,11 +153,17 @@ export async function LegalNoticeComponent({
               {t("legalNotice.modificacionesP2")}
             </a>{" "}
             {t("legalNotice.modificacionesP3")}{" "}
-            <a className="text-blue-500 cursor-pointer" href="/privacyPolicy">
+            <Link
+              className="text-blue-500 cursor-pointer"
+              href="/privacyPolicy"
+              title={tLinks("/privacyPolicy")}
+            >
               {t("legalNotice.modificacionesP4")}
-            </a>{" "}
+            </Link>{" "}
             {t("legalNotice.modificacionesP5")}{" "}
-            <a className="text-blue-500">{t("legalNotice.modificacionesP6")}</a>{" "}
+            <span className="text-blue-500">
+              {t("legalNotice.modificacionesP6")}
+            </span>{" "}
             {t("legalNotice.modificacionesP7")}
           </p>
         </div>

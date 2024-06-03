@@ -18,6 +18,7 @@ export const PostHorizontalCard = async ({
   // const [openPostModal, setOpenPostModal] = useState<boolean>(false);
   const locale = useLocale();
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div
@@ -74,6 +75,7 @@ export const PostHorizontalCard = async ({
           {!isModal && (
             <Link
               href={`blog/${post.id}`}
+              title={post.id.replaceAll("-", " ").toLocaleUpperCase()}
               className="text-primary-500 underline cursor-pointer hover:text-primary-300"
             >
               {t("common.verMás")}

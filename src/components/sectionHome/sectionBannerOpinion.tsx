@@ -5,6 +5,8 @@ import Link from "next/link";
 
 export async function SectionBannerOpinion() {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
+
   return (
     <div className="grid lg:grid-cols-2 rounded-[40px] overflow-hidden min-h-[388px]">
       <div className="text-center flex justify-center items-center lg:items-start flex-col lg:text-left lg:order-first order-last p-8 lg:py-20 lg:pl-[59px] lg:pr-[62px] bg-primary-100 overflow-hidden">
@@ -17,6 +19,7 @@ export async function SectionBannerOpinion() {
         <Link
           className="btn  btn-primary-500 mt-10 content-center overflow-hidden whitespace-nowrap"
           href="/review"
+          title={tLinks("/review")}
         >
           {t("bannerOpinion.WriteOpinion")}
         </Link>

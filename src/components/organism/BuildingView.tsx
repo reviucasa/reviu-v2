@@ -21,6 +21,7 @@ export default function BuildingView({
   children?: React.ReactNode;
 }) {
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   const [activeSection, setActiveSection] =
     useState<string>("valuationGeneral");
@@ -96,6 +97,7 @@ export default function BuildingView({
             <Link
               className="btn btn-primary-500 content-center overflow-hidden px-14"
               href="/review"
+              title={tLinks("/review")}
             >
               {t("common.writeReview")}
             </Link>

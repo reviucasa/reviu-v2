@@ -7,6 +7,7 @@ import PostVerticalCard from "../molecules/PostVerticalCard";
 
 export async function SectionBlog() {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   const posts = await getPosts();
 
@@ -28,7 +29,7 @@ export async function SectionBlog() {
             .slice(0, 3)
             .map((p) => <PostVerticalCard key={p.id} post={p} />)}
       </div>
-      <Link className="btn btn-primary-500 mt-14" href="/blog">
+      <Link className="btn btn-primary-500 mt-14" href="/blog" title={tLinks("/blog")}>
         {t("blog.seeAll")}
       </Link>
     </div>

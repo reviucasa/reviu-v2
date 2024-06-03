@@ -1,7 +1,13 @@
 "use client";
 import { AddressComboBox } from "@/components/atoms/AddressComboBox";
 import { Button } from "@/components/atoms/Button";
-import { Menu, MenuButton, MenuItem, MenuItems, Switch } from "@headlessui/react";
+import {
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuItems,
+  Switch,
+} from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "public/images/reviuLogo.svg";
@@ -24,6 +30,7 @@ import { classNames } from "@/helpers/classNames";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   const [enabled, setEnabled] = useState(false);
   const [searchType, setSearchType] = useState<string>("address");
@@ -203,6 +210,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     <MenuItem>
                       <Link
                         href="/account"
+                        title={tLinks("/account")}
                         className="hover:no-underline"
                         // buttonClassName="content-center"
                         // onClick={() => {
@@ -233,6 +241,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                             focus && "bg-secondary-200"
                           }`}
                           href="mailto:info@reviucasa.com"
+                          title={"Email"}
                         >
                           {t("common.soporte")}
                         </Link>
@@ -278,6 +287,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     <MenuItem>
                       <Link
                         href="/auth/login"
+                        title={tLinks("/auth/login")}
                         className="content-center hover:no-underline"
                         // onClick={() => {
                         //   router.push("/auth/login");
@@ -289,6 +299,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     <MenuItem>
                       <Link
                         href="/auth/login"
+                        title={tLinks("/auth/register")}
                         className="content-center hover:no-underline"
                         // onClick={() => {
                         //   router.push("/auth/login");
@@ -300,6 +311,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     <MenuItem>
                       <Link
                         href="/review"
+                        title={tLinks("/review")}
                         className="btn btn-primary-500 content-center !w-full"
                         // onClick={() => router.push("/review")}
                       >

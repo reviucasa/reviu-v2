@@ -31,6 +31,7 @@ export const ReviewDetail = ({
 }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
   const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
@@ -235,6 +236,7 @@ export const ReviewDetail = ({
                         <Link
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
                           href={`/agency/${review.data.management?.agencyId}`}
+                          title={tLinks("/agency")}
                         >
                           {review.data?.management?.realStateAgency}
                         </Link>

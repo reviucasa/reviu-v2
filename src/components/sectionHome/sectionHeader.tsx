@@ -18,6 +18,8 @@ export type SectionsType = Array<SectionType>;
 
 export async function SectionHeader() {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
+
   const tabSearchOpinion = t("slide.tabs.searchOpinion");
   const tabWriteOpinion = t("common.writeReview");
   const tabSearchAgency = t("slide.tabs.searchAgency");
@@ -34,7 +36,7 @@ export async function SectionHeader() {
       title: tabWriteOpinion,
       text: [t("slide.hazUnRepaso"), t("slide.noTeLlevesSorpresas")],
       children: (
-        <Link className="btn btn-primary-500 content-center" href="/review">
+        <Link className="btn btn-primary-500 content-center" href="/review" title={tLinks("/review")}>
           {t("common.writeReview")}
         </Link>
       ),
@@ -56,7 +58,7 @@ export async function SectionHeader() {
     <div
       className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-hidden`}
     >
-      <div className="flex h-12 justify-center items-center gap-2 bg-black">
+      <div className="flex h-12 justify-center items-center gap-2 bg-black rounded-t-[32px]">
         <Image
           src={IconHouseLima}
           alt="icon house lima"

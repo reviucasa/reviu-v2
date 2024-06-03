@@ -10,6 +10,7 @@ import { getTranslations } from "next-intl/server";
 
 export async function Footer() {
   const t = await getTranslations();
+  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className="flex flex-col">
@@ -26,7 +27,9 @@ export async function Footer() {
                 {t("common.empresa")}
               </li>
               <li className="cursor-pointer">
-                <Link href="/about">{t("common.sobreNosotros")}</Link>
+                <Link href="/about" title={tLinks("/about")}>
+                  {t("common.sobreNosotros")}
+                </Link>
               </li>
               <li>info@reviucasa.com</li>
               {/* {t("common.contacto")} */}
@@ -40,10 +43,14 @@ export async function Footer() {
               {/*<li>{t('common.eresInmobiliaria', '¿Eres una inmobiliaria?')}</li>*/}
               {/*<li>{t('common.eresPropietario', '¿Eres propietario?')}</li>*/}
               <li className="cursor-pointer">
-                <Link href="/blog">Blog</Link>
+                <Link href="/blog" title={tLinks("/blog")}>
+                  Blog
+                </Link>
               </li>
               <li className="cursor-pointer">
-                <Link href="/faqs">{t("common.preguntasFecuentes")}</Link>
+                <Link href="/faqs" title={tLinks("/faqs")}>
+                  {t("common.preguntasFecuentes")}
+                </Link>
               </li>
             </ul>
           </div>
@@ -51,20 +58,27 @@ export async function Footer() {
             <ul className="flex flex-col gap-4">
               <li className="text-purple-300 font-bold">{t("common.legal")}</li>
               <li className="cursor-pointer">
-                <Link href="/privacyPolicy">
+                <Link href="/privacyPolicy" title={tLinks("/privacyPolicy")}>
                   {t("common.politicaPrivacidad")}
                 </Link>
               </li>
               <li className="cursor-pointer">
-                <Link href="/legalNotice">{t("common.legalNotice")}</Link>
+                <Link href="/legalNotice" title={tLinks("/legalNotice")}>
+                  {t("common.legalNotice")}
+                </Link>
               </li>
               <li className="cursor-pointer">
-                <Link href="/termsAndConditions">
+                <Link
+                  href="/termsAndConditions"
+                  title={tLinks("/termsAndConditions")}
+                >
                   {t("common.terminosYCondiciones")}
                 </Link>
               </li>
               <li className="cursor-pointer">
-                <Link href="/cookies">{t("common.cookies")}</Link>
+                <Link href="/cookies" title={tLinks("/cookies")}>
+                  {t("common.cookies")}
+                </Link>
               </li>
             </ul>
           </div>
@@ -81,6 +95,7 @@ export async function Footer() {
             <div className="flex gap-3">
               <Link
                 href=" https://www.instagram.com/reviu_casa"
+                title={"Instagram - Reviu"}
                 target="_blank"
                 rel="no-follow noreferrer"
               >
@@ -95,6 +110,7 @@ export async function Footer() {
               </Link>
               <Link
                 href="https://twitter.com/reviu_casa"
+                title={"Twitter - Reviu"}
                 target="_blank"
                 rel="no-follow noreferrer"
               >
@@ -108,6 +124,7 @@ export async function Footer() {
                 </div>
               </Link>
               <Link
+                title={"TikTok - Reviu"}
                 href="https://www.tiktok.com/@reviu_casa"
                 target="_blank"
                 rel="no-follow noreferrer"
