@@ -23,7 +23,11 @@ export async function generateMetadata({
   params: { locale: string; buildingId: string };
 }) {
   // Fetch building data using the buildingId
-  const building = await getBuilding(buildingId);
+  // const building = await getBuilding(buildingId);
+  const building = {
+    address: 'Address',
+    postalCode: '08004'
+  }
 
   const titleDetail =
     locale == "en"
