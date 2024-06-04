@@ -14,37 +14,37 @@ import { getTranslations } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 import { locales } from "../../layout";
 
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
+// export function generateStaticParams() {
+//   return locales.map((locale) => ({ locale }));
+// }
 
-export async function generateMetadata({
-  params: { locale, /* agencyId */ },
-}: {
-  params: { locale: string; /* agencyId: string  */};
-}) {
-  // Fetch agency data using the agencyId
-  //const agency = await getAgency(agencyId);
+// export async function generateMetadata({
+//   params: { locale, /* agencyId */ },
+// }: {
+//   params: { locale: string; /* agencyId: string  */};
+// }) {
+//   // Fetch agency data using the agencyId
+//   //const agency = await getAgency(agencyId);
 
-  const titleDetail =
-    locale == "en"
-      ? `Real Estate Agency` // : ${agency?.name}
-      : locale == "es"
-      ? `Agencia Inmobiliaria` // : ${agency?.name}
-      : `Agència Immobiliària`; // : ${agency?.name}
+//   const titleDetail =
+//     locale == "en"
+//       ? `Real Estate Agency` // : ${agency?.name}
+//       : locale == "es"
+//       ? `Agencia Inmobiliaria` // : ${agency?.name}
+//       : `Agència Immobiliària`; // : ${agency?.name}
 
-  const description =
-    locale == "en"
-      ? `Learn more about this real estate agency in Barcelona thanks to the users reviews.` // ${agency?.name}
-      : locale == "es"
-      ? `Conoce más sobre esta agencia immobiliaria de Barcelona gracias a las reseñas de los usuarios.`
-      : `Coneix més sobre aquesta agència immobiliària de Barcelona gràcies a les ressenyes dels usuaris.`;
+//   const description =
+//     locale == "en"
+//       ? `Learn more about this real estate agency in Barcelona thanks to the users reviews.` // ${agency?.name}
+//       : locale == "es"
+//       ? `Conoce más sobre esta agencia immobiliaria de Barcelona gracias a las reseñas de los usuarios.`
+//       : `Coneix més sobre aquesta agència immobiliària de Barcelona gràcies a les ressenyes dels usuaris.`;
 
-  return {
-    title: titleDetail,
-    description,
-  };
-}
+//   return {
+//     title: titleDetail,
+//     description,
+//   };
+// }
 
 export default async function Agency({
   params,
