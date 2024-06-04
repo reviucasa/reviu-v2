@@ -13,47 +13,37 @@ import BuildingView from "@/components/organism/BuildingView";
 import { toPlainObject } from "lodash";
 import { locales } from "../../layout";
 
-/* export function generateStaticParams() {
+export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
-  params: { locale, buildingId },
+  params: { locale /* buildingId */ },
 }: {
-  params: { locale: string; buildingId: string };
+  params: { locale: string /* buildingId: string */ };
 }) {
   // Fetch building data using the buildingId
-  const building = await getBuilding(buildingId);
+  // const building = await getBuilding(buildingId);
 
   const titleDetail =
     locale == "en"
-      ? `Building Details: ${building?.address + ", " + building?.postalCode}`
+      ? `Building Details` // : ${building?.address + ", " + building?.postalCode}
       : locale == "es"
-      ? `Detalles del Edificio: ${
-          building?.address + ", " + building?.postalCode
-        }`
-      : `Detalls de l'Edifici: ${
-          building?.address + ", " + building?.postalCode
-        }`;
+      ? `Detalles del Edificio` // : ${building?.address + ", " + building?.postalCode}
+      : `Detalls de l'Edifici`; // : ${building?.address + ", " + building?.postalCode}
 
   const description =
     locale == "en"
-      ? `Learn more about ${
-          building?.address + ", " + building?.postalCode
-        }. Read reviews and see detailed information about this rental property on Reviu.`
+      ? `Learn more about the building. Read reviews and see detailed information about this rental property on Reviu.` // ${building?.address + ", " + building?.postalCode}
       : locale == "es"
-      ? `Conoce más sobre ${
-          building?.address + ", " + building?.postalCode
-        }. Lee reseñas y consulta información detallada sobre esta propiedad de alquiler en Reviu.`
-      : `Coneix més sobre ${
-          building?.address + ", " + building?.postalCode
-        }. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`;
+      ? `Conoce más sobre el edificio. Lee reseñas y consulta información detallada sobre esta propiedad de alquiler en Reviu.` // ${building?.address + ", " + building?.postalCode}
+      : `Coneix més sobre l'edifici. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`; // ${building?.address + ", " + building?.postalCode}
 
   return {
     title: titleDetail,
     description,
   };
-} */
+}
 
 export default async function BuildingPage({
   params,

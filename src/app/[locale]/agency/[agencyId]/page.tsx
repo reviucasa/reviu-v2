@@ -19,26 +19,26 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { locale, agencyId },
+  params: { locale, /* agencyId */ },
 }: {
-  params: { locale: string; agencyId: string };
+  params: { locale: string; /* agencyId: string  */};
 }) {
   // Fetch agency data using the agencyId
-  const agency = await getAgency(agencyId);
+  //const agency = await getAgency(agencyId);
 
   const titleDetail =
     locale == "en"
-      ? `Real Estate Agency: ${agency?.name}`
+      ? `Real Estate Agency` // : ${agency?.name}
       : locale == "es"
-      ? `Agencia Inmobiliaria: ${agency?.name}`
-      : `Agència Immobiliària: ${agency?.name}`;
+      ? `Agencia Inmobiliaria` // : ${agency?.name}
+      : `Agència Immobiliària`; // : ${agency?.name}
 
   const description =
     locale == "en"
-      ? `Learn more about ${agency?.name}, a trusted real estate agency in Barcelona. Explore their listings, read reviews, and find your ideal rental home with Reviu.`
+      ? `Learn more about this real estate agency in Barcelona thanks to the users reviews.` // ${agency?.name}
       : locale == "es"
-      ? `Conoce más sobre ${agency?.name}, una agencia inmobiliaria de confianza en Barcelona. Explora sus listados, lee reseñas y encuentra tu vivienda de alquiler ideal con Reviu.`
-      : `Coneix més sobre ${agency?.name}, una agència immobiliària de confiança a Barcelona. Explora els seus llistats, llegeix ressenyes i troba el teu habitatge de lloguer ideal amb Reviu.`;
+      ? `Conoce más sobre esta agencia immobiliaria de Barcelona gracias a las reseñas de los usuarios.`
+      : `Coneix més sobre aquesta agència immobiliària de Barcelona gràcies a les ressenyes dels usuaris.`;
 
   return {
     title: titleDetail,
