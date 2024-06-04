@@ -24,7 +24,7 @@ const nextConfig = {
             value:
               "default-src 'self'; img-src 'self' https: data:; media-src 'self'",
           }, */
-          {
+          /* {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
           }, 
@@ -39,7 +39,7 @@ const nextConfig = {
           {
             key: "X-XSS-Protection",
             value: "1; mode=block",
-          },
+          }, */
           {
             key: "Referrer-Policy",
             value: "no-referrer",
