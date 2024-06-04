@@ -150,13 +150,14 @@ export const ReviewDetail = ({
                   </span>
                 </div>
               </div>
-              {review.data.opinion?.images && (
-                <div className="border-b-2 lg:mb-8 mb-4 mt-4">
-                  <h6 className="mb-2 lg:text-xl font-bold">
-                    {t("common.Imágenes")}
-                  </h6>
-                </div>
-              )}
+              {review.data.opinion?.images &&
+                review.data.opinion?.images?.length > 0 && (
+                  <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                    <h6 className="mb-2 lg:text-xl font-bold">
+                      {t("common.Imágenes")}
+                    </h6>
+                  </div>
+                )}
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                 {review.data.opinion?.images &&
                   review.data.opinion?.images.map((image, idx) => (

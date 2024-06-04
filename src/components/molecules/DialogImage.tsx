@@ -39,7 +39,7 @@ export const DialogImage = ({
         setIsOpen(!isOpen);
       }}
     >
-      {images && (
+      {images && images?.length > 0 && (
         <div className="flex relative text-center justify-center items-center bg-zinc-950 px-8 rounded-xl gap-8">
           <Button
             onClick={handlePrevReviews}
