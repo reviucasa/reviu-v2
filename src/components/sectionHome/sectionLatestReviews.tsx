@@ -51,7 +51,7 @@ export function SectionLatestReviews() {
       <SlideReview
         title={t("common.latestReviews")}
         reviews={latestReviews}
-        sizeCard={420}
+        sizeCard={380}
         sizeGapCard={28}
         sizeGapCardMobile={16}
       />

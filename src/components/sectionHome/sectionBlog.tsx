@@ -22,7 +22,7 @@ export async function SectionBlog() {
       <div className="flex justify-center mt-6 mb-14 ">
         <h2 className="xs:text-2xl">{t("blog.findOutTips")}</h2>
       </div>
-      <div className="w-full relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:gap-4 md:gap-6 ">
+      <div className="w-full relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-y-4 sm:gap-4 md:gap-6 ">
         {posts &&
           posts
             .filter((p) => p.status != PostStatus.archived)

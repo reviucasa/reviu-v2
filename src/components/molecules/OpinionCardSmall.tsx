@@ -30,7 +30,7 @@ export const OpinionCardSmall = ({
       <div
         style={{ width: `${sizeCard}px` }}
         key={review.id}
-        className={`${className} hover:bg-[#F8F8F8] hover:border-[#546E7A] flex flex-col justify-between border py-6 px-8 rounded-lg h-full`}
+        className={`${className} hover:bg-[#F8F8F8] hover:border-[#546E7A] flex flex-col justify-between border py-6 px-6 rounded-lg h-full`}
       >
         <div
           className="cursor-pointer"
@@ -68,7 +68,7 @@ export const OpinionCardSmall = ({
           <div className="flex flex-row justify-start h-20 w-full gap-2">
             {review.data.opinion?.images &&
               review.data.opinion?.images
-                .slice(0, 6)
+                .slice(0, 4)
                 .map((image, idx) => (
                   <Image
                     key={idx}

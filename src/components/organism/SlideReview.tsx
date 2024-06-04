@@ -37,9 +37,12 @@ export const SlideReview = ({
     const preCalculatedNumberOfCards = Math.trunc(
       widthWrapper / (sizeCard + sizeGapCard)
     );
+
     const numberOfCards =
       preCalculatedNumberOfCards < 1 ? 1 : preCalculatedNumberOfCards;
+
     let windowWidth = numberOfCards * (sizeCard + sizeGapCard) - sizeGapCard;
+
     if (numberOfCards === 1) {
       //Mobile mode
       windowWidth = widthWrapper;
@@ -66,12 +69,6 @@ export const SlideReview = ({
     numberOfCards,
   } = memoizedValues;
 
-  /* useEffect(() => {
-    const handleResize = () => setSizeScreen(window.innerWidth);
-    window.addEventListener("resize", debounce(handleResize, 200));
-    return () => window.removeEventListener("resize", handleResize);
-  }, []); */
-
   const shuffleData = useMemo(() => {
     return reviews && shuffle(reviews);
   }, [reviews]);
@@ -94,7 +91,7 @@ export const SlideReview = ({
       >
         <div
           id="window"
-          className="flex justify-start overflow-hidden px-8"
+          className="flex justify-start overflow-hidden sm:px-8"
           style={{
             width: `${windowWidth}px`,
           }}
