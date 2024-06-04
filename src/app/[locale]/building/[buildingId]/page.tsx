@@ -13,7 +13,7 @@ import BuildingView from "@/components/organism/BuildingView";
 import { toPlainObject } from "lodash";
 import { locales } from "../../layout";
 
-export function generateStaticParams() {
+/* export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
@@ -23,11 +23,7 @@ export async function generateMetadata({
   params: { locale: string; buildingId: string };
 }) {
   // Fetch building data using the buildingId
-  // const building = await getBuilding(buildingId);
-  const building = {
-    address: 'Address',
-    postalCode: '08004'
-  }
+  const building = await getBuilding(buildingId);
 
   const titleDetail =
     locale == "en"
@@ -57,7 +53,7 @@ export async function generateMetadata({
     title: titleDetail,
     description,
   };
-}
+} */
 
 export default async function BuildingPage({
   params,
