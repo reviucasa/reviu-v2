@@ -1,6 +1,6 @@
 "use client";
 import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
-import { Combobox, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
+import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
@@ -46,7 +46,7 @@ export const AgencyComboBox = ({
       onChange={setSelectedRealStateAgency}
     >
       <div className={`relative ${className}`}>
-        <Combobox.Input
+        <ComboboxInput
           className={`w-full ${icon && "!pl-10"}`}
           placeholder={placeholder ?? t("common.queInmobiliaria")}
           onChange={(event) =>
