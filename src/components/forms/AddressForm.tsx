@@ -208,7 +208,15 @@ export const AddressForm = () => {
                   value={stairSelected}
                   onChange={(ev) => onSelectStair(ev.target.value)}
                 >
-                  <option value="">{t("addressReview.escalera")}</option>
+                  <option
+                    value={
+                      stairSelected == "" || stairSelected == undefined
+                        ? t("addressReview.main")
+                        : stairSelected
+                    }
+                  >
+                    {t("addressReview.escalera")}
+                  </option>
                   {getBuildingStairs(building).map((stair) => (
                     <option key={stair} value={stair}>
                       {stair == "" ? t("addressReview.main") : stair}
@@ -224,7 +232,16 @@ export const AddressForm = () => {
                 value={apartmentSelected?.id}
                 onChange={onSelectWholeAddress}
               >
-                <option value="">{t("addressReview.pisoYPuerta")}</option>
+                <option
+                  value={
+                    ""
+                    /* apartmentSelected == undefined
+                      ? t("addressReview.pisoYPuerta")
+                      : `${apartmentSelected.floor}/${apartmentSelected.door}` */
+                  }
+                >
+                  {t("addressReview.pisoYPuerta")}
+                </option>
                 {aparmentList.map((apartment, index) => (
                   <option
                     key={index}
