@@ -151,6 +151,7 @@ export const AddressForm = () => {
     if (building && apartmentSelected) {
       if (draft?.address) {
         await updateDraft(auth.currentUser!.uid, {
+          address: selectedAddress,
           apartment: apartmentSelected,
           buildingId: building.id,
         });
