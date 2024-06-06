@@ -14,7 +14,7 @@ export const sendSignInLinkToEmail = functions
       // URL must be in the authorized domains list in the Firebase Console.
       url:
         url ||
-        "https://reviu.vercel.app/" /* "https://reviu-git-admin-dashboard-and-improvements-nicolaufs-projects.vercel.app/" */ /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviu.vercel.app/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
+        "https://reviucasa.com/" /* "https://reviu-git-admin-dashboard-and-improvements-nicolaufs-projects.vercel.app/" */ /* "https://reviu-git-dev-nicolaufs.vercel.app" */ /* "https://reviucasa.com/" */ /* http://localhost:3000/ */ /* "https://www.reviucasa.com/", */,
       // This must be true.
       handleCodeInApp: true,
     };
@@ -120,7 +120,7 @@ async function sendSignInEmail(
     </head>
     <body class="email-container">
       <img
-        src="https://reviu.vercel.app/images/logo.png"
+        src="https://reviucasa.com/images/logo.png"
         alt="Check Email"
         width="120"
         style="margin: 20px auto"
@@ -134,7 +134,7 @@ async function sendSignInEmail(
           >${translation.signIn}</a
         >
         <img
-          src="https://reviu.vercel.app/images/check-email2.png"
+          src="https://reviucasa.com/images/check-email2.png"
           alt="Check Email"
           width="120"
           style="margin: 0px auto 32px auto; padding-left: 14px"
@@ -171,7 +171,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/images/IconInstagram.png"
+                  src="https://reviucasa.com/images/IconInstagram.png"
                   alt="icon instagram"
                   style="height: auto; width: 36px"
                 />
@@ -194,7 +194,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/images/IconTwitter.png"
+                  src="https://reviucasa.com/images/IconTwitter.png"
                   alt="icon twitter"
                   style="height: auto; width: 36px"
                 />
@@ -218,7 +218,7 @@ async function sendSignInEmail(
                 "
               >
                 <img
-                  src="https://reviu.vercel.app/images/IconTikTok.png"
+                  src="https://reviucasa.com/images/IconTikTok.png"
                   alt="icon tiktok"
                   style="height: auto; width: 36px"
                 />

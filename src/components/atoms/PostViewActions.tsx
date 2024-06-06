@@ -33,7 +33,7 @@ export default function PostViewActions({ post }: { post: PostPlain }) {
 
   const handleCopyLink = () => {
     setLinkCopied(true);
-    navigator.clipboard.writeText(`https://reviu.vercel.app/blog/${post.id}`);
+    navigator.clipboard.writeText(`https://reviucasa.com/blog/${post.id}`);
   };
 
   const handleToggleStatus = async () => {

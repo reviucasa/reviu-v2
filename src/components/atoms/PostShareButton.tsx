@@ -33,7 +33,7 @@ export function PostShareButton({ post }: { post: PostPlain }) {
       onClick={() => {
         setLinkCopied(true);
         navigator.clipboard.writeText(
-          `https://reviu.vercel.app/blog/${post.id}`
+          `https://reviucasa.com/blog/${post.id}`
         );
       }}
     >
