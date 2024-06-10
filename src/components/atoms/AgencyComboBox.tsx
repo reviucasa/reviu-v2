@@ -1,6 +1,12 @@
 "use client";
 import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  Transition,
+} from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
@@ -31,6 +37,14 @@ export const AgencyComboBox = ({
   const fetchRealStateAgencyList = useCallback(
     debounce(async (query: string) => {
       setLoading(true);
+
+      if (query === "") {
+        setAgenciesList([]);
+        setLoading(false);
+
+        return;
+      }
+
       const agencies = await searchAgenciesByName(query.toLowerCase());
       setAgenciesList(agencies);
       setLoading(false);
@@ -54,7 +68,7 @@ export const AgencyComboBox = ({
               ? fetchRealStateAgencyList(event.target.value)
               : {}
           }
-          displayValue={(agency: any) => agency.name}
+          displayValue={(agency: any) => (agency != null ? agency.name : "")}
         />
         {icon && !selectedAgencyLoading && (
           <Image
