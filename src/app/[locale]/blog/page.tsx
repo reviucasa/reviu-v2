@@ -59,7 +59,7 @@ export default async function Blog({
             <div className="space-y-6 sm:max-w-3xl lg:max-w-4xl">
               {posts
                 ?.filter((p) => p.status != PostStatus.archived)
-                .slice(0, 3)
+                // .slice(0, 3)
                 ?.map((post) => (
                   <PostHorizontalCard key={post.id} post={post} />
                 ))}

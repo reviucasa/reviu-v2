@@ -4,7 +4,6 @@ import { classNames } from "@/helpers/classNames";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PostModalButton } from "../atoms/PostModalButton";
-import { toPlainObject } from "lodash";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { useLocale } from "next-intl";
 
@@ -18,7 +17,6 @@ export const PostHorizontalCard = async ({
   // const [openPostModal, setOpenPostModal] = useState<boolean>(false);
   const locale = useLocale();
   const t = await getTranslations();
-  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div
