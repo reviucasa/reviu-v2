@@ -16,11 +16,6 @@ export default function PostViewActions({ post }: { post: PostPlain }) {
   const [linkCopied, setLinkCopied] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const { refetch } = useQuery({
-    queryKey: ["posts"],
-    queryFn: () => getPosts(),
-  });
-
   useEffect(() => {
     if (linkCopied) {
       const timer = setTimeout(() => {
@@ -40,13 +35,12 @@ export default function PostViewActions({ post }: { post: PostPlain }) {
     const newStatus = statusActive ? PostStatus.archived : PostStatus.active;
     await updatePost(post.id, { status: newStatus });
     setStatusActive(!statusActive);
-    refetch();
+    router.refresh();
   };
 
   const handleDelete = async () => {
     if (confirmDelete) {
       await deletePost(post.id);
-      refetch();
       router.refresh();
     } else {
       setConfirmDelete(true);

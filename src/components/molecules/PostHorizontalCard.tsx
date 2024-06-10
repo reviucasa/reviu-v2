@@ -40,7 +40,7 @@ export const PostHorizontalCard = async ({
         </h2>
         <section aria-labelledby="information-heading" className="mt-3 ">
           <h3 id="information-heading" className="sr-only">
-            Description
+            {post.subtitle}
           </h3>
           <p className="text-sm text-gray-700 max-h-20 text-ellipsis overflow-hidden">
             {post.subtitle}
