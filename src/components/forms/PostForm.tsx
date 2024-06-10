@@ -181,6 +181,7 @@ export const PostForm = () => {
             )
           }
         />
+        {errors.image && <FieldError>{errors.image.message}</FieldError>}
       </div>
       <div className="flex flex-col">
         <label htmlFor="content">Content</label>
@@ -196,6 +197,7 @@ export const PostForm = () => {
               placeholder="The content of your post goes here"
               name="content"
               control={control}
+              withAddLink={true}
             />
           )}
         />
