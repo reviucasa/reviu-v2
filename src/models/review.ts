@@ -21,6 +21,7 @@ import {
 } from "firebase/firestore";
 import { Apartment } from "./building";
 import { User, getUsersById } from "./user";
+import { shuffleArray } from "@/helpers/shuffleArray";
 
 export enum ReviewStatus {
   Suspended = "suspended",
@@ -219,16 +220,22 @@ const deleteReview = async (id: string): Promise<void> => {
 const getReviews = async ({
   count,
   startAfterTime,
+  random = false,
 }: {
   count: number;
   startAfterTime: Timestamp | null;
+  random?: boolean;
 }): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
   let q = query(ref, where("status", "!=", ReviewStatus.Suspended));
 
   // Conditionally add a limit
   if (count) {
-    q = query(q, orderBy("timeCreated", "desc"), limit(count));
+    if (random) {
+      q = query(q, limit(count * 4));
+    } else {
+      q = query(q, orderBy("timeCreated", "desc"), limit(count));
+    }
   }
 
   if (startAfterTime) {
@@ -240,6 +247,12 @@ const getReviews = async ({
       if (snapshot.empty) {
         console.log("No reviews.");
         return [];
+      }
+      if (random) {
+        return shuffleArray(snapshot.docs.map((doc) => doc.data())).slice(
+          0,
+          count
+        );
       }
       return snapshot.docs.map((doc) => doc.data());
     })
@@ -284,7 +297,11 @@ const getSuspendedReviews = async (): Promise<Review[]> => {
 // Retrieve building reviews
 const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
-  const q = query(ref, where("buildingId", "==", buildingId), where("status", "==", ReviewStatus.Published));
+  const q = query(
+    ref,
+    where("buildingId", "==", buildingId),
+    where("status", "==", ReviewStatus.Published)
+  );
   const snapshot = await getDocs(q);
   return snapshot.docs.map((e) => e.data());
 };
