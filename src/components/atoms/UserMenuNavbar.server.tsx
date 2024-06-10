@@ -70,7 +70,7 @@ export const UserMenuNavbar = () => {
                       {({ focus }) => (
                         <Link
                           href="/admin"
-                          title={tLinks("/admin")}
+                          title={"Admin Dashboard"}
                           className={`p-2 text-secondary-500 hover:no-underline ${
                             focus && "bg-secondary-200"
                           }`}
@@ -113,7 +113,11 @@ export const UserMenuNavbar = () => {
       {/* <Link href="/auth/login" className="content-center hover:no-underline px-8">
         {t("common.signIn")}
       </Link> */}
-      <Link href="/review" title={tLinks("/review")} className="btn btn-primary-500 ">
+      <Link
+        href="/review"
+        title={tLinks("/review")}
+        className="btn btn-primary-500 "
+      >
         {t("common.writeReview")}
       </Link>
     </div>

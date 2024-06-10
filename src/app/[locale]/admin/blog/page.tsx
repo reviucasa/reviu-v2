@@ -2,6 +2,9 @@ import AdminLayout from "@/components/layouts/AdminLayout";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { getPosts } from "@/models/post";
 
+
+export const revalidate = 86400 // revalidate the data at most every day
+
 export default async function Page() {
   const posts = await getPosts();
 
