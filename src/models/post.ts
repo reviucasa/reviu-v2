@@ -54,14 +54,14 @@ const getPost = async (id: string): Promise<Post | undefined> => {
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
-const getPosts = cache(async (): Promise<Post[]> => {
+const getPosts = async (): Promise<Post[]> => {
   const q = query(
     collection(db, "posts").withConverter(postConverter),
     orderBy("timeCreated", "desc")
   );
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data());
-});
+};
 
 const createPost = async (post: Partial<Post>): Promise<void> => {
   const postId = normalizeString(
