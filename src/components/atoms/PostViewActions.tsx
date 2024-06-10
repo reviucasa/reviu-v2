@@ -1,7 +1,6 @@
 "use client";
 import { useAuth } from "@/context/auth";
-import { PostStatus, getPosts, updatePost, deletePost } from "@/models/post";
-import { useQuery } from "@tanstack/react-query";
+import { PostStatus, updatePost, deletePost } from "@/models/post";
 import { useState, useEffect } from "react";
 import { BiHide, BiShow, BiTrash } from "react-icons/bi";
 import { PostPlain } from "../organism/PostView";
@@ -25,11 +24,6 @@ export default function PostViewActions({ post }: { post: PostPlain }) {
       return () => clearTimeout(timer);
     }
   }, [linkCopied]);
-
-  const handleCopyLink = () => {
-    setLinkCopied(true);
-    navigator.clipboard.writeText(`https://reviucasa.com/blog/${post.id}`);
-  };
 
   const handleToggleStatus = async () => {
     const newStatus = statusActive ? PostStatus.archived : PostStatus.active;

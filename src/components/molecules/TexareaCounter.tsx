@@ -39,7 +39,7 @@ const TextAreaWithCharCounter = React.forwardRef<HTMLTextAreaElement, Props>(
       if (url) {
         const text = prompt("Enter the text for the link:");
         field.onChange(
-          `${field.value} <a href="https://${url}" style="color: #9E80F7; text-decoration: underline; font-weight: 500;" target="_blank">${text}</a>`
+          `${field.value} <a href="${url}" style="color: #9E80F7; text-decoration: underline; font-weight: 500;" target="_blank">${text}</a>`
         );
       }
     };
