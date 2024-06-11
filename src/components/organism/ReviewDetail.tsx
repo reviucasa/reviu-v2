@@ -63,9 +63,9 @@ export const ReviewDetail = ({
                 ) : (
                   <FaRegThumbsDown size={17} />
                 )}
-                {`${review?.data?.opinion?.recomend ? "" : "NO"} ${t(
-                  "common.loRecomiendo"
-                )}`}
+                {review?.data?.opinion?.recomend
+                  ? t("common.loRecomiendo")
+                  : t("common.noLoRecomiendo")}
               </Chip>
               <div className="lg:mt-3 mt-0 lg:p-0 p-4 overflow-hidden sticky top-10">
                 <div className="lg:flex lg:flex-col lg:justify-end lg:pb-4 lg:sticky top-5 grid grid-cols-[1fr_auto]">
@@ -104,9 +104,9 @@ export const ReviewDetail = ({
                   ) : (
                     <FaRegThumbsDown size={17} />
                   )}
-                  {`${review?.data?.opinion?.recomend ? "" : "NO"} ${t(
-                    "common.loRecomiendo"
-                  )} `}
+                  {review?.data?.opinion?.recomend
+                    ? t("common.loRecomiendo")
+                    : t("common.noLoRecomiendo")}
                 </Chip>
               </div>
               <div className="border-b-2 lg:mb-8 mb-4 mt-4">

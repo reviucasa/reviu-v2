@@ -54,9 +54,11 @@ export const OpinionCard = ({
           ) : (
             <Image src={thumbDown} width={20} height={20} alt="thumbDown" />
           )}
-          <p className="tracking-wider font-bold">{`${
-            review.data?.opinion?.recomend ? "" : "NO"
-          } ${t("common.loRecomiendo")}`}</p>
+          <p className="tracking-wider font-bold">
+            {review?.data?.opinion?.recomend
+              ? t("common.loRecomiendo")
+              : t("common.noLoRecomiendo")}
+          </p>
         </Chip>
       </div>
 

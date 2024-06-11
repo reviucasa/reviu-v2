@@ -190,6 +190,7 @@
     "spam": "It's spam",
     "informacionFalsa": "The information is false.",
     "loRecomiendo": "I recommend it",
+    "noLoRecomiendo": "I don't recommend it",
     "valuationGeneral": "General overview",
     "valuationFloor": "Of the apartment",
     "valuationCommunity": "Of the building",
