@@ -110,6 +110,12 @@ export default function ReviewsTable() {
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
                     >
+                      Id
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
                       Title
                     </th>
                     <th
@@ -157,7 +163,7 @@ export default function ReviewsTable() {
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                            {review.data.opinion?.recomend ? (
+                            {review.data && review.data.opinion?.recomend ? (
                               <div className="p-1 w-6 rounded-full bg-green-100">
                                 <Image
                                   src={thumbUp}
@@ -178,7 +184,10 @@ export default function ReviewsTable() {
                             )}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                            {review.data.opinion?.title}
+                            {review.id}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                            {review.data && review.data.opinion?.title}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                             <ReviewStatusBadge
