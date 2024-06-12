@@ -231,9 +231,7 @@ const getReviews = async ({
 
   // Conditionally add a limit
   if (count) {
-    if (random) {
-      q = query(q);
-    } else {
+    if (!random) {
       q = query(q, orderBy("timeCreated", "desc"), limit(count));
     }
   }
