@@ -316,7 +316,12 @@ const getReviewsByBuidingId = async (buildingId: string): Promise<Review[]> => {
 
 const getReviewsByAgencyId = async (agencyId: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
-  const q = query(ref, where("data.management.agencyId", "==", agencyId));
+  const q = query(
+    ref,
+    where("data.management.agencyId", "==", agencyId),
+    where("status", "==", ReviewStatus.Published)
+  );
+
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data() as Review); // Cast to Review type if necessary
 };
