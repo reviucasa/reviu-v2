@@ -6,8 +6,8 @@ import thumbUp from "public/images/thumbUp.svg";
 import {
   Review,
   ReviewStatus,
-  getReviews,
   getSuspendedReviews,
+  getSuspendedReviewsWithUser,
 } from "@/models/review";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,7 @@ import { BounceLoader } from "react-spinners";
 import { useState } from "react";
 import { ModalInfo } from "../molecules/ModalInfo";
 import { Timestamp } from "firebase/firestore";
+import { User } from "@/models/user";
 
 export default function SuspendedReviewsTable() {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -25,29 +26,36 @@ export default function SuspendedReviewsTable() {
 
   const [startAfterTime, setStartAfterTime] = useState<Timestamp | null>(null);
 
-  const { data: reviews, isFetching } = useQuery<Review[] | undefined, Error>({
+  const { data, isFetching } = useQuery<
+    | {
+        reviews: Review[];
+        users: User[];
+      }
+    | undefined,
+    Error
+  >({
     queryKey: ["suspended", startAfterTime],
-    queryFn: () => getSuspendedReviews(),
+    queryFn: () => getSuspendedReviewsWithUser(),
   });
 
   // Handlers to go to the next or previous page
   const fetchNext = () => {
-    if (reviews && reviews.length > 0) {
-      const firstReview = reviews[0];
+    if (data && data.reviews.length > 0) {
+      const firstReview = data.reviews[0];
       // Add 1 second to the first review time in every page so we don't miss that review
       let firstReviewTime = firstReview.timeCreated.toDate();
       firstReviewTime.setSeconds(firstReviewTime.getSeconds() + 1);
       const time = Timestamp.fromDate(firstReviewTime);
       if (paginationTimes.length == paginationIndex)
         setPaginationTimes((prev) => [...prev, time]);
-      const lastReview = reviews[reviews.length - 1];
+      const lastReview = data.reviews[data.reviews.length - 1];
       setStartAfterTime(lastReview.timeCreated);
       setPaginationIndex(paginationIndex + 1);
     }
   };
 
   const fetchPrev = () => {
-    if (reviews && reviews.length > 0) {
+    if (data && data.reviews.length > 0) {
       setPaginationIndex(paginationIndex - 1);
       setStartAfterTime(paginationTimes[paginationIndex - 1]);
     }
@@ -82,6 +90,12 @@ export default function SuspendedReviewsTable() {
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Review Id
+                    </th>
                     <th
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
@@ -131,7 +145,7 @@ export default function SuspendedReviewsTable() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
-                  {isFetching || !reviews ? (
+                  {isFetching || !data ? (
                     <tr>
                       <td colSpan={8}>
                         <div className="flex justify-center items-center h-[446px] z-50 bg-white opacity-90">
@@ -140,68 +154,88 @@ export default function SuspendedReviewsTable() {
                       </td>
                     </tr>
                   ) : (
-                    reviews.map((review) => (
-                      <tr key={review.id}>
-                        <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                          {review.address.split(",")[0]}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          {review.address.split(",")[1]}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          {review.userId}
-                        </td>
+                    data.reviews.map((review) => {
+                      const user = data.users.find(
+                        (u) => u.id == review.userId
+                      );
 
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          {review.data.opinion?.recomend ? (
-                            <div className="p-1 w-6 rounded-full bg-green-100">
-                              <Image
-                                src={thumbUp}
-                                width={20}
-                                height={20}
-                                alt="thumbUp"
-                              />
-                            </div>
-                          ) : (
-                            <div className="p-1 w-6 rounded-full bg-red-400">
-                              <Image
-                                src={thumbDown}
-                                width={20}
-                                height={20}
-                                alt="thumbDown"
-                              />
-                            </div>
-                          )}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                          {review.data.opinion?.title}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          <ReviewStatusBadge
-                            status={review.status as ReviewStatus}
-                          />
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                          {review.timeCreated
-                            .toDate()
-                            .toLocaleDateString("en-US", {
-                              day: "2-digit", // Display the day as a two-digit number
-                              month: "short", // Display an abbreviated version of the month
-                            })}
-                        </td>
-                        <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <div
+                      return (
+                        <tr key={review.id}>
+                          <td
+                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
                             onClick={() => {
-                              setSelectedReview(review);
-                              setOpenMoreInfo(!openMoreInfo);
+                              navigator.clipboard.writeText(review.id);
                             }}
-                            className="text-secondary-500 cursor-pointer hover:text-secondary-300"
                           >
-                            <BiChevronRight className="h-6 w-6" />
-                          </div>
-                        </td>
-                      </tr>
-                    ))
+                            {review.id.slice(0, 3)}...{review.id.slice(-3)}
+                          </td>
+                          <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                            {review.address.split(",")[0]}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                            {review.address.split(",")[1]}
+                          </td>
+                          <td
+                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                user ? user.email : review.userId
+                              );
+                            }}
+                          >
+                            {user ? user.email : review.userId}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                            {review.data.opinion?.recomend ? (
+                              <div className="p-1 w-6 rounded-full bg-green-100">
+                                <Image
+                                  src={thumbUp}
+                                  width={20}
+                                  height={20}
+                                  alt="thumbUp"
+                                />
+                              </div>
+                            ) : (
+                              <div className="p-1 w-6 rounded-full bg-red-400">
+                                <Image
+                                  src={thumbDown}
+                                  width={20}
+                                  height={20}
+                                  alt="thumbDown"
+                                />
+                              </div>
+                            )}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                            {review.data.opinion?.title}
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                            <ReviewStatusBadge
+                              status={review.status as ReviewStatus}
+                            />
+                          </td>
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                            {review.timeCreated
+                              .toDate()
+                              .toLocaleDateString("en-US", {
+                                day: "2-digit", // Display the day as a two-digit number
+                                month: "short", // Display an abbreviated version of the month
+                              })}
+                          </td>
+                          <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                            <div
+                              onClick={() => {
+                                setSelectedReview(review);
+                                setOpenMoreInfo(!openMoreInfo);
+                              }}
+                              className="text-secondary-500 cursor-pointer hover:text-secondary-300"
+                            >
+                              <BiChevronRight className="h-6 w-6" />
+                            </div>
+                          </td>
+                        </tr>
+                      );
+                    })
                   )}
                 </tbody>
               </table>
@@ -218,7 +252,7 @@ export default function SuspendedReviewsTable() {
                 <button
                   className="btn-primary-transparent-full disabled:text-gray-400"
                   onClick={fetchNext}
-                  disabled={isFetching || reviews!.length < 10}
+                  disabled={isFetching || data!.reviews!.length < 10}
                 >
                   Next
                 </button>

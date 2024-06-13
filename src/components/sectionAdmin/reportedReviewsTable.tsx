@@ -56,13 +56,19 @@ export default function ReportedReviewsTable() {
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      User
+                      Reporting User
                     </th>
                     <th
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
                       User Type
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Review Id
                     </th>
                     <th
                       scope="col"
@@ -108,11 +114,27 @@ export default function ReportedReviewsTable() {
                       .map((report) => {
                         return (
                           <tr key={report.id}>
-                            <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                            <td
+                              className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  report.user.email
+                                );
+                              }}
+                            >
                               {report.user.email}
                             </td>
                             <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                               <UserTypeBadge type={report.user.type} />
+                            </td>
+                            <td
+                              className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                              onClick={() => {
+                                navigator.clipboard.writeText(report.reviewId);
+                              }}
+                            >
+                              {report.reviewId.slice(0, 3)}...
+                              {report.reviewId.slice(-3)}
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                               <div

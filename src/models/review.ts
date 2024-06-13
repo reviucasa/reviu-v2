@@ -260,7 +260,7 @@ const getReviews = async ({
     });
 };
 
-// Retrieve reviews
+// Retrieve reviews with user
 const getReviewsWithUser = async ({
   count,
   startAfterTime,
@@ -290,6 +290,16 @@ const getSuspendedReviews = async (): Promise<Review[]> => {
       console.error("Error fetching reviews:", error);
       return [];
     });
+};
+// Retrieve reviews
+const getSuspendedReviewsWithUser = async (): Promise<{
+  reviews: Review[];
+  users: User[];
+}> => {
+  const reviews = await getSuspendedReviews();
+  const uids = Array.from(new Set(reviews.map((r) => r.userId)));
+  const users = await getUsersById(uids);
+  return { reviews, users };
 };
 
 // Retrieve building reviews
@@ -333,6 +343,7 @@ export {
   getReviews,
   getReviewsWithUser,
   getSuspendedReviews,
+  getSuspendedReviewsWithUser,
   getReviewsByBuidingId,
   getReviewsByAgencyId,
   getReviewsFromUser,

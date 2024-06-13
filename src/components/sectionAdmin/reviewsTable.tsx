@@ -83,6 +83,12 @@ export default function ReviewsTable() {
                   <tr>
                     <th
                       scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Review Id
+                    </th>
+                    <th
+                      scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
                       Street
@@ -106,12 +112,7 @@ export default function ReviewsTable() {
                     >
                       Opinion
                     </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Id
-                    </th>
+
                     <th
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
@@ -152,13 +153,28 @@ export default function ReviewsTable() {
 
                       return (
                         <tr key={review.id}>
+                          <td
+                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                            onClick={() => {
+                              navigator.clipboard.writeText(review.id);
+                            }}
+                          >
+                            {review.id.slice(0, 3)}...{review.id.slice(-3)}
+                          </td>
                           <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                             {review.address?.split(",")[0]}
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                             {review.address?.split(",")[1]}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                          <td
+                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                            onClick={() => {
+                              navigator.clipboard.writeText(
+                                user ? user.email : review.userId
+                              );
+                            }}
+                          >
                             {user ? user.email : review.userId}
                           </td>
 
@@ -183,9 +199,7 @@ export default function ReviewsTable() {
                               </div>
                             )}
                           </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                            {review.id}
-                          </td>
+
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
                             {review.data && review.data.opinion?.title}
                           </td>
