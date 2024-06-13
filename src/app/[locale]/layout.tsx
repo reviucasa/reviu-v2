@@ -24,7 +24,7 @@ export async function generateMetadata({
     locale == "en"
       ? "Home reviews you can trust"
       : locale == "es"
-      ? "Reseñas de pisos real"
+      ? "Reseñas de pisos reales"
       : "Ressenyes de pisos reals";
 
   const description =
