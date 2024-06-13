@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/admin/",
     },
-    sitemap: "https://reviu.vercel.app/sitemap.xml",
+    sitemap: "https://reviucasa.com/sitemap.xml",
   };
 }
