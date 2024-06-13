@@ -3,15 +3,15 @@ import { MetadataRoute } from "next";
 const generateBlogPostsSitemapObjects = async () => {
   return [
     {
-      slug: "barcelona-al-descobert-la-teva-guia-per-trobar-el-pis-perfecte",
+      slug: "com-funciona-la-regulacio-de-lloguers-",
       updatedAt: new Date(),
     },
     {
-      slug: "consells-clau-per-negociar-el-teu-contracte-de-lloguer",
+      slug: "com-saber-quant-pagava-lanterior-llogater-i-evitar-que-et-pugin-el-preu",
       updatedAt: new Date(),
     },
     {
-      slug: "que-ens-poden-demanar-i-que-no-les-immobiliaries",
+      slug: "quants-mesos-de-fianca-et-poden-demanar-quan-llogues-un-pis",
       updatedAt: new Date(),
     },
   ];
