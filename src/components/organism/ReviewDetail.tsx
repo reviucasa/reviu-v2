@@ -257,11 +257,11 @@ export const ReviewDetail = ({
                     `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
                   )}
                 </Label>
-                <Label title={t("common.respuestaProblema")}>
+                {review?.data?.management?.problemSolving && <Label title={t("common.respuestaProblema")}>
                   {config(
                     `landlord.problemSolving.${review?.data?.management?.problemSolving}`
                   )}
-                </Label>
+                </Label>}
                 {review?.data?.management?.deposit && (
                   <Label title={t("common.devolvieronFianza")}>
                     {config(
