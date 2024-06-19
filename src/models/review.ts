@@ -183,13 +183,15 @@ const publishReview = async (
   uid: string,
   review: Partial<Review>
 ): Promise<void> => {
-  const ref = collection(db, `reviews`).withConverter(reviewConverter);
-  await addDoc(ref, {
-    ...review,
-    userId: uid,
-    timeCreated: serverTimestamp(),
-    timeUpdated: serverTimestamp(),
-  });
+  if (review.data) {
+    const ref = collection(db, `reviews`).withConverter(reviewConverter);
+    await addDoc(ref, {
+      ...review,
+      userId: uid,
+      timeCreated: serverTimestamp(),
+      timeUpdated: serverTimestamp(),
+    });
+  }
 };
 
 // Update an existing review
