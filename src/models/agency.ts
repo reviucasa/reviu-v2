@@ -59,10 +59,10 @@ async function searchAgenciesByName(prefix: string) {
   );
 
   const querySnapshot = await getDocs(q);
-  const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
-  return matchingAgencies;
+  /* const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
+  return matchingAgencies; */
 
-  /* const allAgencies = querySnapshot.docs.map(
+  const allAgencies = querySnapshot.docs.map(
     (doc) => doc.data() as RealStateAgency
   );
 
@@ -84,7 +84,7 @@ async function searchAgenciesByName(prefix: string) {
     }
   }
 
-  return uniqueAgencies; */
+  return uniqueAgencies;
 
   /* const allAgencies = querySnapshot.docs.map(
     (doc) => doc.data() as RealStateAgency
