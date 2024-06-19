@@ -23,8 +23,8 @@ export async function generateMetadata({
     locale == "en"
       ? "Log in to your Reviu account to access your dashboard, submit reviews, and manage your profile. Stay connected with the latest updates on rental homes in Barcelona."
       : locale == "es"
-      ? "Inicia sesión en tu cuenta de Reviu para acceder a tu panel de control, enviar reseñas y gestionar tu perfil. Mantente conectado con las últimas actualizaciones sobre viviendas de alquiler en Barcelona."
-      : "Inicia sessió al teu compte de Reviu per accedir al teu tauler, enviar ressenyes i gestionar el teu perfil. Mantén-te connectat amb les últimes actualitzacions sobre habitatges de lloguer a Barcelona.";
+      ? "Inicia sesión en tu cuenta de Reviu para acceder a tu panel de control, enviar reseñas y opiniones y gestionar tu perfil. Mantente conectado con las últimas actualizaciones sobre viviendas de alquiler en Barcelona."
+      : "Inicia sessió al teu compte de Reviu per accedir al teu tauler, enviar ressenyes i opinions i gestionar el teu perfil. Mantén-te connectat amb les últimes actualitzacions sobre habitatges de lloguer a Barcelona.";
 
   return {
     title: titleDetail,

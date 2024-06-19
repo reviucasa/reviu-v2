@@ -23,8 +23,8 @@ export async function generateMetadata({
     locale == "en"
       ? "Find answers to common questions about using Reviu, submitting reviews, and more. Our FAQs provide detailed information to help you make the most of our platform."
       : locale == "es"
-      ? "Encuentra respuestas a preguntas comunes sobre el uso de Reviu, el envío de reseñas y más. Nuestras preguntas frecuentes proporcionan información detallada para ayudarte a aprovechar al máximo nuestra plataforma."
-      : "Troba respostes a preguntes comunes sobre l'ús de Reviu, l'enviament de ressenyes i més. Les nostres preguntes freqüents proporcionen informació detallada per ajudar-te a treure el màxim profit de la nostra plataforma.";
+      ? "Encuentra respuestas a preguntas comunes sobre el uso de Reviu, el envío de reseñas, opiniones y más. Nuestras preguntas frecuentes proporcionan información detallada para ayudarte a aprovechar al máximo nuestra plataforma."
+      : "Troba respostes a preguntes comunes sobre l'ús de Reviu, l'enviament de ressenyes, opinions i més. Les nostres preguntes freqüents proporcionen informació detallada per ajudar-te a treure el màxim profit de la nostra plataforma.";
 
   return {
     title: titleDetail,

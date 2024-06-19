@@ -25,8 +25,8 @@ export async function generateMetadata({
     locale == "en"
       ? "Read the terms and conditions of Reviu to understand how we help you find reliable rental homes in Barcelona. Discover detailed reviews and guides for a transparent and hassle-free rental experience."
       : locale == "es"
-      ? "Lee los términos y condiciones de Reviu para entender cómo te ayudamos a encontrar viviendas de alquiler confiables en Barcelona. Descubre reseñas detalladas y guías para una experiencia de alquiler transparente y sin complicaciones."
-      : "Llegeix els termes i condicions de Reviu per entendre com t'ajudem a trobar habitatges de lloguer fiables a Barcelona. Descobreix ressenyes detallades i guies per a una experiència de lloguer transparent i sense complicacions.";
+      ? "Lee los términos y condiciones de Reviu para entender cómo te ayudamos a encontrar viviendas de alquiler confiables en Barcelona. Descubre reseñas y opiniones detalladas y guías para una experiencia de alquiler transparente y sin complicaciones."
+      : "Llegeix els termes i condicions de Reviu per entendre com t'ajudem a trobar habitatges de lloguer fiables a Barcelona. Descobreix ressenyes i opinions detallades i guies per a una experiència de lloguer transparent i sense complicacions.";
   return {
     title: titleDetail,
     description,
