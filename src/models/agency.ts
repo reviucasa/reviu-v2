@@ -17,6 +17,7 @@ export type RealStateAgency = {
   documentId: string;
   id: string;
   name: string;
+  lowercase: string;
 };
 
 const realStateAgencyConverter: FirestoreDataConverter<RealStateAgency> = {
@@ -60,6 +61,47 @@ async function searchAgenciesByName(prefix: string) {
   const querySnapshot = await getDocs(q);
   const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
   return matchingAgencies;
+
+  /* const allAgencies = querySnapshot.docs.map(
+    (doc) => doc.data() as RealStateAgency
+  );
+
+  // Sort agencies by the length of their lowercase value (shortest first)
+  allAgencies.sort((a, b) => a.lowercase.length - b.lowercase.length);
+
+  const uniqueAgencies: RealStateAgency[] = [];
+
+  for (const agency of allAgencies) {
+    // Check if this agency's lowercase value is contained in any of the already selected unique agencies
+    if (
+      !uniqueAgencies.some(
+        (uniqueAgency) =>
+          uniqueAgency.lowercase.includes(agency.lowercase) ||
+          agency.lowercase.includes(uniqueAgency.lowercase)
+      )
+    ) {
+      uniqueAgencies.push(agency);
+    }
+  }
+
+  return uniqueAgencies; */
+
+  /* const allAgencies = querySnapshot.docs.map(
+    (doc) => doc.data() as RealStateAgency
+  );
+
+  // Use a Set to track unique lowercase values
+  const uniqueLowercaseSet = new Set<string>();
+  const uniqueAgencies: RealStateAgency[] = [];
+
+  for (const agency of allAgencies) {
+    if (!uniqueLowercaseSet.has(agency.lowercase)) {
+      uniqueLowercaseSet.add(agency.lowercase);
+      uniqueAgencies.push(agency);
+    }
+  }
+
+  return uniqueAgencies; */
 }
 
 export { getAgency, searchAgenciesByName };

@@ -20,12 +20,12 @@ export const DialogDelete = ({
 
   const handleSuspend = async () => {
     await suspendReview(reviewId);
-    router.refresh();
+    location.reload();
   };
 
   const handleDelete = async () => {
     await deleteReview(reviewId);
-    router.refresh();
+    location.reload();
   };
 
   return (
