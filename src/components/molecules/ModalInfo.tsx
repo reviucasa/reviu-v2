@@ -20,8 +20,8 @@ export const ModalInfo = ({
     >
       <ReviewDetail
         review={review}
-        openMoreInfo={openMoreInfo}
-        setOpenMoreInfo={setOpenMoreInfo}
+        // openMoreInfo={openMoreInfo}
+        // setOpenMoreInfo={setOpenMoreInfo}
       />
     </DialogDrawer>
   );

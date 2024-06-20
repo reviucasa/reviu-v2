@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import happy from "public/images/happy.png";
 import sad from "public/images/sad.png";
@@ -21,21 +22,11 @@ import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
 import Link from "next/link";
-import { Button } from "../atoms/Button";
 import { Unsuspend } from "../atoms/Unsuspend";
 
-export const ReviewDetail = ({
-  review,
-  openMoreInfo,
-  setOpenMoreInfo,
-}: {
-  review: Review;
-  openMoreInfo: boolean;
-  setOpenMoreInfo: (value: boolean) => void;
-}) => {
+export const ReviewDetail = ({ review }: { review: Review }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
-  const router = useRouter();
   const tLinks = useTranslations("linksTitles");
   const { wordCloud } = useContext(AnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
@@ -44,7 +35,6 @@ export const ReviewDetail = ({
   const [openModalDelete, setOpenModalDelete] = useState<boolean>(false);
   const [openModalImage, setOpenModalImage] = useState<boolean>(false);
   const [selectedImage, setSelectedImage] = useState<number>(0);
-  const [publishing, setPublishing] = useState<boolean>(false);
 
   const config = useTranslations("config");
 
@@ -473,7 +463,6 @@ export const ReviewDetail = ({
                   <Unsuspend
                     onAction={async () => {
                       await unsuspendReview(review.id);
-                      setOpenMoreInfo(!openMoreInfo);
                       location.reload();
                     }}
                   />
