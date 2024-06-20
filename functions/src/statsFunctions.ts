@@ -36,8 +36,13 @@ export const computeWeeklyStats = functions
 
     console.log(stats);
 
-    // Generate a unique document ID based on the current date
-    const statsId = `${new Date().toISOString().split("T")[0]}`;
+    // Calculate the date 7 days before the current date
+    const currentDate = new Date();
+    const sevenDaysAgo = new Date(
+      currentDate.setDate(currentDate.getDate() - 7)
+    );
+    const statsId = `${sevenDaysAgo.toISOString().split("T")[0]}`;
+
     // Save the computed statistics
     const statsRef = admin
       .firestore()

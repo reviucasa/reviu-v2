@@ -3,6 +3,8 @@ import { WeeklyStats, getAllWeeklyStats } from "@/models/stats";
 import { useQuery } from "@tanstack/react-query";
 import { BounceLoader } from "react-spinners";
 import { StatBox } from "../atoms/StatBox";
+import { ReviewsColumnsChart } from "../charts/ReviewsColumnsChart";
+import { UsersColumnsChart } from "../charts/UsersColumnsChart";
 
 export interface Stat {
   name: string;
@@ -65,35 +67,51 @@ export default function SectionStats() {
   }
 
   return (
-    <div className="pb-6">
-      <h3 className="text-base font-semibold leading-6 text-gray-900">
-        Last Week Stats
-      </h3>
-      {isFetching || !data ? (
-        <div className="flex justify-center items-center h-[108px] mt-5 rounded-lg bg-white shadow ">
-          <BounceLoader color="#d8b4fe" size={60} />
-        </div>
-      ) : (
-        <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
-          {stats.map((item) => (
-            <StatBox key={item.name} item={item} />
-          ))}
-        </dl>
-      )}
-      {/* <h3 className="text-base font-semibold leading-6 text-gray-900 mt-12">
-        Avg Week Stats
-      </h3> */}
-      {isFetching || !data ? (
-        <div className="flex justify-center items-center h-[108px] mt-5 rounded-lg bg-white shadow ">
-          <BounceLoader color="#d8b4fe" size={60} />
-        </div>
-      ) : (
-        <dl className="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
-          {avgStats.map((item) => (
-            <StatBox key={item.name} item={item} />
-          ))}
-        </dl>
-      )}
+    <div className="pb-6 space-y-12">
+      <div className=" space-y-8">
+        <h3 className="text-2xl font-semibold leading-6 text-gray-900">
+          Weekly Stats
+        </h3>
+        {isFetching || !data ? (
+          <div className="flex justify-center items-center h-[108px]  rounded-lg bg-white shadow ">
+            <BounceLoader color="#d8b4fe" size={60} />
+          </div>
+        ) : (
+          <dl className=" grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+            {stats.map((item) => (
+              <StatBox key={item.name} item={item} />
+            ))}
+          </dl>
+        )}
+
+        {isFetching || !data ? (
+          <div className="flex justify-center items-center h-[108px]  rounded-lg bg-white shadow ">
+            <BounceLoader color="#d8b4fe" size={60} />
+          </div>
+        ) : (
+          <dl className=" grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+            {avgStats.map((item) => (
+              <StatBox key={item.name} item={item} />
+            ))}
+          </dl>
+        )}
+      </div>
+      <div className=" space-y-8">
+        <h3 className="text-2xl font-semibold leading-6 text-gray-900">
+          History
+        </h3>
+
+        {isFetching || !data ? (
+          <div className="flex justify-center items-center h-[330px]  rounded-lg bg-white shadow ">
+            <BounceLoader color="#d8b4fe" size={60} />
+          </div>
+        ) : (
+          <dl className=" grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow md:grid-cols-2 md:divide-x md:divide-y-0">
+            <UsersColumnsChart data={data.toReversed()} />
+            <ReviewsColumnsChart data={data.toReversed()} />
+          </dl>
+        )}
+      </div>
     </div>
   );
 }
