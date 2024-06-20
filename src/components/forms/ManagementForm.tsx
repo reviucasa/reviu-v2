@@ -19,7 +19,8 @@ import { reviewConfigParams } from "@/staticData";
 import { useDraft } from "@/hooks/swr/useDraft";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
-import { RealStateAgency, getAgency } from "@/models/agency";
+import { RealStateAgency, createAgency, getAgency } from "@/models/agency";
+import { Timestamp } from "firebase/firestore";
 
 export const ManagementForm = () => {
   const { draft, refreshDraft } = useDraft();
@@ -111,6 +112,8 @@ export const ManagementForm = () => {
         documentId: "",
         id: "",
         name: draft?.data.management?.realStateAgency,
+        lowercase: draft?.data.management?.realStateAgency.toLocaleLowerCase(),
+        timeCreated: Timestamp.now(),
       });
     }
   }, [draft, draft?.data.management]);
@@ -131,11 +134,20 @@ export const ManagementForm = () => {
 
   const isFormCompleted = isValid && !isDirty;
 
-  const onSubmit: SubmitHandler<FormData> = (data) =>
-    onSubmitDraft({
-      ...data,
-      agencyId: selectedRealStateAgency?.documentId ?? "",
-    });
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    if (data.isRealStateAgency && isRealStateAgencyManual) {
+      const agencyId = await createAgency(data.realStateAgency!);
+      return onSubmitDraft({
+        ...data,
+        agencyId,
+      });
+    } else {
+      return onSubmitDraft({
+        ...data,
+        agencyId: selectedRealStateAgency?.documentId ?? "",
+      });
+    }
+  };
 
   return (
     <ReviewFormLayout

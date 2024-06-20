@@ -3,6 +3,7 @@ import {
   DocumentData,
   FirestoreDataConverter,
   QueryDocumentSnapshot,
+  Timestamp,
   collection,
   doc,
   endAt,
@@ -10,6 +11,8 @@ import {
   getDocs,
   orderBy,
   query,
+  serverTimestamp,
+  setDoc,
   startAt,
 } from "firebase/firestore";
 
@@ -18,6 +21,7 @@ export type RealStateAgency = {
   id: string;
   name: string;
   lowercase: string;
+  timeCreated: Timestamp;
 };
 
 const realStateAgencyConverter: FirestoreDataConverter<RealStateAgency> = {
@@ -33,6 +37,21 @@ const realStateAgencyConverter: FirestoreDataConverter<RealStateAgency> = {
       ...data,
     } as RealStateAgency;
   },
+};
+
+// Create agency
+const createAgency = async (agencyName: string): Promise<string> => {
+  const ref = doc(collection(db, "agencies")).withConverter(
+    realStateAgencyConverter
+  );
+  await setDoc(ref, {
+    documentId: ref.id,
+    id: "",
+    name: agencyName,
+    lowercase: agencyName.toLocaleLowerCase(),
+    timeCreated: serverTimestamp(),
+  });
+  return ref.id;
 };
 
 // Retrieve a building by ID
@@ -85,23 +104,6 @@ async function searchAgenciesByName(prefix: string) {
   }
 
   return uniqueAgencies;
-
-  /* const allAgencies = querySnapshot.docs.map(
-    (doc) => doc.data() as RealStateAgency
-  );
-
-  // Use a Set to track unique lowercase values
-  const uniqueLowercaseSet = new Set<string>();
-  const uniqueAgencies: RealStateAgency[] = [];
-
-  for (const agency of allAgencies) {
-    if (!uniqueLowercaseSet.has(agency.lowercase)) {
-      uniqueLowercaseSet.add(agency.lowercase);
-      uniqueAgencies.push(agency);
-    }
-  }
-
-  return uniqueAgencies; */
 }
 
-export { getAgency, searchAgenciesByName };
+export { createAgency, getAgency, searchAgenciesByName };

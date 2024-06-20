@@ -7,17 +7,23 @@ export const computeWeeklyStats = functions
   .pubsub.schedule("0 0 * * 1") // Runs at 00:00 every Monday
   .timeZone("Europe/Madrid")
   .onRun(async () => {
+    console.log("Computing weekly reviews");
     const reviewsRef = admin.firestore().collection("reviews");
     const reviewsSnapshot = await fetchDocumentsFromLastWeek(reviewsRef);
-    const reviewsCount = await reviewsRef.count().get();
+    const reviewsCount = (await reviewsRef.count().get()).data().count;
+    console.log(reviewsCount, reviewsSnapshot.size);
 
+    console.log("Computing weekly users");
     const usersRef = admin.firestore().collection("users");
     const usersSnapshot = await fetchDocumentsFromLastWeek(usersRef);
-    const usersCount = await usersRef.count().get();
+    const usersCount = (await usersRef.count().get()).data().count;
+    console.log(usersCount, usersSnapshot.size);
 
+    console.log("Computing weekly reports");
     const reportsRef = admin.firestore().collection("reports");
     const reportsSnapshot = await fetchDocumentsFromLastWeek(reportsRef);
-    const reportsCount = await reportsRef.count().get();
+    const reportsCount = (await reportsRef.count().get()).data().count;
+    console.log(reportsCount, reportsSnapshot.size);
 
     const stats = {
       reviewsCount,
@@ -27,6 +33,8 @@ export const computeWeeklyStats = functions
       usersWeekly: usersSnapshot.size,
       reportsWeekly: reportsSnapshot.size,
     };
+
+    console.log(stats);
 
     // Generate a unique document ID based on the current date
     const statsId = `${new Date().toISOString().split("T")[0]}`;
@@ -64,6 +72,5 @@ async function fetchDocumentsFromLastWeek(
   const snapshot = await ref
     .where("timeCreated", ">=", oneWeekAgoTimestamp)
     .get();
-
   return snapshot;
 }

@@ -9,8 +9,6 @@ import { useTranslations } from "next-intl";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { PiImage } from "react-icons/pi";
 import Image from "next/image";
-import { Opinion, ReviewImage } from "@/models/review";
-import { auth } from "@/firebase/config";
 import { uploadImage } from "@/firebase/helpers";
 import { resizeImage } from "@/helpers/resizeImage";
 import { Post, PostStatus, createPost } from "@/models/post";
