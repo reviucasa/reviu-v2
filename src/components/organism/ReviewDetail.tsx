@@ -14,7 +14,6 @@ import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
 import { Review, ReviewStatus, unsuspendReview } from "@/models/review";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
-import { useRouter } from "next/navigation";
 import { DialogImage } from "../molecules/DialogImage";
 import { DialogDelete } from "../molecules/DialogDelete";
 import { Suspend } from "../atoms/Suspend";
