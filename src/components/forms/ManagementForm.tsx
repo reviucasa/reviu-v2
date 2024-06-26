@@ -32,9 +32,10 @@ export const ManagementForm = () => {
 
   const [isRealStateAgencyManual, setIsRealStateAgencyManual] =
     useState<boolean>(false);
+  const [isRealStateAgencyUnknown, setIsRealStateAgencyUnknown] =
+    useState<boolean>(false);
   const [selectedRealStateAgency, setSelectedRealStateAgency] =
     useState<RealStateAgency>();
-  const [error, setError] = useState<string>();
 
   const schema = yup.object({
     isRealStateAgency: yup.boolean().required(t("common.seleccionaOpcion")),
@@ -43,12 +44,11 @@ export const ManagementForm = () => {
       .when(
         "isRealStateAgency",
         (isRealStateAgency, schema: yup.StringSchema) => {
-          return isRealStateAgency === true
+          return isRealStateAgency === true && !isRealStateAgencyUnknown
             ? schema.required(t("common.necesitamosSaber"))
             : schema;
         }
       ),
-
     realStateDealing: yup
       .string()
       .when("isRealStateAgency", (isRealStateAgency, schema) => {
@@ -62,6 +62,8 @@ export const ManagementForm = () => {
     adviceRealState: yup.string(),
     adviceLandlord: yup.string(),
   });
+
+  console.log(isRealStateAgencyUnknown);
 
   const {
     formState: { isDirty, isValid, errors, isSubmitSuccessful, dirtyFields },
@@ -78,7 +80,6 @@ export const ManagementForm = () => {
   });
 
   const onSelectRealStateAgency = useCallback(async () => {
-    setError(undefined);
     if (draft && selectedRealStateAgency) {
       setValue("realStateAgency", selectedRealStateAgency.name, {
         shouldDirty:
@@ -107,12 +108,12 @@ export const ManagementForm = () => {
     ) {
       fetchAgencyDetails(draft?.data.management?.agencyId);
     } else if (draft?.data.management?.agencyId == "") {
-      setIsRealStateAgencyManual(true);
+      setIsRealStateAgencyUnknown(true);
       setSelectedRealStateAgency({
         documentId: "",
         id: "",
-        name: draft?.data.management?.realStateAgency,
-        lowercase: draft?.data.management?.realStateAgency.toLocaleLowerCase(),
+        name: "",
+        lowercase: "",
         timeCreated: Timestamp.now(),
       });
     }
@@ -135,12 +136,21 @@ export const ManagementForm = () => {
   const isFormCompleted = isValid && !isDirty;
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    if (data.isRealStateAgency && isRealStateAgencyManual) {
-      const agencyId = await createAgency(data.realStateAgency!);
-      return onSubmitDraft({
-        ...data,
-        agencyId,
-      });
+    console.log(data);
+    if (data.isRealStateAgency) {
+      if (isRealStateAgencyManual) {
+        const agencyId = await createAgency(data.realStateAgency!);
+        return onSubmitDraft({
+          ...data,
+          agencyId,
+        });
+      } else if (isRealStateAgencyUnknown) {
+        return onSubmitDraft({
+          ...data,
+          agencyId: "",
+          realStateAgency: "",
+        });
+      }
     } else {
       return onSubmitDraft({
         ...data,
@@ -188,28 +198,46 @@ export const ManagementForm = () => {
                 {t("managementReview.queInmobiliaria")}
               </label>
 
-              {isRealStateAgencyManual ? (
-                <Controller
-                  name="realStateAgency"
-                  control={control}
-                  render={({ field }) => (
-                    <input
-                      {...field}
-                      aria-invalid={!!errors.isRealStateAgency}
-                      type="text"
-                      className="w-full"
-                      placeholder={t(
-                        "managementReview.escribeImmobiliariaManualmente"
-                      )}
-                    />
+              {isRealStateAgencyUnknown ? (
+                <input
+                  disabled={true}
+                  type="text"
+                  className="w-full"
+                  placeholder={t("managementReview.noSeInmobiliaria")}
+                />
+              ) : isRealStateAgencyManual ? (
+                <>
+                  <Controller
+                    name="realStateAgency"
+                    control={control}
+                    render={({ field }) => (
+                      <input
+                        {...field}
+                        aria-invalid={!!errors.isRealStateAgency}
+                        type="text"
+                        className="w-full"
+                        placeholder={t(
+                          "managementReview.escribeImmobiliariaManualmente"
+                        )}
+                      />
+                    )}
+                  />
+                  {errors.isRealStateAgency && (
+                    <FieldError>{errors.isRealStateAgency.message}</FieldError>
                   )}
-                />
+                </>
               ) : (
-                <AgencyComboBox
-                  selectedRealStateAgency={selectedRealStateAgency}
-                  setSelectedRealStateAgency={setSelectedRealStateAgency}
-                />
+                <>
+                  <AgencyComboBox
+                    selectedRealStateAgency={selectedRealStateAgency}
+                    setSelectedRealStateAgency={setSelectedRealStateAgency}
+                  />
+                  {errors.isRealStateAgency && (
+                    <FieldError>{errors.isRealStateAgency.message}</FieldError>
+                  )}
+                </>
               )}
+
               <div className="relative flex items-start mt-2">
                 <div className="flex h-6 items-center">
                   <input
@@ -225,6 +253,7 @@ export const ManagementForm = () => {
                         shouldDirty: true,
                       });
                       setIsRealStateAgencyManual(!isRealStateAgencyManual);
+                      setIsRealStateAgencyUnknown(false);
                     }}
                   />
                 </div>
@@ -237,10 +266,34 @@ export const ManagementForm = () => {
                   </label>
                 </div>
               </div>
-              {errors.isRealStateAgency && (
-                <FieldError>{errors.isRealStateAgency.message}</FieldError>
-              )}
-              <FieldError>{error}</FieldError>
+              <div className="relative flex items-start mt-0">
+                <div className="flex h-6 items-center">
+                  <input
+                    id="agencyUnknown"
+                    aria-describedby="comments-description"
+                    name="agencyUnknown"
+                    type="checkbox"
+                    checked={isRealStateAgencyUnknown}
+                    className="h-4 w-4 !rounded-md border-gray-300"
+                    onChange={() => {
+                      setSelectedRealStateAgency(undefined);
+                      setValue("realStateAgency", undefined, {
+                        shouldDirty: true,
+                      });
+                      setIsRealStateAgencyManual(false);
+                      setIsRealStateAgencyUnknown(!isRealStateAgencyUnknown);
+                    }}
+                  />
+                </div>
+                <div className="ml-3 text-sm leading-6">
+                  <label
+                    htmlFor="agencyUnknown"
+                    className="font-normal text-gray-900"
+                  >
+                    {t("managementReview.noSeInmobiliaria")}
+                  </label>
+                </div>
+              </div>
             </div>
           )}
           {watchIsRealStateAgency?.valueOf() === true && (

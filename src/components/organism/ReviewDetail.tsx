@@ -237,7 +237,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                           {review.data?.management?.realStateAgency}
                         </Link>
                       ) : (
-                        <span>{review.data?.management?.realStateAgency}</span>
+                        <span>{t("managementReview.noSeInmobiliaria")}</span>
                       )}
                     </div>
                     <Label title={t("agency.comoHaSidoElTrato")}>

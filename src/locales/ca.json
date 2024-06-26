@@ -553,6 +553,7 @@
     "gestionadoInmobiliaria": "Has llogat el pis a través d'una immobiliària?",
     "queInmobiliaria": "Quina immobiliària gestiona el pis?",
     "noEncuentroInmobiliaria": "No trobo la immobiliària, la vull introduir manualment.",
+    "noSeInmobiliaria": "No recordo la immobiliària / Ja no existeix.",
     "escribeImmobiliariaManualmente": "Escriu el nom de la immobiliària",
     "escribeInmobiliaria": "Escriu el nom de la immobiliària",
     "tratoInmobiliaria": "Com valores el tracte per part de la immobiliària?",
