@@ -39,7 +39,7 @@ export const computeWeeklyStats = functions
     // Calculate the date 7 days before the current date
     const currentDate = new Date();
     const sevenDaysAgo = new Date(
-      currentDate.setDate(currentDate.getDate() - 7)
+      currentDate.setDate(currentDate.getDate() - 6)
     );
     const statsId = `${sevenDaysAgo.toISOString().split("T")[0]}`;
 

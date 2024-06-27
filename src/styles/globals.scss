@@ -4,8 +4,81 @@
 @import 'fonts.scss';
 @import 'buttons.scss';
 @import 'inputs.scss';
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 body {
   @apply bg-gray-100;
 }
 
+.post-content  {
+  a {
+    @apply text-secondary-500;
+  }
+}
+
+// root css file
+.quill > * {
+  font-family: "Space Grotesk", sans-serif !important;
+  border-color: rgb(156 163 175) !important;
+  background-color: white;
+  color: inherit !important;
+  
+}
+
+.quill > .ql-toolbar {
+  /* border radius of the toolbar */
+  border-radius: 8px 8px 0 0;
+
+
+}
+
+.quill > .ql-container {
+  /* border radius of the container and for font size*/
+  font-family: 'Space Grotesk', sans-serif !important;
+  font-size: inherit;
+  border-radius: 0 0 8px 8px;
+  height: 160px;
+
+  
+}
+
+.ql-editor {
+  font-family: 'Space Grotesk', sans-serif !important;
+  color: rgb(31 41 55) !important;
+  font-size: 1rem !important;
+  line-height: 1.75rem !important;
+  border-radius: 0 0 8px 8px;
+  
+  &:focus {
+    @apply border-secondary-500;
+    box-shadow: 0 0 0 0.125rem #9e80f750 !important;
+  }
+}
+
+.ql-toolbar.ql-snow .ql-picker-label {
+  color: inherit !important;
+  opacity: 0.76;
+}
+.ql-snow .ql-picker {
+  color: inherit !important;
+}
+.quill > .ql-container > .ql-editor.ql-blank::before {
+  /* for placeholder */
+  color: rgb(124, 133, 145) !important;
+}
+.ql-snow.ql-toolbar button svg {
+  opacity: 0.76;
+  color: currentColor;
+}
+.ql-snow .ql-stroke {
+  /* for the border of the editor */
+  stroke: currentColor !important;
+}
+.ql-snow .ql-fill {
+  /* for the bg color */
+  fill: currentColor !important;
+}
+.ql-picker-item {
+  /* for dropdown */
+  color: #444 !important;
+}
