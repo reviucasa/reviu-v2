@@ -50,7 +50,7 @@ export const DropDownLanguages = () => {
                   }`}
                   href={`/${idiom.code}/${pathname}`}
                   hrefLang={idiom.code}
-                  title={tLinks(pathname)}
+                  /* title={tLinks(pathname)} */
                 >
                   {t(`common.${idiom.label}`)}
                 </Link>
