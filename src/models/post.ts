@@ -97,7 +97,6 @@ const updatePost = async (
   await updateDoc(ref, updatedFields);
 };
 
-// Delete a report
 const deletePost = async (id: string): Promise<void> => {
   const ref = doc(db, "posts", id);
   await deleteDoc(ref);

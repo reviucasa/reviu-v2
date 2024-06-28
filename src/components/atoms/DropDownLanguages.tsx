@@ -20,8 +20,6 @@ export const DropDownLanguages = () => {
   const locale = useLocale();
   const currentLanguage = locale || "es";
 
-  console.log(pathname);
-
   return (
     <Menu as="div" className="relative max-w-[168px]">
       <div>
