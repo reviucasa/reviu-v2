@@ -62,14 +62,14 @@ export const postConverter: FirestoreDataConverter<Post> = {
 };
 
 const getPost = async (id: string): Promise<Post | undefined> => {
-  const reportRef = doc(db, "posts-test", id).withConverter(postConverter);
+  const reportRef = doc(db, "posts", id).withConverter(postConverter);
   const snapshot = await getDoc(reportRef);
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
 const getPosts = async (): Promise<Post[]> => {
   const q = query(
-    collection(db, "posts-test").withConverter(postConverter),
+    collection(db, "posts").withConverter(postConverter),
     orderBy("timeCreated", "desc")
   );
   const snapshot = await getDocs(q);
@@ -80,7 +80,7 @@ const createPost = async (post: Partial<Post>): Promise<void> => {
   const postId = normalizeString(
     post.translations!.ca.title!.toLowerCase().replaceAll(" ", "-")
   );
-  const ref = doc(collection(db, `posts-test`), postId).withConverter(
+  const ref = doc(collection(db, `posts`), postId).withConverter(
     postConverter
   );
   await setDoc(ref, {
