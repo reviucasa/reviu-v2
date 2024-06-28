@@ -9,13 +9,13 @@ import {
 } from "@headlessui/react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
 export const DropDownLanguages = () => {
   const t = useTranslations();
-  const tLinks = useTranslations("linksTitles");
+  const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
   const currentLanguage = locale || "es";
@@ -51,6 +51,7 @@ export const DropDownLanguages = () => {
                   href={`/${idiom.code}/${pathname}`}
                   hrefLang={idiom.code}
                   /* title={tLinks(pathname)} */
+                  onClick={() => router.refresh()}
                 >
                   {t(`common.${idiom.label}`)}
                 </Link>
