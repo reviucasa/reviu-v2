@@ -4,7 +4,6 @@
 @import 'fonts.scss';
 @import 'buttons.scss';
 @import 'inputs.scss';
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
 
 body {
   @apply bg-gray-100;
@@ -18,7 +17,6 @@ body {
 
 // root css file
 .quill > * {
-  font-family: "Space Grotesk", sans-serif !important;
   border-color: rgb(156 163 175) !important;
   background-color: white;
   color: inherit !important;
@@ -34,16 +32,14 @@ body {
 
 .quill > .ql-container {
   /* border radius of the container and for font size*/
-  font-family: 'Space Grotesk', sans-serif !important;
   font-size: inherit;
   border-radius: 0 0 8px 8px;
-  height: 160px;
+  height: 320px;
 
   
 }
 
 .ql-editor {
-  font-family: 'Space Grotesk', sans-serif !important;
   color: rgb(31 41 55) !important;
   font-size: 1rem !important;
   line-height: 1.75rem !important;
