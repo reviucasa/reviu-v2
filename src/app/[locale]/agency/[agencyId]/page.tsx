@@ -12,7 +12,6 @@ import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
-import { locales } from "../../layout";
 
 // export function generateStaticParams() {
 //   return locales.map((locale) => ({ locale }));

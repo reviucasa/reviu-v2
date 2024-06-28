@@ -18,6 +18,8 @@ export const PostHorizontalCard = async ({
   const locale = useLocale();
   const t = await getTranslations();
 
+  const p = post.translations[locale as "en" | "ca" | "es"]
+
   return (
     <div
       className={classNames(
@@ -36,14 +38,14 @@ export const PostHorizontalCard = async ({
       </div>
       <div className="sm:col-span-9 lg:col-span-8 p-6 ">
         <h2 className="text-2xl font-bold text-gray-900 sm:pr-12">
-          {post.title}
+          {p.title}
         </h2>
         <section aria-labelledby="information-heading" className="mt-3 ">
           <h3 id="information-heading" className="sr-only">
-            {post.subtitle}
+            {p.subtitle}
           </h3>
           <p className="text-sm text-gray-700 max-h-20 text-ellipsis overflow-hidden">
-            {post.subtitle}
+            {p.subtitle}
           </p>
         </section>
         <section aria-labelledby="options-heading" className="mt-6 text-start">

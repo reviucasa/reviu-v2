@@ -1,34 +1,19 @@
-"use client";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { ReviewDetail } from "@/components/organism/ReviewDetail";
-import { Review, getReview } from "@/models/review";
-import { useQuery } from "@tanstack/react-query";
-import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { getReview } from "@/models/review";
 import { BounceLoader } from "react-spinners";
 
-export default function ReviewDetails({
+export default async function ReviewDetails({
   params,
 }: {
   params: { reviewId: string };
 }) {
-  const router = useRouter();
-  const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-  const t = useTranslations();
+  const review = await getReview(params.reviewId);
 
-  const {
-    data: review,
-    isError,
-    error,
-  } = useQuery<Review | undefined, Error>({
-    queryKey: ["building", params.reviewId],
-    queryFn: () => getReview(params.reviewId),
-  });
-
-  if (isError) {
-    console.error(error);
-    router.push("/");
+  // Redirect if there's an error fetching the building
+  if (!review) {
+    console.error("Building not found");
+    /* router.push("/"); */
   }
 
   if (!review) {
@@ -53,8 +38,6 @@ export default function ReviewDetails({
           </div>
           <ReviewDetail
             review={review}
-            openMoreInfo={openMoreInfo}
-            setOpenMoreInfo={setOpenMoreInfo}
           />
         </div>
       </div>

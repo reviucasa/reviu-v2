@@ -14,7 +14,6 @@ import {
   deleteDoc,
   updateDoc,
 } from "firebase/firestore";
-import { cache } from "react";
 
 export enum PostStatus {
   active = "active",
@@ -24,12 +23,26 @@ export enum PostStatus {
 // Define the Post type
 export type Post = {
   id: string;
-  title: string;
+  translations: {
+    ca: {
+      title: string;
+      subtitle: string | null;
+      content: string;
+    };
+    es: {
+      title: string;
+      subtitle: string | null;
+      content: string;
+    };
+    en: {
+      title: string;
+      subtitle: string | null;
+      content: string;
+    };
+  };
   timeCreated: Timestamp;
   timeUpdated?: Timestamp;
-  subtitle: string | null;
   imageUrl: string;
-  content: string;
   status?: PostStatus;
 };
 
@@ -65,9 +78,11 @@ const getPosts = async (): Promise<Post[]> => {
 
 const createPost = async (post: Partial<Post>): Promise<void> => {
   const postId = normalizeString(
-    post.title!.toLowerCase().replaceAll(" ", "-")
+    post.translations!.ca.title!.toLowerCase().replaceAll(" ", "-")
   );
-  const ref = doc(collection(db, "posts"), postId).withConverter(postConverter);
+  const ref = doc(collection(db, `posts`), postId).withConverter(
+    postConverter
+  );
   await setDoc(ref, {
     ...post,
     timeCreated: serverTimestamp(),

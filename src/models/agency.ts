@@ -3,6 +3,7 @@ import {
   DocumentData,
   FirestoreDataConverter,
   QueryDocumentSnapshot,
+  Timestamp,
   collection,
   doc,
   endAt,
@@ -10,6 +11,8 @@ import {
   getDocs,
   orderBy,
   query,
+  serverTimestamp,
+  setDoc,
   startAt,
 } from "firebase/firestore";
 
@@ -17,6 +20,8 @@ export type RealStateAgency = {
   documentId: string;
   id: string;
   name: string;
+  lowercase: string;
+  timeCreated: Timestamp;
 };
 
 const realStateAgencyConverter: FirestoreDataConverter<RealStateAgency> = {
@@ -32,6 +37,21 @@ const realStateAgencyConverter: FirestoreDataConverter<RealStateAgency> = {
       ...data,
     } as RealStateAgency;
   },
+};
+
+// Create agency
+const createAgency = async (agencyName: string): Promise<string> => {
+  const ref = doc(collection(db, "agencies")).withConverter(
+    realStateAgencyConverter
+  );
+  await setDoc(ref, {
+    documentId: ref.id,
+    id: "",
+    name: agencyName,
+    lowercase: agencyName.toLocaleLowerCase(),
+    timeCreated: serverTimestamp(),
+  });
+  return ref.id;
 };
 
 // Retrieve a building by ID
@@ -58,8 +78,32 @@ async function searchAgenciesByName(prefix: string) {
   );
 
   const querySnapshot = await getDocs(q);
-  const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
-  return matchingAgencies;
+  /* const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
+  return matchingAgencies; */
+
+  const allAgencies = querySnapshot.docs.map(
+    (doc) => doc.data() as RealStateAgency
+  );
+
+  // Sort agencies by the length of their lowercase value (shortest first)
+  allAgencies.sort((a, b) => a.lowercase.length - b.lowercase.length);
+
+  const uniqueAgencies: RealStateAgency[] = [];
+
+  for (const agency of allAgencies) {
+    // Check if this agency's lowercase value is contained in any of the already selected unique agencies
+    if (
+      !uniqueAgencies.some(
+        (uniqueAgency) =>
+          uniqueAgency.lowercase.includes(agency.lowercase) ||
+          agency.lowercase.includes(uniqueAgency.lowercase)
+      )
+    ) {
+      uniqueAgencies.push(agency);
+    }
+  }
+
+  return uniqueAgencies;
 }
 
-export { getAgency, searchAgenciesByName };
+export { createAgency, getAgency, searchAgenciesByName };

@@ -204,6 +204,15 @@ const updateReview = async (
 };
 
 // Suspend a review
+const unsuspendReview = async (id: string): Promise<void> => {
+  const ref = doc(db, "reviews", id);
+  await updateDoc(ref, {
+    status: ReviewStatus.Published,
+    timeUpdated: serverTimestamp(),
+  });
+};
+
+// Suspend a review
 const suspendReview = async (id: string): Promise<void> => {
   const ref = doc(db, "reviews", id);
   await updateDoc(ref, {
@@ -346,6 +355,7 @@ export {
   publishReview,
   updateReview,
   suspendReview,
+  unsuspendReview,
   deleteReview,
   getReviews,
   getReviewsWithUser,

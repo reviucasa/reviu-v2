@@ -6,12 +6,10 @@ import {
   Timestamp,
   collection,
   doc,
-  endAt,
   getDoc,
   getDocs,
   orderBy,
   query,
-  startAt,
 } from "firebase/firestore";
 
 export type WeeklyStats = {

@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import happy from "public/images/happy.png";
 import sad from "public/images/sad.png";
@@ -11,9 +12,8 @@ import { Label } from "../atoms/Label";
 import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
-import { Review, ReviewImage } from "@/models/review";
+import { Review, ReviewStatus, unsuspendReview } from "@/models/review";
 import { AnalysisContext } from "@/context/AnalysisSectionActive";
-import { useRouter } from "next/navigation";
 import { DialogImage } from "../molecules/DialogImage";
 import { DialogDelete } from "../molecules/DialogDelete";
 import { Suspend } from "../atoms/Suspend";
@@ -21,14 +21,9 @@ import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
 import Link from "next/link";
+import { Unsuspend } from "../atoms/Unsuspend";
 
-export const ReviewDetail = ({
-  review,
-}: {
-  review: Review;
-  openMoreInfo: boolean;
-  setOpenMoreInfo: (value: boolean) => void;
-}) => {
+export const ReviewDetail = ({ review }: { review: Review }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
   const tLinks = useTranslations("linksTitles");
@@ -242,7 +237,7 @@ export const ReviewDetail = ({
                           {review.data?.management?.realStateAgency}
                         </Link>
                       ) : (
-                        <span>{review.data?.management?.realStateAgency}</span>
+                        <span>{t("managementReview.noSeInmobiliaria")}</span>
                       )}
                     </div>
                     <Label title={t("agency.comoHaSidoElTrato")}>
@@ -257,11 +252,13 @@ export const ReviewDetail = ({
                     `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
                   )}
                 </Label>
-                {review?.data?.management?.problemSolving && <Label title={t("common.respuestaProblema")}>
-                  {config(
-                    `landlord.problemSolving.${review?.data?.management?.problemSolving}`
-                  )}
-                </Label>}
+                {review?.data?.management?.problemSolving && (
+                  <Label title={t("common.respuestaProblema")}>
+                    {config(
+                      `landlord.problemSolving.${review?.data?.management?.problemSolving}`
+                    )}
+                  </Label>
+                )}
                 {review?.data?.management?.deposit && (
                   <Label title={t("common.devolvieronFianza")}>
                     {config(
@@ -460,11 +457,22 @@ export const ReviewDetail = ({
               />
             )}
             {user && claims?.admin && (
-              <Suspend
-                onAction={() => {
-                  setOpenModalDelete(!openModalDelete);
-                }}
-              />
+              <div className="flex space-x-6">
+                {review.status == ReviewStatus.Suspended && (
+                  <Unsuspend
+                    onAction={async () => {
+                      await unsuspendReview(review.id);
+                      location.reload();
+                    }}
+                  />
+                )}
+
+                <Suspend
+                  onAction={() => {
+                    setOpenModalDelete(!openModalDelete);
+                  }}
+                />
+              </div>
             )}
           </div>
         </>

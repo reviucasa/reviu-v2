@@ -4,7 +4,6 @@ import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
 import { useLocale } from "next-intl";
 import { notFound } from "next/navigation";
-import { locales } from "../../layout";
 
 export async function generateMetadata({
   params: { locale, postId },
@@ -14,19 +13,21 @@ export async function generateMetadata({
   // Fetch blog post data using the postId
   const post = await getPost(postId);
 
+  const p = post?.translations[locale as "en" | "ca" | "es"]
+
   const titleDetail =
     locale == "en"
-      ? `Reviu Post: ${post?.title}`
+      ? `Reviu Post: ${p?.title}`
       : locale == "es"
-      ? `Reviu: ${post?.title}`
-      : `Reviu: ${post?.title}`;
+      ? `Reviu: ${p?.title}`
+      : `Reviu: ${p?.title}`;
 
   const description =
     locale == "en"
-      ? `${post?.title} Read more on Reviu.`
+      ? `${p?.title} - Read more on Reviu.`
       : locale == "es"
-      ? `${post?.title} Lee más en Reviu.`
-      : `${post?.title} Llegeix més a Reviu.`;
+      ? `${p?.title} - Lee más en Reviu.`
+      : `${p?.title} - Llegeix més a Reviu.`;
 
   return {
     title: titleDetail,

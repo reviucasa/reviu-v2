@@ -5,26 +5,29 @@ import * as yup from "yup";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { PiImage } from "react-icons/pi";
 import Image from "next/image";
-import { Opinion, ReviewImage } from "@/models/review";
-import { auth } from "@/firebase/config";
 import { uploadImage } from "@/firebase/helpers";
 import { resizeImage } from "@/helpers/resizeImage";
 import { Post, PostStatus, createPost } from "@/models/post";
 import { normalizeString } from "@/helpers/normalizeString";
+import ReactQuillEditor from "../molecules/ReactQuillEditor";
 
 export const PostForm = () => {
   const router = useRouter();
-  const t = useTranslations();
 
   const schema = yup.object({
-    title: yup.string().required("Required"),
-    subtitle: yup.string().required("Required"),
+    catitle: yup.string().required("Required"),
+    estitle: yup.string().required("Required"),
+    entitle: yup.string().required("Required"),
+    casubtitle: yup.string().required("Required"),
+    essubtitle: yup.string().required("Required"),
+    ensubtitle: yup.string().required("Required"),
     image: yup.string().required("Required"),
-    content: yup.string().required("Required"),
+    cacontent: yup.string().required("Required"),
+    escontent: yup.string().required("Required"),
+    encontent: yup.string().required("Required"),
   });
 
   type FormData = yup.InferType<typeof schema>;
@@ -40,22 +43,48 @@ export const PostForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
+    console.log(data);
     try {
-      const { title, subtitle, image, content } = data;
+      const {
+        catitle,
+        estitle,
+        entitle,
+        casubtitle,
+        essubtitle,
+        ensubtitle,
+        image,
+        cacontent,
+        escontent,
+        encontent,
+      } = data;
       let url = "";
       if (image) {
         const file = await resizeImage(image);
         url = await uploadImage(
           file,
-          `posts/${normalizeString(title.toLowerCase().replaceAll(" ", "-"))}`
+          `posts/${normalizeString(entitle.toLowerCase().replaceAll(" ", "-"))}`
         );
       }
 
       const post: Partial<Post> = {
-        title,
-        subtitle,
+        translations: {
+          ca: {
+            title: catitle,
+            subtitle: casubtitle,
+            content: cacontent,
+          },
+          es: {
+            title: estitle,
+            subtitle: essubtitle,
+            content: escontent,
+          },
+          en: {
+            title: entitle,
+            subtitle: ensubtitle,
+            content: encontent,
+          },
+        },
         imageUrl: url,
-        content: content.replace(/\n/g, "<br>"),
         status: PostStatus.active,
       };
 
@@ -77,41 +106,81 @@ export const PostForm = () => {
       </h1>
       <div className="flex flex-col">
         <label htmlFor="title">A cool and catchy title</label>
-        <Controller
-          name="title"
-          control={control}
-          render={({ field }) => (
-            <TextAreaWithCharCounter
-              {...field}
-              maxLength={80}
-              ariaInvalid={!!errors.title}
-              className="w-full h-14"
-              placeholder="My new post title"
-              name="title"
+        {[
+          {
+            controller: "catitle",
+            error: errors.catitle,
+            placeholder: "Català: Escriu aquí el títol",
+          },
+          {
+            controller: "estitle",
+            error: errors.estitle,
+            placeholder: "Castellano: Escribe aquí el subtítulo",
+          },
+          {
+            controller: "entitle",
+            error: errors.entitle,
+            placeholder: "English: Write here the title",
+          },
+        ].map((e) => (
+          <div key={e.controller}>
+            <Controller
+              name={e.controller as "catitle" | "estitle" | "entitle"}
               control={control}
+              render={({ field }) => (
+                <TextAreaWithCharCounter
+                  {...field}
+                  maxLength={80}
+                  ariaInvalid={!!e.error}
+                  className="w-full h-14 mb-2"
+                  placeholder={e.placeholder}
+                  name={e.controller}
+                  control={control}
+                />
+              )}
             />
-          )}
-        />
-        {errors.title && <FieldError>{errors.title.message}</FieldError>}
+            {e.error && <FieldError>{e.error.message}</FieldError>}
+          </div>
+        ))}
       </div>
       <div className="flex flex-col">
         <label htmlFor="subtitle">Post subtitle</label>
-        <Controller
-          name="subtitle"
-          control={control}
-          render={({ field }) => (
-            <TextAreaWithCharCounter
-              {...field}
-              ariaInvalid={!!errors.subtitle}
-              className="w-full h-20"
-              placeholder="Something catchy that engages the reader"
-              name="subtitle"
+        {[
+          {
+            controller: "casubtitle",
+            error: errors.casubtitle,
+            placeholder: "Català: Escriu aquí el subtítol",
+          },
+          {
+            controller: "essubtitle",
+            error: errors.essubtitle,
+            placeholder: "Castellano: Escribe aquí el subtítulo",
+          },
+          {
+            controller: "ensubtitle",
+            error: errors.ensubtitle,
+            placeholder: "English: Write here the subtitle",
+          },
+        ].map((e) => (
+          <div key={e.controller}>
+            <Controller
+              name={e.controller as "casubtitle" | "essubtitle" | "ensubtitle"}
               control={control}
+              render={({ field }) => (
+                <TextAreaWithCharCounter
+                  {...field}
+                  ariaInvalid={!!e.error}
+                  className="w-full h-20 mb-2"
+                  placeholder={e.placeholder}
+                  name={e.controller}
+                  control={control}
+                />
+              )}
             />
-          )}
-        />
 
-        {errors.subtitle && <FieldError>{errors.subtitle.message}</FieldError>}
+            {e.error && <FieldError>{e.error.message}</FieldError>}
+          </div>
+        ))}
       </div>
       <div>
         <p className=" font-bold pb-2">Main image</p>
@@ -185,24 +254,63 @@ export const PostForm = () => {
       </div>
       <div className="flex flex-col">
         <label htmlFor="content">Content</label>
-        <Controller
+        {[
+          {
+            controller: "cacontent",
+            error: errors.cacontent,
+            placeholder: "Català: Escriu aquí el contingut del post",
+          },
+          {
+            controller: "escontent",
+            error: errors.escontent,
+            placeholder: "Castellano: Escribe aquí el contenido del post",
+          },
+          {
+            controller: "encontent",
+            error: errors.encontent,
+            placeholder: "English: Write the post content here",
+          },
+        ].map((e) => (
+          <div key={e.controller} className="mb-4">
+            <Controller
+              name={e.controller as "cacontent" | "escontent" | "encontent"}
+              control={control}
+              render={({ field }) => (
+                <ReactQuillEditor
+                  value={field.value}
+                  onChange={field.onChange}
+                  placeholder={e.placeholder}
+                  className="w-full  focus:border-secondary-500 "
+                />
+              )}
+            />
+            {e.error && <FieldError>{e.error.message}</FieldError>}
+          </div>
+        ))}
+        {/* <Controller
           name="content"
           control={control}
           render={({ field }) => (
-            <TextAreaWithCharCounter
-              {...field}
-              ariaInvalid={!!errors.subtitle}
-              maxLength={3000}
-              className="w-full h-64"
-              placeholder="The content of your post goes here"
-              name="content"
-              control={control}
-              withAddLink={true}
+            <ReactQuillEditor
+              value={field.value}
+              onChange={field.onChange}
+              placeholder="Whatever"
+              className="w-full  focus:border-secondary-500"
             />
+            // <TextAreaWithCharCounter
+            //   {...field}
+            //   ariaInvalid={!!errors.content}
+            //   maxLength={3000}
+            //   className="w-full h-64"
+            //   placeholder="The content of your post goes here"
+            //   name="content"
+            //   control={control}
+            //   withAddLink={true}
+            // />
           )}
         />
 
-        {errors.subtitle && <FieldError>{errors.subtitle.message}</FieldError>}
+        {errors.content && <FieldError>{errors.content.message}</FieldError>} */}
       </div>
       <div className="flex justify-between">
         <Button buttonClassName={"btn-secondary-500"}>Publish</Button>

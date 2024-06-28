@@ -16,12 +16,13 @@ textarea {
     @apply bg-gray-200 text-gray-500 cursor-not-allowed;
   }
 }
-a{
+
+a {
+  
   &:hover {
     text-decoration: underline  
   }
 }
-
 
 input[type='text'],
 input[type='date'],
