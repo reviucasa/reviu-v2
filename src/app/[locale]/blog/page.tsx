@@ -36,7 +36,7 @@ export async function generateMetadata({
   };
 }
 
-export const revalidate = 3600
+export const revalidate = 3600;
 
 export default async function Blog({
   params: { locale },
@@ -47,8 +47,6 @@ export default async function Blog({
   const t = await getTranslations();
 
   const posts = await getPosts();
-
-  console.log(posts);
 
   return (
     <MainLayout>

@@ -63,8 +63,6 @@ export const ManagementForm = () => {
     adviceLandlord: yup.string(),
   });
 
-  console.log(isRealStateAgencyUnknown);
-
   const {
     formState: { isDirty, isValid, errors, isSubmitSuccessful, dirtyFields },
     handleSubmit,
@@ -136,7 +134,6 @@ export const ManagementForm = () => {
   const isFormCompleted = isValid && !isDirty;
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
     if (data.isRealStateAgency) {
       if (isRealStateAgencyManual) {
         const agencyId = await createAgency(data.realStateAgency!);

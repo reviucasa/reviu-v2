@@ -51,7 +51,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
-      console.log(address);
       setLoading(true);
       const building = await findBuildingByAddress(address);
       if (building) {

@@ -116,26 +116,6 @@ export default function SectionStats() {
   );
 }
 
-/* const formatStat = (
-  name: string,
-  data: number[],
-  inverted?: boolean | undefined
-): Stat => {
-  console.log(data);
-  const total = data.reduce((prev, val) => prev + val);
-  const prev = data.slice(1).reduce((prev, val) => prev + val);
-
-  return {
-    name,
-    value: total,
-    previousValue: prev,
-    change: (total / prev - 1) * 100,
-    changeType:
-      total > prev ? "increase" : total < prev ? "decrease" : "steady",
-    inverted,
-  } as Stat;
-}; */
-
 const formatStat = (
   name: string,
   data: number[],

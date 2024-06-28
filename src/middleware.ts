@@ -7,7 +7,7 @@ export default createMiddleware({
   // Used when no locale matches
   defaultLocale: "es",
 
-  localePrefix: 'never'
+  localePrefix: "always",
 });
 
 export const config = {

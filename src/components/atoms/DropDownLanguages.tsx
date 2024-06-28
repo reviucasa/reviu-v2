@@ -13,9 +13,16 @@ import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
+const removeLocaleFromPath = (path: string) => {
+  const parts = path.split("/");
+  if (["en", "es", "ca"].includes(parts[1])) {
+    parts.splice(1, 1);
+  }
+  return parts.join("/");
+};
+
 export const DropDownLanguages = () => {
   const t = useTranslations();
-  const router = useRouter();
   const pathname = usePathname();
   const locale = useLocale();
   const currentLanguage = locale || "es";
@@ -48,10 +55,10 @@ export const DropDownLanguages = () => {
                   className={`text-gray-800 p-2 cursor-pointer ${
                     focus && "bg-secondary-200"
                   }`}
-                  href={`/${idiom.code}/${pathname}`}
-                  hrefLang={idiom.code}
+                  href={`/${idiom.code}/${removeLocaleFromPath(pathname)}`}
+                  /*  hrefLang={idiom.code} */
                   /* title={tLinks(pathname)} */
-                  onClick={() => router.refresh()}
+                  /*  onClick={() => router.refresh()} */
                 >
                   {t(`common.${idiom.label}`)}
                 </Link>
