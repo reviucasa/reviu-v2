@@ -13,7 +13,7 @@ export async function generateMetadata({
   // Fetch blog post data using the postId
   const post = await getPost(postId);
 
-  const p = post?.translations[locale as "en" | "ca" | "es"]
+  const p = post?.translations[locale as "en" | "ca" | "es"];
 
   const titleDetail =
     locale == "en"
@@ -38,36 +38,14 @@ export async function generateMetadata({
 export default async function PostPage({
   params,
 }: {
-  params: { postId: string };
+  params: { locale: string; postId: string };
 }) {
-  const locale = useLocale();
-  /* const router = useRouter();
+  // const locale = useLocale();
 
-  const {
-    data: post,
-    isError,
-    error,
-  } = useQuery<Post | undefined, Error>({
-    queryKey: ["post", params.postId],
-    queryFn: () => getPost(decodeURIComponent(params.postId)),
-  });
-
-  if (isError) {
-    console.error(error);
-    router.push("/");
-  } */
-
-  const post = await getPost(decodeURIComponent(params.postId));
+  const post = await getPost(params.postId);
 
   if (!post) {
     notFound();
-    /* return (
-      <MainLayout>
-        <div className="top-0 left-0 flex justify-center items-center w-full h-[100vh] z-50 bg-white opacity-90">
-          <BounceLoader color="#d8b4fe" size={140} />
-        </div>
-      </MainLayout>
-    ); */
   }
 
   return (
@@ -76,13 +54,17 @@ export default async function PostPage({
         <PostView
           post={{
             ...post,
-            timeCreated: formatFirebaseTimestamp(post.timeCreated, locale, {
-              onlyDate: true,
-              ignoreYear: false,
-            }),
+            timeCreated: formatFirebaseTimestamp(
+              post.timeCreated,
+              params.locale,
+              {
+                onlyDate: true,
+                ignoreYear: false,
+              }
+            ),
             timeUpdated:
               post.timeUpdated &&
-              formatFirebaseTimestamp(post.timeUpdated, locale, {
+              formatFirebaseTimestamp(post.timeUpdated, params.locale, {
                 onlyDate: true,
                 ignoreYear: false,
               }),
