@@ -15,11 +15,7 @@ import {
   getPositionUrlReview,
   getUrlReview,
 } from "@/helpers/stepper";
-import {
-  createDraft,
-  getReviewsFromUser,
-  updateDraft,
-} from "@/models/review";
+import { createDraft, getReviewsFromUser, updateDraft } from "@/models/review";
 import { auth } from "@/firebase/config";
 import {
   Apartment,
@@ -29,6 +25,7 @@ import {
   getBuildingStairs,
 } from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";
+import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
 
 export const AddressForm = () => {
   const { draft } = useDraft();
@@ -137,7 +134,9 @@ export const AddressForm = () => {
     }
   };
 
-  const currentUrlPosition = getPositionUrlReview(pathname);
+  const currentUrlPosition = getPositionUrlReview(
+    removeLocaleFromPath(pathname)
+  );
 
   const stepReview = getNextStepReview(
     draft?.data?.step || 0,
@@ -164,6 +163,7 @@ export const AddressForm = () => {
       /* revalidateUser(); */
       router.push(getUrlReview(stepReview));
     }
+
     setLoading(false);
   };
 
