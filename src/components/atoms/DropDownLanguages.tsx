@@ -13,7 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
-const removeLocaleFromPath = (path: string) => {
+export const removeLocaleFromPath = (path: string) => {
   const parts = path.split("/");
   if (["en", "es", "ca"].includes(parts[1])) {
     parts.splice(1, 1);

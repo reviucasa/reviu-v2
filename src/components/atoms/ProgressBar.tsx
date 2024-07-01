@@ -1,5 +1,6 @@
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo } from "react";
+import { removeLocaleFromPath } from "./DropDownLanguages";
 
 type Step = {
   label: string;
@@ -7,11 +8,12 @@ type Step = {
 };
 
 export const ProgressBar = ({ steps }: { steps: Step[] }) => {
-  const router = useRouter();
   const pathname = usePathname();
 
   const getPercent = useMemo((): number => {
-    const activeIndex = steps.findIndex((step) => step.url === pathname);
+    const activeIndex = steps.findIndex(
+      (step) => step.url === removeLocaleFromPath(pathname)
+    );
     return Math.round((activeIndex / (steps.length - 1)) * 100);
   }, [pathname, steps]);
 

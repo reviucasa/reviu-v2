@@ -1,4 +1,5 @@
 "use client";
+import { removeLocaleFromPath } from "@/components/atoms/DropDownLanguages";
 import { auth } from "@/firebase/config";
 import { UserStatus } from "@/models/user";
 import {
@@ -62,11 +63,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (!user) {
         setUser(null);
         // User is signed out
-        if (adminUrls.includes(pathname)) {
+        if (adminUrls.includes(removeLocaleFromPath(pathname))) {
           router.replace("/");
           return;
         }
-        if (protectedUrls.includes(pathname)) {
+        if (protectedUrls.includes(removeLocaleFromPath(pathname))) {
           router.push("/auth/login");
         }
       } else if (user) {
@@ -75,14 +76,18 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
         if (
           tokenResult.claims.status == UserStatus.Suspended &&
-          (adminUrls.includes(pathname) || protectedUrls.includes(pathname))
+          (adminUrls.includes(removeLocaleFromPath(pathname)) ||
+            protectedUrls.includes(removeLocaleFromPath(pathname)))
         ) {
           /* await auth.signOut(); */
           router.replace("/suspended");
           return;
         }
 
-        if (tokenResult.claims.admin != true && adminUrls.includes(pathname)) {
+        if (
+          tokenResult.claims.admin != true &&
+          adminUrls.includes(removeLocaleFromPath(pathname))
+        ) {
           router.replace("/");
           return;
         }

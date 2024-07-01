@@ -3,6 +3,7 @@ import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback } from "react";
+import { removeLocaleFromPath } from "./DropDownLanguages";
 
 type Step = {
   label: string;
@@ -19,7 +20,9 @@ const Stepper: React.FC<StepperProps> = ({ steps, className }) => {
   const { draft } = useDraft();
 
   const getActiveStepIndex = (): number => {
-    const activeIndex = steps.findIndex((step) => step.url === pathname);
+    const activeIndex = steps.findIndex(
+      (step) => step.url === removeLocaleFromPath(pathname)
+    );
     return activeIndex >= 0 ? activeIndex : 0;
   };
 
