@@ -24,10 +24,10 @@ export async function generateMetadata({
 
   const description =
     locale == "en"
-      ? `${p?.title} - Read more on Reviu.`
+      ? `${p?.subtitle} - Read more on Reviu.`
       : locale == "es"
-      ? `${p?.title} - Lee más en Reviu.`
-      : `${p?.title} - Llegeix més a Reviu.`;
+      ? `${p?.subtitle} - Lee más en Reviu.`
+      : `${p?.subtitle} - Llegeix més a Reviu.`;
 
   return {
     title: titleDetail,
