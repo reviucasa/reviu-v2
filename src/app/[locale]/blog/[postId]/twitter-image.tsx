@@ -22,11 +22,6 @@ export default async function Image({
   // Fetch blog post data using the postId
   const post = await getPost(postId);
 
-  // Font
-  const ppeUltrabold = fetch(
-    new URL("./fonts/PPEditorialNew-Ultrabold.otf", import.meta.url)
-  ).then((res) => res.arrayBuffer());
-
   return new ImageResponse(
     (
       // ImageResponse JSX element
@@ -49,14 +44,6 @@ export default async function Image({
       // For convenience, we can re-use the exported opengraph-image
       // size config to also set the ImageResponse's width and height.
       ...size,
-      fonts: [
-        {
-          name: "PPEditorialNew",
-          data: await ppeUltrabold,
-          style: "normal",
-          weight: 700,
-        },
-      ],
     }
   );
 }
