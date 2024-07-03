@@ -218,11 +218,13 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     .join(", ")}
                 </Label>
               </div>
-              <div className="border-b-2 lg:mb-8 mb-4 mt-4">
-                <h6 className="mb-2 lg:text-xl font-bold">
-                  {t("common.gestion")}
-                </h6>
-              </div>
+              {review?.data?.management && (
+                <div className="border-b-2 lg:mb-8 mb-4 mt-4">
+                  <h6 className="mb-2 lg:text-xl font-bold">
+                    {t("common.gestion")}
+                  </h6>
+                </div>
+              )}
               <div className="flex-1 grid grid-cols-2 gap-8">
                 {review?.data?.management?.isRealStateAgency && (
                   <>
@@ -247,11 +249,14 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     </Label>
                   </>
                 )}
-                <Label title={t("common.tratoCasero")}>
-                  {config(
-                    `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
-                  )}
-                </Label>
+                {review?.data?.management?.landlordDealing && (
+                  <Label title={t("common.tratoCasero")}>
+                    {config(
+                      `landlord.landlordTreatment.${review?.data?.management?.landlordDealing}`
+                    )}
+                  </Label>
+                )}
+
                 {review?.data?.management?.problemSolving && (
                   <Label title={t("common.respuestaProblema")}>
                     {config(
