@@ -135,6 +135,10 @@ export const ManagementForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (data.isRealStateAgency) {
+      console.log(isRealStateAgencyManual, "isRealStateAgencyManual");
+      console.log(isRealStateAgencyUnknown, "isRealStateAgencyUnknown");
+      console.log("selectedRealStateAgency", selectedRealStateAgency);
+
       if (isRealStateAgencyManual) {
         const agencyId = await createAgency(data.realStateAgency!);
         return onSubmitDraft({
@@ -146,6 +150,12 @@ export const ManagementForm = () => {
           ...data,
           agencyId: "",
           realStateAgency: "",
+        });
+      } else {
+        return onSubmitDraft({
+          ...data,
+          realStateAgency: selectedRealStateAgency?.name ?? "",
+          agencyId: selectedRealStateAgency?.documentId ?? "",
         });
       }
     } else {
