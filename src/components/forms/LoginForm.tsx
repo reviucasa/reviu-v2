@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { httpsCallable } from "firebase/functions";
 import { functions } from "@/firebase/config";
 import { sendSignInLink } from "@/firebase/auth";

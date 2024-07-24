@@ -12,7 +12,7 @@ import {
   BiUser,
   BiX,
 } from "react-icons/bi";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 
 const navigation = [
   { title: "", items: [{ name: "Dashboard", href: "/admin", icon: BiHome }] },

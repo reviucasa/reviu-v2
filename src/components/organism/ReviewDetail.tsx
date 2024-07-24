@@ -20,8 +20,8 @@ import { Suspend } from "../atoms/Suspend";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
-import Link from "next/link";
 import { Unsuspend } from "../atoms/Unsuspend";
+import { Link } from "@/navigation";
 
 export const ReviewDetail = ({ review }: { review: Review }) => {
   const { user, claims } = useAuth();

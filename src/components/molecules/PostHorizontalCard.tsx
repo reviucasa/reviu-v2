@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Post, PostStatus } from "@/models/post";
 import { classNames } from "@/helpers/classNames";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { PostModalButton } from "../atoms/PostModalButton";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { useLocale } from "next-intl";
+import { Link } from "@/navigation";
 
 export const PostHorizontalCard = async ({
   post,

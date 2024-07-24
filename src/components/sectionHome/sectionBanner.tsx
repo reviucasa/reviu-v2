@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Mano from "public/images/Frame.png";
 import Banner from "public/images/imgBanner.png";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
 
 export async function SectionBanner({ className }: { className?: string }) {
   const t = await getTranslations();

@@ -1,6 +1,6 @@
 "use client";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { FieldError } from "../atoms/FieldError";
 import lupa from "public/images/lupa-green.png";

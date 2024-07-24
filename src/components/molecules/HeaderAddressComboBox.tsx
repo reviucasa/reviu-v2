@@ -1,7 +1,7 @@
 "use client";
 import { findBuildingByAddress } from "@/models/building";
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { FieldError } from "../atoms/FieldError";

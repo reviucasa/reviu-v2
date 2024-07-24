@@ -14,7 +14,7 @@ import { useTranslations } from "next-intl";
 import { range } from "@/helpers/generateRange";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";
 import { useDraft } from "@/hooks/swr/useDraft";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { getUrlReview } from "@/helpers/stepper";
 import { useStep } from "@/hooks/useStep";
 

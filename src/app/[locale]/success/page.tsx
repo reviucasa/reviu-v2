@@ -1,8 +1,8 @@
 import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
-import Link from "next/link";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { locales } from "../layout";
+import { Link } from "@/navigation";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -63,8 +63,8 @@ export default async function Success({
         <div className="flex gap-5">
           <Link
             className="btn btn-primary-500 mt-7 w-full lg:w-auto"
-            href="/review"
-            title={tLinks("/review")}
+            href="/newReview"
+            title={tLinks("/newReview")}
           >
             {t("success.publicarOtraOpinion")}
           </Link>

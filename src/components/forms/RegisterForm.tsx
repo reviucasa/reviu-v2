@@ -8,7 +8,7 @@ import { Button } from "../atoms/Button";
 import { useLocale, useTranslations } from "next-intl";
 import { Genders, countries } from "@/staticData";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { updateAuthUser } from "@/firebase/auth";
 import { createUser } from "@/models/user";
 import { useAuth } from "@/context/auth";

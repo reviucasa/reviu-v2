@@ -4,7 +4,7 @@ import { PostStatus, updatePost, deletePost } from "@/models/post";
 import { useState, useEffect } from "react";
 import { BiHide, BiShow, BiTrash } from "react-icons/bi";
 import { PostPlain } from "../organism/PostView";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 
 export default function PostViewActions({ post }: { post: PostPlain }) {
   const { claims } = useAuth();

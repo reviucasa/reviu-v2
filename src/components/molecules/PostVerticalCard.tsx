@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { Post } from "@/models/post";
-import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
 
 export default async function PostVerticalCard({ post }: { post: Post }) {
   const t = await getTranslations();

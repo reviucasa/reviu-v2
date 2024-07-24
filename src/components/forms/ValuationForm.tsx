@@ -8,7 +8,7 @@ import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { ReviewFormLayout } from "../layouts/ReviewFormLayout";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useStep } from "@/hooks/useStep";
 import { getUrlReview } from "@/helpers/stepper";
 import { useTranslations } from "next-intl";

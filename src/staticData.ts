@@ -26,13 +26,13 @@ export const Genders: Array<{ [key: string]: string }> = [
 ];
 
 export const steps = [
-  { label: "Dirección", url: "/review/address" },
-  { label: "Estancia", url: "/review/stay" },
-  { label: "Valoración-del-piso", url: "/review/valuation" },
-  { label: "Gestión", url: "/review/management" },
-  { label: "Comunidad-de-vecinos", url: "/review/community" },
-  { label: "Barrio-o-zona", url: "/review/neighbourhood" },
-  { label: "Opinión-del-piso", url: "/review/opinion" },
+  { label: "Dirección", url: "/newReview/address" },
+  { label: "Estancia", url: "/newReview/stay" },
+  { label: "Valoración-del-piso", url: "/newReview/valuation" },
+  { label: "Gestión", url: "/newReview/management" },
+  { label: "Comunidad-de-vecinos", url: "/newReview/community" },
+  { label: "Barrio-o-zona", url: "/newReview/neighbourhood" },
+  { label: "Opinión-del-piso", url: "/newReview/opinion" },
 ];
 
 export const countries: Array<{ [key: string]: string }> = [

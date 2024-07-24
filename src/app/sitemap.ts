@@ -1,4 +1,4 @@
-import { MetadataRoute } from "next";
+/* import { MetadataRoute } from "next";
 
 const generateBlogPostsSitemapObjects = async () => {
   return [
@@ -79,49 +79,49 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.2,
     },
     {
-      url: "https://reviucasa.com/review",
+      url: "https://reviucasa.com/newReview",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.2,
     },
     {
-      url: "https://reviucasa.com/review/address",
+      url: "https://reviucasa.com/newReview/address",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/community",
+      url: "https://reviucasa.com/newReview/community",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/management",
+      url: "https://reviucasa.com/newReview/management",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/neighbourhood",
+      url: "https://reviucasa.com/newReview/neighbourhood",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/opinion",
+      url: "https://reviucasa.com/newReview/opinion",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/stay",
+      url: "https://reviucasa.com/newReview/stay",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
     },
     {
-      url: "https://reviucasa.com/review/valuation",
+      url: "https://reviucasa.com/newReview/valuation",
       lastModified: new Date(),
       changeFrequency: "monthly",
       priority: 0.4,
@@ -139,4 +139,30 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.1,
     },
   ];
+}
+ */
+
+import { defaultLocale, host, locales, pathnames } from "@/config";
+import { getPathname } from "@/navigation";
+import { MetadataRoute } from "next";
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const keys = Object.keys(pathnames) as Array<keyof typeof pathnames>;
+
+  function getUrl(
+    key: keyof typeof pathnames,
+    locale: (typeof locales)[number]
+  ) {
+    const pathname = getPathname({ locale, href: key });
+    return `${host}/${locale}${pathname === "/" ? "" : pathname}`;
+  }
+
+  return keys.map((key) => ({
+    url: getUrl(key, defaultLocale),
+    alternates: {
+      languages: Object.fromEntries(
+        locales.map((locale) => [locale, getUrl(key, locale)])
+      ),
+    },
+  }));
 }

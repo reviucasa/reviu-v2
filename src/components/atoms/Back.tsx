@@ -1,5 +1,5 @@
 import { useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { AiOutlineLeft } from "react-icons/ai";
 
 export const Back = ({ className }: { className?: string }) => {

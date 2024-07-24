@@ -1,10 +1,11 @@
 "use client";
 
-import { Menu, MenuItem } from "@headlessui/react";
-import { useRouter, usePathname, useSearchParams } from "next/navigation";
+import { MenuItem } from "@headlessui/react";
+import { useRouter, usePathname } from "@/navigation";
 import { mutate } from "swr";
 import { signOut } from "@/firebase/auth";
 import { useTranslations } from "next-intl";
+import { useSearchParams } from "next/navigation";
 
 const UserMenuClient = () => {
   const router = useRouter();
@@ -21,7 +22,7 @@ const UserMenuClient = () => {
       { revalidate: false } // do not revalidate
     );
 
-    pathname.includes("/review")
+    pathname.includes("/newReview")
       ? router.push("/")
       : params.toString().includes("mode=signIn")
       ? router.replace("/")

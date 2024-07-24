@@ -1,4 +1,4 @@
-import { usePathname } from "next/navigation";
+import { usePathname } from "@/navigation";
 import { getNextStepReview, getPositionUrlReview } from "@/helpers/stepper";
 import { useDraft } from "./swr/useDraft";
 import { removeLocaleFromPath } from "@/components/atoms/DropDownLanguages";

@@ -7,7 +7,6 @@ import {
   TransitionChild,
 } from "@headlessui/react";
 import Image from "next/image";
-import Link from "next/link";
 import Face from "public/images/face.png";
 import { Fragment } from "react";
 import { HiOutlineChevronUp } from "react-icons/hi";
@@ -15,6 +14,7 @@ import UserMenuClient from "./UserMenuClient";
 import { useTranslations } from "next-intl";
 import { useAuth } from "@/context/auth";
 import { useUser } from "@/hooks/swr/useUser";
+import { Link } from "@/navigation";
 
 export const UserMenuNavbar = () => {
   const auth = useAuth();
@@ -114,8 +114,8 @@ export const UserMenuNavbar = () => {
         {t("common.signIn")}
       </Link> */}
       <Link
-        href="/review"
-        title={tLinks("/review")}
+        href="/newReview"
+        title={tLinks("/newReview")}
         className="btn btn-primary-500 "
       >
         {t("common.writeReview")}

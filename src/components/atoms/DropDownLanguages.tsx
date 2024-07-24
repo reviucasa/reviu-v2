@@ -1,4 +1,5 @@
 "use client";
+import { Link } from "@/navigation";
 import { Idioms } from "@/staticData";
 import {
   Menu,
@@ -8,8 +9,7 @@ import {
   Transition,
 } from "@headlessui/react";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "@/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
@@ -55,8 +55,8 @@ export const DropDownLanguages = () => {
                   className={`text-gray-800 p-2 cursor-pointer ${
                     focus && "bg-secondary-200"
                   }`}
-                  href={`/${idiom.code}/${removeLocaleFromPath(pathname)}`}
-                  /*  hrefLang={idiom.code} */
+                  href={`/${removeLocaleFromPath(pathname)}`}
+                  locale={idiom.code as "es" | "ca" | "en"}
                   /* title={tLinks(pathname)} */
                   /*  onClick={() => router.refresh()} */
                 >

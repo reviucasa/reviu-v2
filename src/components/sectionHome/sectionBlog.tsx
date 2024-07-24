@@ -1,9 +1,9 @@
 import Image from "next/image";
 import circulosection from "public/images/circulosection.svg";
 import { PostStatus, getPosts } from "@/models/post";
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import PostVerticalCard from "../molecules/PostVerticalCard";
+import { Link } from "@/navigation";
 
 export async function SectionBlog() {
   const t = await getTranslations();

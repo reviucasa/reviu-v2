@@ -1,6 +1,6 @@
 import Image, { StaticImageData } from "next/image";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 export const BannerOpinion = async ({
   className,
@@ -33,12 +33,12 @@ export const BannerOpinion = async ({
           href={
             textButton == t("agency.contactaNosotros")
               ? "mailto:info@reviucasa.com"
-              : "/review"
+              : "/newReview"
           }
           title={
             textButton == t("agency.contactaNosotros")
               ? "Email"
-              : tLinks("/review")
+              : tLinks("/newReview")
           }
         >
           {textButton}
