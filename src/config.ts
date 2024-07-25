@@ -28,11 +28,11 @@ export const pathnames: Pathnames<typeof locales> = {
     en: "/auth/check-email",
   },
   "/blog": "/blog",
-  "/building": {
+  /* "/building": {
     es: "/edificio",
     ca: "/edifici",
     en: "/building",
-  },
+  }, */
   "/building/[buildingId]": {
     es: "/edificio/[buildingId]",
     ca: "/edifici/[buildingId]",
@@ -108,4 +108,4 @@ export const pathnames: Pathnames<typeof locales> = {
 export const localePrefix: LocalePrefix<typeof locales> = "as-needed";
 
 export const port = process.env.PORT || 3000;
-export const host = `http://localhost:${port}`;
+export const host = "https://reviucasa.com"; //`http://localhost:${port}`;

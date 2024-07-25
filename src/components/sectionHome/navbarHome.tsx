@@ -18,7 +18,7 @@ import lupa from "public/images/lupa.png";
 import lupaGreen from "public/images/lupa-green.png";
 import { FieldError } from "../atoms/FieldError";
 import { UserMenuNavbar } from "../atoms/UserMenuNavbar.server";
-import { usePathname, useRouter } from "@/navigation";
+import { getPathname, usePathname, useRouter } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
@@ -28,6 +28,7 @@ import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
+import { defaultLocale, host, locales, pathnames } from "@/config";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -100,6 +101,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             router.push("/");
           }}
         />
+
         {search && (
           <>
             <div className="flex flex-col flex-1">
