@@ -13,14 +13,14 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 export const protectedUrls = [
-  "/review",
-  "/review/address",
-  "/review/stay",
-  "/review/valuation",
-  "/review/opinion",
-  "/review/management",
-  "/review/community",
-  "/review/neighbourhood",
+  "/newReview",
+  "/newReview/address",
+  "/newReview/stay",
+  "/newReview/valuation",
+  "/newReview/opinion",
+  "/newReview/management",
+  "/newReview/community",
+  "/newReview/neighbourhood",
   "/success",
   "/account",
 ];

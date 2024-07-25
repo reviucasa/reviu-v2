@@ -1,5 +1,5 @@
+import { Link } from "@/navigation";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 
 export async function LegalNoticeComponent({
   className,

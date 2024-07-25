@@ -1,7 +1,7 @@
 import Image from "next/image";
 import opinion from "public/images/imgOpinion.png";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 export async function SectionBannerOpinion() {
   const t = await getTranslations();
@@ -18,8 +18,8 @@ export async function SectionBannerOpinion() {
         </h4>
         <Link
           className="btn  btn-primary-500 mt-10 content-center overflow-hidden whitespace-nowrap"
-          href="/review"
-          title={tLinks("/review")}
+          href="/newReview"
+          title={tLinks("/newReview")}
         >
           {t("bannerOpinion.WriteOpinion")}
         </Link>

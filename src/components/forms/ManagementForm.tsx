@@ -11,7 +11,7 @@ import * as yup from "yup";
 import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
 import { AgencyComboBox } from "../atoms/AgencyComboBox";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useStep } from "@/hooks/useStep";
 import { getUrlReview } from "@/helpers/stepper";
 import { useTranslations } from "next-intl";

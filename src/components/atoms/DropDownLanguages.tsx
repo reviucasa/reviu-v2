@@ -1,4 +1,5 @@
 "use client";
+import { Link } from "@/navigation";
 import { Idioms } from "@/staticData";
 import {
   Menu,
@@ -8,8 +9,8 @@ import {
   Transition,
 } from "@headlessui/react";
 import { useLocale, useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "@/navigation";
+import { usePathname as useNextPathname } from "next/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
 
@@ -24,8 +25,10 @@ export const removeLocaleFromPath = (path: string) => {
 export const DropDownLanguages = () => {
   const t = useTranslations();
   const pathname = usePathname();
+  const nextPathname = useNextPathname(); // this is the one working here surprisingly
+
   const locale = useLocale();
-  const currentLanguage = locale || "es";
+  const currentLanguage = locale || "ca";
 
   return (
     <Menu as="div" className="relative max-w-[168px]">
@@ -55,8 +58,8 @@ export const DropDownLanguages = () => {
                   className={`text-gray-800 p-2 cursor-pointer ${
                     focus && "bg-secondary-200"
                   }`}
-                  href={`/${idiom.code}/${removeLocaleFromPath(pathname)}`}
-                  /*  hrefLang={idiom.code} */
+                  href={`/${removeLocaleFromPath(nextPathname)}`}
+                  locale={idiom.code as "es" | "ca" | "en"}
                   /* title={tLinks(pathname)} */
                   /*  onClick={() => router.refresh()} */
                 >

@@ -1,9 +1,8 @@
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
 import React, { useCallback } from "react";
 import { removeLocaleFromPath } from "./DropDownLanguages";
+import { Link, usePathname } from "@/navigation";
 
 type Step = {
   label: string;

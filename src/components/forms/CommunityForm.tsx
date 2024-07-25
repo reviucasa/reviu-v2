@@ -9,7 +9,7 @@ import * as yup from "yup";
 import { Back } from "../atoms/Back";
 import { Button } from "../atoms/Button";
 import { MultiselectInput } from "../molecules/MultiselectInput";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useStep } from "@/hooks/useStep";
 import { useTranslations } from "next-intl";
 import { getUrlReview } from "@/helpers/stepper";

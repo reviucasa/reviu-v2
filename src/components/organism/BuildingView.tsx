@@ -7,11 +7,11 @@ import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import React from "react";
 import { useState } from "react";
-import Link from "next/link";
 import { AreaValuation } from "@/components/organism/AreaValuation";
 import { CommunityValuation } from "@/components/organism/CommunityValuation";
 import { FloorValuation } from "@/components/organism/FloorValuation";
 import { GeneralValuation } from "@/components/organism/GeneralValuation";
+import { Link } from "@/navigation";
 
 export default function BuildingView({
   analysis,
@@ -96,8 +96,8 @@ export default function BuildingView({
             <p className="mt-1 mb-8">{t("common.hasVividoAqui")} </p>
             <Link
               className="btn btn-primary-500 content-center overflow-hidden px-14"
-              href="/review"
-              title={tLinks("/review")}
+              href="/newReview"
+              title={tLinks("/newReview")}
             >
               {t("common.writeReview")}
             </Link>

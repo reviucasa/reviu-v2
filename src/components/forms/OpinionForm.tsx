@@ -14,7 +14,7 @@ import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
 import { ReviewFormLayout } from "../layouts/ReviewFormLayout";
 import { RadioInput } from "../molecules/RadioInput";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useTranslations } from "next-intl";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useSubmitDraft } from "@/hooks/useSubmitDraft";

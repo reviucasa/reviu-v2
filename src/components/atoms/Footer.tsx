@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 import Instagram from "public/images/IconInstagram.svg";
 import TikTok from "public/images/IconTikTok.svg";
 import Twitter from "public/images/IconTwitter.svg";
@@ -7,6 +6,7 @@ import Idra from "public/images/IDRA-trans.png";
 import LogoWhite from "public/images/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { getTranslations } from "next-intl/server";
+import { Link } from "@/navigation";
 
 export async function Footer() {
   const t = await getTranslations();

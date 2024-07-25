@@ -158,7 +158,7 @@ export default async function BuildingPage({
                   <p className="mt-1 mb-8">{t("common.hasVividoAqui")} </p>
                   <Link
                     className="btn btn-primary-500 content-center overflow-hidden px-14"
-                    href="/review"
+                    href="/newReview"
                   >
                     {t("common.writeReview")}
                   </Link>

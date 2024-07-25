@@ -2,7 +2,7 @@
 import { useDraft } from "@/hooks/swr/useDraft";
 import { useUser } from "@/hooks/swr/useUser";
 import { steps } from "@/staticData";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { useEffect } from "react";
 
 export default function Review() {
@@ -12,7 +12,7 @@ export default function Review() {
 
   useEffect(() => {
     if (user && !draft) {
-      router.push("/review/address");
+      router.push("/newReview/address");
     }
     if (draft?.data.step) {
       router.push(

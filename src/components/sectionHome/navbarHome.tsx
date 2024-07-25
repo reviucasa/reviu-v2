@@ -9,7 +9,6 @@ import {
   Switch,
 } from "@headlessui/react";
 import Image from "next/image";
-import Link from "next/link";
 import Logo from "public/images/reviuLogo.svg";
 import { Suspense, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -19,7 +18,7 @@ import lupa from "public/images/lupa.png";
 import lupaGreen from "public/images/lupa-green.png";
 import { FieldError } from "../atoms/FieldError";
 import { UserMenuNavbar } from "../atoms/UserMenuNavbar.server";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { getPathname, usePathname, useRouter } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
@@ -27,6 +26,9 @@ import { findBuildingByAddress } from "@/models/building";
 import { AgencyComboBox } from "../atoms/AgencyComboBox";
 import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
+import { Link } from "@/navigation";
+import { useSearchParams } from "next/navigation";
+import { defaultLocale, host, locales, pathnames } from "@/config";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -99,6 +101,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             router.push("/");
           }}
         />
+
         {search && (
           <>
             <div className="flex flex-col flex-1">
@@ -179,7 +182,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                 <div className="md:flex hidden mr-10">
                   <Button
                     buttonClassName="btn-primary-500"
-                    onClick={() => router.push("/review")}
+                    onClick={() => router.push("/newReview")}
                   >
                     {t("common.writeReview")}
                   </Button>
@@ -261,7 +264,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                               undefined, // update cache data to `undefined`
                               { revalidate: false } // do not revalidate
                             );
-                            pathname.includes("/review")
+                            pathname.includes("/newReview")
                               ? router.push("/")
                               : params.toString().includes("mode=signIn")
                               ? router.replace("/")
@@ -275,7 +278,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     <MenuItem>
                       <Button
                         className="btn-primary-500 w-full"
-                        onClick={() => router.push("/review")}
+                        onClick={() => router.push("/newReview")}
                       >
                         {t("common.writeReview")}
                       </Button>
@@ -309,10 +312,10 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                     </MenuItem>
                     <MenuItem>
                       <Link
-                        href="/review"
-                        title={tLinks("/review")}
+                        href="/newReview"
+                        title={tLinks("/newReview")}
                         className="btn btn-primary-500 content-center !w-full"
-                        // onClick={() => router.push("/review")}
+                        // onClick={() => router.push("/newReview")}
                       >
                         {t("common.writeReview")}
                       </Link>

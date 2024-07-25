@@ -3,7 +3,7 @@ import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
 import { locales } from "../../layout";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import Link from "next/link";
+import { Link } from "@/navigation";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

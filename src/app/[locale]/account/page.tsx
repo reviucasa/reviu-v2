@@ -14,7 +14,7 @@ import padlock from "public/images/padlock.png";
 import smallPadlock from "public/images/smallPadlock.png";
 import { useUser } from "@/hooks/swr/useUser";
 import { useLocale, useTranslations } from "next-intl";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import { deleteUser, updateUser } from "@/models/user";
 import { useAuth } from "@/context/auth";
 import { Genders, countries } from "@/staticData";

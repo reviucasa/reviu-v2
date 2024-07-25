@@ -8,7 +8,7 @@ import HappyHouse from "public/images/happyHouse.png";
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter, usePathname } from "@/navigation";
 import { useTranslations } from "next-intl";
 import {
   getNextStepReview,
@@ -160,7 +160,6 @@ export const AddressForm = () => {
           data: { step: stepReview },
         });
       }
-      /* revalidateUser(); */
       router.push(getUrlReview(stepReview));
     }
 

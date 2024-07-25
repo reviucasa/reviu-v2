@@ -1,10 +1,10 @@
 import Image from "next/image";
 import IconHouseLima from "../../../public/images/houseLima.svg";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 import { HeaderAddressComboBox } from "../molecules/HeaderAddressComboBox";
 import { HeaderAgencyComboBox } from "../molecules/HeaderAgencyComboBox";
 import CardSlideClient from "../organism/CardSlideClient";
+import { Link } from "@/navigation";
 
 export type SectionType = {
   title: string;
@@ -36,7 +36,7 @@ export async function SectionHeader() {
       title: tabWriteOpinion,
       text: [t("slide.hazUnRepaso"), t("slide.noTeLlevesSorpresas")],
       children: (
-        <Link className="btn btn-primary-500 content-center" href="/review" title={tLinks("/review")}>
+        <Link className="btn btn-primary-500 content-center" href="/newReview" title={tLinks("/newReview")}>
           {t("common.writeReview")}
         </Link>
       ),

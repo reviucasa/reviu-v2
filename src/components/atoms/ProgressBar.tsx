@@ -1,4 +1,4 @@
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "@/navigation";
 import { useMemo } from "react";
 import { removeLocaleFromPath } from "./DropDownLanguages";
 

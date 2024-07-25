@@ -4,7 +4,7 @@ import { Controller, SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import { Button } from "../atoms/Button";
 import { FieldError } from "../atoms/FieldError";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/navigation";
 import TextAreaWithCharCounter from "../molecules/TexareaCounter";
 import { PiImage } from "react-icons/pi";
 import Image from "next/image";
