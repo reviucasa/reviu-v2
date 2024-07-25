@@ -23,7 +23,7 @@ export const PostHorizontalCard = async ({
   return (
     <div
       className={classNames(
-        "grid grid-cols-1 sm:grid-cols-12 bg-white rounded-2xl shadow-sm overflow-hidden ",
+        "grid grid-cols-1 sm:grid-cols-12 bg-white rounded-2xl shadow-sm overflow-hidden max-h-64 ",
         post.status != PostStatus.archived ? "opacity-100" : "opacity-40"
       )}
     >
