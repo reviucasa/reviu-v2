@@ -68,6 +68,12 @@ export default function UsersTable() {
                   <tr>
                     <th
                       scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Uid
+                    </th>
+                    <th
+                      scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
                       Email
@@ -138,6 +144,14 @@ export default function UsersTable() {
                   ) : (
                     users.map((user) => (
                       <tr key={user.id}>
+                        <td
+                          className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                          onClick={() => {
+                            navigator.clipboard.writeText(user.id);
+                          }}
+                        >
+                          {user.id.slice(0, 3)}...{user.id.slice(-3)}
+                        </td>
                         <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                           {user.email}
                         </td>

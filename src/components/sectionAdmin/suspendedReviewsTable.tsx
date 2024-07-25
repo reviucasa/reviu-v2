@@ -30,6 +30,7 @@ export default function SuspendedReviewsTable() {
     | {
         reviews: Review[];
         users: User[];
+        count: number;
       }
     | undefined,
     Error
@@ -68,7 +69,7 @@ export default function SuspendedReviewsTable() {
           {/* <BiBlock className="text-red-400 w-5 h-5 my-4 " /> */}
 
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            <span>Suspended Reviews</span>
+            <span>Suspended Reviews {data?.count && " - " + data.count}</span>
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             A list of all the suspended reviews.

@@ -18,6 +18,7 @@ import {
   serverTimestamp,
   Timestamp,
   startAfter,
+  getCountFromServer,
 } from "firebase/firestore";
 import { Apartment } from "./building";
 import { User, getUsersById } from "./user";
@@ -126,6 +127,21 @@ const reviewConverter: FirestoreDataConverter<Review> = {
   },
 };
 
+const draftConverter: FirestoreDataConverter<Review> = {
+  toFirestore(r: Review): DocumentData {
+    const { id, ...review } = r;
+    return review;
+  },
+  fromFirestore(snapshot: QueryDocumentSnapshot): Review {
+    const doc = snapshot.data();
+    return {
+      ...doc,
+      userId: snapshot.id,
+      id: snapshot.id,
+    } as Review;
+  },
+};
+
 // Create a new review
 const createDraft = async (
   uid: string,
@@ -140,6 +156,42 @@ const getDraft = async (uid: string): Promise<Review | undefined> => {
   const ref = doc(db, `drafts/${uid}`).withConverter(reviewConverter);
   const snapshot = await getDoc(ref);
   return snapshot.exists() ? snapshot.data() : undefined;
+};
+
+const getDrafts = async ({
+  count,
+  startAfterDocId,
+}: {
+  count: number;
+  startAfterDocId: string | null;
+}): Promise<Review[]> => {
+  const ref = collection(db, "drafts").withConverter(draftConverter);
+  let q = query(ref, limit(count));
+
+  if (startAfterDocId) {
+    const lastDocRef = await getDoc(
+      doc(db, "drafts", startAfterDocId).withConverter(draftConverter)
+    );
+    if (lastDocRef.exists()) {
+      q = query(ref, startAfter(lastDocRef), limit(count));
+    } else {
+      console.error("The document to start after does not exist.");
+      return [];
+    }
+  }
+
+  return getDocs(q)
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log("No drafts.");
+        return [];
+      }
+      return snapshot.docs.map((doc) => doc.data() as Review);
+    })
+    .catch((error) => {
+      console.error("Error fetching drafts:", error);
+      return [];
+    });
 };
 
 const updateDraftData = async <K extends keyof ReviewData>(
@@ -278,12 +330,14 @@ const getReviewsWithUser = async ({
 }: {
   count: number;
   startAfterTime: Timestamp | null;
-}): Promise<{ reviews: Review[]; users: User[] }> => {
+}): Promise<{ reviews: Review[]; users: User[]; count: number }> => {
+  const docsCount = await getReviewsCount(ReviewStatus.Published);
   const reviews = await getReviews({ count, startAfterTime });
   const uids = Array.from(new Set(reviews.map((r) => r.userId)));
   const users = await getUsersById(uids);
-  return { reviews, users };
+  return { reviews, users, count: docsCount };
 };
+
 // Retrieve suspended reviews
 const getSuspendedReviews = async (): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
@@ -306,11 +360,13 @@ const getSuspendedReviews = async (): Promise<Review[]> => {
 const getSuspendedReviewsWithUser = async (): Promise<{
   reviews: Review[];
   users: User[];
+  count: number;
 }> => {
+  const docsCount = await getReviewsCount(ReviewStatus.Suspended);
   const reviews = await getSuspendedReviews();
   const uids = Array.from(new Set(reviews.map((r) => r.userId)));
   const users = await getUsersById(uids);
-  return { reviews, users };
+  return { reviews, users, count: docsCount };
 };
 
 // Retrieve building reviews
@@ -345,6 +401,37 @@ const getReviewsFromUser = async (uid: string): Promise<Review[]> => {
   return snapshot.docs.map((e) => e.data());
 };
 
+// Retrieve reviews with user
+const getDraftsWithUser = async ({
+  count,
+  startAfterDocId,
+}: {
+  count: number;
+  startAfterDocId: string | null;
+}): Promise<{ drafts: Review[]; users: User[]; count: number }> => {
+  const docsCount = await getDraftsCount();
+  const drafts = await getDrafts({ count, startAfterDocId });
+  const uids = Array.from(new Set(drafts.map((d) => d.userId!)));
+  const users = await getUsersById(uids);
+  return { drafts, users, count: docsCount };
+};
+
+// Function to get the count of documents in the "drafts" collection
+const getReviewsCount = async (status: ReviewStatus): Promise<number> => {
+  const draftsCollection = collection(db, "reviews");
+  const q = query(draftsCollection, where("status", "==", status));
+  const snapshot = await getCountFromServer(q);
+  return snapshot.data().count;
+};
+
+// Function to get the count of documents in the "drafts" collection
+const getDraftsCount = async (): Promise<number> => {
+  const draftsCollection = collection(db, "drafts");
+  const q = query(draftsCollection);
+  const snapshot = await getCountFromServer(q);
+  return snapshot.data().count;
+};
+
 export {
   getDraft,
   createDraft,
@@ -365,4 +452,7 @@ export {
   getReviewsByAgencyId,
   getReviewsFromUser,
   reviewConverter,
+  getDraftsWithUser,
+  getDraftsCount,
+  getReviewsCount,
 };

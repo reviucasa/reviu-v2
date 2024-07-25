@@ -2,7 +2,12 @@
 import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
 import { Fragment, useState } from "react";
-import { Dialog, Transition, TransitionChild } from "@headlessui/react";
+import {
+  Dialog,
+  DialogPanel,
+  Transition,
+  TransitionChild,
+} from "@headlessui/react";
 import {
   BiFolder,
   BiHome,
@@ -18,7 +23,10 @@ const navigation = [
   { title: "", items: [{ name: "Dashboard", href: "/admin", icon: BiHome }] },
   {
     title: "Reviews",
-    items: [{ name: "Reviews", href: "/admin/reviews/", icon: BiReceipt }],
+    items: [
+      { name: "Reviews", href: "/admin/reviews/", icon: BiReceipt },
+      { name: "Drafts", href: "/admin/reviews/drafts/", icon: BiPencil },
+    ],
   },
   {
     title: "Users",
@@ -71,7 +79,7 @@ export default function AdminLayout({
               leaveFrom="translate-x-0"
               leaveTo="-translate-x-full"
             >
-              <Dialog.Panel className="relative mr-16 flex w-full max-w-xs flex-1">
+              <DialogPanel className="relative mr-16 flex w-full max-w-xs flex-1">
                 <TransitionChild
                   as={Fragment}
                   enter="ease-in-out duration-300"
@@ -121,12 +129,13 @@ export default function AdminLayout({
                                 <a
                                   href={item.href}
                                   className={
-                                    "text-gray-700 hover:text-indigo-600 hover:bg-gray-50 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold"
+                                    "  text-gray-800 hover:bg-gray-100 group flex gap-x-3 p-2 text-sm leading-6"
                                   }
+                                  style={{ textDecoration: "none" }}
                                 >
                                   <item.icon
                                     className={
-                                      "text-primary-400 group-hover:text-primary-500 h-4 w-4 shrink-0"
+                                      "text-primary-300  h-5 w-5 shrink-0"
                                     }
                                     aria-hidden="true"
                                   />
@@ -140,7 +149,7 @@ export default function AdminLayout({
                     </ul>
                   </nav>
                 </div>
-              </Dialog.Panel>
+              </DialogPanel>
             </TransitionChild>
           </div>
         </Dialog>

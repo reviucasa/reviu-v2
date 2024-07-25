@@ -8,9 +8,7 @@ import SuspendedReviewsTable from "@/components/sectionAdmin/suspendedReviewsTab
 export default function Page() {
   return (
     <AdminLayout>
-      <ReviewsTable />
-      <ReportedReviewsTable />
-      <SuspendedReviewsTable />
+      <DraftsTable />
     </AdminLayout>
   );
 }

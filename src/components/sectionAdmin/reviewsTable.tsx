@@ -11,6 +11,7 @@ import { useState } from "react";
 import { ModalInfo } from "../molecules/ModalInfo";
 import { Timestamp } from "firebase/firestore";
 import { User } from "@/models/user";
+import CopyToClipboard from "../atoms/CopyToClipboard";
 
 export default function ReviewsTable() {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -25,6 +26,7 @@ export default function ReviewsTable() {
     | {
         reviews: Review[];
         users: User[];
+        count: number;
       }
     | undefined,
     Error
@@ -67,7 +69,7 @@ export default function ReviewsTable() {
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
           <h1 className="text-base font-semibold leading-6 text-gray-900">
-            Reviews
+            Reviews {data?.count && " - " + data.count}
           </h1>
           <p className="mt-2 text-sm text-gray-700">
             A list of all the reviews registered in the app.
@@ -153,13 +155,12 @@ export default function ReviewsTable() {
 
                       return (
                         <tr key={review.id}>
-                          <td
-                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
-                            onClick={() => {
-                              navigator.clipboard.writeText(review.id);
-                            }}
-                          >
-                            {review.id.slice(0, 3)}...{review.id.slice(-3)}
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis ">
+                            <CopyToClipboard textToCopy={review.id}>
+                              {`${review.id.slice(0, 3)}...${review.id.slice(
+                                -3
+                              )}`}
+                            </CopyToClipboard>
                           </td>
                           <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                             {review.address?.split(",")[0]}
@@ -167,15 +168,12 @@ export default function ReviewsTable() {
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                             {review.address?.split(",")[1]}
                           </td>
-                          <td
-                            className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 cursor-pointer hover:text-secondary-500 active:text-secondary-300"
-                            onClick={() => {
-                              navigator.clipboard.writeText(
-                                user ? user.email : review.userId
-                              );
-                            }}
-                          >
-                            {user ? user.email : review.userId}
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 ">
+                            <CopyToClipboard
+                              textToCopy={user ? user.email : review.userId}
+                            >
+                              {user ? user.email : review.userId}
+                            </CopyToClipboard>
                           </td>
 
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
