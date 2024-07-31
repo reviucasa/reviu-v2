@@ -99,6 +99,8 @@ export const AddressForm = () => {
 
       if (buildingData) {
         setBuilding(buildingData);
+        setStairSelected(undefined);
+        setApartmentSelected(undefined);
       } else {
         const addressRegex = /^(.*?),\s*(\d+)/;
         const match = selectedAddress.match(addressRegex);
