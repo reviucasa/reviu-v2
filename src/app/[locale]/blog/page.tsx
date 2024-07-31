@@ -33,6 +33,29 @@ export async function generateMetadata({
   return {
     title: titleDetail,
     description,
+    openGraph: {
+      type: "article",
+      url: `https://www.reviucasa.com/${locale}/blog`,
+      title: titleDetail,
+      subtitle: description,
+      image: "https://www.reviucasa.com/images/message.png",
+      siteName: "Reviu",
+      locale,
+      images: [
+        {
+          url: "https://www.reviucasa.com/images/message.png",
+          width: 300,
+          height: 300,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "https://www.reviucasa.com",
+      title: titleDetail,
+      description: description,
+      image: "https://www.reviucasa.com/images/message.png",
+    },
   };
 }
 
