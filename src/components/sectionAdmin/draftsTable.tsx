@@ -8,6 +8,7 @@ import { User } from "@/models/user";
 import { steps } from "@/staticData";
 import { DialogDrawer } from "../atoms/DialogDrawer";
 import CopyToClipboard from "../atoms/CopyToClipboard";
+import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 
 export default function DraftsTable() {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -99,6 +100,13 @@ export default function DraftsTable() {
                       Step
                     </th>
 
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Created
+                    </th>
+
                     <th scope="col" className="relative py-2 pl-3 pr-4 sm:pr-6">
                       <span className="sr-only">See more</span>
                     </th>
@@ -138,7 +146,13 @@ export default function DraftsTable() {
                             </CopyToClipboard>
                           </td>
                           <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                            {steps[d!.data!.step!].label}
+                            {d!.data!.step!}. {steps[d!.data!.step!].label}
+                          </td>
+
+                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                            {d.timeCreated
+                              ? formatFirebaseTimestamp(d.timeCreated, "en")
+                              : ""}
                           </td>
 
                           <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">

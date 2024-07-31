@@ -27,6 +27,7 @@ import {
 } from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
+import { serverTimestamp, Timestamp } from "firebase/firestore";
 
 export const AddressForm = () => {
   const { draft } = useDraft();
@@ -161,6 +162,7 @@ export const AddressForm = () => {
           apartment: apartmentSelected,
           buildingId: building.id,
           data: { step: stepReview },
+          timeCreated: Timestamp.now(),
         });
       }
       router.push(getUrlReview(stepReview));
