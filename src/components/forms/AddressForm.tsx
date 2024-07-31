@@ -22,6 +22,7 @@ import {
   Building,
   findBuildingByAddress,
   findBuildingByCatastroId,
+  getBuilding,
   getBuildingStairs,
 } from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";
@@ -66,11 +67,11 @@ export const AddressForm = () => {
 
   useEffect(() => {
     const fetchBuilding = async (buildingId: string) => {
-      const b = await findBuildingByCatastroId(buildingId);
+      const b = await getBuilding(buildingId);
       setBuilding(b);
       setStairSelected(draft?.apartment?.stair!);
       setAparmentList(
-        b?.apartments.filter((a) => a.stair == draft?.apartment?.stair!) || []
+        b?.apartments || [] //.filter((a) => a.stair == draft?.apartment?.stair!) || []
       );
       setApartmentSelected(draft?.apartment);
     };
@@ -123,9 +124,9 @@ export const AddressForm = () => {
   const onSelectWholeAddress = async (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
-    const apartment = aparmentList.find(
+    const apartment = aparmentList[Number(event.currentTarget.value)]; /* .find(
       (a) => a.id == event.currentTarget.value
-    );
+    ); */
     const reviews = await getReviewsFromUser(auth.currentUser!.uid);
     if (reviews.find((r) => r.apartment?.id == apartment?.id)) {
       setIsOpenExistingReviewAlertsetIsOpen(true);
@@ -226,15 +227,22 @@ export const AddressForm = () => {
               <label>{t("addressReview.pisoYPuerta")}</label>
               <select
                 className="w-full"
-                value={apartmentSelected?.id}
+                value={
+                  apartmentSelected &&
+                  aparmentList.findIndex(
+                    (a) =>
+                      a.stair == apartmentSelected.stair &&
+                      a.floor == apartmentSelected.floor &&
+                      a.door == apartmentSelected.door
+                  )
+                }
                 onChange={onSelectWholeAddress}
               >
                 <option
                   value={
-                    ""
-                    /* apartmentSelected == undefined
+                    apartmentSelected == undefined
                       ? t("addressReview.pisoYPuerta")
-                      : `${apartmentSelected.floor}/${apartmentSelected.door}` */
+                      : `${apartmentSelected.floor}/${apartmentSelected.door}`
                   }
                 >
                   {t("addressReview.pisoYPuerta")}
@@ -242,7 +250,7 @@ export const AddressForm = () => {
                 {aparmentList.map((apartment, index) => (
                   <option
                     key={index}
-                    value={apartment.id}
+                    value={aparmentList.indexOf(apartment) /* apartment.id */}
                   >{`${apartment.floor}/${apartment.door}`}</option>
                 ))}
               </select>
