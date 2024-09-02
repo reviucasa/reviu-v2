@@ -39,7 +39,7 @@ export const pathnames: Pathnames<typeof locales> = {
     en: "/building/[buildingId]",
   },
   "/cookies": "/cookies",
-  "/detail": {
+  "/review": {
     es: "/reseña",
     ca: "/ressenya",
     en: "/review",
