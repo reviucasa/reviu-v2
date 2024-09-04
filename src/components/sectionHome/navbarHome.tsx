@@ -206,7 +206,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
               // leaveFrom="transform opacity-100 scale-100"
               // leaveTo="transform opacity-0 scale-95"
             >
-              <MenuItems className="bg-gray-100 flex flex-col items-center gap-5 p-4">
+              <MenuItems className="bg-white flex flex-col items-center gap-5 p-4">
                 {auth.user != null ? (
                   <>
                     <MenuItem>

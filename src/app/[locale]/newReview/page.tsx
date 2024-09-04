@@ -14,7 +14,7 @@ export default function Review() {
     if (user && !draft) {
       router.push("/newReview/address");
     }
-    if (draft?.data.step) {
+    if (user && draft?.data.step) {
       router.push(
         draft.data.step > steps.length - 1
           ? steps[steps.length - 1].url
