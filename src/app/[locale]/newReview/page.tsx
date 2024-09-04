@@ -11,15 +11,19 @@ export default function Review() {
   const router = useRouter();
 
   useEffect(() => {
-    if (user && !draft) {
-      router.push("/newReview/address");
-    }
-    if (user && draft?.data.step) {
-      router.push(
-        draft.data.step > steps.length - 1
-          ? steps[steps.length - 1].url
-          : steps[draft.data.step].url
-      );
+    if (!user) {
+      router.push("/auth/login");
+    } else {
+      if (!draft) {
+        router.push("/newReview/address");
+      }
+      if (draft?.data.step) {
+        router.push(
+          draft.data.step > steps.length - 1
+            ? steps[steps.length - 1].url
+            : steps[draft.data.step].url
+        );
+      }
     }
   }, [draft, router, user]);
 
