@@ -119,6 +119,20 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     <div className="w-8 h-8">
                       <Image
                         quality={100}
+                        src={comillas}
+                        width={24}
+                        height={24}
+                        alt={t("common.comentarioPositivo")}
+                      />
+                    </div>
+                    <span className="flex-1 text-sm md:text-base">
+                      {review?.data?.opinion?.title}
+                    </span>
+                  </span>
+                  <span className="flex align-top gap-4">
+                    <div className="w-8 h-8">
+                      <Image
+                        quality={100}
                         src={happy}
                         width={32}
                         height={32}
@@ -277,7 +291,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                 {review?.data?.management?.isRealStateAgency && (
                   <div className="flex flex-col">
                     <div className="flex gap-4">
-                      <Image src={comillas} alt="20" className="h-fit" />
+                      <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
                       <div>
                         <p className="font-bold text-sm md:text-base">
                           {t("common.consejosInmobiliaria")}
@@ -292,7 +306,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                 {review?.data?.management?.adviceLandlord && (
                   <div className="flex flex-col">
                     <div className="flex gap-4">
-                      <Image src={comillas} alt="20" className="h-fit" />
+                      <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
                       <div>
                         <p className="font-bold text-sm md:text-base">
                           {t("common.consejosCasero")}
@@ -366,7 +380,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                       <div className="grid col-span-2">
                         {review.data.community.comment && (
                           <div className="flex">
-                            <Image src={comillas} alt="20" className="h-fit" />
+                            <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
                             <p className="pl-2 text-sm md:text-base">
                               {review.data?.community?.comment}
                             </p>
@@ -425,7 +439,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     <div className="grid col-span-2">
                       {review?.data?.neighbourhood?.comments && (
                         <div className="flex">
-                          <Image src={comillas} alt="20" className="h-fit" />
+                          <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
                           <p className="pl-2 text-sm md:text-base">
                             {review.data?.neighbourhood?.comments}
                           </p>
