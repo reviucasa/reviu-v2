@@ -4,14 +4,16 @@ import { useUser } from "@/hooks/swr/useUser";
 import { steps } from "@/staticData";
 import { useRouter } from "@/navigation";
 import { useEffect } from "react";
+import { auth } from "@/firebase/config";
 
 export default function Review() {
   const { draft } = useDraft();
-  const { user } = useUser();
+  const { user, isLoading: loading } = useUser();
   const router = useRouter();
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
+    if (!loading) {
+      // Ensure user data has finished loading
       if (user) {
         if (!draft) {
           router.push("/newReview/address");
@@ -26,10 +28,8 @@ export default function Review() {
       } else {
         router.push("/auth/login");
       }
-    }, 500); // 500 ms delay
-
-    return () => clearTimeout(timeout); // Cleanup the timeout on unmount
-  }, [draft, router, user]);
+    }
+  }, [draft, router, user, loading]); // Add loading to dependency array
 
   return <div></div>;
 }
