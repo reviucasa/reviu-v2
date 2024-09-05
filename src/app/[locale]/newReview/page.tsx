@@ -11,9 +11,7 @@ export default function Review() {
   const router = useRouter();
 
   useEffect(() => {
-    if (!user) {
-      router.push("/auth/login");
-    } else {
+    if(user) {
       if (!draft) {
         router.push("/newReview/address");
       }
