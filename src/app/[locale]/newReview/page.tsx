@@ -11,18 +11,24 @@ export default function Review() {
   const router = useRouter();
 
   useEffect(() => {
-    if(user) {
-      if (!draft) {
-        router.push("/newReview/address");
+    const timeout = setTimeout(() => {
+      if (user) {
+        if (!draft) {
+          router.push("/newReview/address");
+        }
+        if (draft?.data.step) {
+          router.push(
+            draft.data.step > steps.length - 1
+              ? steps[steps.length - 1].url
+              : steps[draft.data.step].url
+          );
+        }
+      } else {
+        router.push("/auth/login");
       }
-      if (draft?.data.step) {
-        router.push(
-          draft.data.step > steps.length - 1
-            ? steps[steps.length - 1].url
-            : steps[draft.data.step].url
-        );
-      }
-    }
+    }, 500); // 500 ms delay
+
+    return () => clearTimeout(timeout); // Cleanup the timeout on unmount
   }, [draft, router, user]);
 
   return <div></div>;
