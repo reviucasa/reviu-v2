@@ -22,6 +22,7 @@ const config: Config = {
         lime: "#D1F780",
       },
       fontFamily: {
+        primary: ["SpaceGrotesk"],
         secondary: ["PPEditorialNew"],
       },
       boxShadow: {
@@ -63,8 +64,6 @@ const config: Config = {
       },
     },
   },
-  plugins: [
-    require("@tailwindcss/forms"),
-  ],
+  plugins: [require("@tailwindcss/forms")],
 };
 export default config;

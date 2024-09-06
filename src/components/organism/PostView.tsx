@@ -47,7 +47,7 @@ export const PostView = ({ post }: { post: PostPlain }) => {
           <p className="text-xs text-gray-400 ">{post.timeCreated}</p>
           <PostShareButton post={post} />
         </div>
-        <p className=" text-gray-600 ">{p.subtitle}</p>
+        <h4 className=" h-plain ">{p.subtitle}</h4>
         <Image
           src={post.imageUrl}
           className="w-full max-h-96 object-cover max-w-3xl mx-auto rounded-xl"

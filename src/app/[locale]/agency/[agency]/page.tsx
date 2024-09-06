@@ -4,58 +4,64 @@ import Image from "next/image";
 import green_house from "public/images/green_house.png";
 import comillas from "public/images/comillas.png";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
-import { getReviewsByAgencyId } from "@/models/review";
-import { getAgency } from "@/models/agency";
+import { getReviewsByAgencyId, Review } from "@/models/review";
+import { getAgency, getAgencyByName } from "@/models/agency";
 import React from "react";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
+import { locales } from "@/config";
 
-// export function generateStaticParams() {
-//   return locales.map((locale) => ({ locale }));
-// }
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 
-// export async function generateMetadata({
-//   params: { locale, /* agencyId */ },
-// }: {
-//   params: { locale: string; /* agencyId: string  */};
-// }) {
-//   // Fetch agency data using the agencyId
-//   //const agency = await getAgency(agencyId);
+export function generateMetadata({
+  params: { locale, agency },
+}: {
+  params: { locale: string; agency: string };
+}) {
+  const agencyName = decodeURIComponent(agency);
+  const titleDetail =
+    locale == "en"
+      ? `Reviu | ${agencyName} - Real Estate Agency` // : ${agency?.name}
+      : locale == "es"
+      ? `Reviu | ${agencyName} - Agencia Inmobiliaria` // : ${agency?.name}
+      : `Reviu | ${agencyName} - Agència Immobiliària`; // : ${agency?.name}
 
-//   const titleDetail =
-//     locale == "en"
-//       ? `Real Estate Agency` // : ${agency?.name}
-//       : locale == "es"
-//       ? `Agencia Inmobiliaria` // : ${agency?.name}
-//       : `Agència Immobiliària`; // : ${agency?.name}
+  const description =
+    locale == "en"
+      ? `Learn more about ${agencyName}, a real estate agency in Barcelona, by reading reviews from other users about their experiences and services.`
+      : locale == "es"
+      ? `Conoce más sobre ${agencyName}, una agencia inmobiliaria de Barcelona, leyendo las reseñas de otros usuarios sobre sus experiencias y servicios.`
+      : `Coneix més sobre ${agencyName}, una agència immobiliària de Barcelona, llegint les ressenyes d'altres usuaris sobre les seves experiències i serveis.`;
 
-//   const description =
-//     locale == "en"
-//       ? `Learn more about this real estate agency in Barcelona thanks to the users reviews.` // ${agency?.name}
-//       : locale == "es"
-//       ? `Conoce más sobre esta agencia immobiliaria de Barcelona gracias a las reseñas de los usuarios.`
-//       : `Coneix més sobre aquesta agència immobiliària de Barcelona gràcies a les ressenyes dels usuaris.`;
-
-//   return {
-//     title: titleDetail,
-//     description,
-//   };
-// }
+  return {
+    title: titleDetail,
+    description,
+  };
+}
 
 export default async function Agency({
   params,
 }: {
-  params: { agencyId: string };
+  params: { agency: string };
 }) {
   const t = await getTranslations();
   const config = await getTranslations("config");
 
-  const agency = await getAgency(params.agencyId);
+  const agency = await getAgencyByName(decodeURIComponent(params.agency));
 
-  const reviews = await getReviewsByAgencyId(params.agencyId);
+  console.log(agency);
+  // const reviews = await getReviewsByAgencyId(agency?.id);
+  // If agency exists, fetch the reviews based on the agency's ID
+  let reviews: Review[] = [];
+
+  if (agency?.id) {
+    reviews = await getReviewsByAgencyId(agency.documentId);
+  }
 
   if (!reviews || !agency) {
     return (
@@ -164,7 +170,11 @@ export default async function Agency({
                         )}
                         <div className="grid col-span-2">
                           <div className="flex  gap-4">
-                            <Image src={comillas} alt="quote" className="h-fit"/>
+                            <Image
+                              src={comillas}
+                              alt="quote"
+                              className="h-fit"
+                            />
                             <div>
                               <p className="font-bold text-sm md:text-base">
                                 {t("agency.queConsejosDarias")}

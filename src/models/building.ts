@@ -128,6 +128,29 @@ const getBuilding = async (
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
+// Retrieve a building by ID
+const getBuildingByAddress = async (
+  street: string,
+  number: string
+): Promise<Building | undefined> => {
+  // Create a reference to the collection of agencies
+  const ref = collection(db, "buildings").withConverter(buildingConverter);
+
+  // Build a query that matches the 'lowercase' field
+  const q = query(ref, where("address", "==", street));
+
+  // Execute the query
+  const querySnapshot = await getDocs(q);
+
+  // Return the first matching agency, or undefined if none are found
+  if (!querySnapshot.empty) {
+    const res = querySnapshot.docs.filter((q) => q.data().number == number);
+    return res[0].data();
+  } else {
+    return undefined;
+  }
+};
+
 // Retrieve a building by CatastroID
 const findBuildingByCatastroId = async (
   catastroId: string
@@ -208,6 +231,7 @@ export {
   findBuildingByAddress,
   findBuildingByCatastroId,
   getBuilding,
+  getBuildingByAddress,
   updateBuilding,
   deleteBuilding,
 };

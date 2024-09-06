@@ -21,7 +21,11 @@ export function HeaderAddressComboBox() {
     if (address && address != "") {
       const building = await findBuildingByAddress(address);
       if (building) {
-        router.push(`/building/${building.id}`);
+        router.push(
+          `/building/${encodeURIComponent(
+            [building.address, building.number, "Barcelona"].join("-")
+          )}`
+        );
       } else {
         const addressRegex = /^(.*?),\s*(\d+)/;
         const match = address.match(addressRegex);

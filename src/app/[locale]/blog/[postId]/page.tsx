@@ -2,7 +2,6 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
-import { useLocale } from "next-intl";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({
