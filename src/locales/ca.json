@@ -3,7 +3,7 @@
     "elProblema": "El problema",
     "quienesHemosBuscado": "Els que hem buscat pis sabem que hi ha poca informació més enllà del que prometen els anuncis",
     "solución": "La solució",
-    "homeReviewPermite": "Reviu et permet informar-te de com és viure a la casa que t'interessa abans de mudar-t'hi, i compartir opinions sobre els llocs on has viscut.",
+    "homeReviewPermite": "Reviu et permet informar-te de com és viure a la casa que t'interessa abans de mudar-t'hi, i compartir opinions anònimes sobre els llocs on has viscut.",
     "ourValues": "Els nostres valors",
     "transparencia": "Transparència",
     "yaNoNecesitas": "No hi ha millor anunci que l'experiència de qui ha viscut en aquell pis",
@@ -76,7 +76,7 @@
   "bannerOpinion": {
     "experienceAndShare": "Reviu la teva experiència i comparteix-la",
     "helpIdeal": "Ajuda els altres a trobar el seu pis ideal",
-    "WriteOpinion": "Deixa una opinió anònima"
+    "WriteOpinion": "Deixa una opinió"
   },
   "blog": {
     "findOutTips": "Informa't dels consells més útils",
@@ -153,8 +153,8 @@
     "cuenta": "Compte",
     "soporte": "Ajuda",
     "cerrarSesión": "Tancar sessió",
-    "quieresDejarOpinion": "Vols donar la teva opinió sobre una casa o un pis en aquest edifici?",
-    "escribeOpinion": "Deixa una opinió anònima",
+    "quieresDejarOpinion": "Vols donar la teva opinió anònima sobre una casa o un pis en aquest edifici?",
+    "escribeOpinion": "Deixa una opinió",
     "tipologiaResidentes": "Com definiries l'escala de veïns?",
     "estadoYMantenimiento": "Estat i manteniment",
     "relacionVecinal": "Relació veïnal",
@@ -425,7 +425,7 @@
   },
   "faq": {
     "whatIsHomeReview": "Què és Reviu?",
-    "answerWhat": "Els que hem buscat pis sabem que hi ha poca informació més enllà del que prometen els anuncis. Reviu et permet informar-te de com és viure al pis que t'interessa abans de traslladar-t’hi, i compartir opinions sobre els llocs on has viscut. Som més que un portal. A través de la informació, volem convertir la jungla del lloguer en un espai més just i segur, distingint els que fan les coses bé",
+    "answerWhat": "Els que hem buscat pis sabem que hi ha poca informació més enllà del que prometen els anuncis. Reviu et permet informar-te de com és viure al pis que t'interessa abans de traslladar-t’hi, i compartir opinions anònimes sobre els llocs on has viscut. Som més que un portal. A través de la informació, volem convertir la jungla del lloguer en un espai més just i segur, distingint els que fan les coses bé",
     "whyReview": "Per què deixar una opinió?",
     "answerReview": "Quan comparteixes les teves experiències sobre els llocs on has viscut, augmentes les possibilitats que tant tu com qualsevol persona pugueu trobar una opinió del pis que busqueu. També de l'escala de veïns i de la zona on voleu viure",
     "anonymousReview": "Són anònimes les meves opinions?",
@@ -627,7 +627,7 @@
     "conservacionTD4S": "Contingut de les opinions.",
     "conservacionTD13": "Durant l'ús de la Pàgina Web, l'Usuari pot publicar comentaris que poden incorporar dades personals.",
     "conservacionTD14": "Consentiment de l’Usuari",
-    "conservacionT15": "Aquestes dades seran tractades per a complir amb la finalitat principal de la Pàgina Web, basada a proporcionar als Usuaris un espai en el qual compartir experiències i/o opinions sobre els immobles.",
+    "conservacionT15": "Aquestes dades seran tractades per a complir amb la finalitat principal de la Pàgina Web, basada a proporcionar als Usuaris un espai en el qual compartir experiències i/o opinions anònimes sobre els immobles.",
     "conservacionTD16": "Durant el temps en què duri el consentiment de l’Usuari i, una vegada retirat aquest, Reviu Casa conservarà les dades personals (bloquejades) dels Usuaris durant el temps necessari per a complir amb les obligacions legals.",
     "destinatarios": "3. A quins destinataris es comunicaran les teves dades?",
     "destinatariosP1": "Reviu Casa informa que, per al compliment de les finalitats descrites anteriorment, no cedirà les dades personals de l'Usuari a tercers. No obstant l'anterior, Reviu Casa podrà donar accés a aquestes dades personals a: ",
@@ -680,7 +680,7 @@
   },
   "slide": {
     "titleSearchOpinion": "Descobreix si la immobiliària et tractarà bé abans de signar el contracte",
-    "titleWriteOpinion": "Deixa la teva opinió sobre el pis i la immobiliària. Qualsevol detall pot ajudar qui s’hi està a punt de mudar",
+    "titleWriteOpinion": "Deixa la teva opinió anònima sobre el pis i la immobiliària. Qualsevol detall pot ajudar qui s’hi està a punt de mudar",
     "titleSearchAgency": "Cerca ressenyes sobre qualsevol immobiliària",
     "noTeLlevesSorpresas": "No t'emportis sorpreses. Que t'expliqui com és el pis qui hi ha viscut",
     "hazUnRepaso": "Fes memòria dels llocs on has viscut",

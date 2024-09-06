@@ -3,7 +3,7 @@
     "elProblema": "The problem",
     "quienesHemosBuscado": "Those of us who have looked for a new home know that there is little information beyond what the ads promise",
     "solución": "The solution",
-    "homeReviewPermite": "Reviu allows you to access the experiences of those who have already lived in the home you are looking for, and to share your own experiences about the places where you have lived. ",
+    "homeReviewPermite": "Reviu allows you to access the experiences of those who have already lived in the home you are looking for, and to share your own anonymous experiences about the places where you have lived. ",
     "ourValues": "Our values",
     "transparencia": "Transparency",
     "yaNoNecesitas": "There is no better advertisement than the experience of someone who has lived in that place. ",
@@ -76,7 +76,7 @@
   "bannerOpinion": {
     "experienceAndShare": "Re-live your experience and share it.",
     "helpIdeal": "Help others find their ideal home.",
-    "WriteOpinion": "Leave a review"
+    "WriteOpinion": "Leave an review"
   },
   "blog": {
     "findOutTips": "Find out the most useful tips",
@@ -154,7 +154,7 @@
     "cuenta": "Account",
     "soporte": "Support",
     "cerrarSesión": "Log out",
-    "quieresDejarOpinion": "Do you want to share your opinion about an apartment in this building?",
+    "quieresDejarOpinion": "Do you want to share your anonymous opinion about an apartment in this building?",
     "escribeOpinion": "Leave a review",
     "tipologiaResidentes": "Type of residents",
     "estadoYMantenimiento": "State and maintenance",
@@ -301,7 +301,7 @@
     "identificacionP6": "info@reviucasa.com",
     "identificacionP7": "Phone: ",
     "descripcion": "2. DESCRIPTION OF THE WEBSITE",
-    "descripcionP1": "Reviu Casa makes available to the Users the Website, through which the Users will be able to share and find opinions about the apartments in their cities so that the Users can acquire additional and personal information to choose a home. Thanks to the Website, Users may have access to the information shared by other Users who have previously lived in such homes, from which, they may get a more concrete idea about it, including information about its facilities, the environment, the location or even their general experiences during the period in which the Users were living in them.",
+    "descripcionP1": "Reviu Casa makes available to the Users the Website, through which the Users will be able to share and find anonymous opinions about the apartments in their cities so that the Users can acquire additional and personal information to choose a home. Thanks to the Website, Users may have access to the information shared by other Users who have previously lived in such homes, from which, they may get a more concrete idea about it, including information about its facilities, the environment, the location or even their general experiences during the period in which the Users were living in them.",
     "cuentaUsuario": "3. USER ACCOUNT",
     "cuentaUsuarioP1": "Access to the Website is completely free for Users, although, in order to have access to some of the additional functionalities (such as being able to give their opinion on an apartment), the User must register on the Website by creating their own account. The creation of such an account is optional but will be necessary in order to be able to actively participate in the community created through the Website. ",
     "cuentaUsuarioP2": "In order to create an Account on the Website, the User must be of legal age and have the legal capacity to be bound by these Terms and Conditions. The registration to the Webaite will be considered completed once the User has received an email of account creation.",
@@ -426,7 +426,7 @@
   },
   "faq": {
     "whatIsHomeReview": "What is Reviu?",
-    "answerWhat": "Those of us who have looked for a new home know that there is little information beyond what the ads promise. Reviu allows you to discover what it’s like to live in the home you are interested in beforemoving in, and to share opinions about the places where you have lived. Through information sharing, we want to turn the jungle of renting into a fairer and safer space, highlighting those who do things right.",
+    "answerWhat": "Those of us who have looked for a new home know that there is little information beyond what the ads promise. Reviu allows you to discover what it’s like to live in the home you are interested in beforemoving in, and to share anonymous opinions about the places where you have lived. Through information sharing, we want to turn the jungle of renting into a fairer and safer space, highlighting those who do things right.",
     "whyReview": "Why leave a review?",
     "answerReview": "By sharing your experiences about the homes you have lived in, you increase the chances that you or anyone else can find out the truth about the home you are looking for as well as about the neighbors, the building, and the area you want to live in. ",
     "anonymousReview": "Are my reviews anonymous?",
@@ -628,7 +628,7 @@
     "conservacionTD4S": "Content of opinions. ",
     "conservacionTD13": "During the use of the Website, the User may post comments that may incorporate personal data.",
     "conservacionTD14": "User consent",
-    "conservacionT15": "These data will be processed in order to fulfill the main purpose of the Website, based on providing Users with a space in which to share experiences and/or opinions about real estate. ",
+    "conservacionT15": "These data will be processed in order to fulfill the main purpose of the Website, based on providing Users with a space in which to share anonymous experiences and/or opinions about real estate. ",
     "conservacionTD16": "For the duration of the User consent and after its withdrawal, Reviu Casa will retain the personal data (blocked) of the Users for the time necessary to comply with legal obligations.",
     "destinatarios": "3. To which recipients will your data be communicated?",
     "destinatariosP1": "Reviu Casa informs that, for the fulfillment of the purposes described above, it will not transfer the User's personal data to third parties. Notwithstanding the foregoing, Reviu Casa may give access to such personal data to:",
@@ -681,7 +681,7 @@
   },
   "slide": {
     "titleSearchOpinion": "Find out if the real estate agent will treat you well before you sign the contract.",
-    "titleWriteOpinion": "Provide reviews of the apartment and the real estate agent. Any information will help the following",
+    "titleWriteOpinion": "Leave your anonymous opinion about the apartment and the real estate agency. Any detail can help those who are about to move in.",
     "titleSearchAgency": "Search for reviews about any real estate agency",
     "noTeLlevesSorpresas": "Avoid ugly surprises. Let someone who has lived in the home tell you what it's like",
     "hazUnRepaso": "Re-live your experience and share it.",
