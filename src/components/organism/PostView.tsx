@@ -42,12 +42,12 @@ export const PostView = ({ post }: { post: PostPlain }) => {
           "flex flex-col space-y-10 p-4 md:p-10"
         )}
       >
-        <h2 className="text-4xl font-bold text-gray-900 ">{p.title}</h2>
+        <h1 className=" text-4xl font-bold text-gray-900 ">{p.title}</h1>
         <div className="flex justify-between items-end">
           <p className="text-xs text-gray-400 ">{post.timeCreated}</p>
           <PostShareButton post={post} />
         </div>
-        <h4 className=" h-plain ">{p.subtitle}</h4>
+        <h2 className=" h-plain ">{p.subtitle}</h2>
         <Image
           src={post.imageUrl}
           className="w-full max-h-96 object-cover max-w-3xl mx-auto rounded-xl"
