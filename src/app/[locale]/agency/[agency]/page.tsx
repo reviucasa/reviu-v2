@@ -39,7 +39,10 @@ export function generateMetadata({
       ? `Conoce más sobre ${agencyName}, una agencia inmobiliaria de Barcelona, leyendo las reseñas de otros usuarios sobre sus experiencias y servicios.`
       : `Coneix més sobre ${agencyName}, una agència immobiliària de Barcelona, llegint les ressenyes d'altres usuaris sobre les seves experiències i serveis.`;
 
-  const keywords = [`${agencyName} opiniones`, ...mainKeywords(locale).slice(0,3)];
+  const keywords = [
+    `${agencyName} opiniones`,
+    ...mainKeywords(locale).slice(0, 3),
+  ];
 
   return {
     title: titleDetail,
@@ -63,7 +66,8 @@ export default async function Agency({
   // If agency exists, fetch the reviews based on the agency's ID
   let reviews: Review[] = [];
 
-  if (agency?.id) {
+  if (agency?.documentId) {
+    console.log(agency);
     reviews = await getReviewsByAgencyId(agency.documentId);
   }
 
