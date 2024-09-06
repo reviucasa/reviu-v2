@@ -13,6 +13,7 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { getTranslations } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 import { locales } from "@/config";
+import { mainKeywords } from "@/staticData";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -38,9 +39,12 @@ export function generateMetadata({
       ? `Conoce más sobre ${agencyName}, una agencia inmobiliaria de Barcelona, leyendo las reseñas de otros usuarios sobre sus experiencias y servicios.`
       : `Coneix més sobre ${agencyName}, una agència immobiliària de Barcelona, llegint les ressenyes d'altres usuaris sobre les seves experiències i serveis.`;
 
+  const keywords = [`${agencyName} opiniones`, ...mainKeywords(locale).slice(0,3)];
+
   return {
     title: titleDetail,
     description,
+    keywords,
   };
 }
 

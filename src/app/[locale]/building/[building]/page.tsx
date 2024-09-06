@@ -12,6 +12,7 @@ import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
 import { toPlainObject } from "lodash";
 import { locales } from "../../layout";
+import { mainKeywords } from "@/staticData";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -49,9 +50,15 @@ export async function generateMetadata({
           ", "
         )}. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`;
 
+  const keywords = [
+    addressComponents.join(" "),
+    ...mainKeywords(locale).slice(0, 3),
+  ];
+
   return {
     title,
     description,
+    keywords,
   };
 }
 

@@ -270,6 +270,33 @@ export const countries: Array<{ [key: string]: string }> = [
   { ca: "Zimbabwe", es: "Zimbabue", en: "Zimbabwe" },
 ];
 
+export const mainKeywords = (locale: string) =>
+  locale === "en"
+    ? [
+        "apartments for rent barcelona",
+        "barcelona real state agencies",
+        "apartment reviews",
+        "real estate agency reviews",
+        "rental reviews",
+      ]
+    : locale === "ca"
+    ? [
+        "pisos lloguer barcelona",
+        "immobiliàries barcelona",
+        "opinions pisos",
+        "opinions immobiliàries",
+        "ressenyes pisos",
+        "ressenyes immobiliàries",
+      ]
+    : [
+        "pisos alquiler barcelona",
+        "inmobiliarias barcelona",
+        "opiniones pisos",
+        "opiniones inmobiliarias",
+        "reseñas pisos",
+        "reseñas inmobiliarias",
+      ];
+
 export const reviewConfigParams = {
   buildingQuality: {
     summerTemperature: ["isolated", "good", "hot"],

@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
+import { mainKeywords } from "@/staticData";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata({
@@ -14,7 +15,7 @@ export async function generateMetadata({
 
   const p = post?.translations[locale as "en" | "ca" | "es"];
 
-  const titleDetail =
+  const title =
     locale == "en"
       ? `Reviu Post: ${p?.title}`
       : locale == "es"
@@ -28,9 +29,12 @@ export async function generateMetadata({
       ? `${p?.subtitle} - Lee más en Reviu.`
       : `${p?.subtitle} - Llegeix més a Reviu.`;
 
+  const keywords = [p?.title, ...mainKeywords(locale)];
+
   return {
-    title: titleDetail,
+    title,
     description,
+    keywords,
     openGraph: {
       type: "article",
       url: `https://www.reviucasa.com/${locale}/blog/${postId}`,

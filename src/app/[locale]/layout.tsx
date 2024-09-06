@@ -5,6 +5,7 @@ import getRequestConfig from "../../i18n";
 import { Providers } from "@/context";
 import { Suspense } from "react";
 import { unstable_setRequestLocale } from "next-intl/server";
+import { mainKeywords } from "@/staticData";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -33,9 +34,13 @@ export async function generateMetadata({
       : locale == "es"
       ? "Comparte y encuentra reseñas y opiniones anónimas sobre pisos de tu ciudad. Infórmate de cómo es vivir en la casa que te interesa antes de mudarte y comparte opiniones sobre los lugares donde has vivido."
       : "Comparteix i troba ressenyes i opinions anònimes sobre pisos de la teva ciutat. Informa't de com és viure a la casa que t'interessa abans de mudar-t'hi i comparteix opinions sobre els llocs on has viscut.";
+
+  const keywords = mainKeywords(locale);
+
   return {
     title: "Reviu | " + titleDetail,
     description,
+    keywords,
   };
 }
 
