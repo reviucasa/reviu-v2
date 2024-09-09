@@ -54,7 +54,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     if (address && address != "") {
       setLoading(true);
       const building = await findBuildingByAddress(address);
-      console.log(building);
       if (building) {
         router.push(
           `/building/${encodeURIComponent(

@@ -4,13 +4,12 @@ import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { HeaderAddressComboBox } from "@/components/molecules/HeaderAddressComboBox";
 
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
-import { getBuilding, getBuildingByAddress } from "@/models/building";
+import { getBuildingByAddress } from "@/models/building";
 import { getReviewsByBuidingId, Review } from "@/models/review";
 import { getTranslations } from "next-intl/server";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
-import { toPlainObject } from "lodash";
 import { locales } from "../../layout";
 import { mainKeywords } from "@/staticData";
 
@@ -75,6 +74,8 @@ export default async function BuildingPage({
 }: {
   params: { building: string };
 }) {
+  console.log(params);
+
   const t = await getTranslations();
 
   const [street, number, city] = decodeURIComponent(params.building).split("-");
