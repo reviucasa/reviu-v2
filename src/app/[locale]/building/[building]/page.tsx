@@ -6,7 +6,7 @@ import { HeaderAddressComboBox } from "@/components/molecules/HeaderAddressCombo
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { getBuildingByAddress } from "@/models/building";
 import { getReviewsByBuidingId, Review } from "@/models/review";
-import { getTranslations } from "next-intl/server";
+import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
@@ -72,8 +72,10 @@ function convertTimestampToPlainObject(review: Review) {
 export default async function BuildingPage({
   params,
 }: {
-  params: { building: string };
+  params: { locale: string; building: string };
 }) {
+  unstable_setRequestLocale(params.locale);
+
   console.log(params);
 
   const t = await getTranslations();
