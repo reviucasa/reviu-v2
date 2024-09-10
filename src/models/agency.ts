@@ -14,6 +14,7 @@ import {
   serverTimestamp,
   setDoc,
   startAt,
+  where,
 } from "firebase/firestore";
 
 export type RealStateAgency = {
@@ -65,6 +66,28 @@ const getAgency = async (
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
+const getAgencyByName = async (
+  agency: string
+): Promise<RealStateAgency | undefined> => {
+  // Create a reference to the collection of agencies
+  const agenciesRef = collection(db, "agencies").withConverter(
+    realStateAgencyConverter
+  );
+
+  // Build a query that matches the 'lowercase' field
+  const q = query(agenciesRef, where("lowercase", "==", agency.toLowerCase()));
+
+  // Execute the query
+  const querySnapshot = await getDocs(q);
+
+  // Return the first matching agency, or undefined if none are found
+  if (!querySnapshot.empty) {
+    return querySnapshot.docs[0].data();
+  } else {
+    return undefined;
+  }
+};
+
 async function searchAgenciesByName(prefix: string) {
   const ref = collection(db, "agencies").withConverter(
     realStateAgencyConverter
@@ -106,4 +129,4 @@ async function searchAgenciesByName(prefix: string) {
   return uniqueAgencies;
 }
 
-export { createAgency, getAgency, searchAgenciesByName };
+export { createAgency, getAgency, getAgencyByName, searchAgenciesByName };

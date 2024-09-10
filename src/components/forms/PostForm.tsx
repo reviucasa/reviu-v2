@@ -43,7 +43,6 @@ export const PostForm = () => {
   });
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
-    console.log(data);
     try {
       const {
         catitle,

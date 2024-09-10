@@ -19,6 +19,41 @@
   font-style: light;
 }
 
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Light.ttf') format('opentype');
+  font-weight: 300;
+  font-style: light;
+}
+
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Regular.ttf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Medium.ttf') format('opentype');
+  font-weight: 500;
+  font-style: medium;
+}
+
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Semibold.ttf') format('opentype');
+  font-weight: 600;
+  font-style: semibold;
+}
+
+@font-face {
+  font-family: 'SpaceGrotesk';
+  src: url('/fonts/SpaceGrotesk-Bold.ttf') format('opentype');
+  font-weight: 700;
+  font-style: bold;
+}
+
 h1,
 h2,
 h3,
@@ -44,4 +79,8 @@ h4 {
 
 h5 {
   @apply font-bold text-xl; /* 20px - 28px */
+}
+
+.h-plain {
+  @apply font-primary  text-base;
 }

@@ -28,7 +28,6 @@ import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
-import { defaultLocale, host, locales, pathnames } from "@/config";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -56,7 +55,11 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
       setLoading(true);
       const building = await findBuildingByAddress(address);
       if (building) {
-        router.push(`/building/${building.id}`);
+        router.push(
+          `/building/${encodeURIComponent(
+            [building.address, building.number, "Barcelona"].join("-")
+          )}`
+        );
       } else {
         const addressRegex = /^(.*?),\s*(\d+)/;
         const match = address.match(addressRegex);
@@ -73,7 +76,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   const onSelectRealStateAgency = async (agency: RealStateAgency) => {
     setSelectedRealStateAgency(agency);
     if (agency) {
-      router.push(`/agency/${agency.documentId}`);
+      router.push(`/agency/${encodeURIComponent(agency.lowercase)}`);
     } else {
       setError(t("common.noSeEncontroLaInmobiliaria"));
     }

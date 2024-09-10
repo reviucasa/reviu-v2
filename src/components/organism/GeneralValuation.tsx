@@ -19,9 +19,9 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
   return (
     <div>
       <div>
-        <h5 className="text-base lg:text-xl">
+        <h2 className="h-plain text-base lg:text-xl">
           {t("generalValuation.latestOpinions")}
-        </h5>
+        </h2>
         {reviews.slice(0, 2).map((review) => (
           <OpinionCard className="my-6" key={review.id} review={review} />
         ))}
@@ -34,9 +34,9 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
       </div>
 
       <div className="mt-16">
-        <h5 className="text-base lg:text-xl">
+        <h2 className="h-plain text-base lg:text-xl">
           {t("generalValuation.recentOpinions")}
-        </h5>
+        </h2>
         {reviews.slice(0, 1).map((review) => (
           <CommunityCard className="my-6" key={review.id} review={review} />
         ))}

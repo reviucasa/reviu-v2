@@ -16,10 +16,10 @@ export const pathnames: Pathnames<typeof locales> = {
     en: "/account",
   },
   "/admin": "/admin",
-  "/agency/[agencyId]": {
-    es: "/immobiliaria/[agencyId]",
-    ca: "/inmobiliaria/[agencyId]",
-    en: "/agency/[agencyId]",
+  "/agency/[agency]": {
+    es: "/immobiliaria/[agency]",
+    ca: "/inmobiliaria/[agency]",
+    en: "/agency/[agency]",
   },
   "/auth": "/auth",
   "/auth/checkEmail": {
@@ -33,10 +33,10 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/edifici",
     en: "/building",
   }, */
-  "/building/[buildingId]": {
-    es: "/edificio/[buildingId]",
-    ca: "/edifici/[buildingId]",
-    en: "/building/[buildingId]",
+  "/building/[building]": {
+    es: "/edificio/[building]",
+    ca: "/edifici/[building]",
+    en: "/building/[building]",
   },
   "/cookies": "/cookies",
   "/review": {
