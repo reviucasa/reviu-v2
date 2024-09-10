@@ -24,7 +24,7 @@ export default function DraftsTable() {
     Error
   >({
     queryKey: ["draftsWithUser", startAfterDocId],
-    queryFn: () => getDraftsWithUser({ count: 10, startAfterDocId }),
+    queryFn: () => getDraftsWithUser({ count: 20, startAfterDocId }),
   });
 
   // Handlers to go to the next or previous page
@@ -63,7 +63,7 @@ export default function DraftsTable() {
       </div>
       <div className="mt-6 flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-          <div className="inline-block min-w-full py-2align-middle sm:px-6 lg:px-8">
+          <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
@@ -186,7 +186,7 @@ export default function DraftsTable() {
                   className="btn-primary-transparent-full disabled:text-gray-400"
                   onClick={fetchNext}
                   disabled={
-                    isFetching || (data?.drafts && data.drafts!.length < 10)
+                    isFetching || (data?.drafts && data.drafts!.length < 20)
                   }
                 >
                   Next

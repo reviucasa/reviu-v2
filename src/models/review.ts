@@ -166,14 +166,19 @@ const getDrafts = async ({
   startAfterDocId: string | null;
 }): Promise<Review[]> => {
   const ref = collection(db, "drafts").withConverter(draftConverter);
-  let q = query(ref, limit(count));
+  let q = query(ref, orderBy("timeCreated", "desc"), limit(count));
 
   if (startAfterDocId) {
     const lastDocRef = await getDoc(
       doc(db, "drafts", startAfterDocId).withConverter(draftConverter)
     );
     if (lastDocRef.exists()) {
-      q = query(ref, startAfter(lastDocRef), limit(count));
+      q = query(
+        ref,
+        orderBy("timeCreated", "desc"),
+        startAfter(lastDocRef),
+        limit(count)
+      );
     } else {
       console.error("The document to start after does not exist.");
       return [];
@@ -427,7 +432,7 @@ const getReviewsCount = async (status: ReviewStatus): Promise<number> => {
 // Function to get the count of documents in the "drafts" collection
 const getDraftsCount = async (): Promise<number> => {
   const draftsCollection = collection(db, "drafts");
-  const q = query(draftsCollection);
+  const q = query(draftsCollection, orderBy("timeCreated", "desc"));
   const snapshot = await getCountFromServer(q);
   return snapshot.data().count;
 };

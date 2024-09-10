@@ -247,7 +247,9 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                       {review.data.management.agencyId ? (
                         <Link
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
-                          href={`/agency/${review.data.management?.agencyId}`}
+                          href={`/agency/${encodeURIComponent(
+                            review.data.management?.realStateAgency.toLocaleLowerCase()
+                          )}`}
                           title={tLinks("/agency")}
                         >
                           {review.data?.management?.realStateAgency}
@@ -291,7 +293,13 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                 {review?.data?.management?.isRealStateAgency && (
                   <div className="flex flex-col">
                     <div className="flex gap-4">
-                      <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
+                      <Image
+                        src={comillas}
+                        width={16}
+                        height={16}
+                        alt='"'
+                        className="h-fit"
+                      />
                       <div>
                         <p className="font-bold text-sm md:text-base">
                           {t("common.consejosInmobiliaria")}
@@ -306,7 +314,13 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                 {review?.data?.management?.adviceLandlord && (
                   <div className="flex flex-col">
                     <div className="flex gap-4">
-                      <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
+                      <Image
+                        src={comillas}
+                        width={16}
+                        height={16}
+                        alt='"'
+                        className="h-fit"
+                      />
                       <div>
                         <p className="font-bold text-sm md:text-base">
                           {t("common.consejosCasero")}
@@ -380,7 +394,13 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                       <div className="grid col-span-2">
                         {review.data.community.comment && (
                           <div className="flex">
-                            <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
+                            <Image
+                              src={comillas}
+                              width={16}
+                              height={16}
+                              alt='"'
+                              className="h-fit"
+                            />
                             <p className="pl-2 text-sm md:text-base">
                               {review.data?.community?.comment}
                             </p>
@@ -439,7 +459,13 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     <div className="grid col-span-2">
                       {review?.data?.neighbourhood?.comments && (
                         <div className="flex">
-                          <Image src={comillas} width={16} height={16} alt='"' className="h-fit" />
+                          <Image
+                            src={comillas}
+                            width={16}
+                            height={16}
+                            alt='"'
+                            className="h-fit"
+                          />
                           <p className="pl-2 text-sm md:text-base">
                             {review.data?.neighbourhood?.comments}
                           </p>
