@@ -7,6 +7,7 @@ import { Label } from "../atoms/Label";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
+import { useRouter } from "next/navigation";
 
 export const CommunityCard = ({
   review,
@@ -17,8 +18,10 @@ export const CommunityCard = ({
 }) => {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
   const t = useTranslations();
+  const router = useRouter();
   const handleMoreInfo = () => {
-    setOpenMoreInfo(!openMoreInfo);
+    router.push(`/review/${encodeURIComponent(review.address.split(', ').slice(0,3).join('-'))}/${review.id}`);
+    // setOpenMoreInfo(!openMoreInfo);
   };
   const config = useTranslations("config");
 
