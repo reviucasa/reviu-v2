@@ -36,7 +36,7 @@
   "addressReview": {
     "dirección": "Address",
     "comparteExperiencia": "Review the places where you have lived and share your experience anonymously.",
-    "dejanosTuOpinion": "Let us know what you think!",
+    "dejanosTuOpinion": "Let us know what you think anonymously!",
     "calleYNúmero": "Street and number",
     "deAcuerdo": "I agree",
     "NoPuedesPublicar": "You cannot publish two reviews of the same home. To ensure that the ratings of each home are reliable, only one review per person is allowed",
@@ -573,7 +573,7 @@
     "algunComentarioAñadir": "Add any other comment you would like to leave"
   },
   "opinionReview": {
-    "opinionPiso": "Home review",
+    "opinionPiso": "Home review (anonymous)",
     "resumeExperiencia": "Summarize your experience in one headline",
     "valorPositivo": "What do you like about this home?",
     "valorNegativo": "What do you dislike about this home?",

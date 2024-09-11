@@ -36,7 +36,7 @@
   "addressReview": {
     "dirección": "Adreça",
     "comparteExperiencia": "Fes un repàs dels llocs on has viscut i comparteix la teva experiència de manera anònima.",
-    "dejanosTuOpinion": "Deixa'ns la teva opinió!",
+    "dejanosTuOpinion": "Deixa'ns la teva opinió anònima!",
     "calleYNúmero": "Carrer i número",
     "deAcuerdo": "D'acord",
     "NoPuedesPublicar": "No pots publicar dues opinions del mateix pis. Per assegurar que les valoracions de cada pis són fiables, només es pot publicar una opinió per persona",
@@ -572,7 +572,7 @@
     "algunComentarioAñadir": "Afegeix algun comentari més"
   },
   "opinionReview": {
-    "opinionPiso": "Opinió del pis",
+    "opinionPiso": "Opinió del pis (anònima)",
     "resumeExperiencia": "Resumeix la teva experiència en un titular",
     "valorPositivo": "Què valores positivament d'aquest pis?",
     "valorNegativo": "Què valores negativament d'aquest pis?",
