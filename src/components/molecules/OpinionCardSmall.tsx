@@ -9,6 +9,7 @@ import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
+import { useRouter } from "next/navigation";
 
 export const OpinionCardSmall = ({
   review,
@@ -19,10 +20,10 @@ export const OpinionCardSmall = ({
   sizeCard: number;
   className?: string;
 }) => {
+  const router = useRouter();
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
   const [openReportInfo, setOpenReportInfo] = useState<boolean>(false);
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-
   const t = useTranslations();
 
   return (
@@ -35,7 +36,12 @@ export const OpinionCardSmall = ({
         <div
           className="cursor-pointer"
           onClick={() => {
-            setOpenMoreInfo(!openMoreInfo);
+            // setOpenMoreInfo(!openMoreInfo);
+            router.push(
+              `/review/${encodeURIComponent(
+                review.address.split(", ").slice(0, 3).join("-")
+              )}/${review.id}`
+            );
           }}
         >
           <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
@@ -86,11 +92,13 @@ export const OpinionCardSmall = ({
           <div
             className=" text-primary-500 cursor-pointer text-sm md:text-base"
             onClick={() => {
-              setOpenMoreInfo(!openMoreInfo);
-              // router.push({
-              //   pathname: `/detail/${review.buildingId}`,
-              //   query: { reviewId: review.id }
-              // })
+              // setOpenMoreInfo(!openMoreInfo);
+
+              router.push(
+                `/review/${encodeURIComponent(
+                  review.address.split(", ").slice(0, 3).join("-")
+                )}/${review.id}`
+              );
             }}
           >
             {t("common.verMás")}

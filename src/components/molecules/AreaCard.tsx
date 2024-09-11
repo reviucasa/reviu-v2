@@ -6,6 +6,7 @@ import { useState } from "react";
 import comillas from "public/images/comillas.png";
 import { ModalInfo } from "./ModalInfo";
 import { Review } from "@/models/review";
+import { useRouter } from "next/navigation";
 
 export const AreaCard = ({
   review,
@@ -15,6 +16,7 @@ export const AreaCard = ({
   className?: string;
 }) => {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
+  const router = useRouter();
 
   return (
     <div
@@ -62,7 +64,10 @@ export const AreaCard = ({
         <div
           className="py-2 text-primary-500 cursor-pointer"
           onClick={() => {
-            setOpenMoreInfo(!openMoreInfo);
+            router.push(
+              `/review/${encodeURIComponent(review.address.split(', ').slice(0,3).join('-'))}/${review.id}`
+            );
+            //setOpenMoreInfo(!openMoreInfo);
           }}
         >
           {"Ver mas >"}

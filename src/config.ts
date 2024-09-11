@@ -96,6 +96,11 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/nova-ressenya/valoracio",
     en: "/new-review/valuation",
   },
+  "/review/[address]/[reviewId]": {
+    es: "/reseña/[address]/[reviewId]",
+    ca: "/ressenya/[address]/[reviewId]",
+    en: "/review/[address]/[reviewId]",
+  },
   "/success": "/success",
   "/suspended": "/suspended",
   "/termsAndConditions": {

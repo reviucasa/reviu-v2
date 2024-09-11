@@ -14,6 +14,7 @@ import { DialogReport } from "./DialogReport";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
+import { useRouter } from "next/navigation";
 
 export const OpinionCard = ({
   review,
@@ -25,7 +26,7 @@ export const OpinionCard = ({
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
   const [openReportInfo, setOpenReportInfo] = useState<boolean>(false);
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-
+  const router = useRouter();
   const t = useTranslations();
 
   return (
@@ -119,7 +120,10 @@ export const OpinionCard = ({
         <div
           className="py-2 text-primary-500 cursor-pointer text-sm md:text-base"
           onClick={() => {
-            setOpenMoreInfo(!openMoreInfo);
+            router.push(
+              `/review/${encodeURIComponent(review.address.split(', ').slice(0,3).join('-'))}/${review.id}`
+            );
+            /* setOpenMoreInfo(!openMoreInfo); */
             setOpenReportInfo(false);
           }}
         >
