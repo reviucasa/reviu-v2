@@ -129,6 +129,13 @@ const getBuilding = async (
 };
 
 // Retrieve a building by ID
+const getBuildings = async (): Promise<Building[] | undefined> => {
+  const q = query(collection(db, "buildings").withConverter(buildingConverter));
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => doc.data());
+};
+
+// Retrieve a building by ID
 const getBuildingByAddress = async (
   street: string,
   number: string
@@ -234,4 +241,5 @@ export {
   getBuildingByAddress,
   updateBuilding,
   deleteBuilding,
+  getBuildings,
 };

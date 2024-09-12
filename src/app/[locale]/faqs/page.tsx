@@ -1,7 +1,8 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { SectionFaq } from "@/components/sectionHome/sectionFaq";
+import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
+
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

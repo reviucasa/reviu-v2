@@ -3,8 +3,8 @@ import { ConditionsUseComponent } from "@/components/sectionLegalPages/condition
 import { LegalNoticeComponent } from "@/components/sectionLegalPages/legalNoticeComponent";
 
 import { PrivacyPolicyComponent } from "@/components/sectionLegalPages/privacyPolicyComponent";
+import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

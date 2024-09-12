@@ -1,9 +1,10 @@
 import CheckEmailImg from "public/images/check-email.png";
 import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
-import { locales } from "../../layout";
+
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { Link } from "@/navigation";
+import { locales } from "@/config";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

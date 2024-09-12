@@ -3,8 +3,8 @@ import { Header } from "@/components/sectionAbout/header";
 import { OurValues } from "@/components/sectionAbout/ourValues";
 import { Partners } from "@/components/sectionAbout/partners";
 import { SectionCards } from "@/components/sectionAbout/sectionCards";
+import { locales } from "@/config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

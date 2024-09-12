@@ -1,5 +1,6 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
+import { host } from "@/config";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
 import { mainKeywords } from "@/staticData";
@@ -35,6 +36,7 @@ export async function generateMetadata({
     title,
     description,
     keywords,
+    metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog/${postId}`),
     openGraph: {
       type: "article",
       url: `https://www.reviucasa.com/${locale}/blog/${postId}`,

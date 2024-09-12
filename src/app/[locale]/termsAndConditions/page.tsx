@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { ConditionsUseComponent } from "@/components/sectionLegalPages/conditionsUse";
+import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
 
 /* import { useEffect } from "react"; */
 

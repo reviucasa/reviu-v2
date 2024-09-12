@@ -1,6 +1,6 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
+import { locales } from "@/config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

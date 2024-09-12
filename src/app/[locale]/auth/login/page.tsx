@@ -1,7 +1,7 @@
 import { LoginForm } from "@/components/forms/LoginForm";
 import { LoginLayout } from "@/components/layouts/LoginLayout";
+import { locales } from "@/config";
 import LoginImg from "public/images/login.png";
-import { locales } from "../../layout";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

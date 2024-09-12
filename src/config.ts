@@ -15,7 +15,6 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/compte",
     en: "/account",
   },
-  "/admin": "/admin",
   "/agency/[agency]": {
     es: "/immobiliaria/[agency]",
     ca: "/inmobiliaria/[agency]",
@@ -33,10 +32,15 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/edifici",
     en: "/building",
   }, */
-  "/building/[building]": {
+  /* "/building/[building]": {
     es: "/edificio/[building]",
     ca: "/edifici/[building]",
     en: "/building/[building]",
+  }, */
+  "/building/[city]/[address]/[number]": {
+    es: "/opinión-edificio/[city]/[address]/[number]",
+    ca: "/opinió-edifici/[city]/[address]/[number]",
+    en: "/opinion-building/[city]/[address]/[number]",
   },
   "/cookies": "/cookies",
   "/review": {
@@ -96,10 +100,15 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/nova-ressenya/valoracio",
     en: "/new-review/valuation",
   },
-  "/review/[address]/[reviewId]": {
+  /* "/review/[address]/[reviewId]": {
     es: "/reseña/[address]/[reviewId]",
     ca: "/ressenya/[address]/[reviewId]",
     en: "/review/[address]/[reviewId]",
+  }, */
+  "/review/[city]/[address]/[number]/[reviewId]": {
+    es: "/reseña/[city]/[address]/[number]/[reviewId]",
+    ca: "/ressenya/[city]/[address]/[number]/[reviewId]",
+    en: "/review/[city]/[address]/[number]/[reviewId]",
   },
   "/success": "/success",
   "/suspended": "/suspended",

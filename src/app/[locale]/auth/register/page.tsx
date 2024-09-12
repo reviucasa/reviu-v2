@@ -2,7 +2,7 @@ import { RegisterForm } from "@/components/forms/RegisterForm";
 import { LoginLayout } from "@/components/layouts/LoginLayout";
 import RegisterAsset from "public/images/register_asset.png";
 import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../../layout";
+import { locales } from "@/config";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

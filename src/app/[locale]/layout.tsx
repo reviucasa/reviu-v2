@@ -6,11 +6,9 @@ import { Providers } from "@/context";
 import { Suspense } from "react";
 import { unstable_setRequestLocale } from "next-intl/server";
 import { mainKeywords } from "@/staticData";
+import { locales } from "@/config";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
-
-// Can be imported from a shared config
-export const locales = ["es", "ca", "en"];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
