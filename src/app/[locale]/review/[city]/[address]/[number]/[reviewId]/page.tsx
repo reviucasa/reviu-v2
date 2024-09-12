@@ -82,7 +82,9 @@ export default async function ReviewDetails({
           <div className="flex justify-start mb-3">
             <h4 className="font-bold lg:block hidden ">
               {/* {t("common.detalleOpinion")}{" "} */}
-              <span className="">{review.address}</span>
+              <span className="">
+                {review.address.replace(", Espanya", "")}
+              </span>
             </h4>
           </div>
           <ReviewDetail review={review} />

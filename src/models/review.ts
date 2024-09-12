@@ -443,8 +443,8 @@ const getDraftsWithUser = async ({
 
 // Function to get the count of documents in the "drafts" collection
 const getReviewsCount = async (status: ReviewStatus): Promise<number> => {
-  const draftsCollection = collection(db, "reviews");
-  const q = query(draftsCollection, where("status", "==", status));
+  const ref = collection(db, "reviews");
+  const q = query(ref, where("status", "==", status));
   const snapshot = await getCountFromServer(q);
   return snapshot.data().count;
 };

@@ -7,6 +7,7 @@ import {
   collection,
   doc,
   endAt,
+  getCountFromServer,
   getDoc,
   getDocs,
   limit,
@@ -89,6 +90,14 @@ const getAgencyByName = async (
   }
 };
 
+const getAgencyCount = async (): Promise<number> => {
+  const ref = collection(db, "agencies").withConverter(
+    realStateAgencyConverter
+  );
+  const snapshot = await getCountFromServer(ref);
+  return snapshot.data().count;
+};
+
 async function getAgencies(
   idx?: number, // Optional index parameter (for pagination)
   chunkSize?: number // Optional chunkSize parameter, if undefined, fetch all agencies
@@ -162,4 +171,5 @@ export {
   getAgencyByName,
   getAgencies,
   searchAgenciesByName,
+  getAgencyCount,
 };

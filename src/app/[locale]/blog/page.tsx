@@ -1,7 +1,7 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
-import { locales } from "@/config";
+import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Head from "next/head";
@@ -33,6 +33,7 @@ export async function generateMetadata({
   return {
     title: titleDetail,
     description,
+    metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog`),
     openGraph: {
       type: "article",
       url: `https://www.reviucasa.com/${locale}/blog`,
