@@ -19,11 +19,11 @@ const generateBlogPostsSitemapObjects = async () => {
 
   return posts.map((p) => {
     return {
-      url: `${host}/${p.id}`,
+      url: `${host}/blog/${p.id}`,
       updatedAt: p.timeUpdated ?? p.timeCreated,
       alternates: {
         languages: Object.fromEntries(
-          locales.map((locale) => [locale, `${host}/${locale}/${p.id}`])
+          locales.map((locale) => [locale, `${host}/${locale}/blog/${p.id}`])
         ),
       },
     };
