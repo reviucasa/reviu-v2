@@ -32,7 +32,13 @@ export default async function sitemap({
     lastModified: a.timeCreated.toDate(),
     alternates: {
       languages: Object.fromEntries(
-        locales.map((locale) => [locale, getUrl("/agency/[agency]", locale)])
+        locales.map((locale) => [
+          locale,
+          getUrl(
+            `/agency/${encodeURIComponent(a.lowercase.replaceAll(" ", "-"))}`,
+            locale
+          ),
+        ])
       ),
     },
   }));
