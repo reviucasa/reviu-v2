@@ -9,6 +9,7 @@ import {
   endAt,
   getDoc,
   getDocs,
+  limit,
   orderBy,
   query,
   serverTimestamp,
@@ -88,12 +89,28 @@ const getAgencyByName = async (
   }
 };
 
-async function getAgencies(): Promise<RealStateAgency[]> {
+async function getAgencies(
+  idx?: number, // Optional index parameter (for pagination)
+  chunkSize?: number // Optional chunkSize parameter, if undefined, fetch all agencies
+): Promise<RealStateAgency[]> {
   const ref = collection(db, "agencies").withConverter(
     realStateAgencyConverter
   );
-  // Use orderBy to enable range queries on 'name'
-  const q = query(ref, orderBy("lowercase"));
+
+  // If chunkSize is not provided, fetch all agencies
+  if (!chunkSize) {
+    const querySnapshot = await getDocs(ref);
+    return querySnapshot.docs.map((doc) => doc.data() as RealStateAgency);
+  }
+
+  // Use orderBy, startAt, and limit to paginate the agencies if chunkSize is provided
+  const q = query(
+    ref,
+    orderBy("lowercase"),
+    startAt(idx ? idx * chunkSize : 0), // Start fetching from the idx * chunkSize
+    limit(chunkSize) // Fetch only chunkSize number of agencies
+  );
+
   const querySnapshot = await getDocs(q);
   return querySnapshot.docs.map((doc) => doc.data() as RealStateAgency);
 }

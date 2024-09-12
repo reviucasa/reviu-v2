@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...keys.map((key) => ({
-      url: `${host}/${key}`,
+      url: `${host}${key}`,
       lastModified: new Date(),
       alternates: {
         languages: Object.fromEntries(
