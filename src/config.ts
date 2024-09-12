@@ -15,7 +15,6 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/compte",
     en: "/account",
   },
-  "/admin": "/admin",
   "/agency/[agency]": {
     es: "/immobiliaria/[agency]",
     ca: "/inmobiliaria/[agency]",

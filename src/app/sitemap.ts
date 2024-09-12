@@ -1,22 +1,22 @@
 import { defaultLocale, host, locales, pathnames } from "@/config";
+import { getPosts } from "@/models/post";
 import { getPathname } from "@/navigation";
 import { MetadataRoute } from "next";
 
 const generateBlogPostsSitemapObjects = async () => {
-  return [
-    {
-      slug: "com-funciona-la-regulacio-de-lloguers-",
-      updatedAt: new Date(),
-    },
-    {
-      slug: "com-saber-quant-pagava-lanterior-llogater-i-evitar-que-et-pugin-el-preu",
-      updatedAt: new Date(),
-    },
-    {
-      slug: "quants-mesos-de-fianca-et-poden-demanar-quan-llogues-un-pis",
-      updatedAt: new Date(),
-    },
-  ];
+  const posts = await getPosts();
+
+  return posts.map((p) => {
+    return {
+      url: `${host}/${p.id}`,
+      updatedAt: p.timeUpdated ?? p.timeCreated,
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((locale) => [locale, `${host}/${locale}/${p.id}`])
+        ),
+      },
+    };
+  });
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -50,10 +50,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ),
       },
     })),
-    ...(await generateBlogPostsSitemapObjects()).map((o) => ({
-      url: `https://reviucasa.com/blog/${o.slug}`,
-      lastModified: o.updatedAt,
-      priority: 0.6,
-    })),
+    ...(await generateBlogPostsSitemapObjects()),
   ];
 }
