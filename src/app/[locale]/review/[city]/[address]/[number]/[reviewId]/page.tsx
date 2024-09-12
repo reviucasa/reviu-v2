@@ -5,21 +5,27 @@ import { mainKeywords } from "@/staticData";
 import { BounceLoader } from "react-spinners";
 
 export async function generateMetadata({
-  params: { locale, address, reviewId },
+  params: { locale, city, address, number, reviewId },
 }: {
-  params: { locale: string; address: string; reviewId: string };
+  params: {
+    locale: string;
+    city: string;
+    address: string;
+    number: string;
+    reviewId: string;
+  };
 }) {
   const review = await getReview(reviewId);
-  const reviewTitle = review?.data.opinion?.title
-  const addressComponents = decodeURIComponent(address).split("_");
-  const addr = addressComponents.join(", ")
+  const reviewTitle = review?.data.opinion?.title;
+
+  const addr = decodeURIComponent(address.replaceAll("-", " "));
 
   const titleDetail =
     locale == "en"
-      ? `Review of ${addr} - ${reviewTitle} - Reviu | Real Estate and Rentals Reviews`
+      ? `Review of ${addr} - ${reviewTitle} | Reviu`
       : locale == "es"
-      ? `Reseña de ${addr} - ${reviewTitle} - Reviu | Reseñas de Pisos`
-      : `Ressenya de ${addr} - ${reviewTitle} - Reviu | Ressenyes de Pisos`;
+      ? `Reseña de ${addr} - ${reviewTitle} | Reviu`
+      : `Ressenya de ${addr} - ${reviewTitle} | Reviu`;
 
   const description =
     locale == "en"
@@ -29,9 +35,8 @@ export async function generateMetadata({
       : `Descobreix la ressenya de ${addr} a Barcelona. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
 
   const keywords = [
-    addr,
+    [addr, number, city].join(" "),
     ...mainKeywords(locale).slice(0, 3),
-    ...addressComponents,
   ];
 
   return {
@@ -42,11 +47,17 @@ export async function generateMetadata({
 }
 
 export default async function ReviewDetails({
-  params,
+  params: { locale, city, address, number, reviewId },
 }: {
-  params: { reviewId: string };
+  params: {
+    locale: string;
+    city: string;
+    address: string;
+    number: string;
+    reviewId: string;
+  };
 }) {
-  const review = await getReview(params.reviewId);
+  const review = await getReview(reviewId);
 
   // Redirect if there's an error fetching the building
   if (!review) {

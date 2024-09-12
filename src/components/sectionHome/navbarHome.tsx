@@ -55,10 +55,15 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
       setLoading(true);
       const building = await findBuildingByAddress(address);
       if (building) {
-        router.push(
+        /* router.push(
           `/building/${encodeURIComponent(
             [building.address, building.number, "Barcelona"].join("-")
           )}`
+        ); */
+        router.push(
+          `/building/barcelona/${encodeURIComponent(
+            building.address.replaceAll(" ", "-")
+          )}/${building.number}`
         );
       } else {
         const addressRegex = /^(.*?),\s*(\d+)/;
@@ -76,7 +81,9 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   const onSelectRealStateAgency = async (agency: RealStateAgency) => {
     setSelectedRealStateAgency(agency);
     if (agency) {
-      router.push(`/agency/${encodeURIComponent(agency.lowercase)}`);
+      router.push(
+        `/agency/${encodeURIComponent(agency.lowercase.replaceAll(" ", "-"))}`
+      );
     } else {
       setError(t("common.noSeEncontroLaInmobiliaria"));
     }

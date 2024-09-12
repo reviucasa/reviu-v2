@@ -10,22 +10,22 @@ import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
-import { locales } from "../../layout";
 import { mainKeywords } from "@/staticData";
+import { locales } from "@/config";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
 export async function generateMetadata({
-  params: { locale, building },
+  params: { locale, city, address, number },
 }: {
-  params: { locale: string; building: string };
+  params: { locale: string; city: string; address: string; number: string };
 }) {
   // Fetch building data using the buildingId
   // const building = await getBuilding(buildingId);
 
-  const addressComponents = decodeURIComponent(building).split("-");
+  const addr = address.replaceAll("-", " ");
 
   const titleDetail =
     locale == "en"
@@ -34,23 +34,17 @@ export async function generateMetadata({
       ? `Reviu | Reseñas sobre ` // : ${building?.address + ", " + building?.postalCode}
       : `Reviu | Ressenyes sobre `; // : ${building?.address + ", " + building?.postalCode}
 
-  const title = titleDetail + addressComponents.join(", ");
+  const title = titleDetail + addr;
 
   const description =
     locale == "en"
-      ? `Learn more about ${addressComponents.join(
-          ", "
-        )}. Read reviews and see detailed information about this rental property on Reviu.`
+      ? `Learn more about ${addr} ${number}, ${city}. Read reviews and see detailed information about this rental property on Reviu.`
       : locale == "es"
-      ? `Conoce más sobre ${addressComponents.join(
-          ", "
-        )}. Lee reseñas y consulta información detallada sobre esta propiedad de alquiler en Reviu.`
-      : `Coneix més sobre ${addressComponents.join(
-          ", "
-        )}. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`;
+      ? `Conoce más sobre ${addr} ${number}, ${city}. Lee reseñas y consulta información detallada sobre esta propiedad de alquiler en Reviu.`
+      : `Coneix més sobre ${addr} ${number}, ${city}. Llegeix ressenyes i consulta informació detallada sobre aquesta propietat de lloguer a Reviu.`;
 
   const keywords = [
-    addressComponents.join(" "),
+    [addr, number, city].join(" "),
     ...mainKeywords(locale).slice(0, 3),
   ];
 
@@ -72,7 +66,7 @@ function convertTimestampToPlainObject(review: Review) {
 export default async function BuildingPage({
   params,
 }: {
-  params: { locale: string; building: string };
+  params: { locale: string; city: string; address: string; number: string };
 }) {
   unstable_setRequestLocale(params.locale);
 
@@ -80,9 +74,9 @@ export default async function BuildingPage({
 
   const t = await getTranslations();
 
-  const [street, number, city] = decodeURIComponent(params.building).split("-");
+  const street = decodeURIComponent(params.address.replaceAll("-", " "));
 
-  const building = await getBuildingByAddress(street, number);
+  const building = await getBuildingByAddress(street, params.number);
 
   // const reviews = await getReviewsByBuidingId(params.buildingId);
   let reviews: Review[] = [];
@@ -105,7 +99,7 @@ export default async function BuildingPage({
 
     analysis = {
       buildingId: building.id,
-      address: [building.address, building.number, city].join(", "),
+      address: [building.address, building.number, params.city].join(", "),
       reviews: reviews.map((review) => convertTimestampToPlainObject(review)),
       latitude: building.latitude,
       longitude: building.longitude,

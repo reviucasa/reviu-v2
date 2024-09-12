@@ -247,7 +247,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                         <Link
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
                           href={`/agency/${encodeURIComponent(
-                            review.data.management?.realStateAgency.toLocaleLowerCase()
+                            review.data.management?.realStateAgency.toLocaleLowerCase().replaceAll(" ", "-")
                           )}`}
                           title={tLinks("/agency")}
                         >

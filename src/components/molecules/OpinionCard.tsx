@@ -120,8 +120,13 @@ export const OpinionCard = ({
         <div
           className="py-2 text-primary-500 cursor-pointer text-sm md:text-base"
           onClick={() => {
-            router.push(
+            /* router.push(
               `/review/${encodeURIComponent(review.address.split(', ').slice(0,3).join('-'))}/${review.id}`
+            ); */
+            router.push(
+              `/review/barcelona/${encodeURIComponent(
+                review.address.split(", ")[0].replaceAll(" ", "-")
+              )}/${review.address.split(", ")[1]}/${review.id}`
             );
             /* setOpenMoreInfo(!openMoreInfo); */
             setOpenReportInfo(false);

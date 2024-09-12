@@ -21,10 +21,15 @@ export function HeaderAddressComboBox() {
     if (address && address != "") {
       const building = await findBuildingByAddress(address);
       if (building) {
-        router.push(
+        /* router.push(
           `/building/${encodeURIComponent(
             [building.address, building.number, "Barcelona"].join("-")
           )}`
+        ); */
+        router.push(
+          `/building/barcelona/${encodeURIComponent(
+            building.address.replaceAll(" ", "-")
+          )}/${building.number}`
         );
       } else {
         const addressRegex = /^(.*?),\s*(\d+)/;

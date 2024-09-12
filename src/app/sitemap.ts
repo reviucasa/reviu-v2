@@ -2,27 +2,6 @@ import { defaultLocale, host, locales, pathnames } from "@/config";
 import { getPathname } from "@/navigation";
 import { MetadataRoute } from "next";
 
-/* export default function sitemap(): MetadataRoute.Sitemap {
-  const keys = Object.keys(pathnames) as Array<keyof typeof pathnames>;
-
-  function getUrl(
-    key: keyof typeof pathnames,
-    locale: (typeof locales)[number]
-  ) {
-    const pathname = getPathname({ locale, href: key });
-    return `${host}/${locale}${pathname === "/" ? "" : pathname}`;
-  }
-
-  return keys.map((key) => ({
-    url: getUrl(key, defaultLocale),
-    alternates: {
-      languages: Object.fromEntries(
-        locales.map((locale) => [locale, getUrl(key, locale)])
-      ),
-    },
-  }));
-} */
-
 const generateBlogPostsSitemapObjects = async () => {
   return [
     {
@@ -47,7 +26,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     key: keyof typeof pathnames,
     locale: (typeof locales)[number]
   ) {
-    // TODO: fetch IDs to add as params for buildings, agencies and reviews
     const pathname = getPathname({
       locale,
       href: { pathname: key },
@@ -56,7 +34,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   keys = keys.filter(
-    (key) => !key.includes("building") && !key.includes("agency")
+    (key) =>
+      !key.includes("building") &&
+      !key.includes("agency") &&
+      !key.includes("review")
   );
 
   return [

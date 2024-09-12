@@ -88,6 +88,16 @@ const getAgencyByName = async (
   }
 };
 
+async function getAgencies(): Promise<RealStateAgency[]> {
+  const ref = collection(db, "agencies").withConverter(
+    realStateAgencyConverter
+  );
+  // Use orderBy to enable range queries on 'name'
+  const q = query(ref, orderBy("lowercase"));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => doc.data() as RealStateAgency);
+}
+
 async function searchAgenciesByName(prefix: string) {
   const ref = collection(db, "agencies").withConverter(
     realStateAgencyConverter
@@ -129,4 +139,10 @@ async function searchAgenciesByName(prefix: string) {
   return uniqueAgencies;
 }
 
-export { createAgency, getAgency, getAgencyByName, searchAgenciesByName };
+export {
+  createAgency,
+  getAgency,
+  getAgencyByName,
+  getAgencies,
+  searchAgenciesByName,
+};

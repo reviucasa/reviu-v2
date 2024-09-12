@@ -1,11 +1,11 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
+import { locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
-import { locales } from "../layout";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

@@ -37,10 +37,15 @@ export const OpinionCardSmall = ({
           className="cursor-pointer"
           onClick={() => {
             // setOpenMoreInfo(!openMoreInfo);
-            router.push(
+            /* router.push(
               `/review/${encodeURIComponent(
                 review.address.split(", ").slice(0, 3).join("-")
               )}/${review.id}`
+            ); */
+            router.push(
+              `/review/barcelona/${encodeURIComponent(
+                review.address.split(", ")[0].replaceAll(" ", "-")
+              )}/${review.address.split(", ")[1]}/${review.id}`
             );
           }}
         >
@@ -94,10 +99,15 @@ export const OpinionCardSmall = ({
             onClick={() => {
               // setOpenMoreInfo(!openMoreInfo);
 
-              router.push(
+              /* router.push(
                 `/review/${encodeURIComponent(
                   review.address.split(", ").slice(0, 3).join("-")
                 )}/${review.id}`
+              ); */
+              router.push(
+                `/review/barcelona/${encodeURIComponent(
+                  review.address.split(", ")[0].replaceAll(" ", "-")
+                )}/${review.address.split(", ")[1]}/${review.id}`
               );
             }}
           >

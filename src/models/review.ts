@@ -328,6 +328,26 @@ const getReviews = async ({
     });
 };
 
+// Retrieve reviews
+const getAllReviews = async (): Promise<Review[]> => {
+  const ref = collection(db, `reviews`).withConverter(reviewConverter);
+  let q = query(ref, where("status", "!=", ReviewStatus.Suspended));
+
+  return getDocs(q)
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log("No reviews.");
+        return [];
+      }
+
+      return snapshot.docs.map((doc) => doc.data());
+    })
+    .catch((error) => {
+      console.error("Error fetching reviews:", error);
+      return [];
+    });
+};
+
 // Retrieve reviews with user
 const getReviewsWithUser = async ({
   count,
@@ -450,6 +470,7 @@ export {
   unsuspendReview,
   deleteReview,
   getReviews,
+  getAllReviews,
   getReviewsWithUser,
   getSuspendedReviews,
   getSuspendedReviewsWithUser,

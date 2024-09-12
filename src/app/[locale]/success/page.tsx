@@ -1,8 +1,8 @@
 import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "../layout";
 import { Link } from "@/navigation";
+import { locales } from "@/config";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
