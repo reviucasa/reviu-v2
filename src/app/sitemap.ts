@@ -3,6 +3,17 @@ import { getPosts } from "@/models/post";
 import { getPathname } from "@/navigation";
 import { MetadataRoute } from "next";
 
+export function getUrl(
+  key: keyof typeof pathnames,
+  locale: (typeof locales)[number]
+) {
+  const pathname = getPathname({
+    locale,
+    href: { pathname: key },
+  });
+  return `${host}/${locale}${pathname === "/" ? "" : pathname}`;
+}
+
 const generateBlogPostsSitemapObjects = async () => {
   const posts = await getPosts();
 
@@ -22,17 +33,6 @@ const generateBlogPostsSitemapObjects = async () => {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let keys = Object.keys(pathnames) as Array<keyof typeof pathnames>;
 
-  function getUrl(
-    key: keyof typeof pathnames,
-    locale: (typeof locales)[number]
-  ) {
-    const pathname = getPathname({
-      locale,
-      href: { pathname: key },
-    });
-    return `${host}/${locale}${pathname === "/" ? "" : pathname}`;
-  }
-
   keys = keys.filter(
     (key) =>
       !key.includes("building") &&
@@ -42,7 +42,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...keys.map((key) => ({
-      url: getUrl(key, defaultLocale),
+      url: `${host}/${key}`,
       lastModified: new Date(),
       alternates: {
         languages: Object.fromEntries(
