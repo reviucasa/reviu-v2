@@ -62,9 +62,9 @@ export async function SectionHeader() {
         <Image
           src={IconHouseLima}
           alt="icon house lima"
-          className="h-4 w-4  lg:h-6 lg:w-6"
+          className="hidden md:block h-3 w-3  md:h-5 md:w-5"
         />
-        <span className="text-lime">{t("common.reseñasYOpiniones")}</span>
+        <span className="text-lime text-xs md:text-base">{t("common.reseñasYOpiniones")}</span>
       </div>
       <CardSlideClient dataContentSlide={dataContentSlide} />
     </div>
