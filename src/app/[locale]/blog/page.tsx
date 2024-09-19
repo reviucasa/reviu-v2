@@ -3,6 +3,7 @@ import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
+import { mainKeywords } from "@/staticData";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
@@ -30,33 +31,12 @@ export async function generateMetadata({
       ? "Explora las últimas publicaciones y actualizaciones en el blog de Reviu. Mantente informado con nuestras últimas noticias, consejos y perspectivas sobre cómo encontrar las mejores viviendas de alquiler en Barcelona."
       : "Explora les últimes publicacions i actualitzacions al blog de Reviu. Mantén-te informat amb les nostres últimes notícies, consells i perspectives sobre com trobar els millors habitatges de lloguer a Barcelona.";
 
+  const keywords = [...mainKeywords(locale)];
+
   return {
     title: titleDetail,
     description,
-    metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog`),
-    /* openGraph: {
-      type: "article",
-      url: `https://www.reviucasa.com/${locale}/blog`,
-      title: titleDetail,
-      subtitle: description,
-      image: "https://www.reviucasa.com/images/message.png",
-      siteName: "Reviu",
-      locale,
-      images: [
-        {
-          url: "https://www.reviucasa.com/images/message.png",
-          width: 300,
-          height: 300,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      site: "https://www.reviucasa.com",
-      title: titleDetail,
-      description: description,
-      image: "https://www.reviucasa.com/images/message.png",
-    }, */
+    keywords,
   };
 }
 
