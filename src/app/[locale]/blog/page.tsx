@@ -5,12 +5,7 @@ import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
 import { mainKeywords } from "@/staticData";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({
   params: { locale },
@@ -69,10 +64,6 @@ export default async function Blog({
 
   return (
     <MainLayout>
-      <Head>
-        <title>Reviu Blog</title>
-        <meta name="robots" content="all" />
-      </Head>
       <div className="lg:px-16 px-4 pt-10 pb-20 ">
         <h3>{t("blog.theBlog")}</h3>
         <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1 lg:pt-10 pt-4">
