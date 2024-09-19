@@ -42,7 +42,7 @@ export async function generateMetadata({
       type: "website",
       images: [
         {
-          url: "https://www.reviucasa.com/blog/opengraph-image.png",
+          url: "https://www.reviucasa.com/images/blog-opengraph-image.png",
         },
       ],
     },
@@ -50,7 +50,7 @@ export async function generateMetadata({
       title: titleDetail,
       description,
       card: "summary_large_image",
-      images: ["https://www.reviucasa.com/blog/opengraph-image.png"],
+      images: ["https://www.reviucasa.com/images/blog-opengraph-image.png"],
     },
   };
 }
