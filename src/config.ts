@@ -119,7 +119,7 @@ export const pathnames: Pathnames<typeof locales> = {
   },
 };
 
-export const localePrefix: LocalePrefix<typeof locales> = "as-needed";
+export const localePrefix: LocalePrefix<typeof locales> = "always";
 
 export const port = process.env.PORT || 3000;
 export const host = "https://reviucasa.com"; //`http://localhost:${port}`;
