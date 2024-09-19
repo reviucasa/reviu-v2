@@ -37,6 +37,21 @@ export async function generateMetadata({
     title: titleDetail,
     description,
     keywords,
+    metadataBase: new URL(`https://www.reviucasa.com/blog`),
+    openGraph: {
+      title: titleDetail,
+      description,
+      url: new URL(`https://www.reviucasa.com/blog`),
+      siteName: "Reviu",
+      locale: locale,
+      type: "website",
+    },
+    twitter: {
+      title: titleDetail,
+      description,
+      card: "summary_large_image",
+      images: ["http://www.reviucasa.com/blog/opengraph-image.png"],
+    },
   };
 }
 

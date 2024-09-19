@@ -36,9 +36,40 @@ export async function generateMetadata({
   const keywords = mainKeywords(locale);
 
   return {
+    metadataBase: new URL(`https://www.reviucasa.com`),
     title: "Reviu | " + titleDetail,
     description,
     keywords,
+    openGraph: {
+      title: titleDetail,
+      description,
+      url: new URL(`https://www.reviucasa.com`),
+      siteName: "Reviu",
+      locale: locale,
+      type: "website",
+      images: [
+        {
+          url: "http://www.reviucasa.com/opengraph-image.png",
+        },
+      ],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
+    twitter: {
+      title: titleDetail,
+      description,
+      card: "summary_large_image",
+      images: ["http://www.reviucasa.com/opengraph-image.png"],
+    },
   };
 }
 
