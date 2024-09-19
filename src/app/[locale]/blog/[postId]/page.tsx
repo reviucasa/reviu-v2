@@ -6,6 +6,14 @@ import { getPost } from "@/models/post";
 import { mainKeywords } from "@/staticData";
 import { notFound } from "next/navigation";
 
+import Logo from "public/images/reviuLogo.svg";
+
+import { Space_Grotesk } from "next/font/google";
+import NextImage from "next/image";
+
+// Load Space Grotesk font
+const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
+
 export async function generateMetadata({
   params: { locale, postId },
 }: {
@@ -37,7 +45,7 @@ export async function generateMetadata({
     description,
     keywords,
     metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog/${postId}`),
-    openGraph: {
+    /* openGraph: {
       type: "article",
       url: `https://www.reviucasa.com/${locale}/blog/${postId}`,
       title: p?.title,
@@ -53,7 +61,7 @@ export async function generateMetadata({
       title: p?.title,
       description: p?.subtitle,
       image: post?.imageUrl,
-    },
+    }, */
   };
 }
 

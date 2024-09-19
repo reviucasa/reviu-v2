@@ -34,7 +34,7 @@ export async function generateMetadata({
     title: titleDetail,
     description,
     metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog`),
-    openGraph: {
+    /* openGraph: {
       type: "article",
       url: `https://www.reviucasa.com/${locale}/blog`,
       title: titleDetail,
@@ -56,7 +56,7 @@ export async function generateMetadata({
       title: titleDetail,
       description: description,
       image: "https://www.reviucasa.com/images/message.png",
-    },
+    }, */
   };
 }
 
