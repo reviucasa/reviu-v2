@@ -40,12 +40,17 @@ export async function generateMetadata({
       siteName: "Reviu",
       locale: locale,
       type: "website",
+      images: [
+        {
+          url: "https://www.reviucasa.com/blog/opengraph-img.png",
+        },
+      ],
     },
     twitter: {
       title: titleDetail,
       description,
       card: "summary_large_image",
-      images: ["http://www.reviucasa.com/blog/opengraph-image.png"],
+      images: ["https://www.reviucasa.com/blog/opengraph-img.png"],
     },
   };
 }
