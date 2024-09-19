@@ -3,13 +3,9 @@ import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
+import { mainKeywords } from "@/staticData";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
-import Head from "next/head";
 import cardBannerImage from "public/images/kid-reading.jpg";
-
-export function generateStaticParams() {
-  return locales.map((locale) => ({ locale }));
-}
 
 export async function generateMetadata({
   params: { locale },
@@ -30,33 +26,27 @@ export async function generateMetadata({
       ? "Explora las últimas publicaciones y actualizaciones en el blog de Reviu. Mantente informado con nuestras últimas noticias, consejos y perspectivas sobre cómo encontrar las mejores viviendas de alquiler en Barcelona."
       : "Explora les últimes publicacions i actualitzacions al blog de Reviu. Mantén-te informat amb les nostres últimes notícies, consells i perspectives sobre com trobar els millors habitatges de lloguer a Barcelona.";
 
+  const keywords = [...mainKeywords(locale)];
+
   return {
     title: titleDetail,
     description,
-    metadataBase: new URL(`https://www.reviucasa.com/${locale}/blog`),
-    /* openGraph: {
-      type: "article",
-      url: `https://www.reviucasa.com/${locale}/blog`,
+    keywords,
+    metadataBase: new URL(`https://www.reviucasa.com/blog`),
+    openGraph: {
       title: titleDetail,
-      subtitle: description,
-      image: "https://www.reviucasa.com/images/message.png",
+      description,
+      url: new URL(`https://www.reviucasa.com/blog`),
       siteName: "Reviu",
-      locale,
-      images: [
-        {
-          url: "https://www.reviucasa.com/images/message.png",
-          width: 300,
-          height: 300,
-        },
-      ],
+      locale: locale,
+      type: "website",
     },
     twitter: {
-      card: "summary_large_image",
-      site: "https://www.reviucasa.com",
       title: titleDetail,
-      description: description,
-      image: "https://www.reviucasa.com/images/message.png",
-    }, */
+      description,
+      card: "summary_large_image",
+      images: ["http://www.reviucasa.com/blog/opengraph-image.png"],
+    },
   };
 }
 
@@ -74,10 +64,6 @@ export default async function Blog({
 
   return (
     <MainLayout>
-      <Head>
-        <title>Reviu Blog</title>
-        <meta name="robots" content="all" />
-      </Head>
       <div className="lg:px-16 px-4 pt-10 pb-20 ">
         <h3>{t("blog.theBlog")}</h3>
         <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1 lg:pt-10 pt-4">
