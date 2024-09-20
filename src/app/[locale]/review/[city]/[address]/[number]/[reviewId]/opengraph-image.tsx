@@ -1,8 +1,5 @@
 import { ImageResponse } from "next/og";
-import NextImage from "next/image";
-import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import { Chip } from "@/components/atoms/Chip";
-import { ReviewStatusBadge } from "@/components/atoms/ReviewStatusBadges";
 import { getReview } from "@/models/review";
 import { FaRegThumbsUp, FaRegThumbsDown } from "react-icons/fa";
 import { getTranslations } from "next-intl/server";
@@ -12,7 +9,7 @@ import { PiCalendarBlank, PiKey, PiMoneyLight } from "react-icons/pi";
 export const runtime = "edge";
 
 // Image metadata
-export const alt = "Post image";
+export const alt = "Review details";
 export const size = {
   width: 1200,
   height: 630,
@@ -32,7 +29,7 @@ export default async function Image({
     reviewId: string;
   };
 }) {
-  const t = await getTranslations();
+  const t = await getTranslations("common");
 
   const review = await getReview(reviewId);
 
@@ -45,7 +42,7 @@ export default async function Image({
   const endPrice = Number(review?.data?.stay?.endPrice);
   const priceChange = endPrice != startPrice;
 
-  const string = diffYear === 1 ? t("common.añoVar") : t("common.añosVar");
+  const string = diffYear === 1 ? t("añoVar") : t("añosVar");
 
   // const addr = decodeURIComponent(address.replaceAll("-", " "));
 
@@ -65,8 +62,8 @@ export default async function Image({
             <FaRegThumbsDown size={17} />
           )}
           {review?.data?.opinion?.recomend
-            ? t("common.loRecomiendo")
-            : t("common.noLoRecomiendo")}
+            ? t("loRecomiendo")
+            : t("noLoRecomiendo")}
         </Chip>
         <div className="mt-0  p-4 overflow-hidden sticky top-10">
           <div className=" top-5 grid grid-cols-[1fr_auto]">
@@ -86,19 +83,19 @@ export default async function Image({
                 <p className="text-neutral-400 ml-2 text-xs  ">
                   {EndYear
                     ? !priceChange
-                      ? t("common.price") +
+                      ? t("price") +
                         " " +
                         review?.data.stay?.startPrice +
                         "€"
-                      : t("common.startPrice") +
+                      : t("startPrice") +
                         " " +
                         review?.data.stay?.startPrice +
                         "€ - " +
-                        t("common.endPrice") +
+                        t("endPrice") +
                         " " +
                         review?.data.stay?.endPrice +
                         "€"
-                    : t("common.price") +
+                    : t("price") +
                       " " +
                       review?.data.stay?.startPrice +
                       "€"}
@@ -110,12 +107,12 @@ export default async function Image({
                 </div>
                 {EndYear ? (
                   <p className="text-neutral-400 ml-2 text-xs  ">
-                    {t("common.livedFrom")} {StartYear} {t("common.until")}{" "}
+                    {t("livedFrom")} {StartYear} {t("until")}{" "}
                     {EndYear}
                   </p>
                 ) : (
                   <p className="text-neutral-400 ml-2 text-xs  ">
-                    {t("common.movedIn")} {StartYear}
+                    {t("movedIn")} {StartYear}
                   </p>
                 )}
               </div>
@@ -125,12 +122,12 @@ export default async function Image({
                 </div>
                 {EndYear ? (
                   <p className="text-neutral-400 ml-2 text-xs  ">
-                    {t("common.havivido")} {diffYear} {string}{" "}
-                    {t("common.enEsaDireccion")}
+                    {t("havivido")} {diffYear} {string}{" "}
+                    {t("enEsaDireccion")}
                   </p>
                 ) : (
                   <p className="text-neutral-400 ml-2 text-xs">
-                    {t("common.masDe")} {diffYear} {t("common.añosViviendo")}
+                    {t("masDe")} {diffYear} {t("añosViviendo")}
                   </p>
                 )}
               </div>
