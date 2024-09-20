@@ -35,7 +35,7 @@ export async function generateMetadata({
     openGraph: {
       title: titleDetail,
       description,
-      url: new URL(`https://www.reviucasa.com/blog`),
+      url: `https://www.reviucasa.com/blog`,
       siteName: "Reviu",
       locale: locale,
       type: "website",
