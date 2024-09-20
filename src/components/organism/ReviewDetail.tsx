@@ -64,7 +64,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
               </Chip>
               <div className="lg:mt-3 mt-0 lg:p-0 p-4 overflow-hidden sticky top-10">
                 <div className="lg:flex lg:flex-col lg:justify-end lg:pb-4 lg:sticky top-5 grid grid-cols-[1fr_auto]">
-                  <div className="bg-gray-300 rounded-full h-8 w-8 flex items-center justify-center lg:order-first order-last">
+                  <div className="bg-gray-200 rounded-full h-8 w-8  items-center justify-center hidden lg:flex lg:order-first ">
                     <Image
                       quality={100}
                       src={GreenHouse}
@@ -247,7 +247,9 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                         <Link
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
                           href={`/agency/${encodeURIComponent(
-                            review.data.management?.realStateAgency.toLocaleLowerCase().replaceAll(" ", "-")
+                            review.data.management?.realStateAgency
+                              .toLocaleLowerCase()
+                              .replaceAll(" ", "-")
                           )}`}
                           title={tLinks("/agency")}
                         >
