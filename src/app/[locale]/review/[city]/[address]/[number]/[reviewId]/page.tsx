@@ -2,6 +2,7 @@ import { MainLayout } from "@/components/layouts/MainLayout";
 import { ReviewDetail } from "@/components/organism/ReviewDetail";
 import { getReview } from "@/models/review";
 import { mainKeywords } from "@/staticData";
+import { capitalize } from "lodash";
 import { BounceLoader } from "react-spinners";
 
 export async function generateMetadata({
@@ -22,17 +23,23 @@ export async function generateMetadata({
 
   const title =
     locale == "en"
-      ? `Review of ${addr} ${number}, ${city} - ${reviewTitle}`
+      ? `Review of ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`
       : locale == "es"
-      ? `Reseña de ${addr} ${number}, ${city} - ${reviewTitle}`
-      : `Ressenya de ${addr} ${number}, ${city} - ${reviewTitle}`;
+      ? `Reseña de ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`
+      : `Ressenya de ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`;
 
   const description =
     locale == "en"
-      ? `Discover the review of ${addr} ${number}, ${city}. See what others say about this rental on Reviu, and get detailed insights and information.`
+      ? `Discover the review of ${addr} ${number}, ${capitalize(
+          city
+        )}. See what others say about this rental on Reviu, and get detailed insights and information.`
       : locale == "es"
-      ? `Descubre la reseña de ${addr} ${number}, ${city}. Consulta opiniones de otros usuarios sobre esta propiedad en Reviu, y obtén información detallada.`
-      : `Descobreix la ressenya de ${addr} ${number}, ${city}. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
+      ? `Descubre la reseña de ${addr} ${number}, ${capitalize(
+          city
+        )}. Consulta opiniones de otros usuarios sobre esta propiedad en Reviu, y obtén información detallada.`
+      : `Descobreix la ressenya de ${addr} ${number}, ${capitalize(
+          city
+        )}. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
 
   const keywords = [
     [addr, number, city].join(" "),
@@ -51,9 +58,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: new URL(
-        `https://www.reviucasa.com/review/${city}/${address}/${number}/${reviewId}`
-      ),
+      url: `https://www.reviucasa.com/review/${city}/${address}/${number}/${reviewId}`,
       siteName: "Reviu",
       locale: locale,
       type: "article",
