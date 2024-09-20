@@ -1,4 +1,4 @@
-import { getPost } from "@/models/post";
+/* import { getPost } from "@/models/post";
 import { ImageResponse } from "next/og";
 import NextImage from "next/image";
 
@@ -41,3 +41,4 @@ export default async function Image({
     }
   );
 }
+ */
