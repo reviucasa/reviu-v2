@@ -40,7 +40,7 @@ export async function generateMetadata({
     openGraph: {
       title,
       description,
-      url: new URL(`https://www.reviucasa.com/blog/${locale}/blog/${postId}`),
+      url: new URL(`https://www.reviucasa.com/${locale}/blog/${postId}`),
       siteName: "Reviu",
       locale: locale,
       type: "article",

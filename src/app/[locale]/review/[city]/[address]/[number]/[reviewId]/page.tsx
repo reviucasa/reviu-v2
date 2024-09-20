@@ -20,7 +20,7 @@ export async function generateMetadata({
 
   const addr = decodeURIComponent(address.replaceAll("-", " "));
 
-  const titleDetail =
+  const title =
     locale == "en"
       ? `Review of ${addr} - ${reviewTitle} | Reviu`
       : locale == "es"
@@ -40,9 +40,27 @@ export async function generateMetadata({
   ];
 
   return {
-    title: titleDetail,
+    title,
     description,
     keywords,
+    metadataBase: new URL(
+      `https://www.reviucasa.com/${locale}/review/${city}/${address}/${number}/${reviewId}`
+    ),
+    openGraph: {
+      title,
+      description,
+      url: new URL(
+        `https://www.reviucasa.com/${locale}/review/${city}/${address}/${number}/${reviewId}`
+      ),
+      siteName: "Reviu",
+      locale: locale,
+      type: "article",
+    },
+    twitter: {
+      title,
+      description,
+      card: "summary_large_image",
+    },
   };
 }
 
