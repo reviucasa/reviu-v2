@@ -39,26 +39,28 @@ export async function generateMetadata({
     ...mainKeywords(locale).slice(0, 3),
   ];
 
+  const images = review?.data.opinion?.images;
+
   return {
     title,
     description,
     keywords,
-    metadataBase: new URL(
+    /* metadataBase: new URL(
       `https://www.reviucasa.com/${locale}/review/${city}/${address}/${number}/${reviewId}`
-    ),
+    ), */
     openGraph: {
       title,
       description,
       url: new URL(
-        `https://www.reviucasa.com/${locale}/review/${city}/${address}/${number}/${reviewId}`
+        `https://www.reviucasa.com/review/${city}/${address}/${number}/${reviewId}`
       ),
       siteName: "Reviu",
       locale: locale,
-      logo: "https://www.reviucasa.com/images/logo.png",
       type: "article",
       images: [
         {
-          url: review?.data.opinion?.images[0].url,
+          url:
+            images && images?.length > 0 && review?.data.opinion?.images[0].url,
         },
       ],
     },
@@ -66,7 +68,9 @@ export async function generateMetadata({
       title,
       description,
       card: "summary_large_image",
-      images: [review?.data.opinion?.images[0].url],
+      images: [
+        images && images?.length > 0 && review?.data.opinion?.images[0].url,
+      ],
     },
   };
 }
