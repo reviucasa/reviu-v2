@@ -36,6 +36,7 @@ export async function generateMetadata({
       url: new URL(`https://www.reviucasa.com`),
       siteName: "Reviu",
       locale: locale,
+      logo: "https://www.reviucasa.com/images/logo.png",
       type: "website",
       images: [
         {

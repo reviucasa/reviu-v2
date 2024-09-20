@@ -32,13 +32,14 @@ export async function generateMetadata({
     title: titleDetail,
     description,
     keywords,
-    // metadataBase: new URL(`https://www.reviucasa.com/blog`),
+    metadataBase: new URL(`https://www.reviucasa.com/blog`),
     openGraph: {
       title: titleDetail,
       description,
       url: new URL(`https://www.reviucasa.com/blog`),
       siteName: "Reviu",
       locale: locale,
+      logo: "https://www.reviucasa.com/images/logo.png",
       type: "website",
       images: [
         {
