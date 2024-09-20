@@ -17,10 +17,10 @@ export async function generateMetadata({
 
   const title =
     locale == "en"
-      ? `Reviu Post: ${p?.title}`
+      ? `Reviu | ${p?.title}`
       : locale == "es"
-      ? `Reviu: ${p?.title}`
-      : `Reviu: ${p?.title}`;
+      ? `Reviu | ${p?.title}`
+      : `Reviu | ${p?.title}`;
 
   const description =
     locale == "en"
