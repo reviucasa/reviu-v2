@@ -27,7 +27,6 @@ export async function generateMetadata({
   const keywords = mainKeywords(locale);
 
   return {
-    metadataBase: new URL(`https://www.reviucasa.com`),
     title: "Reviu | " + titleDetail,
     description,
     keywords,
