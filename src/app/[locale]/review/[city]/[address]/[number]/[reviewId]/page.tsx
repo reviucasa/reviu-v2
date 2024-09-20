@@ -22,17 +22,17 @@ export async function generateMetadata({
 
   const title =
     locale == "en"
-      ? `Review of ${addr} ${number}, ${city} - ${reviewTitle} | Reviu`
+      ? `Review of ${addr} ${number}, ${city} - ${reviewTitle}`
       : locale == "es"
-      ? `Reseña de ${addr} - ${reviewTitle} | Reviu`
-      : `Ressenya de ${addr} - ${reviewTitle} | Reviu`;
+      ? `Reseña de ${addr} ${number}, ${city} - ${reviewTitle}`
+      : `Ressenya de ${addr} ${number}, ${city} - ${reviewTitle}`;
 
   const description =
     locale == "en"
-      ? `Discover the review of ${addr}. See what others say about this rental on Reviu, and get detailed insights and information.`
+      ? `Discover the review of ${addr} ${number}, ${city}. See what others say about this rental on Reviu, and get detailed insights and information.`
       : locale == "es"
-      ? `Descubre la reseña de ${addr} en Barcelona. Consulta opiniones de otros usuarios sobre esta propiedad en Reviu, y obtén información detallada.`
-      : `Descobreix la ressenya de ${addr} a Barcelona. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
+      ? `Descubre la reseña de ${addr} ${number}, ${city}. Consulta opiniones de otros usuarios sobre esta propiedad en Reviu, y obtén información detallada.`
+      : `Descobreix la ressenya de ${addr} ${number}, ${city}. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
 
   const keywords = [
     [addr, number, city].join(" "),

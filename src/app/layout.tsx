@@ -5,7 +5,7 @@ type Props = {
   children: ReactNode;
 };
 
-export async function generateMetadata({
+/* export async function generateMetadata({
   params: { locale },
 }: {
   params: { locale: string };
@@ -61,7 +61,7 @@ export async function generateMetadata({
       images: ["https://www.reviucasa.com/images/home-opengraph-image.png"],
     },
   };
-}
+} */
 
 // Since we have a `not-found.tsx` page on the root, a layout file
 // is required, even if it's just passing children through.
