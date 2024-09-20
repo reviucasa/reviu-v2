@@ -1,6 +1,5 @@
 import { MainLayout } from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
-import { host } from "@/config";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
 import { mainKeywords } from "@/staticData";
@@ -43,6 +42,7 @@ export async function generateMetadata({
       url: new URL(`https://www.reviucasa.com/${locale}/blog/${postId}`),
       siteName: "Reviu",
       locale: locale,
+      logo: "https://www.reviucasa.com/images/logo.png",
       type: "article",
       images: [
         {

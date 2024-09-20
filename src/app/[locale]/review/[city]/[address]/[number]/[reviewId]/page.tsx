@@ -22,7 +22,7 @@ export async function generateMetadata({
 
   const title =
     locale == "en"
-      ? `Review of ${addr} - ${reviewTitle} | Reviu`
+      ? `Review of ${addr} ${number}, ${city} - ${reviewTitle} | Reviu`
       : locale == "es"
       ? `Reseña de ${addr} - ${reviewTitle} | Reviu`
       : `Ressenya de ${addr} - ${reviewTitle} | Reviu`;
@@ -54,12 +54,19 @@ export async function generateMetadata({
       ),
       siteName: "Reviu",
       locale: locale,
+      logo: "https://www.reviucasa.com/images/logo.png",
       type: "article",
+      images: [
+        {
+          url: review?.data.opinion?.images[0].url,
+        },
+      ],
     },
     twitter: {
       title,
       description,
       card: "summary_large_image",
+      images: [review?.data.opinion?.images[0].url],
     },
   };
 }
