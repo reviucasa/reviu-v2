@@ -114,8 +114,13 @@ export const pathnames: Pathnames<typeof locales> = {
   "/suspended": "/suspended",
   "/termsAndConditions": {
     es: "/condiciones-uso",
-    ca: "/condicions-us",
+    ca: "/condicions-use",
     en: "/terms-conditions",
+  },
+  "/goodPracticesProtocol": {
+    es: "/protocolo-buenas-practicas",
+    ca: "/protocol-bones-practiques",
+    en: "/good-practices-protocol",
   },
 };
 
