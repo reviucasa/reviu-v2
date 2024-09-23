@@ -80,6 +80,14 @@ export async function Footer() {
                   {t("common.cookies")}
                 </Link>
               </li>
+              <li className="cursor-pointer">
+                <Link
+                  href="/goodPracticesProtocol"
+                  title={tLinks("/goodPracticesProtocol")}
+                >
+                  {t("common.protocoloBuenasPracticas")}
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
