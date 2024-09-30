@@ -259,7 +259,7 @@ export const countries: Array<{ [key: string]: string }> = [
 export const mainKeywords = (locale: string) =>
   locale === "en"
     ? [
-        "apartments for rent barcelona",
+        "apartments barcelona",
         "barcelona real state agencies",
         "apartment reviews",
         "real estate agency reviews",
@@ -267,7 +267,7 @@ export const mainKeywords = (locale: string) =>
       ]
     : locale === "ca"
     ? [
-        "pisos lloguer barcelona",
+        "pisos barcelona",
         "immobiliàries barcelona",
         "opinions pisos",
         "opinions immobiliàries",
@@ -275,7 +275,7 @@ export const mainKeywords = (locale: string) =>
         "ressenyes immobiliàries",
       ]
     : [
-        "pisos alquiler barcelona",
+        "pisos barcelona",
         "inmobiliarias barcelona",
         "opiniones pisos",
         "opiniones inmobiliarias",
