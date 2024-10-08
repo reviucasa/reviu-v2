@@ -1,7 +1,5 @@
-"use client";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { useEffect, useState } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 
 export type MapProps = {
