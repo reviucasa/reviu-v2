@@ -39,8 +39,10 @@
     "dejanosTuOpinion": "Deixa'ns la teva opinió anònima!",
     "calleYNúmero": "Carrer i número",
     "deAcuerdo": "D'acord",
-    "NoPuedesPublicar": "No pots publicar dues opinions del mateix pis. Per assegurar que les valoracions de cada pis són fiables, només es pot publicar una opinió per persona",
+    "yaTienesReviewDesc": "No pots publicar dues opinions del mateix pis. Per assegurar que les valoracions de cada pis són fiables, només es pot publicar una opinió per persona. Si vols modificar la teva ressenya, elimina l'actual i en podràs publicar una nova versió.",
     "yaTienesReview": "Ja has publicat una opinió sobre aquest pis",
+    "maximoReviewsAlcanzado": "Ja has esgotat els dos intents per escriure una ressenya sobre aquest pis.",
+    "noPuedesPublicar": "Només es permet una ressenya per pis, amb la possibilitat de modificar-la una vegada si la primera és eliminada. Això ens ajuda a mantenir les valoracions clares i útils per a tothom. En el teu cas, ja has fet ús de la segona oportunitat per reescriure la ressenya. Si tens més comentaris o dubtes, estarem encantats d’ajudar-te!",
     "noEncuentrasDireccion": "Per què no trobo el pis que busco?",
     "nosAyudamosGoogle": "Això es pot deure a",
     "posiblesErrores": "Possibles errors de cerca",
@@ -271,7 +273,11 @@
     "livedFrom": "Hi va viure des del",
     "until": "fins el",
     "movedIn": "S'hi va traslladar el",
-    "goodPracticesProtocol": "Protocol de bones pràctiques"
+    "goodPracticesProtocol": "Protocol de bones pràctiques",
+    "myReviews": "Les meves ressenyes",
+    "publishedReviews": "ressenyes publicades",
+    "reportedReviews": "reportades",
+    "suspendedReviews": "suspeses"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunitat de veïns",
@@ -633,7 +639,8 @@
     "/success": "Opinió enviada correctament",
     "/suspend": "Compte suspès",
     "/termsAndConditions": "Termes i condicions d'ús",
-    "/goodPracticesProtocol": "Protocol de bones pràctiques"
+    "/goodPracticesProtocol": "Protocol de bones pràctiques",
+    "/myReviews": "Les meves ressenyes"
   },
   "loginForm": {
     "iniciaORegistrate": "Inicia sessió o registra't",

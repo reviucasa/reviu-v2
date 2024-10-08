@@ -122,6 +122,11 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/protocol-bones-practiques",
     en: "/good-practices-protocol",
   },
+  "/myReviews": {
+    es: "/mis-reseñas",
+    ca: "/les-meves-ressenyes",
+    en: "/my-reviews",
+  },
 };
 
 export const localePrefix: LocalePrefix<typeof locales> = "always";

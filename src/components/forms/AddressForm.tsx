@@ -15,19 +15,23 @@ import {
   getPositionUrlReview,
   getUrlReview,
 } from "@/helpers/stepper";
-import { createDraft, getReviewsFromUser, updateDraft } from "@/models/review";
+import {
+  createDraft,
+  getReviewsFromUser,
+  ReviewStatus,
+  updateDraft,
+} from "@/models/review";
 import { auth } from "@/firebase/config";
 import {
   Apartment,
   Building,
   findBuildingByAddress,
-  findBuildingByCatastroId,
   getBuilding,
   getBuildingStairs,
 } from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
-import { serverTimestamp, Timestamp } from "firebase/firestore";
+import { Timestamp } from "firebase/firestore";
 
 export const AddressForm = () => {
   const { draft } = useDraft();
@@ -61,7 +65,9 @@ export const AddressForm = () => {
   const [apartmentSelected, setApartmentSelected] = useState<Apartment>();
   const [isOpenReviewAuthenticityAlert, setIsOpenReviewAuthenticityAlert] =
     useState(false);
-  const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlertsetIsOpen] =
+  const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlert] =
+    useState(false);
+  const [isOpenExistingTwoReviewsAlert, setIsOpenExistingTwoReviewsAlert] =
     useState(false);
   const [isOpenAddressIncorrectAlert, setIsOpenAddressIncorrectAlert] =
     useState(false);
@@ -130,9 +136,18 @@ export const AddressForm = () => {
     const apartment = aparmentList[Number(event.currentTarget.value)]; /* .find(
       (a) => a.id == event.currentTarget.value
     ); */
+    setIsOpenExistingTwoReviewsAlert(true);
+    setIsOpenExistingReviewAlert(true);
+
     const reviews = await getReviewsFromUser(auth.currentUser!.uid);
-    if (reviews.find((r) => r.apartment?.id == apartment?.id)) {
-      setIsOpenExistingReviewAlertsetIsOpen(true);
+    if (reviews.filter((r) => r.apartment?.id == apartment?.id).length == 2) {
+      setIsOpenExistingTwoReviewsAlert(true);
+    } else if (
+      reviews.filter((r) => r.apartment?.id == apartment?.id).length == 1 &&
+      reviews.find((r) => r.apartment?.id == apartment?.id)?.status ==
+        ReviewStatus.Published
+    ) {
+      setIsOpenExistingReviewAlert(true);
     } else {
       setApartmentSelected(apartment);
     }
@@ -278,12 +293,18 @@ export const AddressForm = () => {
           </Button>
         )}
       </div>
-
+      <AcceptDialog
+        isOpen={isOpenExistingTwoReviewsAlert}
+        setIsOpen={setIsOpenExistingTwoReviewsAlert}
+        acceptText={t("addressReview.deAcuerdo")}
+        description={t("addressReview.noPuedesPublicar")}
+        title={t("addressReview.maximoReviewsAlcanzado")}
+      />
       <AcceptDialog
         isOpen={isOpenExistingReviewAlert}
-        setIsOpen={setIsOpenExistingReviewAlertsetIsOpen}
+        setIsOpen={setIsOpenExistingReviewAlert}
         acceptText={t("addressReview.deAcuerdo")}
-        description={t("addressReview.NoPuedesPublicar")}
+        description={t("addressReview.yaTienesReviewDesc")}
         title={t("addressReview.yaTienesReview")}
       />
       <Dialog

@@ -39,8 +39,10 @@
     "dejanosTuOpinion": "Let us know what you think anonymously!",
     "calleYNúmero": "Street and number",
     "deAcuerdo": "I agree",
-    "NoPuedesPublicar": "You cannot publish two reviews of the same home. To ensure that the ratings of each home are reliable, only one review per person is allowed",
+    "yaTienesReviewDesc": "You cannot post two reviews of the same apartment. To ensure that the ratings for each apartment are reliable, only one review per person is allowed. If you want to edit your review, delete the current one, and you will be able to post a new version.",
     "yaTienesReview": "You already have a review in this home ",
+    "maximoReviewsAlcanzado": "You have already used both attempts to write a review for this apartment.",
+    "noPuedesPublicar": "Only one published review per apartment is allowed, with the option to create another one if the first one is deleted. This helps us keep the ratings clear and useful for everyone. In your case, you've already used the second opportunity to rewrite the review. If you have any more comments or questions, we'd be happy to help!",
     "noEncuentrasDireccion": "Can't find your address?",
     "nosAyudamosGoogle": "This may be due to",
     "posiblesErrores": "Possible search errors ",
@@ -272,7 +274,11 @@
     "livedFrom": "Lived from",
     "until": "until",
     "movedIn": "Moved in on",
-    "goodPracticesProtocol": "Protocol of good practices"
+    "goodPracticesProtocol": "Protocol of good practices",
+    "myReviews": "My reviews",
+    "publishedReviews": "published reviews",
+    "reportedReviews": "reported reviews",
+    "suspendedReviews": "suspended reviews"
   },
   "communityReviews": {
     "comunidadVecinos": "Building",
@@ -635,8 +641,10 @@
     "/success": "Review submitted successfully",
     "/suspend": "Account suspended",
     "/termsAndConditions": "Terms and conditions of use",
-    "/goodPracticesProtocol": "Protocol of good practices"
+    "/goodPracticesProtocol": "Protocol of good practices",
+    "/myReviews": "My reviews"
   },
+
   "loginForm": {
     "iniciaORegistrate": "Log in or sign in",
     "textDescubre": "Find out what it's like to live there before you move in and share your experience to help others",
