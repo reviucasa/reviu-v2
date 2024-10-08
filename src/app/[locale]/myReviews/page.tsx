@@ -1,13 +1,9 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
-import { BannerOpinion } from "@/components/molecules/BannerOpinion";
-import { getTranslations } from "next-intl/server";
-import cardBannerImage from "public/images/leave-review-banner.jpg";
+
 import MyReviewsClientPage from "./page.client";
 import { AccountLayout } from "@/components/layouts/AccountLayout";
-import Account from "../account/page";
 
 export default async function MyReviewsPage() {
-  const t = await getTranslations();
+
 
   return (
     <AccountLayout>

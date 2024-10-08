@@ -4,7 +4,7 @@ import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { auth } from "@/firebase/config";
 import { useEffect, useState } from "react";
 import { Building, getBuildingsByIds } from "@/models/building";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { MapProps } from "@/components/molecules/OpenStreetMapMultiple";
 import dynamic from "next/dynamic";
 import { capitalize } from "lodash";
@@ -12,6 +12,8 @@ import { BounceLoader } from "react-spinners";
 import Link from "next/link";
 import Image from "next/image";
 import img from "public/images/writeDrawing.png";
+import { unstable_setRequestLocale } from "next-intl/server";
+import { locales } from "@/config";
 
 const OpenStreetMapMultiple = dynamic(
   () => import("../../../components/molecules/OpenStreetMapMultiple"),
@@ -21,7 +23,10 @@ const OpenStreetMapMultiple = dynamic(
 );
 
 export default function MyReviewsClientPage() {
+  const locale = useLocale();
+  unstable_setRequestLocale(locale);
   const t = useTranslations();
+
   const [reviews, setReviews] = useState<Review[]>([]);
   const [buildings, setBuildings] = useState<(Building | undefined)[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
