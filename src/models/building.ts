@@ -128,11 +128,23 @@ const getBuilding = async (
   return snapshot.exists() ? snapshot.data() : undefined;
 };
 
-// Retrieve a building by ID
+// Retrieve all buildings
 const getBuildings = async (): Promise<Building[] | undefined> => {
   const q = query(collection(db, "buildings").withConverter(buildingConverter));
   const snapshot = await getDocs(q);
   return snapshot.docs.map((doc) => doc.data());
+};
+
+// Retrieve multiple buildings by a list of IDs
+const getBuildingsByIds = async (
+  ids: string[]
+): Promise<(Building | undefined)[]> => {
+  const results: (Building | undefined)[] = await Promise.all(
+    ids.map(async (id) => {
+      return await getBuilding(id);
+    })
+  );
+  return results;
 };
 
 // Retrieve a building by ID
@@ -156,6 +168,18 @@ const getBuildingByAddress = async (
   } else {
     return undefined;
   }
+};
+
+// Retrieve multiple buildings by a list of addresses
+const getBuildingsByAddresses = async (
+  addresses: { street: string; number: string }[]
+): Promise<(Building | undefined)[]> => {
+  const results: (Building | undefined)[] = await Promise.all(
+    addresses.map(async ({ street, number }) => {
+      return await getBuildingByAddress(street, number);
+    })
+  );
+  return results;
 };
 
 // Retrieve a building by CatastroID
@@ -239,7 +263,9 @@ export {
   findBuildingByCatastroId,
   getBuilding,
   getBuildingByAddress,
+  getBuildingsByAddresses,
   updateBuilding,
   deleteBuilding,
   getBuildings,
+  getBuildingsByIds,
 };

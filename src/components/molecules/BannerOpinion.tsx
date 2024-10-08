@@ -1,11 +1,13 @@
+"use client";
 import Image, { StaticImageData } from "next/image";
-import { getTranslations } from "next-intl/server";
 import { Link } from "@/navigation";
+import { useTranslations } from "next-intl";
 
-export const BannerOpinion = async ({
+export const BannerOpinion = ({
   className,
   text,
   textColor,
+  textClassName,
   textButton,
   colorButton = "btn-primary-500",
   bgCard = "bg-primary-100",
@@ -14,20 +16,21 @@ export const BannerOpinion = async ({
   className?: string;
   text?: string;
   textColor?: string;
+  textClassName?: string;
   textButton?: string;
   colorButton?: string;
   bgCard?: string;
   image: StaticImageData;
 }) => {
-  const t = await getTranslations();
-  const tLinks = await getTranslations("linksTitles");
+  const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   return (
     <div className={`grid rounded-lg overflow-hidden w-80 ${className}`}>
       <div
         className={`flex text-center justify-center items-center flex-col order-last pb-8 px-4 pt-8 ${bgCard} overflow-hidden`}
       >
-        <h4 className={`${textColor} block mt-1`}>{text}</h4>
+        <h4 className={`${textColor} ${textClassName} block mt-1`}>{text}</h4>
         <Link
           className={`btn ${colorButton} mt-6 content-center overflow-hidden !w-full`}
           href={

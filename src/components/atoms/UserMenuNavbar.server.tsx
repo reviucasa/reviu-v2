@@ -65,6 +65,19 @@ export const UserMenuNavbar = () => {
                       </Link>
                     )}
                   </MenuItem>
+                  <MenuItem>
+                    {({ focus }) => (
+                      <Link
+                        href="/my-reviews"
+                        title={tLinks("/myReviews")}
+                        className={`p-2 hover:no-underline ${
+                          focus && "bg-secondary-200"
+                        }`}
+                      >
+                        {t("common.myReviews")}
+                      </Link>
+                    )}
+                  </MenuItem>
                   {auth.claims.admin == true && (
                     <MenuItem>
                       {({ focus }) => (

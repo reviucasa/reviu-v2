@@ -70,8 +70,6 @@ export default async function BuildingPage({
 }) {
   unstable_setRequestLocale(params.locale);
 
-  console.log(params);
-
   const t = await getTranslations();
 
   const street = decodeURIComponent(params.address.replaceAll("-", " "));

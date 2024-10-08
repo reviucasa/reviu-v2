@@ -194,7 +194,7 @@ export default function Account() {
                         enabled
                           ? "translate-x-6 bg-purple-400"
                           : "bg-primary-300"
-                      } h-5 w-5 rounded-full transition`}
+                      } h-5 w-5 rounded-full`}
                     />
                   </Switch>
                 </div>

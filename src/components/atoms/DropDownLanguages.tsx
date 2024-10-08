@@ -9,7 +9,6 @@ import {
   Transition,
 } from "@headlessui/react";
 import { useLocale, useTranslations } from "next-intl";
-import { usePathname } from "@/navigation";
 import { usePathname as useNextPathname } from "next/navigation";
 import { Fragment } from "react";
 import { HiOutlineChevronDown } from "react-icons/hi";
@@ -24,7 +23,6 @@ export const removeLocaleFromPath = (path: string) => {
 
 export const DropDownLanguages = () => {
   const t = useTranslations();
-  const pathname = usePathname();
   const nextPathname = useNextPathname(); // this is the one working here surprisingly
 
   const locale = useLocale();
@@ -43,10 +41,10 @@ export const DropDownLanguages = () => {
 
       <Transition
         as={Fragment}
-        enter="transition ease-out duration-100"
+        enter="transition ease-out duration-120"
         enterFrom="transform opacity-0 scale-95"
         enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
+        leave="transition ease-in duration-80"
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >

@@ -39,8 +39,10 @@
     "dejanosTuOpinion": "Tu opinión es anónima",
     "calleYNúmero": "Calle y número",
     "deAcuerdo": "De acuerdo",
-    "NoPuedesPublicar": "No puedes publicar dos opiniones del mismo piso. Para asegurar que las valoraciones de cada piso son fiables, sólo se puede publicar una opinión por persona.",
+    "yaTienesReviewDesc": "No puedes publicar dos opiniones sobre el mismo piso. Para asegurar que las valoraciones de cada piso sean fiables, solo se permite una opinión por persona. Si deseas modificar tu reseña, elimina la actual y podrás publicar una nueva versión.",
     "yaTienesReview": "Ya has publicado una opinión sobre este piso",
+    "maximoReviewsAlcanzado": "Ya has agotado los dos intentos para escribir una reseña sobre este apartamento.",
+    "noPuedesPublicar": "Solo se permite una reseña por apartamento, con la posibilidad de modificarla una vez si la primera es eliminada. Esto nos ayuda a mantener las valoraciones claras y útiles para todos. En tu caso, ya has utilizado la segunda oportunidad para reescribir la reseña. Si tienes más comentarios o dudas, estaremos encantados de ayudarte!",
     "noEncuentrasDireccion": "¿No encuentras tu dirección?",
     "nosAyudamosGoogle": "Esto se puede deber a:",
     "posiblesErrores": "Posibles errores de búsqueda",
@@ -272,7 +274,11 @@
     "livedFrom": "Vivió desde el",
     "until": "hasta el",
     "movedIn": "Se mudó el",
-    "goodPracticesProtocol": "Protocolo de buenas práticas"
+    "goodPracticesProtocol": "Protocolo de buenas práticas",
+    "myReviews": "Mis reseñas",
+    "publishedReviews": "reseñas publicadas",
+    "reportedReviews": "reportadas",
+    "suspendedReviews": "suspendidas"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunidad de vecinos",
@@ -632,7 +638,8 @@
     "/success": "Opinión enviada correctamente",
     "/suspend": "Cuenta suspendida",
     "/termsAndConditions": "Términos y condiciones de uso",
-    "/goodPracticesProtocol": "Protocolo de buenas prácticas"
+    "/goodPracticesProtocol": "Protocolo de buenas prácticas",
+    "/myReviews": "Mis reseñas"
   },
   "loginForm": {
     "iniciaORegistrate": "Inicia sesión o regístrate",

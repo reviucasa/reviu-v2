@@ -26,12 +26,6 @@ function OpenStreetMap({ latitude, longitude }: MapProps) {
     iconAnchor: [22.5, 51],
   });
 
-  /* const customIcon = L.icon({
-    iconUrl:
-      "https://cdn.jsdelivr.net/npm/leaflet.awesome-markers@2.0.5/dist/leaflet.awesome-markers.min.js",
-    iconSize: windowWidth < 768 ? [35, 40] : [50, 55],
-  }); */
-
   return (
     <MapContainer
       className="w-full h-full rounded-lg z-0"

@@ -232,6 +232,15 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                         {t("common.cuenta")}
                       </Link>
                     </MenuItem>
+                    <MenuItem>
+                      <Link
+                        href="/my-reviews"
+                        title={tLinks("/myReviews")}
+                        className="hover:no-underline"
+                      >
+                        {t("common.myReviews")}
+                      </Link>
+                    </MenuItem>
                     {auth.claims.admin == true && (
                       <MenuItem>
                         <Link
