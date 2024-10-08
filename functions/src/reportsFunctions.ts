@@ -1,10 +1,5 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import * as postmark from "postmark";
-
-admin.initializeApp();
-
-const postmarkClient = new postmark.ServerClient(process.env.POSTMARK_API_KEY!);
 
 export const sendNewReportNotification = functions
   .region("europe-west1")
@@ -59,34 +54,51 @@ export const sendNewReportNotification = functions
               class="image"
             />
             <div class="email-content">
-              <h2 style="font-size: 24px; font-weight: 600">New Report Created</h2>
-              <div style="justify-content: end; text-align:left; margin: 40px 60px">
-                  <p><strong>Report ID:</strong> ${context.params.reportId}</p>
-                  <p><strong>Review ID:</strong> ${reportData.reviewId}</p>
-                  <p><strong>Reason:</strong> ${
-                    reportData.reason || "No reason specified"
-                  }</p>
-                  <p><strong>Comment:</strong> ${
-                    reportData.comment || "No comment specified"
-                  }</p>
-                  <br/>
-                  <p><strong>Reporting User Email:</strong> ${
-                    reportData.user.email
-                  }</p>
-                  <p><strong>Reporting User Name:</strong> ${
-                    reportData.user.name
-                  }</p>
+              <h2 style="font-size: 24px; font-weight: 600">
+                New Report Created
+              </h2>
+              <div style="justify-content: end; 
+                          text-align:left; 
+                          margin: 40px 60px
+              ">
+                <p>
+                  <strong>Report ID:</strong> ${context.params.reportId}
+                </p>
+                <p>
+                  <strong>Review ID:</strong> ${reportData.reviewId}
+                </p>
+                <p>
+                  <strong>Reason:</strong> $
+                  {reportData.reason || "No reason specified"}
+                </p>
+                <p>
+                  <strong>Comment:</strong> $
+                  {reportData.comment || "No comment specified"}
+                </p>
+                <br />
+                <p>
+                  <strong>Reporting User Email: </strong>
+                  ${reportData.user.email}
+                </p>
+                <p>
+                  <strong>Reporting User Name: </strong>
+                  ${reportData.user.name}
+                </p>
               </div>
-              
-              <p style="color:red; margin-bottom: 40px;">Check the report and take the necessary actions</p>
+
+              <p style="color:red; margin-bottom: 40px;">
+                Check the report and take the necessary actions
+              </p>
             </div>
-            
           </body>
         </html>
       `;
 
+      // Send an email:
+      const client = new postmark.ServerClient(process.env.POSTMARK_API_KEY!);
+
       // Send the email to info@reviucasa.com
-      const response = await postmarkClient.sendEmail({
+      const response = await client.sendEmail({
         From: "info@reviucasa.com",
         To: "info@reviucasa.com",
         Subject: "New Review Report Notification",
@@ -94,8 +106,8 @@ export const sendNewReportNotification = functions
         MessageStream: "outbound",
       });
 
-      console.log("New report notification email sent successfully:", response);
+      console.log("New report email sent successfully:", response);
     } catch (error) {
-      console.error("Error sending new report notification email:", error);
+      console.error("Error sending new report email:", error);
     }
   });
