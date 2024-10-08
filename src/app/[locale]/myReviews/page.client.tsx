@@ -5,26 +5,17 @@ import { auth } from "@/firebase/config";
 import { useEffect, useState } from "react";
 import { Building, getBuildingsByIds } from "@/models/building";
 import { useLocale, useTranslations } from "next-intl";
-import { MapProps } from "@/components/molecules/OpenStreetMapMultiple";
+import OpenStreetMapMultiple, {
+  MapProps,
+} from "@/components/molecules/OpenStreetMapMultiple";
 import dynamic from "next/dynamic";
 import { capitalize } from "lodash";
 import { BounceLoader } from "react-spinners";
 import Link from "next/link";
 import Image from "next/image";
 import img from "public/images/writeDrawing.png";
-import { unstable_setRequestLocale } from "next-intl/server";
-import { locales } from "@/config";
-
-const OpenStreetMapMultiple = dynamic(
-  () => import("../../../components/molecules/OpenStreetMapMultiple"),
-  {
-    ssr: false, // This makes sure the component is only rendered on the client
-  }
-);
 
 export default function MyReviewsClientPage() {
-  const locale = useLocale();
-  unstable_setRequestLocale(locale);
   const t = useTranslations();
 
   const [reviews, setReviews] = useState<Review[]>([]);
