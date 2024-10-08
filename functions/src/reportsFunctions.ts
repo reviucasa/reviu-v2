@@ -100,7 +100,7 @@ export const sendNewReportNotification = functions
       // Send the email to info@reviucasa.com
       const response = await client.sendEmail({
         From: "info@reviucasa.com",
-        To: "info@reviucasa.com",
+        To: "nicolau.farre@gmail.com",
         Subject: "New Review Report Notification",
         HtmlBody: emailContent,
         MessageStream: "outbound",
