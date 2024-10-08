@@ -136,8 +136,6 @@ export const AddressForm = () => {
     const apartment = aparmentList[Number(event.currentTarget.value)]; /* .find(
       (a) => a.id == event.currentTarget.value
     ); */
-    setIsOpenExistingTwoReviewsAlert(true);
-    setIsOpenExistingReviewAlert(true);
 
     const reviews = await getReviewsFromUser(auth.currentUser!.uid);
     if (reviews.filter((r) => r.apartment?.id == apartment?.id).length == 2) {
