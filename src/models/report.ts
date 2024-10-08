@@ -18,11 +18,21 @@ import { UserType } from "./user";
 // Define the ReviewReport type
 export type ReviewReport = {
   id: string;
-  reviewId: string;
+
   timeCreated: Timestamp;
   reason: string | null;
   comment?: string;
-  user: {
+  review: {
+    id: string;
+    address: string;
+    userId: string;
+  };
+  reviewer: {
+    id: string;
+    email: string;
+    name: string;
+  };
+  issuer: {
     id: string;
     email: string;
     name: string;

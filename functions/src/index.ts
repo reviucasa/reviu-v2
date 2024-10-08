@@ -4,11 +4,11 @@ admin.initializeApp();
 import {sendSignInLinkToEmail} from "./authFunctions";
 import {addCustomClaim} from "./userFunctions";
 import {computeWeeklyStats} from "./statsFunctions";
-import {sendNewReportNotification} from "./reportsFunctions";
+import {onReportCreated} from "./reportsFunctions";
 
 export {
   sendSignInLinkToEmail,
   addCustomClaim,
   computeWeeklyStats,
-  sendNewReportNotification,
+  onReportCreated,
 };

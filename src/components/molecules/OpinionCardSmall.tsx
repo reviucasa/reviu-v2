@@ -146,7 +146,11 @@ export const OpinionCardSmall = ({
       <DialogReport
         isOpen={openModalInfo}
         setIsOpen={setOpenModalInfo}
-        reviewId={review.id}
+        reviewData={{
+          id: review.id,
+          userId: review.userId,
+          address: review.address,
+        }}
       />
       <ModalInfo
         openMoreInfo={openMoreInfo}

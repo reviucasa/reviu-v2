@@ -56,7 +56,7 @@ export default function ReportedReviewsTable() {
                       scope="col"
                       className="py-2 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                     >
-                      Reporting User
+                      Issuer
                     </th>
                     <th
                       scope="col"
@@ -64,12 +64,12 @@ export default function ReportedReviewsTable() {
                     >
                       User Type
                     </th>
-                    <th
+                    {/* <th
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
                     >
                       Review Id
-                    </th>
+                    </th> */}
                     <th
                       scope="col"
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
@@ -87,6 +87,12 @@ export default function ReportedReviewsTable() {
                       className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
                     >
                       Comment
+                    </th>
+                    <th
+                      scope="col"
+                      className="px-3 py-2 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Owner
                     </th>
                     <th
                       scope="col"
@@ -118,28 +124,28 @@ export default function ReportedReviewsTable() {
                               className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6 cursor-pointer hover:text-secondary-500 active:text-secondary-300"
                               onClick={() => {
                                 navigator.clipboard.writeText(
-                                  report.user.email
+                                  report.issuer.email
                                 );
                               }}
                             >
-                              {report.user.email}
+                              {report.issuer.email}
                             </td>
                             <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                              <UserTypeBadge type={report.user.type} />
+                              <UserTypeBadge type={report.issuer.type} />
                             </td>
-                            <td
+                            {/* <td
                               className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
                               onClick={() => {
-                                navigator.clipboard.writeText(report.reviewId);
+                                navigator.clipboard.writeText(report.review.id);
                               }}
                             >
-                              {report.reviewId.slice(0, 3)}...
-                              {report.reviewId.slice(-3)}
-                            </td>
+                              {report.review.id.slice(0, 3)}...
+                              {report.review.id.slice(-3)}
+                            </td> */}
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                               <div
                                 onClick={() => {
-                                  onReportSelected(report.reviewId);
+                                  onReportSelected(report.review.id);
                                 }}
                                 className="text-primary-300 cursor-pointer hover:underline"
                               >
@@ -152,6 +158,16 @@ export default function ReportedReviewsTable() {
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-64 overflow-x-hidden text-ellipsis">
                               {report.comment}
+                            </td>
+                            <td
+                              className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-44 overflow-x-hidden text-ellipsis cursor-pointer hover:text-secondary-500 active:text-secondary-300"
+                              onClick={() => {
+                                navigator.clipboard.writeText(
+                                  report.issuer.email
+                                );
+                              }}
+                            >
+                              {report.reviewer.email}
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                               {report.timeCreated

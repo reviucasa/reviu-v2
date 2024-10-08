@@ -19,11 +19,11 @@ import { useUser } from "@/hooks/swr/useUser";
 export const DialogReport = ({
   isOpen,
   setIsOpen,
-  reviewId,
+  reviewData,
 }: {
   isOpen: boolean;
   setIsOpen?: any;
-  reviewId: string;
+  reviewData: { id: string; userId: string; address: string };
 }) => {
   // const [openModalInfo, setOpenModalInfo] = useState<boolean>(false)
   const [openModalReport, setOpenModalReport] = useState<boolean>(false);
@@ -89,9 +89,13 @@ export const DialogReport = ({
     if (user) {
       const report: Partial<ReviewReport> = {
         reason: Options.find((o) => o.id == selectedOption)?.code || "other",
-        reviewId,
         comment: textReport,
-        user: {
+        review: {
+          id: reviewData.id,
+          address: reviewData.address,
+          userId: reviewData.userId,
+        },
+        issuer: {
           id: user!.id,
           email: auth.currentUser!.email!,
           name: [user.name, user.lastname].join(" "),
@@ -101,9 +105,8 @@ export const DialogReport = ({
       createReviewReport(report);
     }
   };
-  
-  // TODO: (crear trigger perque senvii un email del report)
-  // limitar el numero de reports al mes que pot tenir un usuari?
+
+  // TODO: limitar el numero de reports al mes que pot tenir un usuari?
 
   return (
     <Dialog
@@ -220,7 +223,7 @@ export const DialogReport = ({
               buttonClassName="btn-primary-500 content-center overflow-hidden"
               disabled={!textReport}
               onClick={() => {
-                setSelectedOption(0)
+                setSelectedOption(0);
                 handleModalTextReport();
                 handleReviewReport();
               }}

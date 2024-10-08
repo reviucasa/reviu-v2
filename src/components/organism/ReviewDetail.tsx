@@ -486,7 +486,11 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
             <DialogReport
               isOpen={openModalInfo}
               setIsOpen={setOpenModalInfo}
-              reviewId={review?.id}
+              reviewData={{
+                id: review.id,
+                userId: review.userId,
+                address: review.address,
+              }}
             />
             <DialogDelete
               isOpen={openModalDelete}
