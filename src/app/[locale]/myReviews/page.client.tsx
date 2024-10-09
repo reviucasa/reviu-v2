@@ -8,7 +8,6 @@ import { useLocale, useTranslations } from "next-intl";
 import OpenStreetMapMultiple, {
   MapProps,
 } from "@/components/molecules/OpenStreetMapMultiple";
-import dynamic from "next/dynamic";
 import { capitalize } from "lodash";
 import { BounceLoader } from "react-spinners";
 import Link from "next/link";

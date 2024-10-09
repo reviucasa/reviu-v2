@@ -26,7 +26,7 @@ function OpenStreetMapMultiple({ coordinates }: { coordinates: MapProps[] }) {
     lng: co.longitude,
   }));
 
-  const ZOOM_LEVEL = 14;
+  const ZOOM_LEVEL = 13;
 
   const icon = L.icon({
     iconUrl: "/images/marker-icon.png",
