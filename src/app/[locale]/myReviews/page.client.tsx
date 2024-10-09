@@ -40,7 +40,9 @@ export default function MyReviewsClientPage() {
   };
 
   useEffect(() => {
-    fetchReviews();
+    setTimeout(() => {
+      fetchReviews();
+    }, 1500);
   }, []);
 
   const publishedReviews = reviews.filter(
