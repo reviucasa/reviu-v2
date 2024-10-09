@@ -70,13 +70,13 @@ export const onReportCreated = functions
       }
 
       p {
-        margin: 6px 0;
+        margin: 4px 0;
         text-decoration: none;
       }
 
       .email-container {
         background-color: #f5f2fe;
-        padding: 10px 0;
+        padding: 10px 0 20px 0;
         text-align: center;
         width: 100%;
       }
@@ -93,7 +93,7 @@ export const onReportCreated = functions
         height: auto;
         max-width: 100%;
         display: block;
-        margin: 24px auto;
+        margin: 20px auto;
       }
 
       @media (max-width: 900px) {
@@ -112,8 +112,8 @@ export const onReportCreated = functions
       class="image"
     />
     <div class="email-content">
-      <h2 style="font-size: 18px; font-weight: 600">New Report Created</h2>
-      <div style="text-align: left; max-width: 400px; margin: 36px auto">
+      <h3 style="font-size: 16px; font-weight: 600">🚨 New Report Created</h3>
+      <div style="text-align: left; max-width: 400px; margin: 32px auto">
         <p><strong>Issuer Email:</strong> ${reportData.issuer.email}</p>
         <p>
           <strong>Issuer Name:</strong> 
@@ -159,7 +159,15 @@ export const onReportCreated = functions
 
       // Send the email to info@reviucasa.com
       const response = await client.sendEmail({
-        From: "info@reviucasa.com",
+        From: "noreply@reviucasa.com",
+        To: "info@reviucasa.com",
+        Subject: "New Report - " + address,
+        HtmlBody: emailContent,
+        MessageStream: "outbound",
+      });
+
+      await client.sendEmail({
+        From: "noreply@reviucasa.com",
         To: "nicolau.farre@gmail.com",
         Subject: "New Report - " + address,
         HtmlBody: emailContent,
