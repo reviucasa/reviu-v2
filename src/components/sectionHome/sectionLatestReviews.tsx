@@ -27,7 +27,6 @@ export function SectionLatestReviews() {
     try {
       const response = await getReviews({
         count: number,
-        startAfterTime: null,
         random: true,
       });
       setLatestReviews(response);

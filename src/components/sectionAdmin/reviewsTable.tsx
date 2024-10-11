@@ -20,7 +20,7 @@ export default function ReviewsTable() {
   const [paginationIndex, setPaginationIndex] = useState<number>(0);
   const [paginationTimes, setPaginationTimes] = useState<Timestamp[]>([]);
 
-  const [startAfterTime, setStartAfterTime] = useState<Timestamp | null>(null);
+  const [startAfterTime, setStartAfterTime] = useState<Timestamp>();
 
   const { data, isFetching } = useQuery<
     | {

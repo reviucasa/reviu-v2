@@ -12,6 +12,7 @@ import cardBannerImage from "public/images/leave-review-banner.jpg";
 import BuildingView from "@/components/organism/BuildingView";
 import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
+import { capitalize } from "lodash";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -97,7 +98,11 @@ export default async function BuildingPage({
 
     analysis = {
       buildingId: building.id,
-      address: [building.address, building.number, params.city].join(", "),
+      address: [
+        building.address,
+        building.number,
+        capitalize(params.city),
+      ].join(", "),
       reviews: reviews.map((review) => convertTimestampToPlainObject(review)),
       latitude: building.latitude,
       longitude: building.longitude,

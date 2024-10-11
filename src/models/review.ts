@@ -290,8 +290,8 @@ const getReviews = async ({
   startAfterTime,
   random = false,
 }: {
-  count: number;
-  startAfterTime: Timestamp | null;
+  count?: number;
+  startAfterTime?: Timestamp;
   random?: boolean;
 }): Promise<Review[]> => {
   const ref = collection(db, `reviews`).withConverter(reviewConverter);
@@ -317,7 +317,7 @@ const getReviews = async ({
       if (random) {
         return shuffleArray(snapshot.docs.map((doc) => doc.data())).slice(
           0,
-          count
+          count!
         );
       }
       return snapshot.docs.map((doc) => doc.data());
@@ -354,7 +354,7 @@ const getReviewsWithUser = async ({
   startAfterTime,
 }: {
   count: number;
-  startAfterTime: Timestamp | null;
+  startAfterTime: Timestamp | undefined;
 }): Promise<{ reviews: Review[]; users: User[]; count: number }> => {
   const docsCount = await getReviewsCount(ReviewStatus.Published);
   const reviews = await getReviews({ count, startAfterTime });

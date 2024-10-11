@@ -320,7 +320,6 @@ export default function Account() {
                   <span
                     className="flex text-red-600 font-medium items-center cursor-pointer"
                     onClick={async () => {
-                      console.log("delete user");
                       await deleteUser(user!.id);
                       await deleteAuthUser();
                       router.push("/");
