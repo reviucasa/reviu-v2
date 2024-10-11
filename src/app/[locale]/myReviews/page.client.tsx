@@ -72,7 +72,7 @@ export default function MyReviewsClientPage() {
           {reviews.filter((r) => r.status == ReviewStatus.Published).length}{" "}
           {t("common.publishedReviews")}
         </p>
-        <div className=" h-48 sm:h-96 w-full my-10 center align-middle">
+        <div className=" h-72 sm:h-[480px] w-full my-10 center align-middle">
           {reviews.length > 0 ? (
             <OpenStreetMapMultiple />
           ) : loading ? (

@@ -7,7 +7,7 @@ export default async function MyReviewsPage() {
 
   return (
     <AccountLayout>
-      <div className="lg:px-52 md:px-24 bg-white p-12 pb-80">
+      <div className="lg:px-48 md:pt-20 md:px-20 bg-white p-6 pb-80">
         {/* <div className="relative grid lg:grid-cols-[1fr_auto] lg:gap-8 md:gap-4 grid-cols-1"> */}
         <MyReviewsClientPage />
         {/* <div className="w-auto hidden md:block">
