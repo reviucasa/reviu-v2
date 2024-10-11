@@ -13,7 +13,6 @@ import { Report } from "../atoms/Report";
 import { DialogReport } from "../molecules/DialogReport";
 import { useTranslations } from "next-intl";
 import { Review, ReviewStatus, unsuspendReview } from "@/models/review";
-import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { DialogImage } from "../molecules/DialogImage";
 import { DialogDelete } from "../molecules/DialogDelete";
 import { Suspend } from "../atoms/Suspend";
@@ -22,12 +21,13 @@ import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
 import { Unsuspend } from "../atoms/Unsuspend";
 import { Link } from "@/navigation";
+import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 
 export const ReviewDetail = ({ review }: { review: Review }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
   const tLinks = useTranslations("linksTitles");
-  const { wordCloud } = useContext(AnalysisContext);
+  const { wordCloud } = useContext(BuildingAnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);

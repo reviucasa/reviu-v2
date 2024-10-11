@@ -5,10 +5,9 @@ import maskGroup from "public/images/maskGroup.png";
 import { AreaResumeCardAmbience } from "../molecules/AreaResumeCardAmbience";
 import { AreaResumeCardService } from "../molecules/AreaResumeCardServices";
 import { MiniAreaPercent } from "../molecules/MiniAreaPercent";
-import { AnalysisContext } from "@/context/AnalysisSectionActive";
 import { useTranslations } from "next-intl";
-import { Review } from "@/models/review";
 import { Stat } from "@/models/analysis";
+import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 
 type AreaResume = {
   stats: Array<Stat>;
@@ -21,10 +20,10 @@ export const AreaResume = ({
   className,
   notEnoughStats,
 }: AreaResume) => {
-  const { sections, analysisSectionActive } = useContext(AnalysisContext);
+  const { sections, buildingAnalysisSection } = useContext(BuildingAnalysisContext);
   const t = useTranslations();
 
-  return analysisSectionActive === Object.keys(sections)[0] ? (
+  return buildingAnalysisSection === Object.keys(sections)[0] ? (
     <div className={`grid lg:gap-6 grid-col gap-4 ${className}`}>
       <h5 className="lg:text-xl text-base mt-16">{t("common.resumenZona")}</h5>
       {notEnoughStats ? (

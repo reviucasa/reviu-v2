@@ -78,3 +78,23 @@ body {
   /* for dropdown */
   color: #444 !important;
 }
+
+
+
+.leaflet-popup-content-wrapper {
+  padding: 0 !important;
+  margin: 0 !important;
+  margin-bottom: 10px !important;
+}
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+  margin: 0 !important;
+}
+
+.leaflet-popup-close-button {
+  display: none !important;
+}
+
+.leaflet-popup-tip-container {
+  display: none
+}

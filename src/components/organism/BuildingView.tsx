@@ -1,8 +1,6 @@
 "use client";
 import { TabMenu } from "@/components/atoms/TabMenu";
 import { AreaResume } from "@/components/organism/AreaResume";
-import { AnalysisContext } from "@/context/AnalysisSectionActive";
-import { Analysis } from "@/models/analysis";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -12,6 +10,7 @@ import { CommunityValuation } from "@/components/organism/CommunityValuation";
 import { FloorValuation } from "@/components/organism/FloorValuation";
 import { GeneralValuation } from "@/components/organism/GeneralValuation";
 import { Link } from "@/navigation";
+import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 
 export default function BuildingView({
   analysis,
@@ -66,11 +65,11 @@ export default function BuildingView({
       : analysis.neighbourhood.stats[0].total < 1;
 
   return (
-    <AnalysisContext.Provider
+    <BuildingAnalysisContext.Provider
       value={{
         sections: sections,
-        analysisSectionActive: activeSection,
-        setAnalysisSectionActive: setActiveSection,
+        buildingAnalysisSection: activeSection,
+        setBuildingAnalysisSection: setActiveSection,
         wordCloud: analysis.neighbourhood.wordCloud,
       }}
     >
@@ -111,6 +110,6 @@ export default function BuildingView({
         stats={analysis.neighbourhood.stats}
         notEnoughStats={notEnoughStats}
       />
-    </AnalysisContext.Provider>
+    </BuildingAnalysisContext.Provider>
   );
 }

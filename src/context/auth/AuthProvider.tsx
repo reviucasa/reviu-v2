@@ -4,7 +4,6 @@ import { auth } from "@/firebase/config";
 import { UserStatus } from "@/models/user";
 import {
   User as FirebaseUser,
-  IdTokenResult,
   ParsedToken,
   getIdTokenResult,
   onAuthStateChanged,

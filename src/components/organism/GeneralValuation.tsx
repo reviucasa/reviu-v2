@@ -1,7 +1,7 @@
 "use client";
 import { CommunityCard } from "@/components/molecules/CommunityCard";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
-import { AnalysisContext } from "@/context/AnalysisSectionActive";
+import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 import { Review } from "@/models/review";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
@@ -13,7 +13,7 @@ type GeneralValuationProps = {
 export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
   const t = useTranslations();
 
-  const { setAnalysisSectionActive, sections } = useContext(AnalysisContext);
+  const { setBuildingAnalysisSection, sections } = useContext(BuildingAnalysisContext);
 
   const viewAllOpinions = t("generalValuation.viewAllOpinions");
   return (
@@ -28,7 +28,7 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
         <a
           className="w-full flex justify-center cursor-pointer pt-3 text-sm md:text-base"
           onClick={() => {
-            setAnalysisSectionActive(Object.keys(sections)[1]);
+            setBuildingAnalysisSection(Object.keys(sections)[1]);
           }}
         >{`${viewAllOpinions} (${reviews.length}) >`}</a>
       </div>
@@ -42,7 +42,7 @@ export const GeneralValuation = ({ reviews }: GeneralValuationProps) => {
         ))}
         <a
           className="w-full flex justify-center cursor-pointer text-sm md:text-base"
-          onClick={() => setAnalysisSectionActive(Object.keys(sections)[2])}
+          onClick={() => setBuildingAnalysisSection(Object.keys(sections)[2])}
         >{`${viewAllOpinions} (${reviews.length}) >`}</a>
       </div>
     </div>

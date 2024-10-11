@@ -1,4 +1,4 @@
-import { AnalysisContext } from "@/context/AnalysisSectionActive";
+import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 import { useTranslations } from "next-intl";
 import { useContext } from "react";
 
@@ -9,7 +9,7 @@ export const AreaResumeCardService = ({
   className?: string;
   title?: string;
 }) => {
-  const { wordCloud } = useContext(AnalysisContext);
+  const { wordCloud } = useContext(BuildingAnalysisContext);
   const config = useTranslations("config");
 
   return (
