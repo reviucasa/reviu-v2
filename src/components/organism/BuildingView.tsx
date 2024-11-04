@@ -3,7 +3,7 @@ import { TabMenu } from "@/components/atoms/TabMenu";
 import { AreaResume } from "@/components/organism/AreaResume";
 import { useTranslations } from "next-intl";
 import dynamic from "next/dynamic";
-import React from "react";
+import React, { useMemo } from "react";
 import { useState } from "react";
 import { AreaValuation } from "@/components/organism/AreaValuation";
 import { CommunityValuation } from "@/components/organism/CommunityValuation";
@@ -24,6 +24,12 @@ export default function BuildingView({
 
   const [activeSection, setActiveSection] =
     useState<string>("valuationGeneral");
+
+  const OpenStreetMap = useMemo(() => {
+    return dynamic(() => import("../molecules/OpenStreetMap"), {
+      ssr: false,
+    });
+  }, []);
 
   const sections: {
     [key: string]: { title: string; sectionObject: JSX.Element };
@@ -52,10 +58,6 @@ export default function BuildingView({
       title: sections[sectionKey].title,
       onClick: () => setActiveSection(sectionKey),
     };
-  });
-
-  const OpenStreetMap = dynamic(() => import("../molecules/OpenStreetMap"), {
-    ssr: false,
   });
 
   const notOpinions = analysis.reviews.length === 0;
