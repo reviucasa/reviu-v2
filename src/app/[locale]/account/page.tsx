@@ -7,7 +7,7 @@ import { AccountCard } from "@/components/molecules/accountCard";
 import { Switch } from "@headlessui/react";
 import { yupResolver } from "@hookform/resolvers/yup";
 import dayjs from "dayjs";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import * as yup from "yup";
 import padlock from "public/images/padlock.png";
@@ -20,55 +20,6 @@ import { useAuth } from "@/context/auth";
 import { Genders, countries } from "@/staticData";
 import { deleteAuthUser } from "@/firebase/auth";
 
-const schema = yup.object({
-  name: yup.string(),
-  lastname: yup.string(),
-  birthday: yup
-    .string()
-    .test(
-      "is-older-than-18",
-      "Para tener una cuenta es necesario ser mayor de edad",
-      (value) => {
-        if (!value) return true; // Pass validation if value is null or undefined
-
-        // Parse the date string (assuming 'YYYY-MM-DD' format)
-        const birthdate = dayjs(value, "YYYY-MM-DD");
-        const cutoffDate = dayjs().subtract(18, "years");
-
-        // Check if the birthdate is before the cutoff date
-        return birthdate.isBefore(cutoffDate);
-      }
-    ),
-  /* .date()
-    .max(
-      dayjs().subtract(18, "years").toDate(), // Ensure age is over 18
-      "Para tener una cuenta es necesario ser mayor de edad"
-    )
-    .nullable()
-    .transform((value, originalValue) =>
-      originalValue === ""
-        ? null
-        : originalValue
-        ? new Date(originalValue)
-        : value
-    ), */
-  country: yup.string(),
-  gender: yup.string(),
-  subscribedToNewsletter: yup.boolean(),
-});
-
-type EditData = yup.InferType<typeof schema>;
-
-/* 
-type EditData = {
-  name: string;
-  lastname: string;
-  birthday: string;
-  country: string;
-  gender: string;
-  subscribedToNewsletter: boolean;
-}; */
-
 export default function Account() {
   const router = useRouter();
   const auth = useAuth();
@@ -78,6 +29,54 @@ export default function Account() {
   );
   const locale = useLocale();
   const t = useTranslations();
+
+  const schema = useMemo(() => yup.object({
+    name: yup.string(),
+    lastname: yup.string(),
+    birthday: yup
+      .string()
+      .test(
+        "is-older-than-18",
+        t('account.validations.isOlderThan18'),
+        (value) => {
+          if (!value) return true; // Pass validation if value is null or undefined
+  
+          // Parse the date string (assuming 'YYYY-MM-DD' format)
+          const birthdate = dayjs(value, "YYYY-MM-DD");
+          const cutoffDate = dayjs().subtract(18, "years");
+  
+          // Check if the birthdate is before the cutoff date
+          return birthdate.isBefore(cutoffDate);
+        }
+      ),
+    /* .date()
+      .max(
+        dayjs().subtract(18, "years").toDate(), // Ensure age is over 18
+        "Para tener una cuenta es necesario ser mayor de edad"
+      )
+      .nullable()
+      .transform((value, originalValue) =>
+        originalValue === ""
+          ? null
+          : originalValue
+          ? new Date(originalValue)
+          : value
+      ), */
+    country: yup.string(),
+    gender: yup.string(),
+    subscribedToNewsletter: yup.boolean(),
+  }), [t]);
+
+  type EditData = yup.InferType<typeof schema>;
+  /* 
+  type EditData = {
+    name: string;
+    lastname: string;
+    birthday: string;
+    country: string;
+    gender: string;
+    subscribedToNewsletter: boolean;
+  }; */
 
   const {
     register,
@@ -158,10 +157,9 @@ export default function Account() {
                 className="mt-8 mb-14"
               >
                 <p className="text-base text-neutral-500">
-                  {t("account.textCardUser")}{" "}
-                  <span className="font-bold text-primary-900">
-                    {t("account.contactUs")}
-                  </span>
+                  {t.rich("account.textCardUser", {
+                    "contactUs": (chunks) => <span className="font-bold text-primary-900">{chunks}</span>
+                  })}
                 </p>
               </AccountCard>
               <div className="w-auto lg:hidden">
@@ -278,17 +276,13 @@ export default function Account() {
                     })}
                   </select>
                   <div className="flex lg:flex-row lg:justify-between flex-col">
-                    {" "}
                     <p className="font-normal text-neutral-500 lg:w-3/4 w-full order-last lg:order-first">
-                      {t("account.textDataStatsFirstPart")}{" "}
-                      <span
-                        onClick={() => router.push("/privacyPolicy")}
-                        className="font-bold text-primary-900 cursor-pointer hover:underline"
-                      >
-                        {t("common.politicaPrivacidad")}
-                      </span>
-                      {". "}
-                      {t("account.textDataStatsSecondPart")}
+                      {t.rich("account.dataStats", {
+                        "privacyPolicy": () => <span 
+                          onClick={() => router.push("/privacyPolicy")}
+                          className="font-bold text-primary-900 cursor-pointer hover:underline"
+                        >{t("common.politicaPrivacidad")}</span>
+                      })}
                     </p>
                     <Button
                       className="!w-full lg:!w-fit mb-6"

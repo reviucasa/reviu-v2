@@ -6,6 +6,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "./config";
+import { useTranslations } from "next-intl";
 
 export async function updateAuthUser(displayName: string) {
   try {
@@ -43,13 +44,13 @@ export async function sendSignInLink(email: string) {
   }
 }
 
-export const verifyEmailLinkAndAuthenticate = async () => {
+export const verifyEmailLinkAndAuthenticate = async (t : ReturnType<typeof useTranslations>) => {
   const continueUrl = window.location.href;
   try {
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = window.localStorage.getItem("email");
       if (!email) {
-        email = window.prompt("Please provide your email for confirmation");
+        email = window.prompt(t("autchCheck.provideEmail"));
       }
       const credentials = await signInWithEmailLink(auth, email!, continueUrl);
       window.localStorage.removeItem("email");

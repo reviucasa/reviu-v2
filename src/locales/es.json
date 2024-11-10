@@ -3,7 +3,7 @@
     "elProblema": "El problema",
     "quienesHemosBuscado": "Quienes hemos buscado casa sabemos que hay muy poca información más allá de lo que prometen los anuncios.",
     "solución": "La solución",
-    "homeReviewPermite": "Reviu te permite informarte de cómo es vivir en la casa que te interesa antes de mudarte, y compartir opiniones anónimas sobre los lugares donde has vivido. ",
+    "homeReviewPermite": "Reviu te permite informarte de cómo es vivir en la casa que te interesa antes de mudarte, y compartir opiniones anónimas sobre los lugares donde has vivido.",
     "ourValues": "Nuestros valores",
     "transparencia": "Transparencia",
     "yaNoNecesitas": "No hay mejor anuncio que la experiencia de quien ha vivido en esa casa.",
@@ -18,20 +18,21 @@
   },
   "account": {
     "account": "Cuenta",
-    "textCardUser": "Si necesitas hacer cambios en tu correo electrónico, por favor",
-    "contactUs": "contacta con nosotros",
+    "textCardUser": "Si necesitas hacer cambios en tu correo electrónico, por favor <contactUs>Contacta con nosotros</contactUs>.",
     "protectIdentity": "Protegemos tu identidad",
     "dataNoVisible": "Estos datos no serán visibles para el resto de usuarios y en ningún momento se mostrarán en tus opiniones.",
     "notification": "Notificaciones",
     "activateNotification": "Activa las notificaciones para enterarte de lo que no cuentan los otros portales",
     "personalInformation": "Información personal",
     "country": "País/Región",
-    "textDataStatsFirstPart": "Estos datos se utilizarán con fines estadísticos. Puedes consultar nuestra",
-    "textDataStatsSecondPart": "Si tienes alguna duda, escribenos a info@reviucasa.com",
+    "dataStats": "Estos datos se utilizarán con fines estadísticos. Puedes consultar nuestra <privacyPolicy></privacyPolicy>. Si tienes alguna duda, escribenos a info@reviucasa.com",
     "gestionaTusDatos": "Gestiona tus datos",
     "eliminarCuenta": "Eliminar cuenta",
     "tuCuentaSeBorrara": "Si lo haces, tu cuenta y tus datos se borrarán de forma permanente, de acuerdo con la legislación aplicable.",
-    "inicioSesion": "Inicio sesión"
+    "inicioSesion": "Inicio sesión",
+    "validations": {
+      "isOlderThan18": "Para tener una cuenta es necesario ser mayor de edad"
+    }
   },
   "addressReview": {
     "dirección": "Dirección",
@@ -279,7 +280,8 @@
     "myReviews": "Mis reseñas",
     "publishedReviews": "reseñas publicadas",
     "reportedReviews": "reportadas",
-    "suspendedReviews": "suspendidas"
+    "suspendedReviews": "suspendidas",
+    "markAsSolved": "Marcar como resuelto"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunidad de vecinos",
@@ -781,7 +783,14 @@
     "queGrupo": "¿Con qué grupo te sientes más identificado/a?",
     "seleccionaGenero": "Selecciona un género",
     "aceptoTerminos": "Acepto los Términos y condiciones y la Política de Privacidad",
-    "recibirComunicaciones": "Activa las notificaciones para enterarte de lo que no te cuentan los otros portales"
+    "recibirComunicaciones": "Activa las notificaciones para enterarte de lo que no te cuentan los otros portales",
+    "validations": {
+      "isOlderThan18": "Para tener una cuenta es necesario ser mayor de edad",
+      "nameIsRequired": "El nombre es requerido",
+      "surnameIsRequired": "Los apellidos son requeridos",
+      "dateOfBirthRequired": "La fecha de nacimiento es requerida",
+      "acceptTermsAndConditions": "Debes aceptar los términos y condiciones"
+    }
   },
   "slide": {
     "titleSearchOpinion": "Descubre si la inmobiliaria te tratará bien antes de firmar el contrato",
@@ -993,5 +1002,8 @@
         "children-area": "Zona infantil"
       }
     }
+  },
+  "authCheck": {
+    "provideEmail": "Por favor introduzca su email para confirmación"
   }
 }

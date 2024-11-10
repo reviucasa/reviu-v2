@@ -18,20 +18,21 @@
   },
   "account": {
     "account": "Account",
-    "textCardUser": "If you need to make any changes in your email address, please",
-    "contactUs": "Contact us",
+    "textCardUser": "If you need to make any changes in your email address, please <contactUs>Contact us</contactUs>.",
     "protectIdentity": "We protect your identity",
     "dataNoVisible": "This data will not be visible to other users and will never be shown in your feedback.",
     "notification": "Notifications",
     "activateNotification": "To find out what the other portals are not telling you, turn notifications on",
     "personalInformation": "Personal information",
     "country": "Country",
-    "textDataStatsFirstPart": "This data will be used for statistical purposes. You can consult our",
-    "textDataStatsSecondPart": "If you have any questions, please contact us at info@reviucasa.com.",
+    "dataStats": "This data will be used for statistical purposes. You can consult our <privacyPolicy></privacyPolicy>. If you have any questions, please contact us at info@reviucasa.com.",
     "gestionaTusDatos": "Manage your data",
     "eliminarCuenta": "Delete account",
     "tuCuentaSeBorrara": "If you do so, your data and account will be permanently deteled, in accordance with applicable law",
-    "inicioSesion": "Log in"
+    "inicioSesion": "Log in",
+    "validations": {
+      "isOlderThan18": "You have to be 18 to have an account"
+    }
   },
   "addressReview": {
     "dirección": "Address",
@@ -279,7 +280,8 @@
     "myReviews": "My reviews",
     "publishedReviews": "published reviews",
     "reportedReviews": "reported reviews",
-    "suspendedReviews": "suspended reviews"
+    "suspendedReviews": "suspended reviews",
+    "markAsSolved": "Mark as solved"
   },
   "communityReviews": {
     "comunidadVecinos": "Building",
@@ -785,7 +787,14 @@
     "queGrupo": "What group do you identify most closely with?",
     "seleccionaGenero": "Choose a gender",
     "aceptoTerminos": "I accept the Terms and Conditions and the Privacy Policy",
-    "recibirComunicaciones": "To find out what the other portals are not telling you, turn notifications on"
+    "recibirComunicaciones": "To find out what the other portals are not telling you, turn notifications on",
+    "validations": {
+      "isOlderThan18": "You have to be 18 to have an account",
+      "nameIsRequired": "Name is required",
+      "surnameIsRequired": "Surname is required",
+      "dateOfBirthRequired": "The date of birth is required",
+      "acceptTermsAndConditions": "You must accept the terms and conditions"
+    }
   },
   "slide": {
     "titleSearchOpinion": "Find out if the real estate agent will treat you well before you sign the contract.",
@@ -997,5 +1006,8 @@
         "children-area": "Children area"
       }
     }
+  },
+  "authCheck": {
+    "provideEmail": "Please provide your email for confirmation"
   }
 }
