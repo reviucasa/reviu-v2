@@ -13,27 +13,7 @@ import { updateAuthUser } from "@/firebase/auth";
 import { createUser } from "@/models/user";
 import { useAuth } from "@/context/auth";
 
-const schema = yup.object({
-  name: yup.string().required("El nombre es requerido"),
-  lastname: yup.string().required("Los apellidos son requeridos"),
-  birthday: yup
-    .date()
-    .max(
-      dayjs().subtract(18, "year").format("YYYY-MM-DD"),
-      "Para crear una cuenta es necesario ser mayor de edad"
-    )
-    .nullable()
-    .transform((curr, orig) => (orig === "" ? null : curr))
-    .required("La fecha de nacimiento es requerida"),
-  country: yup.string(),
-  gender: yup.string(),
-  acceptedTerms: yup
-    .boolean()
-    .oneOf([true], "Debes aceptar los términos y condiciones"),
-  subscribedToNewsletter: yup.boolean(),
-});
 
-type FormData = yup.InferType<typeof schema>;
 
 export const RegisterForm = () => {
   const router = useRouter();
@@ -42,6 +22,28 @@ export const RegisterForm = () => {
   const t = useTranslations();
 
   const [loading, setLoading] = useState(false);
+
+  const schema = yup.object({
+    name: yup.string().required(t('registerForm.validations.nameIsRequired')),
+    lastname: yup.string().required(t('registerForm.validations.nameIsRequired')),
+    birthday: yup
+      .date()
+      .max(
+        dayjs().subtract(18, "year").format("YYYY-MM-DD"),
+        t('registerForm.validations.isOlderThan18'),
+      )
+      .nullable()
+      .transform((curr, orig) => (orig === "" ? null : curr))
+      .required(t('registerForm.validations.dateOfBirthRequired')),
+    country: yup.string(),
+    gender: yup.string(),
+    acceptedTerms: yup
+      .boolean()
+      .oneOf([true], t('registerForm.validations.dateOfBirthRequired')),
+    subscribedToNewsletter: yup.boolean(),
+  });
+  
+  type FormData = yup.InferType<typeof schema>;
 
   useEffect(() => {
     if (!auth) {

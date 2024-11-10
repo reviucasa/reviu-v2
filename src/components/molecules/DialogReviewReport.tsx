@@ -116,7 +116,7 @@ export const DialogReviewReport = ({
                 refetch();
               }}
             >
-              Mark as solved
+              {t("common.markAsSolved")}
             </Button>
           </div>
         </div>

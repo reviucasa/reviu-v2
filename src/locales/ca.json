@@ -18,20 +18,21 @@
   },
   "account": {
     "account": "Compte",
-    "textCardUser": "Si has de modificar el teu correu electrònic, si us plau",
-    "contactUs": "Contacta amb nosaltres",
+    "textCardUser": "Si has de modificar el teu correu electrònic, si us plau <contactUs>Contacta amb nosaltres</contactUs>.",
     "protectIdentity": "Protegim la teva identitat",
     "dataNoVisible": "Aquestes dades no seran visibles per la resta d'usuaris i en cap moment es publicaran com a part de les teves opinions.",
     "notification": "Notificacions",
     "activateNotification": "Activa les notificacions per assabentar-te del que els altres portals no expliquen",
     "personalInformation": "Informació personal",
     "country": "País/Regió",
-    "textDataStatsFirstPart": "Aquestes dades s'utilitzaran amb finalitat estadística. Pots consultar la nostra",
-    "textDataStatsSecondPart": "Si tens algun dubte, escriu-nos a info@reviucasa.com",
+    "dataStats": "Aquestes dades s'utilitzaran amb finalitat estadística. Pots consultar la nostra <privacyPolicy></privacyPolicy>. Si tens algun dubte, escriu-nos a info@reviucasa.com",
     "gestionaTusDatos": "Gestiona les teves dades",
     "eliminarCuenta": "Suprimir compte",
     "tuCuentaSeBorrara": "Si ho fas, el teu compte i les teves dades s'esborraran permanentment, d'acord amb la legislació aplicable",
-    "inicioSesion": "Iniciar sessió"
+    "inicioSesion": "Iniciar sessió",
+    "validations": {
+      "isOlderThan18": "Per tenir un compte cal ser major de 18"
+    }
   },
   "addressReview": {
     "dirección": "Adreça",
@@ -278,7 +279,8 @@
     "myReviews": "Les meves ressenyes",
     "publishedReviews": "ressenyes publicades",
     "reportedReviews": "reportades",
-    "suspendedReviews": "suspeses"
+    "suspendedReviews": "suspeses",
+    "markAsSolved": "Marca com a resolta"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunitat de veïns",
@@ -783,7 +785,14 @@
     "queGrupo": "Amb quin grup et sents més identificat/da?",
     "seleccionaGenero": "Selecciona un gènere",
     "aceptoTerminos": "Accepto els Termes i condicions i la Política de Privadesa",
-    "recibirComunicaciones": "Activa les notificacions per assabentar-te del que els altres portals no t'expliquen"
+    "recibirComunicaciones": "Activa les notificacions per assabentar-te del que els altres portals no t'expliquen",
+    "validations": {
+      "isOlderThan18": "Per tenir un compte cal ser major de 18",
+      "nameIsRequired": "El nom és obligatori",
+      "surnameIsRequired": "Els cognoms són obligatoris",
+      "dateOfBirthRequired": "La data de naixement és obligatòria",
+      "acceptTermsAndConditions": "Heu d’acceptar els termes i condicions"
+    }
   },
   "slide": {
     "titleSearchOpinion": "Descobreix si la immobiliària et tractarà bé abans de signar el contracte",
@@ -995,5 +1004,8 @@
         "children-area": "Zona infantil"
       }
     }
+  },
+  "authCheck": {
+    "provideEmail": "Introduïu el vostre correu electrònic per a la confirmació"
   }
 }
