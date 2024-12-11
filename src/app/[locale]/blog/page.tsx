@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { host, locales } from "@/config";
@@ -21,12 +21,12 @@ export async function generateMetadata({
 
   const description =
     locale == "en"
-      ? "Explore the latest posts and updates on the Reviu blog. Stay informed with our latest news, tips, and insights on finding the best rental homes in Barcelona."
+      ? "Explore the latest posts and updates on the Reviu blog. Stay informed with our latest news, tips, and insights on finding the best rental homes."
       : locale == "es"
-      ? "Explora las últimas publicaciones y actualizaciones en el blog de Reviu. Mantente informado con nuestras últimas noticias, consejos y perspectivas sobre cómo encontrar las mejores viviendas de alquiler en Barcelona."
-      : "Explora les últimes publicacions i actualitzacions al blog de Reviu. Mantén-te informat amb les nostres últimes notícies, consells i perspectives sobre com trobar els millors habitatges de lloguer a Barcelona.";
+      ? "Explora las últimas publicaciones y actualizaciones en el blog de Reviu. Mantente informado con nuestras últimas noticias, consejos y perspectivas sobre cómo encontrar las mejores viviendas de alquiler."
+      : "Explora les últimes publicacions i actualitzacions al blog de Reviu. Mantén-te informat amb les nostres últimes notícies, consells i perspectives sobre com trobar els millors habitatges de lloguer.";
 
-  const keywords = [...mainKeywords(locale)];
+  const keywords = [...mainKeywords(locale, '')];
 
   return {
     title: titleDetail,

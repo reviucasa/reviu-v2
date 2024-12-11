@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Instagram from "public/images/IconInstagram.svg";
 import TikTok from "public/images/IconTikTok.svg";
@@ -7,10 +8,12 @@ import LogoWhite from "public/images/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/navigation";
+import { useTransition } from "react";
+import { useTranslations } from "next-intl";
 
-export async function Footer() {
-  const t = await getTranslations();
-  const tLinks = await getTranslations("linksTitles");
+export function Footer() {
+  const t = useTranslations();
+  const tLinks = useTranslations("linksTitles");
 
   return (
     <div className="flex flex-col">

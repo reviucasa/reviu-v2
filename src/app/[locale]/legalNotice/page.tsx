@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { LegalNoticeComponent } from "@/components/sectionLegalPages/legalNoticeComponent";
 import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";

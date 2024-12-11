@@ -27,7 +27,7 @@ export const ApartmentLocationSummary = ({
         {review?.apartment?.stair} {review?.apartment?.floor}{" "}
         {review?.apartment?.door}
         <p className="text-sm font-normal flex !my-1">
-          {review.address.split(",").slice(0, 2).join(" ")}, Barcelona
+          {review.address.split(",").slice(0, 3).join(" ")}
         </p>
       </span>
       <div className="flex justify-start space-x-4 items-center mt-2 ">

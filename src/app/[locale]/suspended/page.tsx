@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { locales } from "@/config";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 

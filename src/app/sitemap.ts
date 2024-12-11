@@ -4,6 +4,10 @@ import { getPosts } from "@/models/post";
 import { getAllReviews } from "@/models/review";
 import { getPathname } from "@/navigation";
 import { MetadataRoute } from "next";
+import {
+  CatastroAddressElements,
+  cleanAddress,
+} from "@/helpers/catastroFunctions";
 
 export function getUrl(
   key: keyof typeof pathnames,
@@ -57,25 +61,25 @@ const generateAgenciesSitemapObjects = async () => {
 const generateReviewsSitemapObjects = async () => {
   const reviews = await getAllReviews();
 
-  return reviews.map((r) => ({
-    url: `${host}/review/barcelona/${encodeURIComponent(
-      r.address.split(", ")[0].replaceAll(" ", "-")
-    )}/${r.address.split(", ")[1]}/${r.id}`,
-    lastModified: r.timeCreated.toDate(),
-    alternates: {
-      languages: Object.fromEntries(
-        locales.map((locale) => [
-          locale,
-          getUrl(
-            `/review/barcelona/${encodeURIComponent(
-              r.address.split(", ")[0].replaceAll(" ", "-")
-            )}/${r.address.split(", ")[1]}/${r.id}`,
-            locale
-          ),
-        ])
-      ),
-    },
-  }));
+  return reviews.map((r) => {
+    const { province, municipality, street, number }: CatastroAddressElements =
+      cleanAddress(r.address, { forUri: true })!;
+    return {
+      url: `${host}/review/${province}/${municipality}/${street}/${number}/${r.id}`,
+      lastModified: r.timeCreated.toDate(),
+      alternates: {
+        languages: Object.fromEntries(
+          locales.map((locale) => [
+            locale,
+            getUrl(
+              `/review/${province}/${municipality}/${street}/${number}/${r.id}`,
+              locale
+            ),
+          ])
+        ),
+      },
+    };
+  });
 };
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout from "@/components/layouts/MainLayout";
 import { ConditionsUseComponent } from "@/components/sectionLegalPages/conditionsUse";
 import { GoodPracticesComponent } from "@/components/sectionLegalPages/goodPracticesComponent";
 import { locales } from "@/config";

@@ -37,10 +37,10 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/edifici/[building]",
     en: "/building/[building]",
   }, */
-  "/building/[city]/[address]/[number]": {
-    es: "/opinión-edificio/[city]/[address]/[number]",
-    ca: "/opinió-edifici/[city]/[address]/[number]",
-    en: "/opinion-building/[city]/[address]/[number]",
+  "/building/[province]/[municipality]/[type]/[address]/[number]": {
+    es: "/opinión-edificio/[province]/[municipality]/[type]/[address]/[number]",
+    ca: "/opinió-edifici/[province]/[municipality]/[type]/[address]/[number]",
+    en: "/opinion-building/[province]/[municipality]/[type]/[address]/[number]",
   },
   "/cookies": "/cookies",
   "/review": {
@@ -105,10 +105,10 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/ressenya/[address]/[reviewId]",
     en: "/review/[address]/[reviewId]",
   }, */
-  "/review/[city]/[address]/[number]/[reviewId]": {
-    es: "/reseña/[city]/[address]/[number]/[reviewId]",
-    ca: "/ressenya/[city]/[address]/[number]/[reviewId]",
-    en: "/review/[city]/[address]/[number]/[reviewId]",
+  "/review/[province]/[municipality]/[type]/[address]/[number]/[reviewId]": {
+    es: "/reseña/[province]/[municipality]/[type]/[address]/[number]/[reviewId]",
+    ca: "/ressenya/[province]/[municipality]/[type]/[address]/[number]/[reviewId]",
+    en: "/review/[province]/[municipality]/[type]/[address]/[number]/[reviewId]",
   },
   "/success": "/success",
   "/suspended": "/suspended",

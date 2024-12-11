@@ -256,27 +256,27 @@ export const countries: Array<{ [key: string]: string }> = [
   { ca: "Zimbabwe", es: "Zimbabue", en: "Zimbabwe" },
 ];
 
-export const mainKeywords = (locale: string) =>
+export const mainKeywords = (locale: string, municipality: string) =>
   locale === "en"
     ? [
-        "apartments barcelona",
-        "barcelona real state agencies",
+        `apartments ${municipality}`,
+        `${municipality} real estate agencies`,
         "apartment reviews",
         "real estate agency reviews",
         "rental reviews",
       ]
     : locale === "ca"
     ? [
-        "pisos barcelona",
-        "immobiliàries barcelona",
+        `pisos ${municipality}`,
+        `immobiliàries ${municipality}`,
         "opinions pisos",
         "opinions immobiliàries",
         "ressenyes pisos",
         "ressenyes immobiliàries",
       ]
     : [
-        "pisos barcelona",
-        "inmobiliarias barcelona",
+        `pisos ${municipality}`,
+        `inmobiliarias ${municipality}`,
         "opiniones pisos",
         "opiniones inmobiliarias",
         "reseñas pisos",

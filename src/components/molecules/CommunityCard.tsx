@@ -8,6 +8,7 @@ import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
+import { cleanAddress } from "@/helpers/catastroFunctions";
 
 export const CommunityCard = ({
   review,
@@ -20,11 +21,12 @@ export const CommunityCard = ({
   const t = useTranslations();
   const router = useRouter();
   const handleMoreInfo = () => {
-    // router.push(`/review/${encodeURIComponent(review.address.split(', ').slice(0,3).join('-'))}/${review.id}`);
+    const { province, municipality, type, street, number } = cleanAddress(
+      review.address,
+      { forUri: true }
+    )!;
     router.push(
-      `/review/barcelona/${encodeURIComponent(
-        review.address.split(", ")[0].replaceAll(" ", "-")
-      )}/${review.address.split(", ")[1]}/${review.id}`
+      `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
     );
     // setOpenMoreInfo(!openMoreInfo);
   };

@@ -23,6 +23,7 @@ import {
 import { Apartment } from "./building";
 import { User, getUsersById } from "./user";
 import { shuffleArray } from "@/helpers/shuffleArray";
+import { Unidad } from "./catastro";
 
 export enum ReviewStatus {
   Suspended = "suspended",
@@ -36,9 +37,10 @@ export type Review = {
   timeCreated: Timestamp;
   timeUpdated: Timestamp;
   status: ReviewStatus;
-  apartment?: Apartment;
+  apartment?: Unidad;
   data: Partial<ReviewData>;
   buildingId: string;
+  catastroRef: string;
   userId: string;
 };
 
@@ -418,6 +420,20 @@ const getReviewsByAgencyId = async (agencyId: string): Promise<Review[]> => {
   return snapshot.docs.map((doc) => doc.data() as Review); // Cast to Review type if necessary
 };
 
+// Retrieve building reviews
+const getReviewsByCatastroRef = async (
+  catastroRef: string
+): Promise<Review[]> => {
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(
+    ref,
+    where("catastroRef", "==", catastroRef),
+    where("status", "==", ReviewStatus.Published)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((e) => e.data());
+};
+
 // Retrieve user reviews
 const getReviewsFromUser = async (uid: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
@@ -476,6 +492,7 @@ export {
   getSuspendedReviewsWithUser,
   getReviewsByBuidingId,
   getReviewsByAgencyId,
+  getReviewsByCatastroRef,
   getReviewsFromUser,
   reviewConverter,
   getDraftsWithUser,

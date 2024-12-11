@@ -22,7 +22,7 @@ export const ApartmentLocation = ({
   const t = useTranslations();
 
   const string = diffYear === 1 ? t("common.añoVar") : t("common.añosVar");
-
+  // TODO:
   return (
     <div className={className}>
       <span className="font-bold text-sm md:text-base">
@@ -31,7 +31,10 @@ export const ApartmentLocation = ({
         <p className="text-xs md:text-base font-normal flex ">
           {review.address.split(",").slice(0, 2).join(" ")}
         </p>
-        <p className="text-xs md:text-base font-normal flex ">Barcelona</p>
+        <p className="text-xs md:text-base font-normal flex ">
+          {/*  TODO: modificar per municipi */}
+          {review?.address.split(", ")[2]}
+        </p>
       </span>
       <div className="flex items-center">
         <div className="flex w-5 h-5">

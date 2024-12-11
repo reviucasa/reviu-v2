@@ -49,7 +49,7 @@ export const onReportCreated = functions
       });
 
       const address = reportData.review.address;
-
+      // TODO: fix address generation with cleanAddress and `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
       const reviewLink = [
         "https://reviucasa.com/review/barcelona",
         encodeURIComponent(address.split(", ")[0].replaceAll(" ", "-")),

@@ -9,7 +9,7 @@ import { getAgency, getAgencyByName } from "@/models/agency";
 import React from "react";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 import { locales } from "@/config";
@@ -34,14 +34,14 @@ export function generateMetadata({
 
   const description =
     locale == "en"
-      ? `Learn more about ${agencyName}, a real estate agency in Barcelona, by reading reviews from other users about their experiences and services.`
+      ? `Learn more about ${agencyName}, a real estate agency, by reading reviews from other users about their experiences and services.`
       : locale == "es"
-      ? `Conoce más sobre ${agencyName}, una agencia inmobiliaria de Barcelona, leyendo las reseñas de otros usuarios sobre sus experiencias y servicios.`
-      : `Coneix més sobre ${agencyName}, una agència immobiliària de Barcelona, llegint les ressenyes d'altres usuaris sobre les seves experiències i serveis.`;
+      ? `Conoce más sobre ${agencyName}, una agencia inmobiliaria, leyendo las reseñas de otros usuarios sobre sus experiencias y servicios.`
+      : `Coneix més sobre ${agencyName}, una agència immobiliària, llegint les ressenyes d'altres usuaris sobre les seves experiències i serveis.`;
 
   const keywords = [
     `${agencyName} opiniones`,
-    ...mainKeywords(locale).slice(0, 3),
+    ...mainKeywords(locale, '').slice(0, 3),
   ];
 
   return {

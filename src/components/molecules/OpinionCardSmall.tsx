@@ -10,6 +10,7 @@ import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
+import { cleanAddress } from "@/helpers/catastroFunctions";
 
 export const OpinionCardSmall = ({
   review,
@@ -36,16 +37,11 @@ export const OpinionCardSmall = ({
         <div
           className="cursor-pointer"
           onClick={() => {
-            // setOpenMoreInfo(!openMoreInfo);
-            /* router.push(
-              `/review/${encodeURIComponent(
-                review.address.split(", ").slice(0, 3).join("-")
-              )}/${review.id}`
-            ); */
+            const { province, municipality, type, street, number } = cleanAddress(
+              review.address, { forUri: true }
+            )!;
             router.push(
-              `/review/barcelona/${encodeURIComponent(
-                review.address.split(", ")[0].replaceAll(" ", "-")
-              )}/${review.address.split(", ")[1]}/${review.id}`
+              `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
             );
           }}
         >
@@ -97,17 +93,12 @@ export const OpinionCardSmall = ({
           <div
             className=" text-primary-500 cursor-pointer text-sm md:text-base"
             onClick={() => {
-              // setOpenMoreInfo(!openMoreInfo);
-
-              /* router.push(
-                `/review/${encodeURIComponent(
-                  review.address.split(", ").slice(0, 3).join("-")
-                )}/${review.id}`
-              ); */
+              const { province, municipality, type, street, number } = cleanAddress(
+                review.address, { forUri: true }
+              )!;
+              
               router.push(
-                `/review/barcelona/${encodeURIComponent(
-                  review.address.split(", ")[0].replaceAll(" ", "-")
-                )}/${review.address.split(", ")[1]}/${review.id}`
+                `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
               );
             }}
           >

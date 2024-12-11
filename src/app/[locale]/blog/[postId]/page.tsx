@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";

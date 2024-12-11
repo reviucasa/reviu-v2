@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { SectionExperiences } from "@/components/sectionHome/SectionExperiences";
 import { SectionBanner } from "@/components/sectionHome/sectionBanner";
 import { SectionBannerOpinion } from "@/components/sectionHome/sectionBannerOpinion";

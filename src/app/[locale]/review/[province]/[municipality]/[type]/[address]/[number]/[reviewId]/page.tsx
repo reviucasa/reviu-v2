@@ -1,49 +1,61 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout from "@/components/layouts/MainLayout";
 import { ReviewDetail } from "@/components/organism/ReviewDetail";
+import { cleanAddress } from "@/helpers/catastroFunctions";
+import { toTitleCase } from "@/helpers/stringHelpers";
 import { getReview } from "@/models/review";
 import { mainKeywords } from "@/staticData";
 import { capitalize } from "lodash";
 import { BounceLoader } from "react-spinners";
 
 export async function generateMetadata({
-  params: { locale, city, address, number, reviewId },
+  params: { locale, province, municipality, type, street, number, reviewId },
 }: {
   params: {
     locale: string;
-    city: string;
-    address: string;
+    province: string;
+    municipality: string;
+    type: string;
+    street: string;
     number: string;
     reviewId: string;
   };
 }) {
   const review = await getReview(reviewId);
+
+  console.log(cleanAddress(review!.address, { forUri: true }));
   const reviewTitle = review?.data.opinion?.title;
 
-  const addr = decodeURIComponent(address.replaceAll("-", " "));
+  const addr = review?.address.replace(", Espanya", ""); // toTitleCase([[street, number].join(" "), city].join(", "));
 
   const title =
     locale == "en"
-      ? `Review of ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`
+      ? `Review of ${addr} ${number}, ${capitalize(
+          municipality
+        )} - ${reviewTitle}`
       : locale == "es"
-      ? `Reseña de ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`
-      : `Ressenya de ${addr} ${number}, ${capitalize(city)} - ${reviewTitle}`;
+      ? `Reseña de ${addr} ${number}, ${capitalize(
+          municipality
+        )} - ${reviewTitle}`
+      : `Ressenya de ${addr} ${number}, ${capitalize(
+          municipality
+        )} - ${reviewTitle}`;
 
   const description =
     locale == "en"
       ? `Discover the review of ${addr} ${number}, ${capitalize(
-          city
+          municipality
         )}. See what others say about this rental on Reviu, and get detailed insights and information.`
       : locale == "es"
       ? `Descubre la reseña de ${addr} ${number}, ${capitalize(
-          city
+          municipality
         )}. Consulta opiniones de otros usuarios sobre esta propiedad en Reviu, y obtén información detallada.`
       : `Descobreix la ressenya de ${addr} ${number}, ${capitalize(
-          city
+          municipality
         )}. Consulta les opinions d'altres usuaris sobre aquesta propietat a Reviu, i obtén informació detallada.`;
 
   const keywords = [
-    [addr, number, city].join(" "),
-    ...mainKeywords(locale).slice(0, 3),
+    [addr, number, municipality].join(" "),
+    ...mainKeywords(locale, municipality).slice(0, 3),
   ];
 
   const images = review?.data.opinion?.images;
@@ -52,13 +64,10 @@ export async function generateMetadata({
     title,
     description,
     keywords,
-    /* metadataBase: new URL(
-      `https://www.reviucasa.com/${locale}/review/${city}/${address}/${number}/${reviewId}`
-    ), */
     openGraph: {
       title,
       description,
-      url: `https://www.reviucasa.com/review/${city}/${address}/${number}/${reviewId}`,
+      url: `https://www.reviucasa.com/review/${province}/${municipality}/${street}/${number}/${reviewId}`,
       siteName: "Reviu",
       locale: locale,
       type: "article",
@@ -81,13 +90,9 @@ export async function generateMetadata({
 }
 
 export default async function ReviewDetails({
-  params: { locale, city, address, number, reviewId },
+  params: { reviewId },
 }: {
   params: {
-    locale: string;
-    city: string;
-    address: string;
-    number: string;
     reviewId: string;
   };
 }) {

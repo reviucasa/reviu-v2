@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { Header } from "@/components/sectionAbout/header";
 import { OurValues } from "@/components/sectionAbout/ourValues";
 import { Partners } from "@/components/sectionAbout/partners";
@@ -24,10 +24,10 @@ export async function generateMetadata({
 
   const description =
     locale == "en"
-      ? "Learn about Reviu, the platform dedicated to providing trusted reviews of rental homes in Barcelona. Discover how we help you find the best rental properties."
+      ? "Learn about Reviu, the platform dedicated to providing trusted reviews of rental homes in Spain. Discover how we help you find the best rental properties."
       : locale == "es"
-      ? "Conoce Reviu, la plataforma dedicada a proporcionar reseñas y opiniones fiables de viviendas de alquiler en Barcelona. Descubre cómo te ayudamos a encontrar las mejores propiedades de alquiler."
-      : "Coneix Reviu, la plataforma dedicada a proporcionar ressenyes i opinions fiables d'habitatges de lloguer a Barcelona. Descobreix com t'ajudem a trobar les millors propietats de lloguer.";
+      ? "Conoce Reviu, la plataforma dedicada a proporcionar reseñas y opiniones fiables de viviendas de alquiler en España. Descubre cómo te ayudamos a encontrar las mejores propiedades de alquiler."
+      : "Coneix Reviu, la plataforma dedicada a proporcionar ressenyes i opinions fiables d'habitatges de lloguer a Catalunya. Descobreix com t'ajudem a trobar les millors propietats de lloguer.";
 
   return {
     title: titleDetail,

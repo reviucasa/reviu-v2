@@ -28,6 +28,8 @@ import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
+import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
+import { encodeForReadableURI } from "@/helpers/stringHelpers";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -53,19 +55,61 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-      const building = await findBuildingByAddress(address);
-      if (building) {
-        /* router.push(
-          `/building/${encodeURIComponent(
-            [building.address, building.number, "Barcelona"].join("-")
-          )}`
-        ); */
-        router.push(
-          `/building/barcelona/${encodeURIComponent(
-            building.address.replaceAll(" ", "-")
-          )}/${building.number}`
-        );
+      const res = await getCatastroDataFromAddress(address);
+      if (res) {
+        const ubi = res.response.bico
+          ? res.response.bico?.localizacion.ubicacion
+          : res.response.listaRegistroCatastral
+          ? res.response.listaRegistroCatastral.registros[0].localizacion
+              .ubicacion
+          : null;
+
+        const municipality = res.response.bico
+          ? res.response.bico?.localizacion.municipio
+          : res.response.listaRegistroCatastral
+          ? res.response.listaRegistroCatastral.registros[0].localizacion
+              .municipio
+          : null;
+
+        const province = res.response.bico
+          ? res.response.bico?.localizacion.municipio
+          : res.response.listaRegistroCatastral
+          ? res.response.listaRegistroCatastral.registros[0].localizacion
+              .provincia
+          : null;
+
+        const err = res.response.errores;
+        if (ubi && municipality && province) {
+          const link = encodeForReadableURI(
+            [
+              province,
+              municipality,
+              ubi.direccion.siglas,
+              ubi.direccion.nombre,
+              ubi.direccion.numero,
+            ].join("/")
+          );
+          router.push(`/building/${link}`);
+        } else if (err) {
+          console.log(err[0].desc, address);
+          const num = res.response.numerero;
+          if (num) {
+            console.log(
+              "Options: ",
+              num.map((n) => n.numero)
+            );
+            setError(
+              t("common.noSeEncontroDirección") +
+                `. Options: ${num.map((n) => n.numero).toString()}`
+            );
+          } else {
+            setError(err[0].desc);
+          }
+        } else {
+          console.log("error fetching:", address);
+        }
       } else {
+        console.log("catastro data not found");
         const addressRegex = /^(.*?),\s*(\d+)/;
         const match = address.match(addressRegex);
         if (!match) {
@@ -74,6 +118,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           setError(t("common.noSeEncontroDirección"));
         }
       }
+
       setLoading(false);
     }
   };

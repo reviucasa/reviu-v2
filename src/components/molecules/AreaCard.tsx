@@ -7,6 +7,7 @@ import comillas from "public/images/comillas.png";
 import { ModalInfo } from "./ModalInfo";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
+import { cleanAddress } from "@/helpers/catastroFunctions";
 
 export const AreaCard = ({
   review,
@@ -64,10 +65,11 @@ export const AreaCard = ({
         <div
           className="py-2 text-primary-500 cursor-pointer"
           onClick={() => {
+            const { province, municipality, type, street, number } = cleanAddress(
+              review.address, { forUri: true }
+            )!;
             router.push(
-              `/review/barcelona/${encodeURIComponent(
-                review.address.split(", ")[0].replaceAll(" ", "-")
-              )}/${review.address.split(", ")[1]}/${review.id}`
+              `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
             );
             //setOpenMoreInfo(!openMoreInfo);
           }}

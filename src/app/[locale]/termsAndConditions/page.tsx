@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { ConditionsUseComponent } from "@/components/sectionLegalPages/conditionsUse";
 import { locales } from "@/config";
 import { unstable_setRequestLocale } from "next-intl/server";
@@ -16,17 +16,17 @@ export async function generateMetadata({
 }) {
   const titleDetail =
     locale == "en"
-      ? "Terms and conditions of Reviu: find your rental home in Barcelona"
+      ? "Terms and conditions of Reviu: find your rental home"
       : locale == "es"
-      ? "Términos y condiciones de Reviu: encuentra tu vivienda de alquiler en Barcelona"
-      : "Termes i condicions de Reviu: troba el teu habitatge de lloguer a Barcelona";
+      ? "Términos y condiciones de Reviu: encuentra tu vivienda de alquiler"
+      : "Termes i condicions de Reviu: troba el teu habitatge de lloguer";
 
   const description =
     locale == "en"
-      ? "Read the terms and conditions of Reviu to understand how we help you find reliable rental homes in Barcelona. Discover detailed reviews and guides for a transparent and hassle-free rental experience."
+      ? "Read the terms and conditions of Reviu to understand how we help you find reliable rental homes. Discover detailed reviews and guides for a transparent and hassle-free rental experience."
       : locale == "es"
-      ? "Lee los términos y condiciones de Reviu para entender cómo te ayudamos a encontrar viviendas de alquiler confiables en Barcelona. Descubre reseñas y opiniones detalladas y guías para una experiencia de alquiler transparente y sin complicaciones."
-      : "Llegeix els termes i condicions de Reviu per entendre com t'ajudem a trobar habitatges de lloguer fiables a Barcelona. Descobreix ressenyes i opinions detallades i guies per a una experiència de lloguer transparent i sense complicacions.";
+      ? "Lee los términos y condiciones de Reviu para entender cómo te ayudamos a encontrar viviendas de alquiler confiables. Descubre reseñas y opiniones detalladas y guías para una experiencia de alquiler transparente y sin complicaciones."
+      : "Llegeix els termes i condicions de Reviu per entendre com t'ajudem a trobar habitatges de lloguer fiables. Descobreix ressenyes i opinions detallades i guies per a una experiència de lloguer transparent i sense complicacions.";
   return {
     title: titleDetail,
     description,

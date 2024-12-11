@@ -6,7 +6,7 @@ type MainLayoutProps = {
   children: React.ReactNode;
 };
 
-export const MainLayout = ({ className, children }: MainLayoutProps) => {
+const MainLayout = ({ className, children }: MainLayoutProps) => {
   return (
     <div>
       <NavbarHome />
@@ -15,3 +15,5 @@ export const MainLayout = ({ className, children }: MainLayoutProps) => {
     </div>
   );
 };
+
+export default MainLayout;

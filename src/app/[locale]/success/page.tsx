@@ -22,10 +22,10 @@ export async function generateMetadata({
 
   const description =
     locale == "en"
-      ? "Thank you for submitting your review on Reviu. Your feedback helps others find reliable rental homes in Barcelona. Check your email for confirmation and further details."
+      ? "Thank you for submitting your review on Reviu. Your feedback helps others find reliable rental homes. Check your email for confirmation and further details."
       : locale == "es"
-      ? "Gracias por enviar tu reseña en Reviu. Tu opinión ayuda a otros a encontrar viviendas de alquiler confiables en Barcelona. Revisa tu correo para la confirmación y más detalles."
-      : "Gràcies per enviar la teva ressenya a Reviu. La teva opinió ajuda a altres a trobar habitatges de lloguer fiables a Barcelona. Revisa el teu correu per a la confirmació i més detalls.";
+      ? "Gracias por enviar tu reseña en Reviu. Tu opinión ayuda a otros a encontrar viviendas de alquiler confiables. Revisa tu correo para la confirmación y más detalles."
+      : "Gràcies per enviar la teva ressenya a Reviu. La teva opinió ajuda a altres a trobar habitatges de lloguer fiables. Revisa el teu correu per a la confirmació i més detalls.";
 
   return {
     title: titleDetail,
@@ -68,7 +68,11 @@ export default async function Success({
           >
             {t("success.publicarOtraOpinion")}
           </Link>
-          <Link className="btn btn-terciary-500 mt-7 w-full lg:w-auto" href="/" title={tLinks("/")}>
+          <Link
+            className="btn btn-terciary-500 mt-7 w-full lg:w-auto"
+            href="/"
+            title={tLinks("/")}
+          >
             {t("success.menuPrincipal")}
           </Link>
         </div>

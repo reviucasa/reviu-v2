@@ -1,4 +1,4 @@
-import { MainLayout } from "@/components/layouts/MainLayout";
+import MainLayout  from "@/components/layouts/MainLayout";
 import { ConditionsUseComponent } from "@/components/sectionLegalPages/conditionsUse";
 import { LegalNoticeComponent } from "@/components/sectionLegalPages/legalNoticeComponent";
 

@@ -1,6 +1,12 @@
 "use client";
 import { Address } from "@/models/types";
-import { Combobox, ComboboxInput, ComboboxOption, ComboboxOptions, Transition } from "@headlessui/react";
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxOption,
+  ComboboxOptions,
+  Transition,
+} from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
@@ -61,16 +67,18 @@ export const AddressComboBox = ({
   ) {
     if (status === "OK") {
       // handle autocomplete suggestions
-      const autocompleteSuggestions = predictions!
-        .map((prediction) => {
-          return {
-            id: prediction.place_id,
-            address: {
-              string: prediction.description,
-            },
-          };
-        })
-        .filter((e) => e.address.string.includes("Barcelona"));
+      const autocompleteSuggestions = predictions!.map((prediction) => {
+        return {
+          id: prediction.place_id,
+          address: {
+            string: prediction.description,
+          },
+        };
+      }); // TODO: modificar per municipi
+      /* .filter((e) => e.address.string.includes("Barcelona")) */
+
+      console.log(predictions);
+
       setSearchResult({
         autocompleteSuggestions: autocompleteSuggestions,
         status: "OK",
@@ -118,7 +126,8 @@ export const AddressComboBox = ({
         },
         //fields: ["name", "formatted_address"], //"address_components",
         types: ["address"],
-        locationRestriction: bounds,
+        locationBias: "IP_BIAS",
+        // locationRestriction: bounds,
         //strictBounds: true,
       };
 
