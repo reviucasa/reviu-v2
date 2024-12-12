@@ -1,6 +1,6 @@
 import Image from "next/image";
 import okhand from "public/images/ok-hand.png";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/navigation";
 import { locales } from "@/config";
 
@@ -38,7 +38,7 @@ export default async function Success({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
   const tLinks = await getTranslations("linksTitles");
 

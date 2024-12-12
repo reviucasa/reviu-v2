@@ -4,7 +4,7 @@ import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
 import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
 import { mainKeywords } from "@/staticData";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import cardBannerImage from "public/images/kid-reading.jpg";
 
 export async function generateMetadata({
@@ -61,7 +61,7 @@ export default async function Blog({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations();
 
   const posts = await getPosts();

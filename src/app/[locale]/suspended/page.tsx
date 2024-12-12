@@ -1,6 +1,6 @@
 import MainLayout  from "@/components/layouts/MainLayout";
 import { locales } from "@/config";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -35,7 +35,7 @@ export default async function SuspendedPage({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   const t = await getTranslations("suspended");
   return (
     <MainLayout>

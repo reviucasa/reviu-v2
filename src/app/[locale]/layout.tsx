@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from "next-intl";
 import getRequestConfig from "../../i18n";
 import { Providers } from "@/context";
 import { Suspense } from "react";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
 import Script from "next/script";
@@ -34,7 +34,7 @@ export async function generateMetadata({
       ? "Comparte y encuentra reseñas y opiniones anónimas sobre pisos de tu ciudad. Infórmate de cómo es vivir en la casa que te interesa antes de mudarte y comparte opiniones sobre los lugares donde has vivido."
       : "Comparteix i troba ressenyes i opinions anònimes sobre pisos de la teva ciutat. Informa't de com és viure a la casa que t'interessa abans de mudar-t'hi i comparteix opinions sobre els llocs on has viscut.";
 
-  const keywords = mainKeywords(locale);
+  const keywords = mainKeywords(locale, "");
 
   return {
     title: "Reviu | " + titleDetail,
@@ -80,8 +80,12 @@ export default async function RootLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
-  const { messages } = await getRequestConfig({ locale });
+  setRequestLocale(locale);
+  // FIXME: Both locale and requestLocale are now mandatory, but locale should be removed at some point
+  const { messages } = await getRequestConfig({
+    locale,
+    requestLocale: new Promise((resolve) => resolve(locale)),
+  });
 
   return (
     <html lang={locale} className={space_grotesk.className}>

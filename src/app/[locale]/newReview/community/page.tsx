@@ -1,11 +1,11 @@
 import { CommunityForm } from "@/components/forms/CommunityForm";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export default function Community({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   return <CommunityForm />;
 }

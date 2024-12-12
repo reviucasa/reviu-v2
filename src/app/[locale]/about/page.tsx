@@ -4,7 +4,7 @@ import { OurValues } from "@/components/sectionAbout/ourValues";
 import { Partners } from "@/components/sectionAbout/partners";
 import { SectionCards } from "@/components/sectionAbout/sectionCards";
 import { locales } from "@/config";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -40,7 +40,7 @@ export default async function About({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   const t = await getTranslations();
 

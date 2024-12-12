@@ -4,7 +4,7 @@ import { LegalNoticeComponent } from "@/components/sectionLegalPages/legalNotice
 
 import { PrivacyPolicyComponent } from "@/components/sectionLegalPages/privacyPolicyComponent";
 import { locales } from "@/config";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -40,7 +40,7 @@ export default function LegalPages({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   /* useEffect(() => {
     document.body.className = "bg-white";
     return () => {

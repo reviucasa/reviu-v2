@@ -10,7 +10,7 @@ import React from "react";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";
 import MainLayout  from "@/components/layouts/MainLayout";
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 import { locales } from "@/config";
 import { mainKeywords } from "@/staticData";
@@ -56,7 +56,7 @@ export default async function Agency({
 }: {
   params: { locale: string; agency: string };
 }) {
-  unstable_setRequestLocale(params.locale);
+  setRequestLocale(params.locale);
 
   const t = await getTranslations();
   const config = await getTranslations("config");

@@ -7,14 +7,14 @@ import { SectionFaq } from "@/components/sectionHome/sectionFaq";
 import { SectionHeader } from "@/components/sectionHome/sectionHeader";
 import { SectionLatestReviews } from "@/components/sectionHome/sectionLatestReviews";
 import AuthCheck from "./AuthCheck";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export default function Home({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   return (
     <MainLayout className="flex flex-col gap-20">
       <AuthCheck />

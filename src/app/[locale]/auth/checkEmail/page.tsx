@@ -2,7 +2,7 @@ import CheckEmailImg from "public/images/check-email.png";
 import Image from "next/image";
 import Logo from "public/images/reviuLogo.svg";
 
-import { getTranslations, unstable_setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/navigation";
 import { locales } from "@/config";
 
@@ -40,7 +40,7 @@ export default async function CheckEmail({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
 
   const t = await getTranslations();
   const tLinks = await getTranslations("linksTitles");

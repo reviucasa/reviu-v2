@@ -6,7 +6,7 @@ import BuildingView from "@/components/organism/BuildingView";
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { getReviewsByCatastroRef, Review } from "@/models/review";
 import { toPlainObject } from "lodash";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import dynamic from "next/dynamic";
 import { BounceLoader } from "react-spinners";
 import { URLAddressParams } from "./page";

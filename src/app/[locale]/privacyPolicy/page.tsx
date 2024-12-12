@@ -1,7 +1,7 @@
 import MainLayout  from "@/components/layouts/MainLayout";
 import { PrivacyPolicyComponent } from "@/components/sectionLegalPages/privacyPolicyComponent";
 import { locales } from "@/config";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 
 export function generateStaticParams() {
@@ -38,7 +38,7 @@ export default function PrivacyPolicy({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   /* useEffect(() => {
     document.body.className = "bg-white";
     return () => {

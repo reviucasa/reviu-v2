@@ -1,11 +1,11 @@
 import { StayForm } from "@/components/forms/StayForm";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export default function Stay({
   params: { locale },
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   return <StayForm />;
 }

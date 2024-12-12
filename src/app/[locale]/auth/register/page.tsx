@@ -1,7 +1,7 @@
 import { RegisterForm } from "@/components/forms/RegisterForm";
 import { LoginLayout } from "@/components/layouts/LoginLayout";
 import RegisterAsset from "public/images/register_asset.png";
-import { unstable_setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 import { locales } from "@/config";
 
 export function generateStaticParams() {
@@ -38,7 +38,7 @@ export default function Register({
 }: {
   params: { locale: string };
 }) {
-  unstable_setRequestLocale(locale);
+  setRequestLocale(locale);
   return (
     <LoginLayout image={RegisterAsset} imageAlt="register reviu">
       <RegisterForm />
