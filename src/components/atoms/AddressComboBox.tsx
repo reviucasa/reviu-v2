@@ -142,7 +142,7 @@ export const AddressComboBox = ({
   const t = useTranslations();
 
   return (
-    <Combobox value={selectedAddress} onChange={setSelectedAddress} nullable>
+    <Combobox value={selectedAddress} onChange={setSelectedAddress}>
       <div className={`relative ${className}`}>
         <ComboboxInput
           id="query"

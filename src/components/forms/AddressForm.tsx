@@ -22,16 +22,15 @@ import {
   updateDraft,
 } from "@/models/review";
 import { auth } from "@/firebase/config";
-import {
-  Apartment,
-  Building,
-  findBuildingByAddress,
-  getBuilding,
-  getBuildingStairs,
-} from "@/models/building";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
 import { Timestamp } from "firebase/firestore";
+import { CatastroResponse, Unidad } from "@/models/catastro";
+import {
+  getCatastroDataFromAddress,
+  getCatastroDataFromReference,
+} from "@/helpers/catastroFunctions";
+import { replaceUndefinedWithNull } from "@/helpers/replaceUndefinedWithNull";
 
 export const AddressForm = () => {
   const { draft } = useDraft();
@@ -58,11 +57,12 @@ export const AddressForm = () => {
     </div>
   );
   const [selectedAddress, setSelectedAddress] = useState<string>("");
-  const [building, setBuilding] = useState<Building>();
-  const [aparmentList, setAparmentList] = useState<Apartment[]>([]);
+  const [building, setBuilding] = useState<CatastroResponse>();
+  const [catastroRef, setCatastroRef] = useState<string>();
+  const [unitsList, setUnitsList] = useState<Unidad[]>([]);
   const [error, setError] = useState<string>();
-  const [stairSelected, setStairSelected] = useState<string>();
-  const [apartmentSelected, setApartmentSelected] = useState<Apartment>();
+  const [selectedStair, setSelectedStair] = useState<string>();
+  const [selectedUnit, setSelectedUnit] = useState<Unidad>();
   const [isOpenReviewAuthenticityAlert, setIsOpenReviewAuthenticityAlert] =
     useState(false);
   const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlert] =
@@ -73,14 +73,20 @@ export const AddressForm = () => {
     useState(false);
 
   useEffect(() => {
-    const fetchBuilding = async (buildingId: string) => {
-      const b = await getBuilding(buildingId);
-      setBuilding(b);
-      setStairSelected(draft?.apartment?.stair!);
-      setAparmentList(
-        b?.apartments || [] //.filter((a) => a.stair == draft?.apartment?.stair!) || []
-      );
-      setApartmentSelected(draft?.apartment);
+    const fetchBuilding = async (catRef: string) => {
+      const b = await getCatastroDataFromReference(catRef);
+      if (b) {
+        setBuilding(b);
+        setUnitsList(
+          b.response.bico?.listaConstrucciones.map(
+            (c) => c.detallesUbicacion.localizacionUrbana.unidad
+          ) ??
+            b.response.listaRegistroCatastral?.registros.map(
+              (r) => r.localizacion.ubicacion.unidad
+            ) ??
+            []
+        );
+      }
     };
 
     const acceptedTerms = localStorage.getItem("acceptedReviewTerms");
@@ -90,9 +96,12 @@ export const AddressForm = () => {
     }
 
     if (draft?.address) {
+      setCatastroRef(draft.catastroRef);
       setSelectedAddress(draft.address);
       if (draft?.apartment) {
-        fetchBuilding(draft.buildingId);
+        setSelectedStair(draft.apartment.stair);
+        setSelectedUnit(draft.apartment);
+        fetchBuilding(draft.catastroRef);
       }
     }
   }, [draft]);
@@ -102,13 +111,42 @@ export const AddressForm = () => {
     setError(undefined);
 
     if (selectedAddress) {
-      const buildingData = await findBuildingByAddress(selectedAddress);
-
-      if (buildingData) {
-        setBuilding(buildingData);
-        setStairSelected(undefined);
-        setApartmentSelected(undefined);
+      const res = await getCatastroDataFromAddress(selectedAddress);
+      if (res) {
+        const units =
+          res.response.bico?.listaConstrucciones.map(
+            (c) => c.detallesUbicacion.localizacionUrbana.unidad
+          ) ??
+          res.response.listaRegistroCatastral?.registros.map(
+            (r) => r.localizacion.ubicacion.unidad
+          );
+        const err = res.response.errores;
+        if (units) {
+          setCatastroRef(
+            res.response.listaRegistroCatastral?.registros[0]
+              .referenciaCatastral.edificio ??
+              res.response.bico?.identificacionBienInmueble.referenciaCatastral
+                .edificio
+          );
+          setBuilding(res);
+          setUnitsList(units);
+          setSelectedStair(undefined);
+          setSelectedUnit(undefined);
+        } else if (err) {
+          const num = res.response.numerero;
+          if (num) {
+            setError(
+              t("common.noSeEncontroDirección") +
+                `. Options: ${num.map((n) => n.numero).toString()}`
+            );
+          } else {
+            setError(err[0].desc);
+          }
+        } else {
+          console.log("error fetching:", selectedAddress);
+        }
       } else {
+        console.log("catastro data not found");
         const addressRegex = /^(.*?),\s*(\d+)/;
         const match = selectedAddress.match(addressRegex);
         if (!match) {
@@ -122,32 +160,28 @@ export const AddressForm = () => {
 
   const onSelectStair = useCallback(
     (selectedStair: string) => {
-      setStairSelected(selectedStair);
-      setAparmentList(
-        building?.apartments.filter((a) => a.stair == selectedStair) || []
-      );
+      setSelectedStair(selectedStair);
+      setUnitsList(unitsList.filter((a) => a.stair == selectedStair) || []);
     },
-    [building?.apartments]
+    [unitsList]
   );
 
   const onSelectWholeAddress = async (
     event: ChangeEvent<HTMLSelectElement>
   ) => {
-    const apartment = aparmentList[Number(event.currentTarget.value)]; /* .find(
-      (a) => a.id == event.currentTarget.value
-    ); */
+    const unit = unitsList[Number(event.currentTarget.value)];
 
     const reviews = await getReviewsFromUser(auth.currentUser!.uid);
-    if (reviews.filter((r) => r.apartment?.id == apartment?.id).length == 2) {
+    if (reviews.filter((r) => r.apartment?.id == unit?.id).length == 2) {
       setIsOpenExistingTwoReviewsAlert(true);
     } else if (
-      reviews.filter((r) => r.apartment?.id == apartment?.id).length == 1 &&
-      reviews.find((r) => r.apartment?.id == apartment?.id)?.status ==
+      reviews.filter((r) => r.apartment?.id == unit?.id).length == 1 &&
+      reviews.find((r) => r.apartment?.id == unit?.id)?.status ==
         ReviewStatus.Published
     ) {
       setIsOpenExistingReviewAlert(true);
     } else {
-      setApartmentSelected(apartment);
+      setSelectedUnit(replaceUndefinedWithNull(unit));
     }
   };
 
@@ -162,18 +196,18 @@ export const AddressForm = () => {
 
   const onSubmit = async () => {
     setLoading(true);
-    if (building && apartmentSelected) {
+    if (building && selectedUnit) {
       if (draft?.address) {
         await updateDraft(auth.currentUser!.uid, {
           address: selectedAddress,
-          apartment: apartmentSelected,
-          buildingId: building.id,
+          apartment: selectedUnit,
+          catastroRef,
         });
       } else {
         await createDraft(auth.currentUser!.uid, {
           address: selectedAddress,
-          apartment: apartmentSelected,
-          buildingId: building.id,
+          apartment: selectedUnit,
+          catastroRef,
           data: { step: stepReview },
           timeCreated: Timestamp.now(),
         });
@@ -190,10 +224,10 @@ export const AddressForm = () => {
 
   useEffect(() => {
     //If there is only one stair, select it
-    if (building && getBuildingStairs(building!).length === 1) {
-      onSelectStair(building!.apartments[0].stair!);
+    if (building && unitsList.map((u) => u.stair).length === 1) {
+      onSelectStair(unitsList[0].stair!);
     }
-  }, [building, onSelectStair]);
+  }, [building, onSelectStair, unitsList]);
 
   return (
     <ReviewFormLayout
@@ -215,26 +249,26 @@ export const AddressForm = () => {
         />
         {building && (
           <div className="flex gap-3 mt-5">
-            {getBuildingStairs(building).length > 1 && (
+            {unitsList.map((u) => u.stair).length > 1 && (
               <div className="w-full">
                 <label>{t("addressReview.escalera")}</label>
                 <select
                   className="w-full"
-                  value={stairSelected}
+                  value={selectedStair}
                   onChange={(ev) => onSelectStair(ev.target.value)}
                 >
                   <option
                     value={
-                      stairSelected == "" || stairSelected == undefined
+                      selectedStair == "" || selectedStair == undefined
                         ? t("addressReview.main")
-                        : stairSelected
+                        : selectedStair
                     }
                   >
                     {t("addressReview.escalera")}
                   </option>
-                  {getBuildingStairs(building).map((stair) => (
-                    <option key={stair} value={stair}>
-                      {stair == "" ? t("addressReview.main") : stair}
+                  {unitsList.map((u, i) => (
+                    <option key={i} value={u.stair}>
+                      {u.stair == "" ? t("addressReview.main") : u.stair}
                     </option>
                   ))}
                 </select>
@@ -245,30 +279,32 @@ export const AddressForm = () => {
               <select
                 className="w-full"
                 value={
-                  apartmentSelected &&
-                  aparmentList.findIndex(
-                    (a) =>
-                      a.stair == apartmentSelected.stair &&
-                      a.floor == apartmentSelected.floor &&
-                      a.door == apartmentSelected.door
-                  )
+                  selectedUnit &&
+                  unitsList
+                    .map((u) => replaceUndefinedWithNull(u))
+                    .findIndex(
+                      (a) =>
+                        a.stair == selectedUnit.stair &&
+                        a.floor == selectedUnit.floor &&
+                        a.door == selectedUnit.door
+                    )
                 }
                 onChange={onSelectWholeAddress}
               >
                 <option
                   value={
-                    apartmentSelected == undefined
+                    selectedUnit == undefined
                       ? t("addressReview.pisoYPuerta")
-                      : `${apartmentSelected.floor}/${apartmentSelected.door}`
+                      : `${selectedUnit.floor ?? ""}/${selectedUnit.door ?? ""}`
                   }
                 >
                   {t("addressReview.pisoYPuerta")}
                 </option>
-                {aparmentList.map((apartment, index) => (
+                {unitsList.map((unit, i) => (
                   <option
-                    key={index}
-                    value={aparmentList.indexOf(apartment) /* apartment.id */}
-                  >{`${apartment.floor}/${apartment.door}`}</option>
+                    key={i}
+                    value={unitsList.indexOf(unit) /* unit.id */}
+                  >{`${unit.floor ?? ""}/${unit.door ?? ""}`}</option>
                 ))}
               </select>
             </div>
@@ -283,7 +319,7 @@ export const AddressForm = () => {
         {building && (
           <Button
             buttonClassName="btn-primary-500"
-            disabled={!apartmentSelected}
+            disabled={!selectedUnit}
             onClick={onSubmit}
             loading={loading}
           >
