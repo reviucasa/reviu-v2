@@ -1,4 +1,4 @@
-import { db } from "@/firebase/config";
+/* import { db } from "@/firebase/config";
 import { parseLocation } from "@/helpers/parseLocation";
 import {
   removeAccents,
@@ -41,16 +41,6 @@ export type Stair = {
   stair: string;
   building_floors: Floor[];
 };
-
-/* export type Building = {
-  id: string;
-  block_id: string;
-  address: string;
-  number: string;
-  latitude: number;
-  longitude: number;
-  building_stairs: Stair[];
-}; */
 
 export type Building = {
   id: string;
@@ -233,9 +223,7 @@ const findBuildingByAddress = async (
   } catch (error) {
     if (error instanceof FirestoreError) {
       console.error("Firestore error:", error.message);
-    } /* else {
-      console.error("Error:", error);
-    } */
+    }
     return null;
   }
 };
@@ -269,3 +257,4 @@ export {
   getBuildings,
   getBuildingsByIds,
 };
+ */

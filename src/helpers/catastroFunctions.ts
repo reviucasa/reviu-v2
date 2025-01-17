@@ -1,5 +1,7 @@
 import { CatastroResponse, CoordinatesResponse } from "@/models/catastro";
 import { removeVowelAccents2 } from "./removeAccents";
+import { provincesData } from "@/staticData";
+import { getProvinceFromMunicipality } from "./getProvinceFromMunicipality";
 
 export const catastroAddressEndpoint = (
   provincia: string,
@@ -46,7 +48,7 @@ export const getCatastroDataFromReference = async (
 ): Promise<CatastroResponse | null> => {
   const url = catastroReferenceEndpoint(reference);
 
-  console.log("Reference URL:", url); // To verify the URL
+  // console.log("Reference URL:", url); // To verify the URL
 
   try {
     const response = await fetch(url);
@@ -126,7 +128,7 @@ const abbreviations: Abbreviations = {
   CH: ["CHALET", "XALE"],
   CI: ["CINTURON", "CINTURO"],
   CJ: ["CALLEJA", "CALLEJON", "CARRERO"],
-  CL: ["CALLE", "CARRER"],
+  CL: ["CALLE", "CARRER", "VIA"],
   CM: ["CAMINO", "CARMEN", "CAMI", "CARMEN"],
   CN: ["COLONIA", "COLÒNIA"],
   CO: ["CONCEJO", "COLEGIO", "CONSISTORI", "COL·LEGI"],
@@ -198,7 +200,7 @@ const abbreviations: Abbreviations = {
   UR: ["URBANIZACION", "URBANITZACIO"],
   VA: ["VALLE", "VALL"],
   VD: ["VIADUCTO", "VIADUCTE"],
-  VI: ["VIA"],
+  // VI: ["VIA"],
   VL: ["VIAL"],
   VR: ["VEREDA"],
 };
@@ -212,6 +214,13 @@ export const cleanAddress = (
   options: CleanAddressOptions = {}
 ): CatastroAddressElements | null => {
   const { forUri = false } = options;
+
+  // Check if the address starts with "via" or "vía" (case-insensitive)
+  // If so, make "calle" the address type for normalization purposes
+  if (/^via|vía/i.test(address.split(" ")[0])) {
+    address = `calle ${address}`;
+  }
+
   // Flatten the abbreviations object to get all unique location types (both in Spanish and Catalan)
   const locationTypes = Object.entries(abbreviations).flatMap(
     ([abbr, words]) => [
@@ -244,12 +253,11 @@ export const cleanAddress = (
         .replace(/l·l/g, "l.l")
     );
 
-    console.log(street);
     const number = match[4];
 
     const municipality = address.split(", ")[2];
 
-    const province = municipality; // TODO ??
+    const province = getProvinceFromMunicipality(municipality);
 
     // Normalize the type back to its abbreviation
     const normalizedType = Object.entries(abbreviations).find(

@@ -22,7 +22,6 @@ export async function generateMetadata({
 }) {
   const review = await getReview(reviewId);
 
-  console.log(cleanAddress(review!.address, { forUri: true }));
   const reviewTitle = review?.data.opinion?.title;
 
   const addr = review?.address.replace(", Espanya", ""); // toTitleCase([[street, number].join(" "), city].join(", "));

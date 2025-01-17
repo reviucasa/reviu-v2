@@ -3,7 +3,6 @@ import { getReviewsFromUser, Review, ReviewStatus } from "@/models/review";
 import { OpinionCard } from "@/components/molecules/OpinionCard";
 import { auth } from "@/firebase/config";
 import { useEffect, useState } from "react";
-import { Building, getBuildingsByIds } from "@/models/building";
 import { useTranslations } from "next-intl";
 import OpenStreetMapMultiple from "@/components/molecules/OpenStreetMapMultiple";
 import { capitalize } from "lodash";
@@ -16,7 +15,6 @@ export default function MyReviewsClientPage() {
   const t = useTranslations();
 
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [buildings, setBuildings] = useState<(Building | undefined)[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchReviews = async () => {
@@ -25,11 +23,6 @@ export default function MyReviewsClientPage() {
     try {
       const response = await getReviewsFromUser(auth.currentUser!.uid);
       setReviews(response);
-
-      const buildings = await getBuildingsByIds(
-        response.map((r) => r.buildingId)
-      );
-      setBuildings(buildings);
     } catch (error) {
       console.log(error);
     } finally {
@@ -55,6 +48,7 @@ export default function MyReviewsClientPage() {
     (r) => r.status == ReviewStatus.Suspended
   );
 
+
   return (
     <div className="relative lg:gap-8 md:gap-4 ">
       <h1 className="text-2xl lg:text-3xl  font-secondary">
@@ -66,7 +60,7 @@ export default function MyReviewsClientPage() {
       </p>
       <div className=" h-72 sm:h-[480px] w-full my-10 center align-middle">
         {reviews.length > 0 ? (
-          <OpenStreetMapMultiple reviews={reviews} buildings={buildings} />
+          <OpenStreetMapMultiple reviews={reviews} />
         ) : loading ? (
           <div className="flex justify-center items-center py-40">
             <BounceLoader color="#d8b4fe" size={100} />

@@ -20,16 +20,29 @@ import {
   startAfter,
   getCountFromServer,
 } from "firebase/firestore";
-import { Apartment } from "./building";
 import { User, getUsersById } from "./user";
 import { shuffleArray } from "@/helpers/shuffleArray";
 import { Unidad } from "./catastro";
+
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
+};
 
 export enum ReviewStatus {
   Suspended = "suspended",
   Reported = "reported",
   Published = "published",
 }
+
+export type Location = {
+  type: string;
+  street: string;
+  number: number;
+  municipality: string;
+  province: string;
+  coordinates: Coordinates;
+};
 
 export type Review = {
   address: string;
@@ -41,6 +54,7 @@ export type Review = {
   data: Partial<ReviewData>;
   buildingId: string;
   catastroRef: string;
+  location: Location | undefined;
   userId: string;
 };
 

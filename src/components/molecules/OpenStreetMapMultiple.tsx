@@ -3,13 +3,7 @@ import L, { LatLng } from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { OpinionCardSummary } from "./OpinionCardSummary";
-import { Building } from "@/models/building";
-import { Review } from "@/models/review";
-
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
+import { Coordinates, Review } from "@/models/review";
 
 type IconSize = "sm" | "md" | "lg";
 
@@ -28,49 +22,34 @@ const calculateCenter = (
 
 function OpenStreetMapMultiple({
   reviews,
-  buildings,
   zoom = 15,
   iconSize = "md",
 }: {
   reviews: Review[];
-  buildings: (Building | undefined)[];
   zoom?: number;
   iconSize?: IconSize;
 }) {
-  // const { reviews, buildings } = useContext(MyReviewsContext);
+  const coordinates = reviews
+    // .filter((r) => r.location?.coordinates != undefined && r.location?.coordinates != null)
+    .map((r) => r.location!.coordinates!);
 
-  if (buildings.length == 0) {
-    return;
-  }
+  const center =
+    coordinates.length > 0 ? calculateCenter(coordinates) : undefined;
 
-  const coordinates = buildings
-    .filter((b, i) => {
-      if (!b?.latitude || !b.longitude) {
-        console.log(b?.latitude, b?.longitude);
-        console.log(b?.id, b?.address, "Wrong coordiantes");
-        console.log(reviews[i]?.id, reviews[i]?.address, "Wrong coordiantes");
-      }
-      return b?.latitude && b.longitude;
-    })
-    .map((b) => {
-      return {
-        latitude: b?.latitude,
-        longitude: b?.longitude,
-      } as Coordinates;
-    });
-  const center = calculateCenter(coordinates);
-
-  const markers = coordinates.map((c) => ({
-    lat: c.latitude,
-    lng: c.longitude,
-  }));
+  const markers =
+    coordinates.length > 0
+      ? coordinates.map((c) => ({
+          lat: c.latitude,
+          lng: c.longitude,
+        }))
+      : undefined;
 
   const iconSizeFactor = iconSize == "sm" ? 0.8 : iconSize == "lg" ? 1.2 : 1.0;
 
   const icon = L.icon({
     iconUrl: "/images/marker-icon.png",
-    iconSize: [36 * iconSizeFactor, 40 * iconSizeFactor],
-    iconAnchor: [18 * iconSizeFactor, 40 * iconSizeFactor],
+    iconSize: [28 * iconSizeFactor, 32 * iconSizeFactor],
+    iconAnchor: [14 * iconSizeFactor, 32 * iconSizeFactor],
   });
 
   return (
@@ -83,25 +62,26 @@ function OpenStreetMapMultiple({
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 
-      {markers.map((m, i) => {
-        try {
-          m as LatLng;
-        } catch (error) {
-          console.log(
-            buildings[i]?.id,
-            buildings[i]?.address,
-            "Wrong coordiantes"
+      {markers &&
+        markers.map((m, i) => {
+          try {
+            m as LatLng;
+          } catch (error) {
+            console.log(
+              reviews[i]?.catastroRef,
+              reviews[i]?.address,
+              "Wrong coordiantes"
+            );
+            return;
+          }
+          return (
+            <Marker key={i} position={m} icon={icon}>
+              <Popup>
+                <OpinionCardSummary review={reviews[i]} />
+              </Popup>
+            </Marker>
           );
-          return;
-        }
-        return (
-          <Marker key={i} position={m} icon={icon}>
-            <Popup>
-              <OpinionCardSummary review={reviews[i]} />
-            </Popup>
-          </Marker>
-        );
-      })}
+        })}
     </MapContainer>
   );
 }

@@ -70,7 +70,7 @@ export const SlideReview = ({
   } = memoizedValues;
 
   const shuffleData = useMemo(() => {
-    return reviews && shuffle(reviews);
+    return reviews /* && shuffle(reviews) */;
   }, [reviews]);
 
   const handleNextReviews = () => {

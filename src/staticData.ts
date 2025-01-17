@@ -354,7 +354,7 @@ export const reviewConfigParams = {
 
 // endpoint para called de un municipio: http://ovc.catastro.meh.es/OVCServWeb/OVCWcfCallejero/COVCCallejero.svc/json/ObtenerCallejero?Provincia=lleida&Municipio=lleida
 
-export const provincesData = {
+export const provincesData: Record<string, string[]> = {
   "A CORUÑA": [
     "A BAÑA",
     "A CAPELA",

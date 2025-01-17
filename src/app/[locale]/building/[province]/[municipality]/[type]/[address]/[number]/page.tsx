@@ -30,7 +30,6 @@ export async function generateMetadata({
     decodeReadableURI([[address, number].join(" "), municipality].join(", "))
   );
 
-  console.log(addr);
 
   const titleDetail =
     locale == "en"

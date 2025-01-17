@@ -18,6 +18,7 @@ import {
 import {
   createDraft,
   getReviewsFromUser,
+  Location,
   ReviewStatus,
   updateDraft,
 } from "@/models/review";
@@ -29,6 +30,7 @@ import { CatastroResponse, Unidad } from "@/models/catastro";
 import {
   getCatastroDataFromAddress,
   getCatastroDataFromReference,
+  getCoordinatesFromCatastroRef,
 } from "@/helpers/catastroFunctions";
 import { replaceUndefinedWithNull } from "@/helpers/replaceUndefinedWithNull";
 
@@ -158,13 +160,10 @@ export const AddressForm = () => {
     }
   }, [selectedAddress, t]);
 
-  const onSelectStair = useCallback(
-    (selectedStair: string) => {
-      setSelectedStair(selectedStair);
-      setUnitsList(unitsList.filter((a) => a.stair == selectedStair) || []);
-    },
-    [unitsList]
-  );
+  const onSelectStair = useCallback((stair: string) => {
+    setSelectedStair(stair);
+    // setUnitsList(unitsList.filter((a) => a.stair == stair) || []);
+  }, []);
 
   const onSelectWholeAddress = async (
     event: ChangeEvent<HTMLSelectElement>
@@ -196,23 +195,49 @@ export const AddressForm = () => {
 
   const onSubmit = async () => {
     setLoading(true);
-    if (building && selectedUnit) {
-      if (draft?.address) {
-        await updateDraft(auth.currentUser!.uid, {
-          address: selectedAddress,
-          apartment: selectedUnit,
-          catastroRef,
-        });
-      } else {
-        await createDraft(auth.currentUser!.uid, {
-          address: selectedAddress,
-          apartment: selectedUnit,
-          catastroRef,
-          data: { step: stepReview },
-          timeCreated: Timestamp.now(),
-        });
+    try {
+      if (building && selectedUnit) {
+        const locationData =
+          building.response.listaRegistroCatastral?.registros[0].localizacion ??
+          building.response.bico?.localizacion!;
+
+        const coordinates = await getCoordinatesFromCatastroRef(catastroRef!);
+
+        const location: Location = {
+          type: locationData.ubicacion.direccion.siglas.toLowerCase(),
+          street: locationData.ubicacion.direccion.nombre.toLowerCase(),
+          number: Number(locationData.ubicacion.direccion.numero),
+          municipality: locationData.municipio.toLowerCase(),
+          province: locationData.provincia.toLowerCase(),
+          coordinates: {
+            latitude: coordinates!.coordinates[0].latitude,
+            longitude: coordinates!.coordinates[0].longitude,
+          },
+        };
+
+        // console.log(location);
+
+        if (draft?.address) {
+          await updateDraft(auth.currentUser!.uid, {
+            address: selectedAddress,
+            apartment: selectedUnit,
+            catastroRef,
+            location,
+          });
+        } else {
+          await createDraft(auth.currentUser!.uid, {
+            address: selectedAddress,
+            apartment: selectedUnit,
+            catastroRef,
+            location,
+            data: { step: stepReview },
+            timeCreated: Timestamp.now(),
+          });
+        }
+        router.push(getUrlReview(stepReview));
       }
-      router.push(getUrlReview(stepReview));
+    } catch (error) {
+      console.log(error);
     }
 
     setLoading(false);
@@ -249,28 +274,32 @@ export const AddressForm = () => {
         />
         {building && (
           <div className="flex gap-3 mt-5">
-            {unitsList.map((u) => u.stair).length > 1 && (
+            {Array.from(new Set(unitsList.map((u) => u.stair))).length > 1 && (
               <div className="w-full">
                 <label>{t("addressReview.escalera")}</label>
                 <select
                   className="w-full"
-                  value={selectedStair}
+                  value={
+                    selectedStair == "" ||
+                    selectedStair == undefined ||
+                    selectedStair == null
+                      ? t("addressReview.main")
+                      : selectedStair
+                  }
                   onChange={(ev) => onSelectStair(ev.target.value)}
                 >
-                  <option
-                    value={
-                      selectedStair == "" || selectedStair == undefined
-                        ? t("addressReview.main")
-                        : selectedStair
-                    }
-                  >
-                    {t("addressReview.escalera")}
+                  <option value={selectedStair}>
+                    {selectedStair ?? t("addressReview.escalera")}
                   </option>
-                  {unitsList.map((u, i) => (
-                    <option key={i} value={u.stair}>
-                      {u.stair == "" ? t("addressReview.main") : u.stair}
-                    </option>
-                  ))}
+                  {Array.from(new Set(unitsList.map((u) => u.stair))).map(
+                    (stair, i) => (
+                      <option key={i} value={stair}>
+                        {stair == "" || stair == undefined || stair == null
+                          ? t("addressReview.main")
+                          : stair}
+                      </option>
+                    )
+                  )}
                 </select>
               </div>
             )}
@@ -300,12 +329,13 @@ export const AddressForm = () => {
                 >
                   {t("addressReview.pisoYPuerta")}
                 </option>
-                {unitsList.map((unit, i) => (
-                  <option
-                    key={i}
-                    value={unitsList.indexOf(unit) /* unit.id */}
-                  >{`${unit.floor ?? ""}/${unit.door ?? ""}`}</option>
-                ))}
+                {unitsList
+                  .filter((u) => (u.stair ? u.stair == selectedStair : true))
+                  .map((unit, i) => (
+                    <option key={i} value={unitsList.indexOf(unit)}>{`${
+                      unit.floor ?? ""
+                    }/${unit.door ?? ""}`}</option>
+                  ))}
               </select>
             </div>
           </div>

@@ -1,5 +1,4 @@
 "use client";
-import { findBuildingByAddress } from "@/models/building";
 import { useTranslations } from "next-intl";
 import { useRouter } from "@/navigation";
 import { useState } from "react";
@@ -23,34 +22,24 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
     if (address && address != "") {
       const res = await getCatastroDataFromAddress(address);
       if (res) {
-        const ubi = res.response.bico
-          ? res.response.bico?.localizacion.ubicacion
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .ubicacion
-          : null;
+        const ubi =
+          res.response.bico?.localizacion.ubicacion ??
+          res.response.listaRegistroCatastral?.registros[0].localizacion
+            .ubicacion ??
+          null;
 
-        const municipality = res.response.bico
-          ? res.response.bico?.localizacion.municipio
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .municipio
-          : null;
+        const municipality =
+          res.response.bico?.localizacion.municipio ??
+          res.response.listaRegistroCatastral?.registros[0].localizacion
+            .municipio ??
+          null;
 
-        const province = res.response.bico
-          ? res.response.bico?.localizacion.municipio
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .provincia
-          : null;
+        const province =
+          res.response.bico?.localizacion.municipio ??
+          res.response.listaRegistroCatastral?.registros[0].localizacion
+            .provincia ??
+          null;
 
-        console.log(
-          res.response.bico
-            ? res.response.bico.localizacion
-            : res.response.listaRegistroCatastral
-            ? res.response.listaRegistroCatastral.registros[0].localizacion
-            : null
-        );
         const err = res.response.errores;
         if (ubi && municipality && province) {
           const link = encodeForReadableURI(

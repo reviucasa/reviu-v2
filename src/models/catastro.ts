@@ -259,7 +259,7 @@ export class CatastroResponse {
     let listaRegistroCatastral;
 
     const result = json.consulta_dnplocResult ?? json.consulta_dnprcResult;
-    console.log(result);
+    // console.log(result);
     if (result.lrcdnp) {
       listaRegistroCatastral = new ListaRegistroCatastral(
         result.lrcdnp.rcdnp.map(

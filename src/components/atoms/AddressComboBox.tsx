@@ -68,6 +68,7 @@ export const AddressComboBox = ({
     if (status === "OK") {
       // handle autocomplete suggestions
       const autocompleteSuggestions = predictions!.map((prediction) => {
+        // console.log(prediction);
         return {
           id: prediction.place_id,
           address: {
@@ -76,8 +77,6 @@ export const AddressComboBox = ({
         };
       }); // TODO: modificar per municipi
       /* .filter((e) => e.address.string.includes("Barcelona")) */
-
-      console.log(predictions);
 
       setSearchResult({
         autocompleteSuggestions: autocompleteSuggestions,
