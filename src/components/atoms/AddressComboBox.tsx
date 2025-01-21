@@ -13,23 +13,27 @@ import Image, { StaticImageData } from "next/image";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import ReactLoading from "react-loading";
+import lupa from "public/images/lupa.png";
+import marker from "public/images/iconMarker.png";
+import map from "public/images/maskGroup.png";
+import { SelectAreaModal } from "./SelectAreaModal";
 
 type AddressComboBoxProps = {
   placeholder?: string;
   className?: string;
   selectedAddress?: string;
-  icon?: StaticImageData;
   selectedAddressLoading?: boolean;
   setSelectedAddress?: (value: string) => void;
+  areaOptions?: boolean;
 };
 
 export const AddressComboBox = ({
   className,
   selectedAddress,
   setSelectedAddress,
-  icon,
   selectedAddressLoading,
   placeholder,
+  areaOptions = true,
 }: AddressComboBoxProps) => {
   const [searchResult, setSearchResult] = useState<{
     autocompleteSuggestions: Address[];
@@ -40,6 +44,10 @@ export const AddressComboBox = ({
   });
 
   const [loading, setLoading] = useState(false);
+
+  const [queryLength, setQueryLength] = useState(0);
+  const [showAreaOptions, setShowAreaOptions] = useState(true);
+  const [isOpenSelectArea, setIsOpenSelectArea] = useState(false);
 
   // Initialize state for Google services to null
   const [service, setService] =
@@ -141,37 +149,88 @@ export const AddressComboBox = ({
   const t = useTranslations();
 
   return (
-    <Combobox value={selectedAddress} onChange={setSelectedAddress}>
+    <Combobox immediate value={selectedAddress} onChange={setSelectedAddress}>
       <div className={`relative ${className}`}>
         <ComboboxInput
           id="query"
-          className={`w-full ${icon && "!pl-10"}`}
+          className={`w-full !pl-10`}
           placeholder={placeholder ?? t("common.enQueDirección")}
-          onChange={(event) => fetchAddressList(event.target.value)}
+          onChange={(event) => {
+            setQueryLength(event.target.value.length);
+            fetchAddressList(event.target.value);
+            if (event.target.value.length > 3) {
+              setShowAreaOptions(false);
+            } else {
+              setShowAreaOptions(true);
+            }
+          }}
+          onFocus={() => setShowAreaOptions(true)}
         />
-        {icon && !selectedAddressLoading && (
+        {!selectedAddressLoading && !loading && (
           <Image
-            src={icon}
+            src={lupa}
             alt="lupa"
             className="h-5 w-5 text-gray-400 absolute left-3 top-3.5"
             aria-hidden="true"
           />
         )}
-        {selectedAddressLoading && (
+        {(selectedAddressLoading || loading) && (
           <div className="opacity-90 absolute left-3 top-3.5">
             <ReactLoading type="spin" width={20} height={20} color="#9E80F7" />
           </div>
         )}
+
         <Transition
           as={Fragment}
           leave="transition ease-in duration-100"
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+          <ComboboxOptions className="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+            {areaOptions && showAreaOptions && (
+              <ComboboxOption
+                className="cursor-pointer px-1 py-3 rounded-md hover:bg-secondary-300"
+                key="area"
+                value={undefined}
+                onClick={() => {
+                  return setIsOpenSelectArea(true);
+                }}
+              >
+                <div className="flex flex-row space-x-2">
+                  <Image
+                    src={map}
+                    alt="lupa"
+                    className="h-5 w-auto text-gray-400  left-2.5 top-2.5"
+                    aria-hidden="true"
+                  />
+                  <span>Busca en una zona</span>
+                </div>
+              </ComboboxOption>
+            )}
+            {areaOptions && showAreaOptions && (
+              <ComboboxOption
+                className="cursor-pointer px-1 py-3 rounded-md hover:bg-secondary-300"
+                key="nearby"
+                value={undefined}
+                onClick={() => {
+                  return console.log("redirect to IP shit");
+                }}
+              >
+                <div className="flex flex-row space-x-2">
+                  <Image
+                    src={marker}
+                    alt="lupa"
+                    className="h-5 w-auto text-gray-400  left-2.5 top-2.5"
+                    aria-hidden="true"
+                  />
+                  <span>Buscar cerca de ti</span>
+                </div>
+              </ComboboxOption>
+            )}
+
             {loading && (
               <ComboboxOption
-                className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                className="cursor-pointer px-1 py-2 rounded-md hover:bg-secondary-300"
                 key=""
                 value={undefined}
                 disabled
@@ -179,44 +238,39 @@ export const AddressComboBox = ({
                 {t("common.buscandoDirección")}
               </ComboboxOption>
             )}
-            {searchResult.autocompleteSuggestions.length === 0 && !loading && (
-              <ComboboxOption
-                className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
-                key=""
-                value={undefined}
-                disabled
-              >
-                {t("common.noSeEncontroDirección")}
-              </ComboboxOption>
-            )}
-
-            {
-              !loading && searchResult.autocompleteSuggestions.length > 0
-                ? searchResult.autocompleteSuggestions.map((e) => {
-                    return (
-                      <ComboboxOption
-                        className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
-                        key={e.id}
-                        value={e.address.string}
-                      >
-                        {e.address.string}
-                      </ComboboxOption>
-                    );
-                  })
-                : null
-              /* addressList.map((address) => (
-                <Combobox.Option
+            {queryLength > 3 &&
+              searchResult.autocompleteSuggestions.length === 0 &&
+              !loading && (
+                <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
-                  key={address.name.string}
-                  value={address.name.string}
+                  key=""
+                  value={undefined}
+                  disabled
                 >
-                  {address.name.string}
-                </Combobox.Option>
-              )) */
-            }
+                  {t("common.noSeEncontroDirección")}
+                </ComboboxOption>
+              )}
+
+            {!loading && searchResult.autocompleteSuggestions.length > 0
+              ? searchResult.autocompleteSuggestions.map((e) => {
+                  return (
+                    <ComboboxOption
+                      className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                      key={e.id}
+                      value={e.address.string}
+                    >
+                      {e.address.string}
+                    </ComboboxOption>
+                  );
+                })
+              : null}
           </ComboboxOptions>
         </Transition>
       </div>
+      <SelectAreaModal
+        isOpen={isOpenSelectArea}
+        setIsOpen={setIsOpenSelectArea}
+      />
     </Combobox>
   );
 };

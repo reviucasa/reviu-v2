@@ -15,7 +15,7 @@ import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
-import { cleanAddress } from "@/helpers/catastroFunctions";
+import { getReviewUri } from "@/helpers/getReviewUri";
 
 export const OpinionCard = ({
   review,
@@ -124,12 +124,7 @@ export const OpinionCard = ({
           className="py-2 text-primary-500 cursor-pointer text-sm md:text-base"
           onClick={() => {
             if (!openInModal) {
-              const { province, municipality, type, street, number } = cleanAddress(
-                review.address, { forUri: true }
-              )!;
-              router.push(
-               `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
-              );
+              router.push(getReviewUri(review));
             } else setOpenMoreInfo(!openMoreInfo);
 
             setOpenReportInfo(false);

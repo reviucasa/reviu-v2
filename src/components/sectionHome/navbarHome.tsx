@@ -14,21 +14,21 @@ import { Suspense, useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { BounceLoader } from "react-spinners";
 import { mutate } from "swr";
-import lupa from "public/images/lupa.png";
 import lupaGreen from "public/images/lupa-green.png";
 import { FieldError } from "../atoms/FieldError";
 import { UserMenuNavbar } from "../atoms/UserMenuNavbar.server";
-import { getPathname, usePathname, useRouter } from "@/navigation";
+import { usePathname, useRouter } from "@/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { signOut } from "@/firebase/auth";
 import { useAuth } from "@/context/auth";
-import { findBuildingByAddress } from "@/models/building";
 import { AgencyComboBox } from "../atoms/AgencyComboBox";
 import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
-import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
+import {
+  getCatastroDataFromAddress,
+} from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
@@ -55,6 +55,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
+
       const res = await getCatastroDataFromAddress(address);
       if (res) {
         const ubi = res.response.bico
@@ -72,7 +73,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           : null;
 
         const province = res.response.bico
-          ? res.response.bico?.localizacion.municipio
+          ? res.response.bico?.localizacion.provincia
           : res.response.listaRegistroCatastral
           ? res.response.listaRegistroCatastral.registros[0].localizacion
               .provincia
@@ -118,6 +119,10 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
           setError(t("common.noSeEncontroDirección"));
         }
       }
+      /* } else {
+        console.log("error cleaning address");
+        setError(t("common.noSeEncontroDirección") + ": municipality error");
+      } */
 
       setLoading(false);
     }
@@ -162,11 +167,11 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             <div className="flex flex-col flex-1">
               {searchType == "address" ? (
                 <AddressComboBox
-                  icon={lupa}
                   placeholder={t("common.buscar")}
                   className="flex-1 mx-10 hidden md:block"
                   selectedAddress={selectedAddress}
                   setSelectedAddress={onSelectAddress}
+                  selectedAddressLoading={loading}
                 />
               ) : (
                 <AgencyComboBox

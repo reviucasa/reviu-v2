@@ -8,7 +8,7 @@ import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
-import { cleanAddress } from "@/helpers/catastroFunctions";
+import { getReviewUri } from "@/helpers/getReviewUri";
 
 export const CommunityCard = ({
   review,
@@ -21,13 +21,8 @@ export const CommunityCard = ({
   const t = useTranslations();
   const router = useRouter();
   const handleMoreInfo = () => {
-    const { province, municipality, type, street, number } = cleanAddress(
-      review.address,
-      { forUri: true }
-    )!;
-    router.push(
-      `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
-    );
+    router.push(getReviewUri(review));
+
     // setOpenMoreInfo(!openMoreInfo);
   };
   const config = useTranslations("config");

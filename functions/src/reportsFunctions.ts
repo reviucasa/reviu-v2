@@ -48,12 +48,14 @@ export const onReportCreated = functions
         },
       });
 
-      const address = reportData.review.address;
-      // TODO: fix address generation with cleanAddress and `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
+      const location = reportData.review.location;
       const reviewLink = [
-        "https://reviucasa.com/review/barcelona",
-        encodeURIComponent(address.split(", ")[0].replaceAll(" ", "-")),
-        address.split(", ")[1],
+        "https://reviucasa.com/review",
+        location.province,
+        location.municipality,
+        location.type,
+        location.street,
+        location.number,
         reportData.review.id,
       ].join("/");
 
@@ -161,7 +163,7 @@ export const onReportCreated = functions
       const response = await client.sendEmail({
         From: "noreply@reviucasa.com",
         To: "info@reviucasa.com",
-        Subject: "New Report - " + address,
+        Subject: "New Report - " + reportData.review.address,
         HtmlBody: emailContent,
         MessageStream: "outbound",
       });
@@ -169,7 +171,7 @@ export const onReportCreated = functions
       await client.sendEmail({
         From: "noreply@reviucasa.com",
         To: "nicolau.farre@gmail.com",
-        Subject: "New Report - " + address,
+        Subject: "New Report - " + reportData.review.address,
         HtmlBody: emailContent,
         MessageStream: "outbound",
       });

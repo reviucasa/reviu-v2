@@ -4,10 +4,6 @@ import { getPosts } from "@/models/post";
 import { getAllReviews } from "@/models/review";
 import { getPathname } from "@/navigation";
 import { MetadataRoute } from "next";
-import {
-  CatastroAddressElements,
-  cleanAddress,
-} from "@/helpers/catastroFunctions";
 
 export function getUrl(
   key: keyof typeof pathnames,
@@ -62,17 +58,19 @@ const generateReviewsSitemapObjects = async () => {
   const reviews = await getAllReviews();
 
   return reviews.map((r) => {
-    const { province, municipality, street, number }: CatastroAddressElements =
-      cleanAddress(r.address, { forUri: true })!;
     return {
-      url: `${host}/review/${province}/${municipality}/${street}/${number}/${r.id}`,
+      url: `${host}/review/${r.location!.province}/${
+        r.location!.municipality
+      }/${r.location!.street}/${r.location!.number}/${r.id}`,
       lastModified: r.timeCreated.toDate(),
       alternates: {
         languages: Object.fromEntries(
           locales.map((locale) => [
             locale,
             getUrl(
-              `/review/${province}/${municipality}/${street}/${number}/${r.id}`,
+              `/review/${r.location!.province}/${r.location!.municipality}/${
+                r.location!.street
+              }/${r.location!.number}/${r.id}`,
               locale
             ),
           ])

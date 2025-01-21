@@ -10,7 +10,7 @@ import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
-import { cleanAddress } from "@/helpers/catastroFunctions";
+import { getReviewUri } from "@/helpers/getReviewUri";
 
 export const OpinionCardSmall = ({
   review,
@@ -32,47 +32,42 @@ export const OpinionCardSmall = ({
       <div
         style={{ width: `${sizeCard}px` }}
         key={review.id}
-        className={`${className} hover:bg-[#F8F8F8] hover:border-[#546E7A] flex flex-col justify-between border py-6 px-6 rounded-lg h-full`}
+        className={`${className} bg-[#FDFDFD] hover:bg-white hover:border-[#546E7A] flex flex-col justify-between border py-4 px-6 rounded-lg max-h-96`}
       >
         <div
           className="cursor-pointer"
           onClick={() => {
-            const { province, municipality, type, street, number } = cleanAddress(
-              review.address, { forUri: true }
-            )!;
-            router.push(
-              `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
-            );
+            router.push(getReviewUri(review));
           }}
         >
           <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
-            <div className="flex-1 flex flex-col  items-start justify-center ">
-              <p>{review.address}</p>
+            <div className="flex-1 flex flex-col items-start justify-center ">
+              <p>{review.address.replace(", Espanya", "").replace(", España", "")}</p>
               <p className="font-bold">
                 {review?.apartment?.stair} {review?.apartment?.floor}{" "}
                 {review?.apartment?.door}
               </p>
             </div>
             <Chip
-              className={`h-10 w-10 px-2 py-2 ${
+              className={`h-8 w-8 px-2 py-2 ${
                 review.data?.opinion?.recomend
                   ? "bg-lime text-primary-500"
                   : "bg-red-500 text-white"
               }`}
             >
               {review.data?.opinion?.recomend ? (
-                <Image src={thumbUp} width={20} height={20} alt="thumbUp" />
+                <Image src={thumbUp} width={16} height={16} alt="thumbUp" />
               ) : (
-                <Image src={thumbDown} width={20} height={20} alt="thumbDown" />
+                <Image src={thumbDown} width={16} height={16} alt="thumbDown" />
               )}
             </Chip>
           </div>
           <div className="flex pb-4 justify-start">
-            <p className="font-bold text-xl text-ellipsis	">
+            <p className="font-bold text-lg text-ellipsis 	">
               {review.data?.opinion?.title}
             </p>
           </div>
-          <div className="flex flex-row justify-start h-20 w-full gap-2">
+          <div className="flex flex-row justify-start h-20 w-full gap-2 mb-4">
             {review.data.opinion?.images &&
               review.data.opinion?.images
                 .slice(0, 4)
@@ -93,13 +88,7 @@ export const OpinionCardSmall = ({
           <div
             className=" text-primary-500 cursor-pointer text-sm md:text-base"
             onClick={() => {
-              const { province, municipality, type, street, number } = cleanAddress(
-                review.address, { forUri: true }
-              )!;
-              
-              router.push(
-                `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
-              );
+              router.push(getReviewUri(review));
             }}
           >
             {t("common.verMás")}

@@ -266,6 +266,7 @@ export const AddressForm = () => {
         <AddressComboBox
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}
+          areaOptions={false}
         />
         <FieldError>{error}</FieldError>
         <AddressNotFoundHelp

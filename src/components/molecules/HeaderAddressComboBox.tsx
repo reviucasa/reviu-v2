@@ -7,6 +7,7 @@ import { FieldError } from "../atoms/FieldError";
 import lupa from "public/images/lupa.png";
 import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
+import { provincesData } from "@/staticData";
 
 export function HeaderAddressComboBox({ className }: { className?: string }) {
   const t = useTranslations();
@@ -87,7 +88,6 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   return (
     <div className={className ? "" : "flex flex-col w-full items-center	"}>
       <AddressComboBox
-        icon={lupa}
         placeholder={t("common.buscar")}
         className={className ?? "lg:w-3/4 w-full"}
         selectedAddress={selectedAddress}

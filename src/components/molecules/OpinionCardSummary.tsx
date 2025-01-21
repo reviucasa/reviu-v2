@@ -11,7 +11,7 @@ import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
 import { useRouter } from "next/navigation";
 import { ApartmentLocationSummary } from "../atoms/ApartmentLocationSummary";
-import { cleanAddress } from "@/helpers/catastroFunctions";
+import { getReviewUri } from "@/helpers/getReviewUri";
 
 export const OpinionCardSummary = ({
   review,
@@ -63,13 +63,7 @@ export const OpinionCardSummary = ({
         className="py-2 mx-3 text-primary-500 cursor-pointer text-sm "
         onClick={() => {
           if (!openInModal) {
-            const { province, municipality, type, street, number } = cleanAddress(
-              review.address,
-              { forUri: true }
-            )!;
-            window.open(
-              `/review/${province}/${municipality}/${type}/${street}/${number}/${review.id}`
-            );
+            window.open(getReviewUri(review));
           } else setOpenMoreInfo(!openMoreInfo);
         }}
       >

@@ -75,7 +75,14 @@ function OpenStreetMapMultiple({
             return;
           }
           return (
-            <Marker key={i} position={m} icon={icon}>
+            <Marker
+              key={i}
+              position={m}
+              icon={icon}
+              eventHandlers={{
+                mouseover: (event) => event.target.openPopup(),
+              }}
+            >
               <Popup>
                 <OpinionCardSummary review={reviews[i]} />
               </Popup>

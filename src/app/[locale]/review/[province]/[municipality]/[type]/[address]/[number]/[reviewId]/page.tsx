@@ -1,7 +1,5 @@
 import MainLayout from "@/components/layouts/MainLayout";
 import { ReviewDetail } from "@/components/organism/ReviewDetail";
-import { cleanAddress } from "@/helpers/catastroFunctions";
-import { toTitleCase } from "@/helpers/stringHelpers";
 import { getReview } from "@/models/review";
 import { mainKeywords } from "@/staticData";
 import { capitalize } from "lodash";
