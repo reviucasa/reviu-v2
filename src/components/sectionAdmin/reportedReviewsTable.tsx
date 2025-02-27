@@ -167,7 +167,7 @@ export default function ReportedReviewsTable() {
                                 );
                               }}
                             >
-                              {report.reviewer.email}
+                              {report.owner?.email ?? 'Deleted user'}
                             </td>
                             <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
                               {report.timeCreated

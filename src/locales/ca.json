@@ -791,6 +791,8 @@
       "nameIsRequired": "El nom és obligatori",
       "surnameIsRequired": "Els cognoms són obligatoris",
       "dateOfBirthRequired": "La data de naixement és obligatòria",
+      "genderRequired": "Selecciona el teu gènere",
+      "countryRequired": "La nacionalitat és obligatòria",
       "acceptTermsAndConditions": "Heu d’acceptar els termes i condicions"
     }
   },

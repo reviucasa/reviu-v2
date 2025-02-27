@@ -1,4 +1,4 @@
-import { Stat } from "../sectionAdmin/sectionStats";
+import { Stat } from "../sectionAdmin/reviewsStats";
 import { classNames } from "@/helpers/classNames";
 import { invert } from "lodash";
 import { BiMinus, BiArrowToTop, BiArrowToBottom } from "react-icons/bi";

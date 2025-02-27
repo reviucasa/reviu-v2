@@ -26,10 +26,9 @@ import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
-import {
-  getCatastroDataFromAddress,
-} from "@/helpers/catastroFunctions";
+import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
+import { provincesData } from "@/staticData";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -55,6 +54,11 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
+
+      if (Object.keys(provincesData).includes(address.split("/")[0])) {
+        router.push(`/explore/${address.toLowerCase()}`);
+        return;
+      }
 
       const res = await getCatastroDataFromAddress(address);
       if (res) {

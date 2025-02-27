@@ -35,8 +35,8 @@ export const RegisterForm = () => {
       .nullable()
       .transform((curr, orig) => (orig === "" ? null : curr))
       .required(t('registerForm.validations.dateOfBirthRequired')),
-    country: yup.string(),
-    gender: yup.string(),
+    country: yup.string().required(t('registerForm.validations.countryRequired')),
+    gender: yup.string().required(t('registerForm.validations.genderRequired')),
     acceptedTerms: yup
       .boolean()
       .oneOf([true], t('registerForm.validations.dateOfBirthRequired')),

@@ -789,6 +789,8 @@
       "nameIsRequired": "El nombre es requerido",
       "surnameIsRequired": "Los apellidos son requeridos",
       "dateOfBirthRequired": "La fecha de nacimiento es requerida",
+      "genderRequired": "Selecciona tu género",
+      "countryRequired": "La nacionalidad es obligatoria",
       "acceptTermsAndConditions": "Debes aceptar los términos y condiciones"
     }
   },

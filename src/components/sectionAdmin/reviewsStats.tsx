@@ -6,7 +6,7 @@ import { StatBox } from "../atoms/StatBox";
 import { ReviewsColumnsChart } from "../charts/ReviewsColumnsChart";
 import { UsersColumnsChart } from "../charts/UsersColumnsChart";
 
-export interface Stat {
+export interface _Stat {
   name: string;
   value: number;
   previousValue: number;
@@ -15,14 +15,14 @@ export interface Stat {
   inverted?: boolean;
 }
 
-export default function SectionStats() {
+export default function ReviewsStats() {
   const { data, isFetching } = useQuery<WeeklyStats[] | undefined, Error>({
     queryKey: ["weeklyStats"],
     queryFn: () => getAllWeeklyStats(),
   });
 
-  let stats: Stat[] = [];
-  let avgStats: Stat[] = [];
+  let stats: _Stat[] = [];
+  let avgStats: _Stat[] = [];
 
   if (!isFetching && data) {
     const usersStat = formatStat(
@@ -120,7 +120,7 @@ const formatStat = (
   name: string,
   data: number[],
   inverted?: boolean | undefined
-): Stat => {
+): _Stat => {
   const current = data[0];
   const prev = data[1];
 
@@ -132,5 +132,5 @@ const formatStat = (
     changeType:
       current > prev ? "increase" : current < prev ? "decrease" : "steady",
     inverted,
-  } as Stat;
+  } as _Stat;
 };

@@ -136,8 +136,8 @@ const getUsers = async ({
   count,
   startAfterTime,
 }: {
-  count: number;
-  startAfterTime: Timestamp | null;
+  count?: number;
+  startAfterTime?: Timestamp | null;
 }): Promise<User[]> => {
   const ref = collection(db, `users`).withConverter(userConverter);
   let q = query(ref);

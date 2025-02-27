@@ -793,6 +793,8 @@
       "nameIsRequired": "Name is required",
       "surnameIsRequired": "Surname is required",
       "dateOfBirthRequired": "The date of birth is required",
+      "genderRequired": "Select your gender",
+      "countryRequired": "Select your nationality",
       "acceptTermsAndConditions": "You must accept the terms and conditions"
     }
   },

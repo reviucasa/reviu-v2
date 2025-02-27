@@ -51,10 +51,8 @@ export const SelectAreaModal = ({
           const link = `/explore/${encodeForReadableURI(
             watch("province")
           )}/${encodeForReadableURI(watch("municipality"))}`;
-          console.log(isValid);
 
           if (isValid) {
-            console.log(link);
             router.push(link);
           }
         }}

@@ -215,8 +215,6 @@ export const AddressForm = () => {
           },
         };
 
-        // console.log(location);
-
         if (draft?.address) {
           await updateDraft(auth.currentUser!.uid, {
             address: selectedAddress,

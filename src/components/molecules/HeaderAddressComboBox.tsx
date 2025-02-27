@@ -4,7 +4,6 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { FieldError } from "../atoms/FieldError";
-import lupa from "public/images/lupa.png";
 import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
 import { provincesData } from "@/staticData";
@@ -19,8 +18,13 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   const onSelectAddress = async (address: string) => {
     setError(undefined);
     setSelectedAddress(address);
-    setLoading(true);
     if (address && address != "") {
+      setLoading(true);
+
+      if (Object.keys(provincesData).includes(address.split("/")[0])) {
+        router.push(`/explore/${address.toLowerCase()}`);
+        return;
+      }
       const res = await getCatastroDataFromAddress(address);
       if (res) {
         const ubi =
@@ -81,6 +85,15 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
           setError(t("common.noSeEncontroDirección"));
         }
       }
+    } else {
+      console.log("catastro data not found");
+      const addressRegex = /^(.*?),\s*(\d+)/;
+      const match = address.match(addressRegex);
+      if (!match) {
+        setError(t("common.missingStreetNumber"));
+      } else {
+        setError(t("common.noSeEncontroDirección"));
+      }
     }
     setLoading(false);
   };
@@ -91,8 +104,8 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
         placeholder={t("common.buscar")}
         className={className ?? "lg:w-3/4 w-full"}
         selectedAddress={selectedAddress}
-        selectedAddressLoading={loading}
         setSelectedAddress={onSelectAddress}
+        selectedAddressLoading={loading}
       />
       <div className="flex lg:w-3/4 w-full">
         <FieldError className=" my-3">{error}</FieldError>

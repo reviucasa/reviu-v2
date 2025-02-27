@@ -1,7 +1,7 @@
 import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
 import { decodeReadableURI, toTitleCase } from "@/helpers/stringHelpers";
-import AreaPageClient from "./page.client";
+import MunicipalityExplorePageClient from "./page.client";
 
 export interface URLAddressParams {
   locale: string;
@@ -29,7 +29,7 @@ export async function generateMetadata({
     locale == "en"
       ? `Reviu | Explore home reviews in ` // : ${building?.address + ", " + building?.postalCode}
       : locale == "es"
-      ? `Reviu | Explora reseñas de viviend en ` // : ${building?.address + ", " + building?.postalCode}
+      ? `Reviu | Explora reseñas de viviendas en ` // : ${building?.address + ", " + building?.postalCode}
       : `Reviu | Explora ressenyes d'habitatges a `; // : ${building?.address + ", " + building?.postalCode}
 
   const title = titleDetail + area;
@@ -53,7 +53,7 @@ export async function generateMetadata({
   };
 }
 
-export default function AreaPage({
+export default function MunicipalityExplorePage({
   params,
 }: {
   params: {
@@ -62,5 +62,5 @@ export default function AreaPage({
     municipality: string;
   };
 }) {
-  return <AreaPageClient params={params} />;
+  return <MunicipalityExplorePageClient params={params} />;
 }

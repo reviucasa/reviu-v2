@@ -23,6 +23,7 @@ import {
 import { User, getUsersById } from "./user";
 import { shuffleArray } from "@/helpers/shuffleArray";
 import { Unidad } from "./catastro";
+import { getBoundingBox } from "@/helpers/getBoundingBox";
 
 export type Coordinates = {
   latitude: number;
@@ -456,6 +457,51 @@ const getReviewsFromUser = async (uid: string): Promise<Review[]> => {
   return snapshot.docs.map((e) => e.data());
 };
 
+// Retrieve user reviews from a specific province and municipality
+const getReviewsFromMunicipality = async (
+  province: string,
+  municipality: string
+): Promise<Review[]> => {
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(
+    ref,
+    where("location.province", "==", province),
+    where("location.municipality", "==", municipality)
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((e) => e.data());
+};
+
+// Function to fetch nearby reviews efficiently
+const getReviewsFromCoordinates = async (
+  lat: number,
+  lng: number,
+  radiusKm: number
+): Promise<Review[]> => {
+  const { minLat, maxLat, minLng, maxLng } = getBoundingBox(lat, lng, radiusKm);
+
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(
+    ref,
+    where("location.coordinates.latitude", ">=", minLat),
+    where("location.coordinates.latitude", "<=", maxLat),
+    where("location.coordinates.longitude", ">=", minLng),
+    where("location.coordinates.longitude", "<=", maxLng)
+  );
+
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((doc) => doc.data());
+
+  /* // Apply Haversine filtering (for precise distance check)
+  return filteredReviews.filter((review) => {
+    const reviewLat = review.location.coordinates.latitude;
+    const reviewLng = review.location.coordinates.longitude;
+    const distance = haversineDistance(lat, lng, reviewLat, reviewLng);
+    return distance <= radiusKm; // Only include reviews within the radius
+  }); */
+};
+
 // Retrieve reviews with user
 const getDraftsWithUser = async ({
   count,
@@ -512,4 +558,6 @@ export {
   getDraftsWithUser,
   getDraftsCount,
   getReviewsCount,
+  getReviewsFromMunicipality,
+  getReviewsFromCoordinates,
 };

@@ -1,20 +1,19 @@
 "use client";
-import { getReviewsFromUser, Review, ReviewStatus } from "@/models/review";
-import dynamic from "next/dynamic";
-import { BounceLoader } from "react-spinners";
+import {
+  Coordinates,
+  getReviewsFromCoordinates,
+  getReviewsFromMunicipality,
+  Review,
+  ReviewStatus,
+} from "@/models/review";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { auth } from "@/firebase/config";
-import OpenStreetMapMultiple from "@/components/molecules/OpenStreetMapMultiple";
-import { OpinionCardSmall } from "@/components/molecules/OpinionCardSmall";
+import ExplorePage from "../../pages/ExplorePage";
 import { toTitleCase } from "@/helpers/stringHelpers";
+import { getLocationFromIP } from "@/helpers/getLocationFromIP";
+import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
 
-// Dynamically import the MainLayout component
-const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
-  ssr: false,
-});
-
-export default function AreaPageClient({
+export default function MunicipalityExplorePageClient({
   params: { province, municipality },
 }: {
   params: {
@@ -23,18 +22,41 @@ export default function AreaPageClient({
     municipality: string;
   };
 }) {
-  console.log(municipality, province);
   const t = useTranslations();
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [empty, setEmpty] = useState<boolean>(false);
+
+  const [coordinates, setCoordinates] = useState<Coordinates>({
+    latitude: 41.3874,
+    longitude: 2.1686,
+  });
 
   const fetchReviews = async () => {
     setLoading(true);
 
     try {
-      const response = await getReviewsFromUser(auth.currentUser!.uid);
-      setReviews(response);
+      const response = await getReviewsFromMunicipality(decodeURIComponent( province), decodeURIComponent( municipality));
+
+      if (response.length == 0) {
+        setEmpty(true);
+        const mCoordinates = await getMunicipalityCoordinates(
+          municipality,
+          province
+        );
+        if (mCoordinates != null) {
+          setCoordinates({
+            latitude: mCoordinates.lat,
+            longitude: mCoordinates.lng,
+          });
+        } else {
+          setReviews([]);
+          setEmpty(true);
+        }
+      } else {
+        setReviews(response);
+      }
     } catch (error) {
       console.log(error);
     } finally {
@@ -48,12 +70,21 @@ export default function AreaPageClient({
     }, 1500);
   }, []);
 
-  const publishedReviews = reviews.filter(
-    (r) => r.status == ReviewStatus.Published
-  );
-
   return (
-    <MainLayout>
+    <ExplorePage
+      title={`Reviews in ${toTitleCase(
+        decodeURIComponent(municipality).replaceAll("-", " ")
+      )}, ${toTitleCase(decodeURIComponent(province))}`}
+      loading={loading}
+      reviews={reviews}
+      coordinates={coordinates!}
+      empty={empty}
+    />
+  );
+}
+
+{
+  /* <MainLayout>
       <div className="lg:p-10 p-4 mb-10 lg:mb-0">
         <div className=" relative lg:gap-8 md:gap-4 ">
           <h1 className="text-2xl lg:text-3xl  font-secondary">
@@ -67,10 +98,7 @@ export default function AreaPageClient({
             <div className="lg:hidden h-[400px] w-full center pt-8 px-8 ">
               {!loading ? (
                 <div className="flex justify-center items-center h-full bg-gray-100 rounded-lg">
-                  <BounceLoader color="#d8b4fe" size={100} />
-                  {/* 
-                <OpenStreetMapMultiple reviews={reviews} zoom={12} />
-                  */}
+                  <OpenStreetMapMultiple reviews={reviews} zoom={12} />
                 </div>
               ) : (
                 <div className="flex justify-center items-center h-full bg-gray-100 rounded-lg">
@@ -107,10 +135,9 @@ export default function AreaPageClient({
               )}
             </div>
             <div className="hidden lg:block h-96 sm:h-[720px] flex-grow center align-middle p-8 pl-4">
-              {false ? (
-                <div className="flex justify-center items-center py-40 w-full h-full bg-gray-100 rounded-lg">
-                  <BounceLoader color="#d8b4fe" size={100} />
-                  {/* <OpenStreetMapMultiple reviews={reviews} zoom={12} /> */}
+              {!loading ? (
+                <div className="flex justify-center items-center py-0 w-full h-full bg-gray-100 rounded-lg">
+                  <OpenStreetMapMultiple reviews={reviews} zoom={14} />
                 </div>
               ) : (
                 <div className="flex justify-center items-center py-40 w-full h-full bg-gray-100 rounded-lg">
@@ -121,8 +148,7 @@ export default function AreaPageClient({
           </div>
         </div>
       </div>
-    </MainLayout>
-  );
+    </MainLayout> */
 }
 
 /* 

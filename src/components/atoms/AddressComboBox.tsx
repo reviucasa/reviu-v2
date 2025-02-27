@@ -9,14 +9,17 @@ import {
 } from "@headlessui/react";
 import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
 import { Fragment, useCallback, useEffect, useState } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import ReactLoading from "react-loading";
 import lupa from "public/images/lupa.png";
-import marker from "public/images/iconMarker.png";
 import map from "public/images/maskGroup.png";
 import { SelectAreaModal } from "./SelectAreaModal";
+import NearbySearchButton from "./NearbySearchButton";
+import { provincesData } from "@/staticData";
+import stringSimilarity from "string-similarity";
+import { toTitleCase } from "@/helpers/stringHelpers";
 
 type AddressComboBoxProps = {
   placeholder?: string;
@@ -26,6 +29,11 @@ type AddressComboBoxProps = {
   setSelectedAddress?: (value: string) => void;
   areaOptions?: boolean;
 };
+
+interface MunicipalityResult {
+  municipality?: string;
+  province?: string;
+}
 
 export const AddressComboBox = ({
   className,
@@ -42,6 +50,13 @@ export const AddressComboBox = ({
     autocompleteSuggestions: [],
     status: "",
   });
+
+  const [municipalitiesResults, setMunicipalitiesResults] = useState<
+    {
+      municipality?: string;
+      province?: string;
+    }[]
+  >([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -76,7 +91,6 @@ export const AddressComboBox = ({
     if (status === "OK") {
       // handle autocomplete suggestions
       const autocompleteSuggestions = predictions!.map((prediction) => {
-        // console.log(prediction);
         return {
           id: prediction.place_id,
           address: {
@@ -97,6 +111,41 @@ export const AddressComboBox = ({
       });
     }
   }
+
+  const fetchMunicipalitiesList = useCallback((query: string) => {
+    if (!query || query.length < 3) return;
+
+    let matchedMunicipalities: MunicipalityResult[] = [];
+
+    // Check if the query matches a province
+    const matchedProvince = Object.keys(provincesData).find((province) =>
+      province.toLowerCase().includes(query.toLowerCase())
+    );
+
+/*     if (matchedProvince) {
+      // Store province as a result with municipality undefined
+      matchedMunicipalities.push({
+        province: matchedProvince,
+        municipality: undefined,
+      });
+    } */
+
+    // Search municipalities in all provinces
+    Object.entries(provincesData).forEach(([province, municipalities]) => {
+      const matchedMunicipalitiesForProvince = municipalities
+        .filter((municipality) =>
+          municipality.toLowerCase().includes(query.toLowerCase())
+        )
+        .map((municipality) => ({ municipality, province }));
+
+      matchedMunicipalities = [
+        ...matchedMunicipalities,
+        ...matchedMunicipalitiesForProvince,
+      ];
+    });
+
+    setMunicipalitiesResults(matchedMunicipalities);
+  }, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchAddressList = useCallback(
@@ -158,6 +207,7 @@ export const AddressComboBox = ({
           onChange={(event) => {
             setQueryLength(event.target.value.length);
             fetchAddressList(event.target.value);
+            fetchMunicipalitiesList(event.target.value);
             if (event.target.value.length > 3) {
               setShowAreaOptions(false);
             } else {
@@ -207,26 +257,7 @@ export const AddressComboBox = ({
                 </div>
               </ComboboxOption>
             )}
-            {areaOptions && showAreaOptions && (
-              <ComboboxOption
-                className="cursor-pointer px-1 py-3 rounded-md hover:bg-secondary-300"
-                key="nearby"
-                value={undefined}
-                onClick={() => {
-                  return console.log("redirect to IP shit");
-                }}
-              >
-                <div className="flex flex-row space-x-2">
-                  <Image
-                    src={marker}
-                    alt="lupa"
-                    className="h-5 w-auto text-gray-400  left-2.5 top-2.5"
-                    aria-hidden="true"
-                  />
-                  <span>Buscar cerca de ti</span>
-                </div>
-              </ComboboxOption>
-            )}
+            {areaOptions && showAreaOptions && <NearbySearchButton />}
 
             {loading && (
               <ComboboxOption
@@ -250,7 +281,21 @@ export const AddressComboBox = ({
                   {t("common.noSeEncontroDirección")}
                 </ComboboxOption>
               )}
+            {municipalitiesResults.map((m, i) => {
+              return (
+                <ComboboxOption
+                  className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                  key={i}
+                  value={`${encodeURIComponent(m.province!)}/${encodeURIComponent(m.municipality!)}`}
+                >
+                  <div className="flex flex-row w-full justify-between">
+                    <div>{toTitleCase(`${m.municipality}, ${m.province}`)}</div>
 
+                    <div className="text-gray-400">Municipality</div>
+                  </div>
+                </ComboboxOption>
+              );
+            })}
             {!loading && searchResult.autocompleteSuggestions.length > 0
               ? searchResult.autocompleteSuggestions.map((e) => {
                   return (
@@ -274,3 +319,4 @@ export const AddressComboBox = ({
     </Combobox>
   );
 };
+

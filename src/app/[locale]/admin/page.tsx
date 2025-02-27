@@ -1,5 +1,5 @@
 import AdminLayout from "@/components/layouts/AdminLayout";
-import SectionStats from "@/components/sectionAdmin/sectionStats";
+import ReviewsStats from "@/components/sectionAdmin/reviewsStats";
 import dynamic from "next/dynamic";
 
 const ReviewsMap = dynamic(
@@ -10,7 +10,7 @@ const ReviewsMap = dynamic(
 export default function Admin() {
   return (
     <AdminLayout>
-      <SectionStats />
+      <ReviewsStats />
       <ReviewsMap />
     </AdminLayout>
   );

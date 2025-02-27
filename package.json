@@ -20,6 +20,7 @@
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "dayjs": "^1.11.10",
+    "difflib": "^0.2.4",
     "firebase": "^10.8.1",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
@@ -40,6 +41,7 @@
     "react-quill-new": "^3.2.0",
     "react-spinners": "^0.13.8",
     "sass": "^1.71.1",
+    "string-similarity": "^4.0.4",
     "swr": "^2.2.5",
     "wkx": "^0.5.0",
     "yup": "0.32.11"
@@ -52,6 +54,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/string-similarity": "^4.0.2",
     "autoprefixer": "^10.0.1",
     "eslint": "^8",
     "eslint-config-next": "14.1.0",

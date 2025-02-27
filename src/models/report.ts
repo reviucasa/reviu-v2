@@ -27,7 +27,7 @@ export type ReviewReport = {
     address: string;
     userId: string;
   };
-  reviewer: {
+  owner: {
     id: string;
     email: string;
     name: string;
