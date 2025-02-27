@@ -122,7 +122,7 @@ export const AddressComboBox = ({
       province.toLowerCase().includes(query.toLowerCase())
     );
 
-/*     if (matchedProvince) {
+    /*     if (matchedProvince) {
       // Store province as a result with municipality undefined
       matchedMunicipalities.push({
         province: matchedProvince,
@@ -286,7 +286,9 @@ export const AddressComboBox = ({
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={i}
-                  value={`${encodeURIComponent(m.province!)}/${encodeURIComponent(m.municipality!)}`}
+                  value={`${encodeURIComponent(
+                    m.province!
+                  )}/${encodeURIComponent(m.municipality!)}`}
                 >
                   <div className="flex flex-row w-full justify-between">
                     <div>{toTitleCase(`${m.municipality}, ${m.province}`)}</div>
@@ -319,4 +321,3 @@ export const AddressComboBox = ({
     </Combobox>
   );
 };
-
