@@ -282,7 +282,7 @@ export const AddressComboBox = ({
                 </ComboboxOption>
               )}
             {municipalitiesResults.map((m, i) => {
-              return (
+              return ( 
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={i}
