@@ -6,7 +6,6 @@ import OpenStreetMap from "../molecules/OpenStreetMap";
 import { BounceLoader } from "react-spinners";
 
 export default function ReviewsMap() {
-
   const { data: reviews, isFetching } = useQuery<Review[] | undefined, Error>({
     queryKey: ["reviews"],
     queryFn: () => getAllReviews(),
@@ -19,10 +18,12 @@ export default function ReviewsMap() {
           Reviews Map
         </h3>
         <div className=" h-80 sm:h-[720px] w-full my-10 center align-middle">
-          {reviews  && reviews.length > 0 ? (
+          {reviews && reviews.length > 0 ? (
             <OpenStreetMapMultiple
               reviews={reviews}
               zoom={13}
+              highlightedReviewId={""}
+              setHighlightedReviewId={() => {}}
               iconSize="sm"
             />
           ) : isFetching ? (

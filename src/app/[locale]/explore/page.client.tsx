@@ -1,7 +1,6 @@
 "use client";
 import { getReviewsFromCoordinates, Review } from "@/models/review";
 
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import ExplorePage from "./pages/ExplorePage";
 import { useRouter } from "next/navigation";
@@ -20,8 +19,6 @@ export default function NearbyExplorePageClient({
     router.push("/");
   }
 
-  const t = useTranslations();
-
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -32,7 +29,7 @@ export default function NearbyExplorePageClient({
       const response = await getReviewsFromCoordinates(
         latitude!,
         longitude!,
-        1
+        0.5
       );
       setReviews(response);
     } catch (error) {
@@ -43,9 +40,7 @@ export default function NearbyExplorePageClient({
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchReviews();
-    }, 1500);
+    fetchReviews();
   }, []);
 
   return (

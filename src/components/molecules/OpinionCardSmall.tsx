@@ -16,10 +16,12 @@ export const OpinionCardSmall = ({
   review,
   sizeCard,
   className,
+  compressed = false,
 }: {
   review: Review;
   sizeCard: number;
   className?: string;
+  compressed?: boolean;
 }) => {
   const router = useRouter();
   const [openModalInfo, setOpenModalInfo] = useState<boolean>(false);
@@ -32,7 +34,7 @@ export const OpinionCardSmall = ({
       <div
         style={{ width: `${sizeCard}px` }}
         key={review.id}
-        className={`${className} bg-[#FDFDFD] hover:bg-white hover:border-[#546E7A] flex flex-col justify-between border py-4 px-6 rounded-lg max-h-96`}
+        className={`bg-[#FDFDFD] hover:bg-white hover:border-[#546E7A] flex flex-col justify-between border py-4 px-6 rounded-lg max-h-96 ${className}`}
       >
         <div
           className="cursor-pointer"
@@ -40,16 +42,24 @@ export const OpinionCardSmall = ({
             router.push(getReviewUri(review));
           }}
         >
-          <div className="flex items-start w-full justify-between pb-4 mb-4 border-b-2 gap-6">
+          <div
+            className={`flex items-start w-full justify-between ${
+              compressed ? "pb-2 mb-2 " : "pb-4 mb-4 "
+            } border-b-2 gap-6`}
+          >
             <div className="flex-1 flex flex-col items-start justify-center ">
-              <p>{review.address.replace(", Espanya", "").replace(", España", "")}</p>
-              <p className="font-bold">
+              <p>
+                {review.address
+                  .replace(", Espanya", "")
+                  .replace(", España", "")}
+              </p>
+             {!compressed && <p className={"font-bold"}>
                 {review?.apartment?.stair} {review?.apartment?.floor}{" "}
                 {review?.apartment?.door}
-              </p>
+              </p>}
             </div>
             <Chip
-              className={`h-8 w-8 px-2 py-2 ${
+              className={`${compressed ? 'h-7 w-7' : 'h-8 w-8'} px-2 py-2 ${
                 review.data?.opinion?.recomend
                   ? "bg-lime text-primary-500"
                   : "bg-red-500 text-white"
@@ -62,12 +72,16 @@ export const OpinionCardSmall = ({
               )}
             </Chip>
           </div>
-          <div className="flex pb-4 justify-start">
-            <p className="font-bold text-lg text-ellipsis 	">
+          <div className={`flex justify-start ${compressed ? "pb-2" : "pb-4"}`}>
+            <p className={`font-bold  ${compressed ? "text-base" : "text-lg"} text-ellipsis`}>
               {review.data?.opinion?.title}
             </p>
           </div>
-          <div className="flex flex-row justify-start h-20 w-full gap-2 mb-4">
+          <div
+            className={`flex flex-row justify-start ${
+              !compressed && "h-20  mb-4"
+            }  w-full gap-2`}
+          >
             {review.data.opinion?.images &&
               review.data.opinion?.images
                 .slice(0, 4)
@@ -84,44 +98,46 @@ export const OpinionCardSmall = ({
                 ))}
           </div>
         </div>
-        <div className="relative border-t-2 pt-2 items-center flex justify-between">
-          <div
-            className=" text-primary-500 cursor-pointer text-sm md:text-base"
-            onClick={() => {
-              router.push(getReviewUri(review));
-            }}
-          >
-            {t("common.verMás")}
-          </div>
-          <div
-            className="flex items-center w-8 justify-end cursor-pointer"
-            onClick={() => {
-              setOpenReportInfo(!openReportInfo);
-            }}
-          >
+        {!compressed && (
+          <div className="relative border-t-2 pt-2 items-center flex justify-between">
             <div
-              className={`${
-                openReportInfo && "bg-gray-300"
-              } rounded-full h-8 w-12 flex items-center justify-center `}
+              className=" text-primary-500 cursor-pointer text-sm md:text-base"
+              onClick={() => {
+                router.push(getReviewUri(review));
+              }}
             >
-              <Image
-                quality={100}
-                src={points}
-                width={4}
-                alt={"Icono reportar comentario"}
-              />
+              {t("common.verMás")}
             </div>
-            {openReportInfo && (
-              <Report
-                className="absolute"
-                onAction={() => {
-                  setOpenModalInfo(!openModalInfo);
-                  setOpenReportInfo(!openReportInfo);
-                }}
-              />
-            )}
+            <div
+              className="flex items-center w-8 justify-end cursor-pointer"
+              onClick={() => {
+                setOpenReportInfo(!openReportInfo);
+              }}
+            >
+              <div
+                className={`${
+                  openReportInfo && "bg-gray-300"
+                } rounded-full h-8 w-12 flex items-center justify-center `}
+              >
+                <Image
+                  quality={100}
+                  src={points}
+                  width={4}
+                  alt={"Icono reportar comentario"}
+                />
+              </div>
+              {openReportInfo && (
+                <Report
+                  className="absolute"
+                  onAction={() => {
+                    setOpenModalInfo(!openModalInfo);
+                    setOpenReportInfo(!openReportInfo);
+                  }}
+                />
+              )}
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <DialogReport
         isOpen={openModalInfo}

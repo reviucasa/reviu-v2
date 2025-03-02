@@ -1,4 +1,4 @@
-import MainLayout  from "@/components/layouts/MainLayout";
+import MainLayout from "@/components/layouts/MainLayout";
 import { PostView } from "@/components/organism/PostView";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
 import { getPost } from "@/models/post";
@@ -29,7 +29,7 @@ export async function generateMetadata({
       ? `${p?.subtitle} - Lee más en Reviu.`
       : `${p?.subtitle} - Llegeix més a Reviu.`;
 
-  const keywords = [p?.title, ...mainKeywords(locale)];
+  const keywords = [p?.title, ...mainKeywords(locale, "")];
 
   return {
     title,

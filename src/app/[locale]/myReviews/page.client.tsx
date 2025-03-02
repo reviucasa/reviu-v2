@@ -17,6 +17,10 @@ export default function MyReviewsClientPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const [highlightedReviewId, setHighlightedReviewId] = useState<string | null>(
+    null
+  );
+
   const fetchReviews = async () => {
     setLoading(true);
 
@@ -48,7 +52,6 @@ export default function MyReviewsClientPage() {
     (r) => r.status == ReviewStatus.Suspended
   );
 
-
   return (
     <div className="relative lg:gap-8 md:gap-4 ">
       <h1 className="text-2xl lg:text-3xl  font-secondary">
@@ -60,7 +63,13 @@ export default function MyReviewsClientPage() {
       </p>
       <div className=" h-72 sm:h-[480px] w-full my-10 center align-middle">
         {reviews.length > 0 ? (
-          <OpenStreetMapMultiple reviews={reviews} />
+          <OpenStreetMapMultiple
+            reviews={reviews}
+            zoom={15}
+            highlightedReviewId={highlightedReviewId}
+            setHighlightedReviewId={setHighlightedReviewId}
+            showPin
+          />
         ) : loading ? (
           <div className="flex justify-center items-center py-40">
             <BounceLoader color="#d8b4fe" size={100} />

@@ -1,5 +1,5 @@
 "use client";
-import L, { LatLng } from "leaflet";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import {
   MapContainer,
@@ -10,49 +10,72 @@ import {
   useMapEvent,
 } from "react-leaflet";
 import { OpinionCardSummary } from "./OpinionCardSummary";
-import {
-  Coordinates,
-  getReviewsFromCoordinates,
-  Review,
-} from "@/models/review";
-import { useCallback, useEffect, useState } from "react";
+import { Coordinates, Review } from "@/models/review";
+import { useState } from "react";
 
 type IconSize = "sm" | "md" | "lg";
 
 const calculateCenter = (
   coords: Coordinates[]
 ): { lat: number; lng: number } => {
-  const totalCoords = coords.length;
+  if (coords.length === 0) return { lat: 0, lng: 0 };
+
+  // Calculate median to detect outliers
+  const sortedLat = [...coords].map((c) => c.latitude).sort((a, b) => a - b);
+  const sortedLng = [...coords].map((c) => c.longitude).sort((a, b) => a - b);
+
+  const medianLat = sortedLat[Math.floor(sortedLat.length / 2)];
+  const medianLng = sortedLng[Math.floor(sortedLng.length / 2)];
+
+  // Define threshold (e.g., 0.5 standard deviations from median)
+  const threshold = 0.5;
+
+  const filteredCoords = coords.filter(
+    (coord) =>
+      Math.abs(coord.latitude - medianLat) < threshold &&
+      Math.abs(coord.longitude - medianLng) < threshold
+  );
+
+  if (filteredCoords.length === 0) return { lat: medianLat, lng: medianLng };
+
+  const totalCoords = filteredCoords.length;
   const averageLatitude =
-    coords.reduce((sum, coord) => sum + coord.latitude, 0) / totalCoords;
+    filteredCoords.reduce((sum, coord) => sum + coord.latitude, 0) /
+    totalCoords;
   const averageLongitude =
-    coords.reduce((sum, coord) => sum + coord.longitude, 0) / totalCoords;
+    filteredCoords.reduce((sum, coord) => sum + coord.longitude, 0) /
+    totalCoords;
+
   return { lat: averageLatitude, lng: averageLongitude };
 };
 
 function OpenStreetMapMultiple({
   coordinates,
-  reviews: initialReviews,
+  reviews: rawReviews,
+  updateReviews,
+  highlightedReviewId, // TODO
+  setHighlightedReviewId,
   zoom: initialZoom = 15,
   iconSize = "md",
+  showPin = false,
 }: {
   coordinates?: Coordinates;
   reviews: Review[];
+  updateReviews?: (lat: number, lng: number, zoom: number) => void;
+  highlightedReviewId: string | null;
+  setHighlightedReviewId: (id: string | null) => void;
   zoom?: number;
   iconSize?: IconSize;
   radiusKm?: number;
+  showPin?: boolean;
 }) {
   const [zoom, setZoom] = useState<number>(initialZoom);
-  const [reviews, setReviews] = useState<Review[]>(initialReviews);
+  const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
-  // TODO: make sure all reviews have coordinates and catastro updated using notebook script
-  let reviewsCoordinates = reviews
-    .filter((r) => r.location)
-    .map((r) => r.location!.coordinates!);
-
+  let reviews = rawReviews.filter((r) => r.location);
   const center =
-    reviewsCoordinates.length > 0
-      ? calculateCenter(reviewsCoordinates)
+    reviews.length > 0
+      ? calculateCenter(reviews.map((r) => r.location!.coordinates!))
       : { lat: coordinates?.latitude!, lng: coordinates?.longitude! };
 
   const [mapCenter, setMapCenter] = useState<{
@@ -60,7 +83,7 @@ function OpenStreetMapMultiple({
     lng: number;
   } | null>(center);
 
-  const fetchReviews = useCallback(
+  /* const fetchReviews = useCallback(
     async (lat: number, lng: number, zoom: number) => {
       try {
         const adaptiveRadius = 40000 / Math.pow(2, zoom);
@@ -81,7 +104,7 @@ function OpenStreetMapMultiple({
     if (mapCenter) {
       fetchReviews(mapCenter.lat, mapCenter.lng, zoom);
     }
-  }, [mapCenter, zoom, fetchReviews]);
+  }, [mapCenter, zoom, fetchReviews]); */
 
   /*   const markers =
     reviewsCoordinates.length > 0
@@ -102,7 +125,7 @@ function OpenStreetMapMultiple({
   return (
     <MapContainer
       className="w-full h-full rounded-lg z-0"
-      center={center}
+      center={mapCenter ?? center}
       zoom={zoom}
       scrollWheelZoom={true}
       attributionControl={true}
@@ -112,7 +135,9 @@ function OpenStreetMapMultiple({
         setMapCenter={(c) => {
           setMapCenter({ lat: c.latitude, lng: c.longitude });
         }}
+        updateReviews={updateReviews}
         setCurrentZoom={setZoom}
+        setActiveMarker={setActiveMarker}
       />
 
       {reviews.map((review, i) => (
@@ -124,7 +149,19 @@ function OpenStreetMapMultiple({
           }}
           icon={icon}
           eventHandlers={{
-            mouseover: (event) => event.target.openPopup(),
+            mouseover: (_) => {
+              setHighlightedReviewId(review.id);
+            },
+            click: (event) => {
+              if (activeMarker === review.id) {
+                setActiveMarker(null);
+                event.target.closePopup();
+              } else {
+                setActiveMarker(review.id);
+                event.target.openPopup();
+              }
+              setHighlightedReviewId(review.id);
+            },
           }}
         >
           <Popup>
@@ -132,24 +169,48 @@ function OpenStreetMapMultiple({
           </Popup>
         </Marker>
       ))}
+      {showPin && (
+        <Marker
+          key={"pin"}
+          position={{
+            lat: coordinates!.latitude,
+            lng: coordinates!.longitude,
+          }}
+          icon={L.icon({
+            iconUrl: "/images/map_pin.png",
+            iconSize: [36 * iconSizeFactor, 36 * iconSizeFactor],
+            iconAnchor: [14 * iconSizeFactor, 36 * iconSizeFactor],
+          })}
+        ></Marker>
+      )}
     </MapContainer>
   );
 }
 
 function MapEventHandler({
   setMapCenter,
+  updateReviews,
   setCurrentZoom,
+  setActiveMarker,
 }: {
   setMapCenter: (coords: Coordinates) => void;
+  updateReviews?: (lat: number, lng: number, zoom: number) => void;
   setCurrentZoom: (zoom: number) => void;
+  setActiveMarker: (id: string | null) => void;
 }) {
   const map = useMap();
   useMapEvent("moveend", (event) => {
     const newCenter = event.target.getCenter();
     setMapCenter({ latitude: newCenter.lat, longitude: newCenter.lng });
+    if (updateReviews)
+      updateReviews(newCenter.lat, newCenter.lng, map.getZoom());
   });
   useMapEvent("zoomend", () => {
     setCurrentZoom(map.getZoom());
+  });
+
+  useMapEvent("click", () => {
+    setActiveMarker(null); // Close popup when clicking outside markers
   });
   return null;
 }
