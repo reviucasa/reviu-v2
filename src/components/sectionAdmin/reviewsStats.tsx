@@ -6,7 +6,7 @@ import { StatBox } from "../atoms/StatBox";
 import { ReviewsColumnsChart } from "../charts/ReviewsColumnsChart";
 import { UsersColumnsChart } from "../charts/UsersColumnsChart";
 
-export interface _Stat {
+export interface Stat {
   name: string;
   value: number;
   previousValue: number;
@@ -21,8 +21,8 @@ export default function ReviewsStats() {
     queryFn: () => getAllWeeklyStats(),
   });
 
-  let stats: _Stat[] = [];
-  let avgStats: _Stat[] = [];
+  let stats: Stat[] = [];
+  let avgStats: Stat[] = [];
 
   if (!isFetching && data) {
     const usersStat = formatStat(
@@ -120,7 +120,7 @@ const formatStat = (
   name: string,
   data: number[],
   inverted?: boolean | undefined
-): _Stat => {
+): Stat => {
   const current = data[0];
   const prev = data[1];
 
@@ -132,5 +132,5 @@ const formatStat = (
     changeType:
       current > prev ? "increase" : current < prev ? "decrease" : "steady",
     inverted,
-  } as _Stat;
+  } as Stat;
 };

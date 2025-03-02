@@ -1163,6 +1163,11 @@
   dependencies:
     undici-types "~6.19.2"
 
+"@types/proj4@^2.5.6":
+  version "2.5.6"
+  resolved "https://registry.yarnpkg.com/@types/proj4/-/proj4-2.5.6.tgz#c91627388b0dd88325bf25e90d4aeddc32550241"
+  integrity sha512-zfMrPy9fx+8DchqM0kIUGeu2tTVB5ApO1KGAYcSGFS8GoqRIkyL41xq2yCx/iV3sOLzo7v4hEgViSLTiPI1L0w==
+
 "@types/prop-types@*":
   version "15.7.12"
   resolved "https://registry.npmjs.org/@types/prop-types/-/prop-types-15.7.12.tgz"

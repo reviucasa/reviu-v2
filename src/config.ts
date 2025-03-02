@@ -48,6 +48,11 @@ export const pathnames: Pathnames<typeof locales> = {
     ca: "/ressenya",
     en: "/review",
   },
+  "/explore": {
+    es: "/explorar",
+    ca: "/explorar",
+    en: "/explore",
+  },
   "/explore/[province]/[municipality]": {
     es: "/explorar/[province]/[municipality]",
     ca: "/explorar/[province]/[municipality]",

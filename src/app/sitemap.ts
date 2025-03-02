@@ -3,6 +3,7 @@ import { getAgencies } from "@/models/agency";
 import { getPosts } from "@/models/post";
 import { getAllReviews } from "@/models/review";
 import { getPathname } from "@/navigation";
+import { provincesData } from "@/staticData";
 import { MetadataRoute } from "next";
 
 export function getUrl(
@@ -57,7 +58,7 @@ const generateAgenciesSitemapObjects = async () => {
 const generateReviewsSitemapObjects = async () => {
   const reviews = await getAllReviews();
 
-  return reviews.map((r) => {
+  return reviews.filter((r) => r.location?.province && r.location?.municipality).map((r) => {
     return {
       url: `${host}/review/${r.location!.province}/${
         r.location!.municipality
@@ -80,6 +81,57 @@ const generateReviewsSitemapObjects = async () => {
   });
 };
 
+const generateExploreSitemapObject = async () => {
+  const provinces = Object.keys(provincesData);
+
+  return provinces.flatMap((province) => {
+    if (!province) return []; // Skip if province is undefined
+
+    const provinceSlug = encodeURIComponent(
+      province.toLowerCase().replace(/\s+/g, "-")
+    );
+    const provinceUrl = `${host}/explore/${provinceSlug}/`;
+
+    const municipalities = provincesData[province] || [];
+
+    const municipalityUrls = municipalities
+      .filter((municipality) => municipality) // Ensure municipality is valid
+      .map((municipality) => {
+        const municipalitySlug = encodeURIComponent(
+          municipality.toLowerCase().replace(/\s+/g, "-")
+        );
+        return {
+          url: `${host}/explore/${provinceSlug}/${municipalitySlug}/`,
+          lastModified: new Date(),
+          alternates: {
+            languages: Object.fromEntries(
+              locales.map((locale) => [
+                locale,
+                getUrl(`/explore/${provinceSlug}/${municipalitySlug}`, locale),
+              ])
+            ),
+          },
+        };
+      });
+
+    return [
+      {
+        url: provinceUrl,
+        lastModified: new Date(),
+        alternates: {
+          languages: Object.fromEntries(
+            locales.map((locale) => [
+              locale,
+              getUrl(`/explore/${provinceSlug}`, locale),
+            ])
+          ),
+        },
+      },
+      ...municipalityUrls,
+    ];
+  });
+};
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   let keys = Object.keys(pathnames) as Array<keyof typeof pathnames>;
 
@@ -87,7 +139,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     (key) =>
       !key.includes("building") &&
       !key.includes("agency") &&
-      !key.includes("review")
+      !key.includes("review") &&
+      !key.includes("explore")
   );
 
   return [
@@ -103,5 +156,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     ...(await generateBlogPostsSitemapObjects()),
     ...(await generateReviewsSitemapObjects()),
     ...(await generateAgenciesSitemapObjects()),
+    ...(await generateExploreSitemapObject()),
   ];
 }
