@@ -214,6 +214,7 @@ export const AddressComboBox = ({
               setShowAreaOptions(true);
             }
           }}
+          autoComplete="off"
           onFocus={() => setShowAreaOptions(true)}
         />
         {!selectedAddressLoading && !loading && (
