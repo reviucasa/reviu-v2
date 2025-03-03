@@ -7,15 +7,18 @@ import {
   Review,
 } from "@/models/review";
 import { BounceLoader } from "react-spinners";
-import OpenStreetMapMultiple from "@/components/molecules/OpenStreetMapMultiple";
 import { OpinionCardSmall } from "@/components/molecules/OpinionCardSmall";
 import MainLayout from "@/components/layouts/MainLayout";
 import { useCallback, useEffect, useState } from "react";
 
-// Dynamically import the MainLayout component
-// const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
-//   ssr: false,
-// });
+import dynamic from "next/dynamic";
+
+const OpenStreetMapMultiple = dynamic(
+  () => import("@/components/molecules/OpenStreetMapMultiple"),
+  {
+    ssr: false,
+  }
+);
 
 export default function ExplorePage({
   title,
@@ -58,7 +61,7 @@ export default function ExplorePage({
     },
     []
   );
-  
+
   return (
     <MainLayout>
       <div className="md:p-10 p-2 mb-10 lg:mb-0">

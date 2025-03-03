@@ -26,7 +26,7 @@ export default function MyReviewsClientPage() {
 
     try {
       const response = await getReviewsFromUser(auth.currentUser!.uid);
-      setReviews(response);
+      setReviews(response.filter((r) => r.location));
     } catch (error) {
       console.log(error);
     } finally {
