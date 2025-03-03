@@ -20,6 +20,7 @@ function OpenStreetMap({
     lat: latitude /* +0.00025 */,
     lng: longitude,
   });
+  
   const windowWidth = window.innerWidth;
 
   const purpleOptions = {

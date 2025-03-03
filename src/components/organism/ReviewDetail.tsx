@@ -22,9 +22,20 @@ import { UserStatus } from "@/models/user";
 import { Unsuspend } from "../atoms/Unsuspend";
 import { Link } from "@/navigation";
 import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
-import OpenStreetMap from "../molecules/OpenStreetMap";
 
-export const ReviewDetail = ({ review }: { review: Review }) => {
+import dynamic from "next/dynamic";
+
+const OpenStreetMap = dynamic(() => import("../molecules/OpenStreetMap"), {
+  ssr: false,
+});
+
+export const ReviewDetail = ({
+  review,
+  showMap = true,
+}: {
+  review: Review;
+  showMap?: boolean;
+}) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
   const tLinks = useTranslations("linksTitles");
@@ -83,7 +94,7 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                       <ReviewStatusBadge status={review.status} />
                     </div>
                   )}
-                  {review.location && (
+                  {review.location && showMap && (
                     <div className="hidden lg:block h-64 w-full mt-8">
                       <OpenStreetMap
                         latitude={review.location.coordinates.latitude}
