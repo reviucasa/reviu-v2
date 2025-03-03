@@ -236,7 +236,7 @@ export const AddressComboBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <ComboboxOptions className="absolute mt-1 max-h-80 w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-10">
+          <ComboboxOptions className="absolute w-full mt-1 max-h-80 z-50 overflow-auto rounded-md bg-white p-1 border border-gray-300 ">
             {areaOptions && showAreaOptions && (
               <ComboboxOption
                 className="cursor-pointer px-1 py-3 rounded-md hover:bg-secondary-300"
@@ -282,7 +282,7 @@ export const AddressComboBox = ({
                 </ComboboxOption>
               )}
             {municipalitiesResults.map((m, i) => {
-              return ( 
+              return (
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={i}

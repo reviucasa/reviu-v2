@@ -58,18 +58,20 @@ export default function ExplorePage({
     },
     []
   );
-  console.log(searchParams.get("lat"));
+  
   return (
     <MainLayout>
-      <div className="lg:p-10 p-4 mb-10 lg:mb-0">
+      <div className="md:p-10 p-2 mb-10 lg:mb-0">
         <div className=" relative lg:gap-8 md:gap-4 ">
-          <h1 className="text-xl lg:text-2xl  font-secondary">{title}</h1>
+          <h1 className="text-xl lg:text-2xl mt-2 md:mt-0 font-secondary">
+            {title}
+          </h1>
           {/* <p className="text-sm tracking-widest">
             {empty ? 0 : reviews.length}
             {" reviews in total"}
           </p> */}
-          <div className="flex flex-col lg:flex-row w-full mt-8 bg-white rounded-2xl">
-            <div className="lg:hidden h-[400px] w-full center pt-8 px-8 ">
+          <div className="flex flex-col lg:flex-row w-full mt-4 md:mt-8 bg-white rounded-2xl">
+            <div className="lg:hidden h-[400px] w-full center pt-4 md:pt-8 px-4 md:px-8 ">
               {!loading ? (
                 <div className="flex justify-center items-center h-full bg-gray-100 rounded-lg">
                   <OpenStreetMapMultiple
@@ -88,7 +90,7 @@ export default function ExplorePage({
                 </div>
               )}
             </div>
-            <div className="relative lg:hidden mx-8 mt-8">
+            <div className="relative lg:hidden md:mx-8 mx-4 md:mt-8 mt-4">
               <div
                 aria-hidden="true"
                 className="absolute inset-0 flex items-center"
@@ -101,7 +103,7 @@ export default function ExplorePage({
                 </span>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full h-[480px] lg:flex lg:flex-col lg:space-y-4 lg:gap-0 lg:w-[424px] lg:h-[820px] overflow-y-auto py-8 px-8">
+            <div className="flex flex-col items-center md:grid md:grid-cols-2 md:gap-4 gap-2 w-full h-[480px] lg:flex lg:flex-col lg:space-y-4 lg:gap-0 lg:w-[424px] lg:h-[820px] overflow-y-auto md:py-8 py-4 md:px-8 px-2">
               {!loading && !empty && reviews.length != 0 ? (
                 reviews.map((review) => (
                   <div

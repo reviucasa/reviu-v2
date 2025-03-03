@@ -113,7 +113,7 @@ export default async function ReviewDetails({
 
   return (
     <MainLayout>
-      <div className="lg:px-40 lg:py-16">
+      <div className="lg:px-24 xl:px-40 lg:py-16">
         <div className="p-6 lg:p-16 rounded-lg bg-white">
           <div className="flex justify-start mb-3">
             <h4 className="font-bold lg:block hidden ">

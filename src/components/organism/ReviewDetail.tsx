@@ -22,6 +22,7 @@ import { UserStatus } from "@/models/user";
 import { Unsuspend } from "../atoms/Unsuspend";
 import { Link } from "@/navigation";
 import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
+import OpenStreetMap from "../molecules/OpenStreetMap";
 
 export const ReviewDetail = ({ review }: { review: Review }) => {
   const { user, claims } = useAuth();
@@ -78,8 +79,17 @@ export const ReviewDetail = ({ review }: { review: Review }) => {
                     review={review}
                   />
                   {user && claims?.admin && (
-                    <div className="mt-8  pt-6 border-t border-gray-200">
+                    <div className="mt-8 pt-6 border-t border-gray-200">
                       <ReviewStatusBadge status={review.status} />
+                    </div>
+                  )}
+                  {review.location && (
+                    <div className="hidden lg:block h-64 w-full mt-8">
+                      <OpenStreetMap
+                        latitude={review.location.coordinates.latitude}
+                        longitude={review.location.coordinates.longitude}
+                        zoom={15}
+                      />
                     </div>
                   )}
                 </div>

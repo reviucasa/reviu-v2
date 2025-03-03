@@ -12,7 +12,7 @@ export const TabMenuSlide = ({
   sectionActive,
   setSectionActive,
 }: TabMenuSlideProps): JSX.Element => (
-  <div className="w-min md:w-full flex flex-col self-center md:flex-row justify-center lg:gap-12 lg:text-base text-[15px] sm:gap-6 xs:text-[11px] gap-3 whitespace-nowrap font-medium">
+  <div className="w-min md:w-full flex flex-col self-center md:flex-row justify-center lg:gap-12 lg:text-base text-[15px] sm:gap-4 xs:text-[11px] gap-2 whitespace-nowrap font-medium">
     {/* section tab */}
     {dataContentSlide.map((tab: SectionType, index) => {
       return (

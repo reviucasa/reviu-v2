@@ -80,6 +80,7 @@ export default function BuildingView({
           <OpenStreetMap
             latitude={analysis.latitude}
             longitude={analysis.longitude}
+            circleDecoration={true}
           />
         </div>
         {!notOpinions && (

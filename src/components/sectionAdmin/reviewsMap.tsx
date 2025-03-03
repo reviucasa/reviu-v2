@@ -31,7 +31,11 @@ export default function ReviewsMap() {
               <BounceLoader color="#d8b4fe" size={100} />
             </div>
           ) : (
-            <OpenStreetMap latitude={41.40855} longitude={2.17114} />
+            <OpenStreetMap
+              latitude={41.40855}
+              longitude={2.17114}
+              circleDecoration={true}
+            />
           )}
         </div>
       </div>

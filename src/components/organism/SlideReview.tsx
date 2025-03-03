@@ -22,7 +22,6 @@ export const SlideReview = ({
   sizeGapCardMobile: number;
 }) => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
-  const [sizeScreen, setSizeScreen] = useState<number>(0);
 
   const wrapperRef = useRef<any>();
 

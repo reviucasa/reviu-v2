@@ -52,11 +52,9 @@ export async function SectionHeader() {
     },
   ];
 
-  const currentSection = dataContentSlide[0]; // Initial section for SSR
-
   return (
     <div
-      className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-hidden`}
+      className={`w-full flex flex-col justify-center xl:h-[700px] rounded-[32px] overflow-visible`}
     >
       <div className="flex h-12 justify-center items-center gap-2 bg-black rounded-t-[32px]">
         <Image

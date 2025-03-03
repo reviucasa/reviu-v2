@@ -29,7 +29,7 @@ export default function NearbyExplorePageClient({
       const response = await getReviewsFromCoordinates(
         latitude!,
         longitude!,
-        0.5
+        0.25
       );
       setReviews(response);
     } catch (error) {
