@@ -26,7 +26,6 @@ export default function MunicipalityExplorePageClient({
 
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [empty, setEmpty] = useState<boolean>(false);
 
   const [coordinates, setCoordinates] = useState<Coordinates>({
     latitude: 41.3874,
@@ -43,7 +42,7 @@ export default function MunicipalityExplorePageClient({
       );
 
       if (response.length == 0) {
-        setEmpty(true);
+        setReviews([]);
       } else {
         setReviews(response);
       }
@@ -58,7 +57,6 @@ export default function MunicipalityExplorePageClient({
         });
       } else {
         setReviews([]);
-        setEmpty(true);
       }
     } catch (error) {
       console.log(error);
@@ -81,7 +79,6 @@ export default function MunicipalityExplorePageClient({
       loading={loading}
       reviews={reviews}
       coordinates={coordinates!}
-      empty={empty}
     />
   );
 }

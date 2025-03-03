@@ -24,13 +24,11 @@ export default function ExplorePage({
   title,
   reviews: initialReviews,
   loading,
-  empty,
   coordinates,
 }: {
   title: string;
   reviews: Review[];
   loading: boolean;
-  empty: boolean;
   coordinates: Coordinates;
 }) {
   const searchParams = useSearchParams();
@@ -107,7 +105,7 @@ export default function ExplorePage({
               </div>
             </div>
             <div className="flex flex-col items-center md:grid md:grid-cols-2 md:gap-4 gap-2 w-full h-[480px] lg:flex lg:flex-col lg:space-y-4 lg:gap-0 lg:w-[424px] lg:h-[820px] overflow-y-auto md:py-8 py-4 md:px-8 px-2">
-              {!loading && !empty && reviews.length != 0 ? (
+              {!loading && reviews.length != 0 ? (
                 reviews.map((review) => (
                   <div
                     key={review.id}
@@ -133,7 +131,7 @@ export default function ExplorePage({
                     />
                   </div>
                 ))
-              ) : (!loading && empty) || reviews.length == 0 ? (
+              ) : !loading && reviews.length == 0 ? (
                 <div className="flex justify-center items-center py-40 w-full lg:w-[392px] h-full">
                   {"No reviews found"}
                 </div>

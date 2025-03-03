@@ -49,7 +49,6 @@ export default function NearbyExplorePageClient({
       loading={loading}
       reviews={reviews}
       coordinates={{ latitude: latitude!, longitude: longitude! }}
-      empty={reviews.length == 0}
     />
   );
 }
