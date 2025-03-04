@@ -28,7 +28,8 @@ import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
 import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
-import { provincesData } from "@/staticData";
+import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
+import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -55,9 +56,56 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     if (address && address != "") {
       setLoading(true);
 
-      if (Object.keys(provincesData).includes(address.split("/")[0])) {
-        router.push(`/explore/${address.toLowerCase()}`);
-        return;
+      if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
+        if (
+          provincesData[address.split(" - ")[1]].includes(
+            address.split(" - ")[0]
+          )
+        ) {
+          router.push(
+            `/explore/${address
+              .split(" - ")
+              .map((e) => encodeURIComponent(e))
+              .join("/")
+              .toLowerCase()}`
+          );
+          setLoading(false);
+
+          return;
+        }
+      }
+
+      if (
+        Object.keys(mainCitiesNeighbourhoods).includes(address.split(" - ")[1])
+      ) {
+        if (
+          mainCitiesNeighbourhoods[address.split(" - ")[1]].includes(
+            address.split(" - ")[0]
+          )
+        ) {
+          const coordinates = await getMunicipalityCoordinates(
+            address.split(" - ")[0],
+            address.split(" - ")[1]
+          );
+          if (coordinates != null) {
+            router.push(
+              `/explore?lat=${coordinates?.lat}&lng=${
+                coordinates?.lng
+              }&name=${encodeURIComponent(address)}`
+            );
+            setLoading(false);
+
+            return;
+          } else {
+            console.log("Couldn't find neighbourhood", address);
+            setLoading(false);
+
+            return;
+          }
+          /* router.push(
+            `/explore/${address.split(", ").join("/").toLowerCase()}`
+          ); */
+        }
       }
 
       const res = await getCatastroDataFromAddress(address);

@@ -17,8 +17,7 @@ import lupa from "public/images/lupa.png";
 import map from "public/images/maskGroup.png";
 import { SelectAreaModal } from "./SelectAreaModal";
 import NearbySearchButton from "./NearbySearchButton";
-import { provincesData } from "@/staticData";
-import stringSimilarity from "string-similarity";
+import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
 import { toTitleCase } from "@/helpers/stringHelpers";
 
 type AddressComboBoxProps = {
@@ -33,6 +32,11 @@ type AddressComboBoxProps = {
 interface MunicipalityResult {
   municipality?: string;
   province?: string;
+}
+
+interface NeighbourhoodResult {
+  neighbourhood?: string;
+  city?: string;
 }
 
 export const AddressComboBox = ({
@@ -55,6 +59,13 @@ export const AddressComboBox = ({
     {
       municipality?: string;
       province?: string;
+    }[]
+  >([]);
+
+  const [neighbourhoodsResults, setNeighbourhoodsResults] = useState<
+    {
+      neighbourhood?: string;
+      city?: string;
     }[]
   >([]);
 
@@ -117,19 +128,6 @@ export const AddressComboBox = ({
 
     let matchedMunicipalities: MunicipalityResult[] = [];
 
-    // Check if the query matches a province
-    const matchedProvince = Object.keys(provincesData).find((province) =>
-      province.toLowerCase().includes(query.toLowerCase())
-    );
-
-    /*     if (matchedProvince) {
-      // Store province as a result with municipality undefined
-      matchedMunicipalities.push({
-        province: matchedProvince,
-        municipality: undefined,
-      });
-    } */
-
     // Search municipalities in all provinces
     Object.entries(provincesData).forEach(([province, municipalities]) => {
       const matchedMunicipalitiesForProvince = municipalities
@@ -145,6 +143,35 @@ export const AddressComboBox = ({
     });
 
     setMunicipalitiesResults(matchedMunicipalities);
+  }, []);
+
+  const fetchNeighbourhoodsList = useCallback((query: string) => {
+    if (!query || query.length < 3) return;
+
+    const removeDiacritics = (str: string) =>
+      str
+        .normalize("NFD") // Decomposes accents
+        .replace(/[\u0300-\u036f]/g, "") // Removes diacritic marks
+        .toLowerCase(); // Case insensitive
+
+    const normalizedQuery = removeDiacritics(query);
+
+    let matchedNeighbourhoods: NeighbourhoodResult[] = [];
+
+    Object.entries(mainCitiesNeighbourhoods).forEach(
+      ([city, neighbourhoods]) => {
+        const matchedNeighbourhoodsForCity = neighbourhoods
+          .filter((n) => removeDiacritics(n).includes(normalizedQuery))
+          .map((neighbourhood) => ({ neighbourhood, city }));
+
+        matchedNeighbourhoods = [
+          ...matchedNeighbourhoods,
+          ...matchedNeighbourhoodsForCity,
+        ];
+      }
+    );
+
+    setNeighbourhoodsResults(matchedNeighbourhoods);
   }, []);
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -207,6 +234,7 @@ export const AddressComboBox = ({
           onChange={(event) => {
             setQueryLength(event.target.value.length);
             fetchAddressList(event.target.value);
+            fetchNeighbourhoodsList(event.target.value);
             fetchMunicipalitiesList(event.target.value);
             if (event.target.value.length > 3) {
               setShowAreaOptions(false);
@@ -282,17 +310,31 @@ export const AddressComboBox = ({
                   {t("common.noSeEncontroDirección")}
                 </ComboboxOption>
               )}
+            {neighbourhoodsResults.map((n, i) => {
+              return (
+                <ComboboxOption
+                  className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
+                  key={i}
+                  value={`${n.neighbourhood} - ${n.city}`}
+                >
+                  <div className="flex flex-row w-full justify-between">
+                    <div>{toTitleCase(`${n.neighbourhood} - ${n.city}`)}</div>
+                    <div className="text-gray-400">Neighbourhood</div>
+                  </div>
+                </ComboboxOption>
+              );
+            })}
             {municipalitiesResults.map((m, i) => {
               return (
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={i}
-                  value={`${encodeURIComponent(
+                  value={`${toTitleCase(m.municipality!)} - ${toTitleCase(
                     m.province!
-                  )}/${encodeURIComponent(m.municipality!)}`}
+                  )}`}
                 >
                   <div className="flex flex-row w-full justify-between">
-                    <div>{toTitleCase(`${m.municipality}, ${m.province}`)}</div>
+                    <div>{toTitleCase(`${m.municipality} - ${m.province}`)}</div>
 
                     <div className="text-gray-400">Municipality</div>
                   </div>

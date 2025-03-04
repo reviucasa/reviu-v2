@@ -11,7 +11,7 @@ import {
 } from "react-leaflet";
 import { OpinionCardSummary } from "./OpinionCardSummary";
 import { Coordinates, Review } from "@/models/review";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type IconSize = "sm" | "md" | "lg";
 
@@ -57,7 +57,7 @@ function OpenStreetMapMultiple({
   setHighlightedReviewId,
   zoom: initialZoom = 15,
   iconSize = "md",
-  showPin = false,
+  showPin = true,
 }: {
   coordinates?: Coordinates;
   reviews: Review[];
@@ -72,47 +72,30 @@ function OpenStreetMapMultiple({
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
-  let reviews = rawReviews.filter((r) => r.location);
-  const center =
-    reviews.length > 0
+  const reviews = rawReviews.filter((r) => r.location);
+  /* const [reviews, setReviews] = useState<Review[]>(
+    rawReviews.filter((r) => r.location)
+  );
+
+  useEffect(() => {
+    console.log(coordinates, rawReviews.length);
+    if (coordinates) {
+      setReviews(rawReviews.filter((r) => r.location));
+
+      if (updateReviews) {
+        updateReviews(coordinates.latitude, coordinates.longitude, zoom);
+      }
+    }
+  }, [coordinates, rawReviews, updateReviews, zoom]); */
+
+  const center = /* reviews.length > 0
       ? calculateCenter(reviews.map((r) => r.location!.coordinates!))
-      : { lat: coordinates?.latitude!, lng: coordinates?.longitude! };
+      :  */ { lat: coordinates?.latitude!, lng: coordinates?.longitude! };
 
   const [mapCenter, setMapCenter] = useState<{
     lat: number;
     lng: number;
   } | null>(center);
-
-  /* const fetchReviews = useCallback(
-    async (lat: number, lng: number, zoom: number) => {
-      try {
-        const adaptiveRadius = 40000 / Math.pow(2, zoom);
-        const newReviews = await getReviewsFromCoordinates(
-          lat,
-          lng,
-          adaptiveRadius
-        );
-        setReviews(newReviews);
-      } catch (error) {
-        console.error("Error fetching reviews:", error);
-      }
-    },
-    []
-  );
-
-  useEffect(() => {
-    if (mapCenter) {
-      fetchReviews(mapCenter.lat, mapCenter.lng, zoom);
-    }
-  }, [mapCenter, zoom, fetchReviews]); */
-
-  /*   const markers =
-    reviewsCoordinates.length > 0
-      ? reviewsCoordinates.map((c) => ({
-          lat: c.latitude,
-          lng: c.longitude,
-        }))
-      : undefined; */
 
   const iconSizeFactor = iconSize == "sm" ? 0.6 : iconSize == "lg" ? 1.2 : 1.0;
 
@@ -138,6 +121,7 @@ function OpenStreetMapMultiple({
         updateReviews={updateReviews}
         setCurrentZoom={setZoom}
         setActiveMarker={setActiveMarker}
+        coordinates={coordinates}
       />
 
       {reviews.map((review, i) => (
@@ -192,13 +176,22 @@ function MapEventHandler({
   updateReviews,
   setCurrentZoom,
   setActiveMarker,
+  coordinates,
 }: {
   setMapCenter: (coords: Coordinates) => void;
   updateReviews?: (lat: number, lng: number, zoom: number) => void;
   setCurrentZoom: (zoom: number) => void;
   setActiveMarker: (id: string | null) => void;
+  coordinates?: Coordinates;
 }) {
   const map = useMap();
+
+  useEffect(() => {
+    if (coordinates) {
+      map.setView([coordinates.latitude, coordinates.longitude], map.getZoom());
+    }
+  }, [coordinates, map]);
+
   useMapEvent("moveend", (event) => {
     const newCenter = event.target.getCenter();
     setMapCenter({ latitude: newCenter.lat, longitude: newCenter.lng });
@@ -210,7 +203,7 @@ function MapEventHandler({
   });
 
   useMapEvent("click", () => {
-    setActiveMarker(null); // Close popup when clicking outside markers
+    setActiveMarker(null);
   });
   return null;
 }

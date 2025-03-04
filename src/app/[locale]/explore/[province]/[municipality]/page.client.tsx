@@ -1,16 +1,12 @@
 "use client";
 import {
   Coordinates,
-  getReviewsFromCoordinates,
   getReviewsFromMunicipality,
   Review,
-  ReviewStatus,
 } from "@/models/review";
-import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import ExplorePage from "../../pages/ExplorePage";
 import { toTitleCase } from "@/helpers/stringHelpers";
-import { getLocationFromIP } from "@/helpers/getLocationFromIP";
 import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
 
 export default function MunicipalityExplorePageClient({
@@ -22,8 +18,6 @@ export default function MunicipalityExplorePageClient({
     municipality: string;
   };
 }) {
-  const t = useTranslations();
-
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -79,6 +73,7 @@ export default function MunicipalityExplorePageClient({
       loading={loading}
       reviews={reviews}
       coordinates={coordinates!}
+      fromCoordinates={false}
     />
   );
 }

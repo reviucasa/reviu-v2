@@ -25,14 +25,14 @@ export default function ExplorePage({
   reviews: initialReviews,
   loading,
   coordinates,
+  fromCoordinates,
 }: {
   title: string;
   reviews: Review[];
   loading: boolean;
   coordinates: Coordinates;
+  fromCoordinates: boolean;
 }) {
-  const searchParams = useSearchParams();
-
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [highlightedReviewId, setHighlightedReviewId] = useState<string | null>(
     null
@@ -42,6 +42,11 @@ export default function ExplorePage({
     // Ensure reviews update when new ones are passed from props
     setReviews(initialReviews);
   }, [initialReviews]);
+
+  useEffect(() => {
+    // Ensure reviews update when new ones are passed from props
+    updateReviews(coordinates.latitude, coordinates.longitude, 16);
+  }, [coordinates]);
 
   const updateReviews = useCallback(
     async (lat: number, lng: number, zoom: number) => {
@@ -82,7 +87,7 @@ export default function ExplorePage({
                     updateReviews={updateReviews}
                     highlightedReviewId={highlightedReviewId}
                     setHighlightedReviewId={setHighlightedReviewId}
-                    showPin={searchParams.get("lat") != null && true}
+                    showPin={/* searchParams.get("lat") != null && */ true}
                   />
                 </div>
               ) : (
@@ -110,11 +115,6 @@ export default function ExplorePage({
                   <div
                     key={review.id}
                     onMouseEnter={() => {
-                      /* updateReviews(
-                        review.location!.coordinates.latitude,
-                        review.location!.coordinates.longitude,
-                        16
-                      ); */
                       return setHighlightedReviewId(review.id);
                     }}
                     onMouseLeave={() => setHighlightedReviewId(null)}
@@ -151,7 +151,7 @@ export default function ExplorePage({
                     updateReviews={updateReviews}
                     highlightedReviewId={highlightedReviewId}
                     setHighlightedReviewId={setHighlightedReviewId}
-                    showPin={searchParams.get("lat") != null && true}
+                    showPin={/* searchParams.get("lat") != null && */ true}
                   />
                 </div>
               ) : (

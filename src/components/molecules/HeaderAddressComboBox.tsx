@@ -6,7 +6,8 @@ import { AddressComboBox } from "../atoms/AddressComboBox";
 import { FieldError } from "../atoms/FieldError";
 import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
-import { provincesData } from "@/staticData";
+import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
+import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
 
 export function HeaderAddressComboBox({ className }: { className?: string }) {
   const t = useTranslations();
@@ -21,9 +22,48 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
     if (address && address != "") {
       setLoading(true);
 
-      if (Object.keys(provincesData).includes(address.split("/")[0])) {
-        router.push(`/explore/${address.toLowerCase()}`);
-        return;
+      if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
+        if (
+          provincesData[address.split(", ")[1]].includes(address.split(", ")[0])
+        ) {
+          router.push(
+            `/explore/${address
+              .split(", ")
+              .map((e) => encodeURIComponent(e))
+              .join("/")
+              .toLowerCase()}`
+          );
+          return;
+        }
+      }
+
+      if (
+        Object.keys(mainCitiesNeighbourhoods).includes(address.split(" - ")[1])
+      ) {
+        if (
+          mainCitiesNeighbourhoods[address.split(", ")[1]].includes(
+            address.split(", ")[0]
+          )
+        ) {
+          const coordinates = await getMunicipalityCoordinates(
+            address.split(", ")[0],
+            address.split(", ")[1]
+          );
+          if (coordinates != null) {
+            router.push(
+              `/explore?lat=${coordinates?.lat}&lng=${
+                coordinates?.lng
+              }&name=${encodeURIComponent(address)}`
+            );
+            return;
+          } else {
+            console.log("Couldn't find neighbourhood", address);
+            return;
+          }
+          /* router.push(
+                  `/explore/${address.split(", ").join("/").toLowerCase()}`
+                ); */
+        }
       }
       const res = await getCatastroDataFromAddress(address);
       if (res) {

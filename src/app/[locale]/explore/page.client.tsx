@@ -8,12 +8,13 @@ import { useRouter } from "next/navigation";
 export default function NearbyExplorePageClient({
   searchParams,
 }: {
-  searchParams: { lat?: string; lng?: string };
+  searchParams: { lat?: string; lng?: string; name?: string };
 }) {
   const router = useRouter();
 
   const latitude = searchParams.lat ? parseFloat(searchParams.lat) : null;
   const longitude = searchParams.lng ? parseFloat(searchParams.lng) : null;
+  const name = searchParams.name ? decodeURIComponent(searchParams.name) : null;
 
   if (latitude == null || longitude == null) {
     router.push("/");
@@ -29,7 +30,7 @@ export default function NearbyExplorePageClient({
       const response = await getReviewsFromCoordinates(
         latitude!,
         longitude!,
-        0.25
+        0.2
       );
       setReviews(response);
     } catch (error) {
@@ -45,10 +46,11 @@ export default function NearbyExplorePageClient({
 
   return (
     <ExplorePage
-      title={"Reviews near you"}
+      title={`Reviews ${name != null ? "in " + name : "near you"}`}
       loading={loading}
       reviews={reviews}
       coordinates={{ latitude: latitude!, longitude: longitude! }}
+      fromCoordinates={true}
     />
   );
 }
