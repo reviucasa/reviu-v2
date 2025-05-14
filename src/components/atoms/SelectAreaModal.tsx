@@ -11,6 +11,7 @@ import { Button } from "./Button";
 import Image from "next/image";
 import map from "public/images/maskGroup.png";
 import { useRouter } from "@/navigation";
+import { useTranslations } from "next-intl";
 
 export const SelectAreaModal = ({
   isOpen,
@@ -20,6 +21,7 @@ export const SelectAreaModal = ({
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 }) => {
   const router = useRouter();
+  const t = useTranslations();
 
   const schema = yup.object({
     province: yup.string().required(""),
@@ -43,7 +45,7 @@ export const SelectAreaModal = ({
     <Dialog
       isOpen={isOpen}
       setIsOpen={setIsOpen}
-      title={"Encuentra las reseñas del área de tu elección"}
+      title={t("common.findReviewsInArea")}
     >
       <form
         onSubmit={(event) => {
@@ -61,15 +63,15 @@ export const SelectAreaModal = ({
         <div className="flex flex-col z-20">
           <div className="flex gap-6">
             <div className="w-1/2">
-              <label>Provincia</label>
+              <label>{t("common.province")}</label>
               <div className="w-full">
                 <select
                   aria-invalid={!!errors.province}
                   className="w-full"
                   {...register("province")}
                 >
-                  <option value="">Provincia</option>
-                  {Object.keys(provincesData).map((p) => (
+                  <option value="">{t("common.province")}</option>
+                  {["BARCELONA", "LLEIDA", "TARRAGONA", "GIRONA"].map((p) => ( // Object.keys(provincesData)
                     <option key={p} value={p}>
                       {toTitleCase0(p)}
                     </option>
@@ -81,7 +83,7 @@ export const SelectAreaModal = ({
               </div>
             </div>
             <div className="w-1/2">
-              <label>Municipio</label>
+              <label>{t("common.municipality")}</label>
               <div className="w-full">
                 <select
                   aria-invalid={!!errors.municipality}
@@ -89,7 +91,7 @@ export const SelectAreaModal = ({
                   {...register("municipality")}
                   disabled={watch("province") == ""}
                 >
-                  <option value="">Municipio</option>
+                  <option value="">{t("common.municipality")}</option>
                   {(watch("province")
                     ? provincesData[watch("province").toUpperCase()]
                     : []

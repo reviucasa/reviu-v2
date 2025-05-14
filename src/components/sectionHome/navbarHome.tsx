@@ -55,11 +55,12 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-
-      if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
+      console.log(address)
+      if (Object.keys(provincesData).includes(address.split(" - ")[1].toUpperCase())) {
+        console.log("Searching province...");
         if (
-          provincesData[address.split(" - ")[1]].includes(
-            address.split(" - ")[0]
+          provincesData[address.split(" - ")[1].toUpperCase()].includes(
+            address.split(" - ")[0].toUpperCase()
           )
         ) {
           router.push(

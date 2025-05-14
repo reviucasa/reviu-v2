@@ -4,6 +4,7 @@ import { getReviewsFromCoordinates, Review } from "@/models/review";
 import { useEffect, useState } from "react";
 import ExplorePage from "./pages/ExplorePage";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function NearbyExplorePageClient({
   searchParams,
@@ -11,6 +12,7 @@ export default function NearbyExplorePageClient({
   searchParams: { lat?: string; lng?: string; name?: string };
 }) {
   const router = useRouter();
+  const t = useTranslations();
 
   const latitude = searchParams.lat ? parseFloat(searchParams.lat) : null;
   const longitude = searchParams.lng ? parseFloat(searchParams.lng) : null;
@@ -46,7 +48,9 @@ export default function NearbyExplorePageClient({
 
   return (
     <ExplorePage
-      title={`Reviews ${name != null ? "in " + name : "near you"}`}
+      title={`${t("common.reviews")} ${
+        name != null ? t("common.in") + name : t("common.nearYou")
+      }`}
       loading={loading}
       reviews={reviews}
       coordinates={{ latitude: latitude!, longitude: longitude! }}

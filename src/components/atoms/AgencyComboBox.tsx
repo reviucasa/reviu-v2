@@ -1,4 +1,5 @@
 "use client";
+import { toTitleCase } from "@/helpers/stringHelpers";
 import { RealStateAgency, searchAgenciesByName } from "@/models/agency";
 import {
   Combobox,
@@ -45,7 +46,7 @@ export const AgencyComboBox = ({
         return;
       }
 
-      const agencies = await searchAgenciesByName(query.toLowerCase());
+      const agencies = await searchAgenciesByName(query);
       setAgenciesList(agencies);
       setLoading(false);
     }, 300),
@@ -90,7 +91,7 @@ export const AgencyComboBox = ({
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <ComboboxOptions className="absolute mt-1 max-h-40  w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-50">
+          <ComboboxOptions className="absolute mt-1 max-h-80  w-full overflow-auto rounded-md bg-white p-1 border border-gray-300 z-50">
             {loading && (
               <ComboboxOption
                 className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
@@ -112,13 +113,17 @@ export const AgencyComboBox = ({
               </ComboboxOption>
             )}
             {!loading &&
-              agenciesList?.slice(0, 3).map((agency) => (
+              agenciesList?.map((agency) => (
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                   key={agency.id}
                   value={agency}
                 >
-                  {agency.name}
+                  <div className="flex flex-row w-full justify-between">
+                    <div>{toTitleCase(`${agency.name}`)}</div>
+
+                    <div className="text-gray-400">{agency.address}</div>
+                  </div>
                 </ComboboxOption>
               ))}
           </ComboboxOptions>

@@ -2,9 +2,11 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import marker from "public/images/iconMarker.png";
 import { ComboboxOption } from "@headlessui/react";
+import { useTranslations } from "next-intl";
 
 const NearbySearchButton = () => {
   const router = useRouter();
+  const t = useTranslations();
 
   const handleSearchNearby = () => {
     if (!navigator.geolocation) {
@@ -41,7 +43,7 @@ const NearbySearchButton = () => {
           className="h-5 w-auto text-gray-400 left-2.5 top-2.5"
           aria-hidden="true"
         />
-        <span>Buscar cerca de ti</span>
+        <span>{t("common.searchNearby")}</span>
       </div>
     </ComboboxOption>
   );

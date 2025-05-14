@@ -72,8 +72,16 @@ function OpenStreetMapMultiple({
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
-  const reviews = rawReviews.filter((r) => r.location);
-  /* const [reviews, setReviews] = useState<Review[]>(
+  /* const reviews = rawReviews
+    .slice(15, 20)
+    .filter(
+      (r) =>
+        r.location &&
+        r.location.coordinates.latitude != undefined &&
+        r.location.coordinates.longitude != undefined
+    ); */
+
+  const [reviews, setReviews] = useState<Review[]>(
     rawReviews.filter((r) => r.location)
   );
 
@@ -86,11 +94,12 @@ function OpenStreetMapMultiple({
         updateReviews(coordinates.latitude, coordinates.longitude, zoom);
       }
     }
-  }, [coordinates, rawReviews, updateReviews, zoom]); */
+  }, [coordinates, rawReviews, updateReviews, zoom]);
 
-  const center = /* reviews.length > 0
+  const center =
+    reviews.length > 0
       ? calculateCenter(reviews.map((r) => r.location!.coordinates!))
-      :  */ { lat: coordinates?.latitude!, lng: coordinates?.longitude! };
+      : { lat: coordinates?.latitude!, lng: coordinates?.longitude! };
 
   const [mapCenter, setMapCenter] = useState<{
     lat: number;
@@ -165,7 +174,7 @@ function OpenStreetMapMultiple({
             iconSize: [36 * iconSizeFactor, 36 * iconSizeFactor],
             iconAnchor: [14 * iconSizeFactor, 36 * iconSizeFactor],
           })}
-        ></Marker>
+        />
       )}
     </MapContainer>
   );

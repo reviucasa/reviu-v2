@@ -135,7 +135,6 @@ export const ManagementForm = () => {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     if (data.isRealStateAgency) {
-      
       if (isRealStateAgencyManual) {
         const agencyId = await createAgency(data.realStateAgency!);
         return onSubmitDraft({

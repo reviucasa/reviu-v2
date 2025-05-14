@@ -24,6 +24,8 @@ import { Link } from "@/navigation";
 import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 
 import dynamic from "next/dynamic";
+import { getAgency } from "@/models/agency";
+import { lowerCase } from "lodash";
 
 const OpenStreetMap = dynamic(() => import("../molecules/OpenStreetMap"), {
   ssr: false,
@@ -265,17 +267,26 @@ export const ReviewDetail = ({
                     <div className="flex flex-col gap-2 text-sm md:text-base">
                       <label>{t("common.inmobiliaria")}</label>
                       {review.data.management.agencyId ? (
-                        <Link
+                        <div
                           className="text-sm md:text-base cursor-pointer text-secondary-500 font-semibold hover:no-underline"
-                          href={`/agency/${encodeURIComponent(
+                          /* href={`/agency/${encodeURIComponent(
                             review.data.management?.realStateAgency
                               .toLocaleLowerCase()
                               .replaceAll(" ", "-")
                           )}`}
-                          title={tLinks("/agency")}
+                          title={tLinks("/agency")} */
+                          onClick={async () => {
+                            const agency = await getAgency(
+                              review.data.management!.agencyId!
+                            );
+
+                            if (agency?.lowercase) {
+                              window.location.href = `/agency/${agency?.lowercase}`;
+                            }
+                          }}
                         >
                           {review.data?.management?.realStateAgency}
-                        </Link>
+                        </div>
                       ) : (
                         <span>{t("managementReview.noSeInmobiliaria")}</span>
                       )}

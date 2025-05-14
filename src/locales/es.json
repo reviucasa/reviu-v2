@@ -281,7 +281,15 @@
     "publishedReviews": "reseñas publicadas",
     "reportedReviews": "reportadas",
     "suspendedReviews": "suspendidas",
-    "markAsSolved": "Marcar como resuelto"
+    "markAsSolved": "Marcar como resuelto",
+    "findReviewsInArea": "Encuentra las reseñas del área de tu elección",
+    "province": "Provincia",
+    "municipality": "Municipio",
+    "searchByLocation": "Busca por localidad",
+    "searchNearby": "Busca cerca de ti",
+    "nearYou": "cerca de ti",
+    "in": "en",
+    "noReviewsFound": "No hay reseñas"
   },
   "communityReviews": {
     "comunidadVecinos": "Comunidad de vecinos",

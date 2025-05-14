@@ -280,7 +280,16 @@
     "publishedReviews": "ressenyes publicades",
     "reportedReviews": "reportades",
     "suspendedReviews": "suspeses",
-    "markAsSolved": "Marca com a resolta"
+    "markAsSolved": "Marca com a resolta",
+    "findReviewsInArea": "Troba les ressenyes d'una zona en concret",
+    "province": "Província",
+    "municipality": "Municipi",
+    "searchByLocation": "Busca per localització",
+    "searchNearby": "Busca a prop teu",
+    "nearYou": "a prop teu",
+    "in": "a",
+    "noReviewsFound": "No hi ha cap ressenya"
+
   },
   "communityReviews": {
     "comunidadVecinos": "Comunitat de veïns",

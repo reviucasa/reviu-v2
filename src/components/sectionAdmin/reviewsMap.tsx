@@ -25,6 +25,7 @@ export default function ReviewsMap() {
               highlightedReviewId={""}
               setHighlightedReviewId={() => {}}
               iconSize="sm"
+              showPin={false}
             />
           ) : isFetching ? (
             <div className="flex justify-center items-center py-40">

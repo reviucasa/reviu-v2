@@ -129,18 +129,22 @@ export const AddressComboBox = ({
     let matchedMunicipalities: MunicipalityResult[] = [];
 
     // Search municipalities in all provinces
-    Object.entries(provincesData).forEach(([province, municipalities]) => {
-      const matchedMunicipalitiesForProvince = municipalities
-        .filter((municipality) =>
-          municipality.toLowerCase().includes(query.toLowerCase())
-        )
-        .map((municipality) => ({ municipality, province }));
+    Object.entries(provincesData)
+      .filter((v, i) =>
+        ["BARCELONA", "LLEIDA", "TARRAGONA", "GIRONA"].includes(v[0])
+      )
+      .forEach(([province, municipalities]) => {
+        const matchedMunicipalitiesForProvince = municipalities
+          .filter((municipality) =>
+            municipality.toLowerCase().includes(query.toLowerCase())
+          )
+          .map((municipality) => ({ municipality, province }));
 
-      matchedMunicipalities = [
-        ...matchedMunicipalities,
-        ...matchedMunicipalitiesForProvince,
-      ];
-    });
+        matchedMunicipalities = [
+          ...matchedMunicipalities,
+          ...matchedMunicipalitiesForProvince,
+        ];
+      });
 
     setMunicipalitiesResults(matchedMunicipalities);
   }, []);
@@ -282,7 +286,7 @@ export const AddressComboBox = ({
                     className="h-5 w-auto text-gray-400  left-2.5 top-2.5"
                     aria-hidden="true"
                   />
-                  <span>Busca en una zona</span>
+                  <span>{t("common.searchByLocation")}</span>
                 </div>
               </ComboboxOption>
             )}
@@ -334,7 +338,9 @@ export const AddressComboBox = ({
                   )}`}
                 >
                   <div className="flex flex-row w-full justify-between">
-                    <div>{toTitleCase(`${m.municipality} - ${m.province}`)}</div>
+                    <div>
+                      {toTitleCase(`${m.municipality} - ${m.province}`)}
+                    </div>
 
                     <div className="text-gray-400">Municipality</div>
                   </div>

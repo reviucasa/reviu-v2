@@ -281,7 +281,15 @@
     "publishedReviews": "published reviews",
     "reportedReviews": "reported reviews",
     "suspendedReviews": "suspended reviews",
-    "markAsSolved": "Mark as solved"
+    "markAsSolved": "Mark as solved",
+    "findReviewsInArea": "Find reviews of the area of your choice",
+    "province": "Province",
+    "municipality": "Municipality",
+    "searchByLocation": "Search by location",
+    "searchNearby": "Search nearby",
+    "nearYou": "near you",
+    "in": "in",
+    "noReviewsFound": "No reviews found"
   },
   "communityReviews": {
     "comunidadVecinos": "Building",

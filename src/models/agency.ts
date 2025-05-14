@@ -1,4 +1,5 @@
 import { db } from "@/firebase/config";
+import { slugify } from "@/helpers/slugify";
 import {
   DocumentData,
   FirestoreDataConverter,
@@ -23,6 +24,7 @@ export type RealStateAgency = {
   documentId: string;
   id: string;
   name: string;
+  address?: string;
   lowercase: string;
   timeCreated: Timestamp;
 };
@@ -124,16 +126,16 @@ async function getAgencies(
   return querySnapshot.docs.map((doc) => doc.data() as RealStateAgency);
 }
 
-async function searchAgenciesByName(prefix: string) {
+async function searchAgenciesByName(text: string) {
   const ref = collection(db, "agencies").withConverter(
     realStateAgencyConverter
   );
-  // Use orderBy to enable range queries on 'name'
+  // Use orderBy to enable range queries on 'lowercase'
   const q = query(
     ref,
     orderBy("lowercase"),
-    startAt(prefix),
-    endAt(prefix + "\uf8ff") // '\uf8ff' is a high code point in the Unicode range, used to match anything that starts with 'prefix'
+    startAt(slugify(text)), // '\uf8ff' is a high code point in the Unicode range, used to match anything that starts with 'prefix'
+    endAt(slugify(text) + "\uf8ff")
   );
 
   const querySnapshot = await getDocs(q);
@@ -146,6 +148,8 @@ async function searchAgenciesByName(prefix: string) {
 
   // Sort agencies by the length of their lowercase value (shortest first)
   allAgencies.sort((a, b) => a.lowercase.length - b.lowercase.length);
+
+  return allAgencies;
 
   const uniqueAgencies: RealStateAgency[] = [];
 

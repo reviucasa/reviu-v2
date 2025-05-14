@@ -22,14 +22,14 @@ export async function generateMetadata({
       ? `Reviu | Explore home reviews nearby`
       : locale === "es"
       ? `Reviu | Explora reseñas de viviendas cerca de ti`
-      : `Reviu | Explora ressenyes d'habitatges aprop teu`;
+      : `Reviu | Explora ressenyes d'habitatges a prop teu`;
 
   const description =
     locale === "en"
       ? `Learn more about home reviews near you. Read reviews and see detailed information about this area on Reviu.`
       : locale === "es"
       ? `Conoce más sobre reseñas de pisos cerca de ti. Lee reseñas y consulta información detallada sobre este área de alquiler en Reviu.`
-      : `Coneix més sobre ressenyes de pisos aprop teu. Llegeix ressenyes i consulta informació detallada sobre aquesta àrea de lloguer a Reviu.`;
+      : `Coneix més sobre ressenyes de pisos a prop teu. Llegeix ressenyes i consulta informació detallada sobre aquesta àrea de lloguer a Reviu.`;
 
   const keywords = [...mainKeywords(locale, "").slice(0, 3)];
 

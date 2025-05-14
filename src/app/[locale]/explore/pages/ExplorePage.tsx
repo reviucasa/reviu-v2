@@ -12,6 +12,7 @@ import MainLayout from "@/components/layouts/MainLayout";
 import { useCallback, useEffect, useState } from "react";
 
 import dynamic from "next/dynamic";
+import { useTranslations } from "next-intl";
 
 const OpenStreetMapMultiple = dynamic(
   () => import("@/components/molecules/OpenStreetMapMultiple"),
@@ -33,6 +34,7 @@ export default function ExplorePage({
   coordinates: Coordinates;
   fromCoordinates: boolean;
 }) {
+  const t = useTranslations();
   const [reviews, setReviews] = useState<Review[]>(initialReviews);
   const [highlightedReviewId, setHighlightedReviewId] = useState<string | null>(
     null
@@ -105,7 +107,7 @@ export default function ExplorePage({
               </div>
               <div className="relative flex justify-center">
                 <span className="bg-white px-2 text-sm text-gray-400">
-                  Reviews
+                  {t("common.reviews")}
                 </span>
               </div>
             </div>
@@ -133,7 +135,7 @@ export default function ExplorePage({
                 ))
               ) : !loading && reviews.length == 0 ? (
                 <div className="flex justify-center items-center py-40 w-full lg:w-[392px] h-full">
-                  {"No reviews found"}
+                  {t("common.noReviewsFound")}
                 </div>
               ) : (
                 <div className="flex justify-center items-center py-40 w-full lg:w-[392px] h-full">

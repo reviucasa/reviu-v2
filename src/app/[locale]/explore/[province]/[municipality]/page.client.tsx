@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import ExplorePage from "../../pages/ExplorePage";
 import { toTitleCase } from "@/helpers/stringHelpers";
 import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
+import { useTranslations } from "next-intl";
 
 export default function MunicipalityExplorePageClient({
   params: { province, municipality },
@@ -18,6 +19,7 @@ export default function MunicipalityExplorePageClient({
     municipality: string;
   };
 }) {
+  const t = useTranslations();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -67,7 +69,7 @@ export default function MunicipalityExplorePageClient({
 
   return (
     <ExplorePage
-      title={`Reviews in ${toTitleCase(
+      title={`${t("common.reviews")} ${t("common.in")} ${toTitleCase(
         decodeURIComponent(municipality).replaceAll("-", " ")
       )}, ${toTitleCase(decodeURIComponent(province))}`}
       loading={loading}

@@ -62,7 +62,7 @@ export default async function Agency({
   const config = await getTranslations("config");
 
   const agency = await getAgencyByName(
-    decodeURIComponent(params.agency.replaceAll("-", " "))
+    decodeURIComponent(params.agency)
   );
 
   // const reviews = await getReviewsByAgencyId(agency?.id);

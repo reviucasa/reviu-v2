@@ -68,7 +68,7 @@ export default function MyReviewsClientPage() {
             zoom={15}
             highlightedReviewId={highlightedReviewId}
             setHighlightedReviewId={setHighlightedReviewId}
-            showPin
+            showPin={false}
           />
         ) : loading ? (
           <div className="flex justify-center items-center py-40">
