@@ -50,7 +50,7 @@ export const verifyEmailLinkAndAuthenticate = async (t : ReturnType<typeof useTr
     if (isSignInWithEmailLink(auth, window.location.href)) {
       let email = window.localStorage.getItem("email");
       if (!email) {
-        email = window.prompt(t("autchCheck.provideEmail"));
+        email = window.prompt(t("authCheck.provideEmail"));
       }
       const credentials = await signInWithEmailLink(auth, email!, continueUrl);
       window.localStorage.removeItem("email");

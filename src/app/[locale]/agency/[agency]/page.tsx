@@ -9,7 +9,7 @@ import { getAgency, getAgencyByName } from "@/models/agency";
 import React from "react";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";
-import MainLayout  from "@/components/layouts/MainLayout";
+import MainLayout from "@/components/layouts/MainLayout";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { AgencyComboBoxClient } from "@/components/molecules/AgencyComboBoxClient";
 import { locales } from "@/config";
@@ -41,7 +41,7 @@ export function generateMetadata({
 
   const keywords = [
     `${agencyName} opiniones`,
-    ...mainKeywords(locale, '').slice(0, 3),
+    ...mainKeywords(locale, "").slice(0, 3),
   ];
 
   return {
