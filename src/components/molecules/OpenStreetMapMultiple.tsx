@@ -72,7 +72,21 @@ function OpenStreetMapMultiple({
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
-  let reviews = rawReviews.filter((r) => r.location);
+  /* let reviews = rawReviews.filter((r) => r.location); */
+
+  const [reviews, setReviews] = useState<Review[]>(
+    rawReviews.filter((r) => r.location)
+  );
+
+  useEffect(() => {
+    if (coordinates) {
+      setReviews(rawReviews);
+
+      /* if (updateReviews) {
+        updateReviews(coordinates.latitude, coordinates.longitude, zoom);
+      } */
+    }
+  }, [coordinates, updateReviews, rawReviews, zoom]);
 
   /* const reviews = rawReviews
     .slice(15, 20)
@@ -195,6 +209,7 @@ function MapEventHandler({
   coordinates?: Coordinates;
 }) {
   const map = useMap();
+  const [userDragged, setUserDragged] = useState(false);
 
   useEffect(() => {
     if (coordinates) {
@@ -202,13 +217,22 @@ function MapEventHandler({
     }
   }, [coordinates, map]);
 
+  useEffect(() => {
+    const handleDragStart = () => setUserDragged(true);
+    map.on("dragstart", handleDragStart);
+    return () => {
+      map.off("dragstart", handleDragStart);
+    };
+  }, [map]);
+
   useMapEvent("moveend", (event) => {
     const newCenter = event.target.getCenter();
-    console.log(newCenter);
     setMapCenter({ latitude: newCenter.lat, longitude: newCenter.lng });
-    if (updateReviews)
+    if (updateReviews && userDragged)
       updateReviews(newCenter.lat, newCenter.lng, map.getZoom());
+    setUserDragged(false); // reset for next move
   });
+
   useMapEvent("zoomend", () => {
     setCurrentZoom(map.getZoom());
   });
