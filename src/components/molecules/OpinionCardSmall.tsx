@@ -94,6 +94,7 @@ export const OpinionCardSmall = ({
                     height={80}
                     className="rounded-md object-cover border border-gray-200 w-12 h-20"
                     alt="selected image"
+                    unoptimized
                   />
                 ))}
           </div>
