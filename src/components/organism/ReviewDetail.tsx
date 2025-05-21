@@ -208,6 +208,7 @@ export const ReviewDetail = ({
                           height={288}
                           className="rounded-md object-cover border border-gray-200 w-44 h-72"
                           alt="selected image"
+                          unoptimized
                         />
                         <p> {image.caption}</p>
                       </div>

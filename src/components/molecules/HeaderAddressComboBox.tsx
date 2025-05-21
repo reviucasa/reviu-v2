@@ -28,17 +28,19 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
           )
         ) {
           if (
-            provincesData[address.split(", ")[1].toUpperCase()].includes(
-              address.split(", ")[0].toUpperCase()
+            provincesData[address.split(" - ")[1].toUpperCase()].includes(
+              address.split(" - ")[0].toUpperCase()
             )
           ) {
             router.push(
               `/explore/${address
-                .split(", ")
+                .split(" - ")
                 .map((e) => encodeURIComponent(e))
                 .join("/")
                 .toLowerCase()}`
             );
+            setLoading(false);
+
             return;
           }
         }
@@ -49,13 +51,13 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
           )
         ) {
           if (
-            mainCitiesNeighbourhoods[address.split(", ")[1]].includes(
-              address.split(", ")[0]
+            mainCitiesNeighbourhoods[address.split(" - ")[1]].includes(
+              address.split(" - ")[0]
             )
           ) {
             const coordinates = await getMunicipalityCoordinates(
-              address.split(", ")[0],
-              address.split(", ")[1]
+              address.split(" - ")[0],
+              address.split(" - ")[1]
             );
             if (coordinates != null) {
               router.push(
@@ -63,17 +65,22 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
                   coordinates?.lng
                 }&name=${encodeURIComponent(address)}`
               );
+              setLoading(false);
+
               return;
             } else {
               console.log("Couldn't find neighbourhood", address);
+              setLoading(false);
+
               return;
             }
             /* router.push(
-                  `/explore/${address.split(", ").join("/").toLowerCase()}`
-                ); */
+            `/explore/${address.split(", ").join("/").toLowerCase()}`
+          ); */
           }
         }
       }
+      
       const res = await getCatastroDataFromAddress(address);
       if (res) {
         const ubi =
