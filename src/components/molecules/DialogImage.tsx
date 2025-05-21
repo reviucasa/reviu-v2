@@ -62,6 +62,7 @@ export const DialogImage = ({
               height={700}
               className="object-contain w-full h-[90vh] "
               alt="selected image"
+              unoptimized
             />
             {images[currentIndex].caption != "" && (
               <p className="absolute font-semibold bg-white rounded-md bottom-8 px-4 py-2 max-w-80">
