@@ -1,0 +1,19 @@
+rules_version = '2';
+
+// Craft rules based on data in your Firestore database
+// allow write: if firestore.get(
+//    /databases/(default)/documents/users/$(request.auth.uid)).data.isAdmin;
+service firebase.storage {
+  match /b/{bucket}/o {
+    match /reviews/{userId}/{imageName} {
+      // Allow anyone to read images
+      allow read: if true;
+      // Restrict writes to folder owner
+      allow write: if request.auth.uid == userId;
+    }
+    match /posts/{postId}/{pathname=**} {
+      allow read: if true; 
+      allow write: if request.auth.token.admin == true;
+    }
+  }
+}
