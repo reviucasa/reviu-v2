@@ -86,7 +86,6 @@ function OpenStreetMapMultiple({
   );
 
   useEffect(() => {
-    console.log(coordinates, rawReviews.length);
     if (coordinates) {
       setReviews(rawReviews.filter((r) => r.location));
 

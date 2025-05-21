@@ -61,7 +61,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             address.split(" - ")[1].toUpperCase()
           )
         ) {
-          console.log("Searching province...");
           if (
             provincesData[address.split(" - ")[1].toUpperCase()].includes(
               address.split(" - ")[0].toUpperCase()

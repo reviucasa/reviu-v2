@@ -52,14 +52,14 @@ export default function BuildingPageClient({
 
   useEffect(() => {
     const fetchData = async () => {
-      console.log("address elements:", {
+      /* console.log("address elements:", {
         locale,
         province,
         municipality,
         type,
         address,
         number,
-      });
+      }); */
 
       try {
         const catastroData = await getCatastroDataFromAddressElements({
@@ -84,7 +84,6 @@ export default function BuildingPageClient({
               .referenciaCatastral.edificio
           : null;
 
-        console.log(catastroRef);
 
         if (!catastroRef) {
           console.error("No catastro ref in data");
