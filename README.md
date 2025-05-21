@@ -19,7 +19,7 @@ This project is licensed under the **GPL v3** and built and powered by [IDRA](ht
 
 ```bash
 git clone https://github.com/reviucasa/reviu-v2
-cd reviucasa
+cd reviu-v2
 ```
 
 ### 2. Install Dependencies
@@ -83,7 +83,7 @@ firebase deploy --only storage:rules
 
 * [Next.js 14](https://nextjs.org/)
 * [Tailwind CSS](https://tailwindcss.com/)
-* [Firebase (Auth + Firestore + Storage)](https://firebase.google.com/)
+* [Firebase (Auth + Firestore + Storage + Functions)](https://firebase.google.com/)
 * [TypeScript](https://www.typescriptlang.org/)
 
 ---
@@ -96,7 +96,7 @@ We welcome contributions! To get started:
 2. Create a new branch: `git checkout -b feature/my-feature`
 3. Commit your changes: `git commit -am 'Add feature'`
 4. Push to the branch: `git push origin feature/my-feature`
-5. Submit a pull request
+5. Submit a pull request to the `dev` branch
 
 ---
 
