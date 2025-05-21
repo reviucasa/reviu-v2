@@ -55,57 +55,64 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-      console.log(address)
-      if (Object.keys(provincesData).includes(address.split(" - ")[1].toUpperCase())) {
-        console.log("Searching province...");
+      if (address.includes(" - ")) {
         if (
-          provincesData[address.split(" - ")[1].toUpperCase()].includes(
-            address.split(" - ")[0].toUpperCase()
+          Object.keys(provincesData).includes(
+            address.split(" - ")[1].toUpperCase()
           )
         ) {
-          router.push(
-            `/explore/${address
-              .split(" - ")
-              .map((e) => encodeURIComponent(e))
-              .join("/")
-              .toLowerCase()}`
-          );
-          setLoading(false);
-
-          return;
-        }
-      }
-
-      if (
-        Object.keys(mainCitiesNeighbourhoods).includes(address.split(" - ")[1])
-      ) {
-        if (
-          mainCitiesNeighbourhoods[address.split(" - ")[1]].includes(
-            address.split(" - ")[0]
-          )
-        ) {
-          const coordinates = await getMunicipalityCoordinates(
-            address.split(" - ")[0],
-            address.split(" - ")[1]
-          );
-          if (coordinates != null) {
+          console.log("Searching province...");
+          if (
+            provincesData[address.split(" - ")[1].toUpperCase()].includes(
+              address.split(" - ")[0].toUpperCase()
+            )
+          ) {
             router.push(
-              `/explore?lat=${coordinates?.lat}&lng=${
-                coordinates?.lng
-              }&name=${encodeURIComponent(address)}`
+              `/explore/${address
+                .split(" - ")
+                .map((e) => encodeURIComponent(e))
+                .join("/")
+                .toLowerCase()}`
             );
             setLoading(false);
 
             return;
-          } else {
-            console.log("Couldn't find neighbourhood", address);
-            setLoading(false);
-
-            return;
           }
-          /* router.push(
+        }
+
+        if (
+          Object.keys(mainCitiesNeighbourhoods).includes(
+            address.split(" - ")[1]
+          )
+        ) {
+          if (
+            mainCitiesNeighbourhoods[address.split(" - ")[1]].includes(
+              address.split(" - ")[0]
+            )
+          ) {
+            const coordinates = await getMunicipalityCoordinates(
+              address.split(" - ")[0],
+              address.split(" - ")[1]
+            );
+            if (coordinates != null) {
+              router.push(
+                `/explore?lat=${coordinates?.lat}&lng=${
+                  coordinates?.lng
+                }&name=${encodeURIComponent(address)}`
+              );
+              setLoading(false);
+
+              return;
+            } else {
+              console.log("Couldn't find neighbourhood", address);
+              setLoading(false);
+
+              return;
+            }
+            /* router.push(
             `/explore/${address.split(", ").join("/").toLowerCase()}`
           ); */
+          }
         }
       }
 

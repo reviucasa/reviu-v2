@@ -21,48 +21,53 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-
-      if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
-        if (
-          provincesData[address.split(", ")[1]].includes(address.split(", ")[0])
-        ) {
-          router.push(
-            `/explore/${address
-              .split(", ")
-              .map((e) => encodeURIComponent(e))
-              .join("/")
-              .toLowerCase()}`
-          );
-          return;
-        }
-      }
-
-      if (
-        Object.keys(mainCitiesNeighbourhoods).includes(address.split(" - ")[1])
-      ) {
-        if (
-          mainCitiesNeighbourhoods[address.split(", ")[1]].includes(
-            address.split(", ")[0]
-          )
-        ) {
-          const coordinates = await getMunicipalityCoordinates(
-            address.split(", ")[0],
-            address.split(", ")[1]
-          );
-          if (coordinates != null) {
+      if (address.includes(" - ")) {
+        if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
+          if (
+            provincesData[address.split(", ")[1]].includes(
+              address.split(", ")[0]
+            )
+          ) {
             router.push(
-              `/explore?lat=${coordinates?.lat}&lng=${
-                coordinates?.lng
-              }&name=${encodeURIComponent(address)}`
+              `/explore/${address
+                .split(", ")
+                .map((e) => encodeURIComponent(e))
+                .join("/")
+                .toLowerCase()}`
             );
             return;
-          } else {
-            console.log("Couldn't find neighbourhood", address);
-            return;
           }
-          /* router.push(
+        }
+
+        if (
+          Object.keys(mainCitiesNeighbourhoods).includes(
+            address.split(" - ")[1]
+          )
+        ) {
+          if (
+            mainCitiesNeighbourhoods[address.split(", ")[1]].includes(
+              address.split(", ")[0]
+            )
+          ) {
+            const coordinates = await getMunicipalityCoordinates(
+              address.split(", ")[0],
+              address.split(", ")[1]
+            );
+            if (coordinates != null) {
+              router.push(
+                `/explore?lat=${coordinates?.lat}&lng=${
+                  coordinates?.lng
+                }&name=${encodeURIComponent(address)}`
+              );
+              return;
+            } else {
+              console.log("Couldn't find neighbourhood", address);
+              return;
+            }
+            /* router.push(
                   `/explore/${address.split(", ").join("/").toLowerCase()}`
                 ); */
+          }
         }
       }
       const res = await getCatastroDataFromAddress(address);
