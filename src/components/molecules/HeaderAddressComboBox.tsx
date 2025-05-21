@@ -22,10 +22,14 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
     if (address && address != "") {
       setLoading(true);
       if (address.includes(" - ")) {
-        if (Object.keys(provincesData).includes(address.split(" - ")[1])) {
+        if (
+          Object.keys(provincesData).includes(
+            address.split(" - ")[1].toUpperCase()
+          )
+        ) {
           if (
-            provincesData[address.split(", ")[1]].includes(
-              address.split(", ")[0]
+            provincesData[address.split(", ")[1].toUpperCase()].includes(
+              address.split(", ")[0].toUpperCase()
             )
           ) {
             router.push(
