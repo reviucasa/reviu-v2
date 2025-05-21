@@ -49,7 +49,7 @@ export default function NearbyExplorePageClient({
   return (
     <ExplorePage
       title={`${t("common.reviews")} ${
-        name != null ? t("common.in") + name : t("common.nearYou")
+        name != null ? t("common.in") + " " + name : t("common.nearYou")
       }`}
       loading={loading}
       reviews={reviews}
