@@ -72,6 +72,8 @@ function OpenStreetMapMultiple({
   const [zoom, setZoom] = useState<number>(initialZoom);
   const [activeMarker, setActiveMarker] = useState<string | null>(null);
 
+  let reviews = rawReviews.filter((r) => r.location);
+
   /* const reviews = rawReviews
     .slice(15, 20)
     .filter(
@@ -81,19 +83,19 @@ function OpenStreetMapMultiple({
         r.location.coordinates.longitude != undefined
     ); */
 
-  const [reviews, setReviews] = useState<Review[]>(
+  /* const [reviews, setReviews] = useState<Review[]>(
     rawReviews.filter((r) => r.location)
-  );
+  ); */
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (coordinates) {
-      setReviews(rawReviews.filter((r) => r.location));
+      // setReviews(rawReviews);
 
       if (updateReviews) {
         updateReviews(coordinates.latitude, coordinates.longitude, zoom);
       }
     }
-  }, [coordinates, rawReviews, updateReviews, zoom]);
+  }, [coordinates, updateReviews, rawReviews, zoom]); */
 
   const center =
     reviews.length > 0
@@ -202,6 +204,7 @@ function MapEventHandler({
 
   useMapEvent("moveend", (event) => {
     const newCenter = event.target.getCenter();
+    console.log(newCenter);
     setMapCenter({ latitude: newCenter.lat, longitude: newCenter.lng });
     if (updateReviews)
       updateReviews(newCenter.lat, newCenter.lng, map.getZoom());
