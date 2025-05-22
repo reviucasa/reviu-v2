@@ -8,6 +8,7 @@ import { setRequestLocale } from "next-intl/server";
 import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/react";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -95,6 +96,7 @@ export default async function RootLayout({
             <Providers>{children}</Providers>
           </Suspense>
         </NextIntlClientProvider>
+        <Analytics />
         <Script id="facebook-pixel" strategy="afterInteractive">
           {`
           !function(f,b,e,v,n,t,s)
