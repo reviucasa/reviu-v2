@@ -3,6 +3,7 @@ import { removeVowelAccents2 } from "./removeAccents";
 import { provincesData } from "@/staticData";
 import { getProvinceAndMunicipality } from "./getProvinceAndMunicipality";
 import { ref } from "firebase/storage";
+import { addressExceptions } from "@/const/addressExceptions";
 
 export const catastroAddressEndpoint = (
   provincia: string,
@@ -70,10 +71,10 @@ export const getCatastroDataFromAddressElements = async (
   addressElements: CatastroAddressElements
 ): Promise<CatastroResponse | null> => {
   const url = catastroAddressEndpoint(
-    addressElements.province,
-    addressElements.municipality,
+    encodeURIComponent(addressElements.province),
+    encodeURIComponent(addressElements.municipality),
     addressElements.type,
-    addressElements.street,
+    encodeURIComponent(addressElements.street),
     addressElements.number
   );
 
@@ -279,19 +280,31 @@ export const cleanAddress = (
 
   const match = address.match(regex);
 
+  if (Object.keys(addressExceptions).includes(address.split(",")[0])) {
+    console.log(
+      "Exception address:",
+      address.split(",")[0],
+      removeVowelAccents2(addressExceptions[address.split(",")[0]])
+    );
+  }
+
   if (match) {
     const type = match[1];
-    const street = removeVowelAccents2(
-      match[3]
-        .replace(/^d'/i, "")
-        .replace(/^de\s+/i, "")
-        .replace(/^del\s+/i, "")
-        .replace(/^de la\s+/i, "")
-        .replace(/^de les\s+/i, "")
-        .replace(/^la\s+/i, "")
-        .replace(/^les\s+/i, "")
-        .replace(/l·l/g, "l.l")
-    );
+    const street = Object.keys(addressExceptions).includes(
+      address.split(",")[0]
+    )
+      ? removeVowelAccents2(addressExceptions[address.split(",")[0]])
+      : removeVowelAccents2(
+          match[3]
+            .replace(/^d'/i, "")
+            .replace(/^de\s+/i, "")
+            .replace(/^del\s+/i, "")
+            .replace(/^de la\s+/i, "")
+            .replace(/^de les\s+/i, "")
+            .replace(/^la\s+/i, "")
+            .replace(/^les\s+/i, "")
+            .replace(/l·l/g, "l.l")
+        );
 
     const number = match[4];
 
