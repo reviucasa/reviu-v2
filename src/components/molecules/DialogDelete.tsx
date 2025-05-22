@@ -15,7 +15,6 @@ export const DialogDelete = ({
   setIsOpen?: any;
   reviewId: string;
 }) => {
-  const router = useRouter();
   const [selectedAction, setSelectedAction] = useState("");
 
   const handleSuspend = async () => {

@@ -14,7 +14,7 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({
-  params: { locale, province, municipality, type, address, number, reviewId },
+  params: { locale, municipality, address, number },
 }: {
   params: {
     locale: string;
@@ -29,7 +29,6 @@ export async function generateMetadata({
   const addr = toTitleCase(
     decodeReadableURI([[address, number].join(" "), municipality].join(", "))
   );
-
 
   const titleDetail =
     locale == "en"

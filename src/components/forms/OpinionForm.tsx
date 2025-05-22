@@ -32,7 +32,7 @@ import {
 import { auth } from "@/firebase/config";
 import { uploadImage } from "@/firebase/helpers";
 import { resizeImage } from "@/helpers/resizeImage";
-import { BiTrash, BiX } from "react-icons/bi";
+import { BiX } from "react-icons/bi";
 
 export const OpinionForm = () => {
   const { draft } = useDraft();
@@ -62,7 +62,6 @@ export const OpinionForm = () => {
   const {
     formState: { errors },
     control,
-    setError,
     clearErrors,
     handleSubmit,
     reset,
@@ -260,7 +259,7 @@ export const OpinionForm = () => {
                                         if (reader.result) {
                                           onChange(reader.result);
 
-                                          const target = e.target as FileReader;
+                                          //const target = e.target as FileReader;
 
                                           const previewElement =
                                             document.getElementById(

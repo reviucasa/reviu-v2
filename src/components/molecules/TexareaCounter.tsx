@@ -1,6 +1,5 @@
 import React from "react";
 import { Control, useController } from "react-hook-form";
-import { BiLink } from "react-icons/bi";
 import { AssertsShape } from "yup/lib/object";
 
 interface Props {
@@ -26,7 +25,6 @@ const TextAreaWithCharCounter = React.forwardRef<HTMLTextAreaElement, Props>(
       ariaInvalid,
       withAddLink = false,
     },
-    ref
   ) => {
     const { field } = useController({
       control,

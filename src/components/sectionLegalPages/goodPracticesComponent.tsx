@@ -1,6 +1,4 @@
-import { Link } from "@/navigation";
 import { getTranslations } from "next-intl/server";
-import { classNames } from "../../helpers/classNames";
 
 export async function GoodPracticesComponent({
   className,
@@ -8,7 +6,6 @@ export async function GoodPracticesComponent({
   className?: string;
 }) {
   const t = await getTranslations();
-  const tLinks = await getTranslations("linksTitles");
 
   return (
     <div className={className}>

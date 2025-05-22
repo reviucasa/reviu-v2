@@ -3,10 +3,8 @@ import { getTranslations } from "next-intl/server";
 
 export async function LegalNoticeComponent({
   className,
-  withTitle = true,
 }: {
   className?: string;
-  withTitle?: boolean;
 }) {
   const t = await getTranslations();
   const tLinks = await getTranslations("linksTitles");

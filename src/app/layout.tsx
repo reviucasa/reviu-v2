@@ -1,4 +1,3 @@
-import { mainKeywords } from "@/staticData";
 import { ReactNode } from "react";
 
 type Props = {

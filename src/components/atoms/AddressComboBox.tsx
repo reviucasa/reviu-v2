@@ -130,7 +130,7 @@ export const AddressComboBox = ({
 
     // Search municipalities in all provinces
     Object.entries(provincesData)
-      .filter((v, i) =>
+      .filter((v) =>
         ["BARCELONA", "LLEIDA", "TARRAGONA", "GIRONA"].includes(v[0])
       )
       .forEach(([province, municipalities]) => {
@@ -178,7 +178,6 @@ export const AddressComboBox = ({
     setNeighbourhoodsResults(matchedNeighbourhoods);
   }, []);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchAddressList = useCallback(
     debounce(async (query: string) => {
       setLoading(true);
@@ -197,12 +196,12 @@ export const AddressComboBox = ({
 
       // Create a bounding box with sides away from the center point
       const center = { lat: 41.40855, lng: 2.17114 };
-      const bounds = {
+      /* const bounds = {
         north: center.lat + 0.08,
         south: center.lat - 0.05,
         east: center.lng + 0.075,
         west: center.lng - 0.075,
-      };
+      }; */
 
       const request: google.maps.places.AutocompletionRequest = {
         input: query,

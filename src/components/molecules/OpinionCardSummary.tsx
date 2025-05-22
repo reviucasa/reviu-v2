@@ -1,11 +1,9 @@
 "use client";
 import { Chip } from "@/components/atoms/Chip";
 import Image from "next/image";
-import green_house from "public/images/green_house.png";
 import { useState } from "react";
 import thumbDown from "public/images/thumbDown.svg";
 import thumbUp from "public/images/thumbUp.svg";
-import { ApartmentLocation } from "../atoms/ApartmentLocation";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
@@ -23,7 +21,6 @@ export const OpinionCardSummary = ({
   openInModal?: boolean;
 }) => {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
-  const router = useRouter();
   const t = useTranslations();
 
   return (

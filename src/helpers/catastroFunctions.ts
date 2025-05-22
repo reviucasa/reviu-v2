@@ -2,7 +2,6 @@ import { CatastroResponse, CoordinatesResponse } from "@/models/catastro";
 import { removeVowelAccents2 } from "./removeAccents";
 import { provincesData } from "@/staticData";
 import { getProvinceAndMunicipality } from "./getProvinceAndMunicipality";
-import { ref } from "firebase/storage";
 import { addressExceptions } from "@/const/addressExceptions";
 
 export const catastroAddressEndpoint = (

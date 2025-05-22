@@ -42,7 +42,11 @@ export const LoginForm = () => {
         // Call the function and pass data
         const url = `${window.location.protocol}//${window.location.host}`;
         try {
-          const response = await sendSignInLinkToEmail({ email, locale, url });
+          /* const response =  */ await sendSignInLinkToEmail({
+            email,
+            locale,
+            url,
+          });
           window.localStorage.setItem("email", email || "none");
           router.push("/auth/checkEmail");
         } catch (error) {

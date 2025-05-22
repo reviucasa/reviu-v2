@@ -3,7 +3,6 @@ import Image from "next/image";
 import circulosection from "public/images/circulosection.svg";
 import experiences from "public/images/experiences.png";
 import sofa from "public/images/sofa.png";
-import { useTranslations } from "next-intl";
 import { getTranslations } from "next-intl/server";
 
 type SectionExperiencesProps = {

@@ -1,7 +1,6 @@
 import MainLayout  from "@/components/layouts/MainLayout";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { PostHorizontalCard } from "@/components/molecules/PostHorizontalCard";
-import { host, locales } from "@/config";
 import { PostStatus, getPosts } from "@/models/post";
 import { mainKeywords } from "@/staticData";
 import { getTranslations, setRequestLocale } from "next-intl/server";

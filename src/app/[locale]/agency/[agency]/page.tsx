@@ -5,7 +5,7 @@ import green_house from "public/images/green_house.png";
 import comillas from "public/images/comillas.png";
 import { ApartmentLocation } from "@/components/atoms/ApartmentLocation";
 import { getReviewsByAgencyId, Review } from "@/models/review";
-import { getAgency, getAgencyByName } from "@/models/agency";
+import { getAgencyByName } from "@/models/agency";
 import React from "react";
 import { BounceLoader } from "react-spinners";
 import cardBannerImage from "public/images/real-state-banner.jpg";

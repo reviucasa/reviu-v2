@@ -1,5 +1,5 @@
 import { auth } from "@/firebase/config";
-import { Review, getDraft, getReview } from "@/models/review";
+import { Review, getDraft } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 
 const useDraft = () => {

@@ -1,12 +1,11 @@
 "use client";
-import { BiBlock, BiChevronRight, BiFlag } from "react-icons/bi";
+import { BiChevronRight } from "react-icons/bi";
 import Image from "next/image";
 import thumbDown from "public/images/thumbDown.svg";
 import thumbUp from "public/images/thumbUp.svg";
 import {
   Review,
   ReviewStatus,
-  getSuspendedReviews,
   getSuspendedReviewsWithUser,
 } from "@/models/review";
 import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";

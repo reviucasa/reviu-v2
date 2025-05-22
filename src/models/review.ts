@@ -1,4 +1,4 @@
-import { db, firebase } from "@/firebase/config";
+import { db } from "@/firebase/config";
 import {
   DocumentData,
   FirestoreDataConverter,

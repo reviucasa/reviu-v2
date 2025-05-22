@@ -58,11 +58,11 @@ export default function ReviewsTable() {
     }
   };
 
-  const sortOptions = [
+  /* const sortOptions = [
     { name: "Most Popular", href: "#" },
     { name: "Best Rating", href: "#" },
     { name: "Newest", href: "#" },
-  ];
+  ]; */
 
   return (
     <div className="">

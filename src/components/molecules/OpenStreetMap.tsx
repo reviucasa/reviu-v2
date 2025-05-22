@@ -2,7 +2,7 @@
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useState } from "react";
-import { Circle, MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { Circle, MapContainer, Marker, TileLayer } from "react-leaflet";
 
 type MapProps = {
   latitude: number;
@@ -16,11 +16,11 @@ function OpenStreetMap({
   zoom = 15,
   circleDecoration,
 }: MapProps) {
-  const [center, setCenter] = useState({
+  const center = {
     lat: latitude /* +0.00025 */,
     lng: longitude,
-  });
-  
+  };
+
   const windowWidth = window.innerWidth;
 
   const purpleOptions = {

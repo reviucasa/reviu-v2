@@ -1,5 +1,5 @@
 "use client";
-import { BiChevronRight, BiExpandAlt } from "react-icons/bi";
+import { BiChevronRight } from "react-icons/bi";
 import { Review, getReview } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 import { BounceLoader } from "react-spinners";

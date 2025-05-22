@@ -1,7 +1,5 @@
-import { shuffle } from "lodash";
-import debounce from "lodash.debounce";
 import Image from "next/image";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import arrowLeft from "public/images/arrowLeft.svg";
 import arrowRigth from "public/images/arrowRigth.svg";
 import { Button } from "../atoms/Button";
@@ -65,7 +63,6 @@ export const SlideReview = ({
     windowWidth,
     mobileSizeCard,
     leftSlidePosition,
-    numberOfCards,
   } = memoizedValues;
 
   const shuffleData = useMemo(() => {

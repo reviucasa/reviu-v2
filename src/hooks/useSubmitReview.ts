@@ -1,7 +1,7 @@
 import { SubmitHandler } from "react-hook-form";
 import { useStep } from "./useStep";
 import { auth } from "@/firebase/config";
-import { updateDraft, updateReview } from "@/models/review";
+import { updateReview } from "@/models/review";
 import { removeUndefinedValues } from "./useSubmitDraft";
 
 type ReturnSubmitReview = {

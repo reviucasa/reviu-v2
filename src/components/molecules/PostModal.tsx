@@ -1,6 +1,5 @@
 "use client";
 import { DialogDrawer } from "../atoms/DialogDrawer";
-import { Post } from "@/models/post";
 import { PostPlain, PostView } from "../organism/PostView";
 
 export const PostModal = ({

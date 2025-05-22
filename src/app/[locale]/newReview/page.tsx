@@ -4,7 +4,6 @@ import { useUser } from "@/hooks/swr/useUser";
 import { steps } from "@/staticData";
 import { useRouter } from "@/navigation";
 import { useEffect } from "react";
-import { auth } from "@/firebase/config";
 
 export default function Review() {
   const { draft } = useDraft();

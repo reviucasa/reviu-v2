@@ -20,12 +20,10 @@ import { ReviewStatusBadge } from "../atoms/ReviewStatusBadges";
 import { useAuth } from "@/context/auth";
 import { UserStatus } from "@/models/user";
 import { Unsuspend } from "../atoms/Unsuspend";
-import { Link } from "@/navigation";
 import { BuildingAnalysisContext } from "@/context/BuildingAnalysis";
 
 import dynamic from "next/dynamic";
 import { getAgency } from "@/models/agency";
-import { lowerCase } from "lodash";
 
 const OpenStreetMap = dynamic(() => import("../molecules/OpenStreetMap"), {
   ssr: false,
@@ -40,7 +38,6 @@ export const ReviewDetail = ({
 }) => {
   const { user, claims } = useAuth();
   const t = useTranslations();
-  const tLinks = useTranslations("linksTitles");
   const { wordCloud } = useContext(BuildingAnalysisContext);
   const vibe = wordCloud?.find((name) => name.group === "vibe")?.words;
   const services = wordCloud?.find((name) => name.group === "services")?.words;

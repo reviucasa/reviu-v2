@@ -1,11 +1,5 @@
-import Cactus from "public/images/BgCactus.svg";
-import circulosection from "public/images/circulosection.svg";
-import Justicia from "public/images/justicia.svg";
-import KeyCommunity from "public/images/keyCommunty.svg";
-import { ImageRounded } from "../atoms/ImageRounded";
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import Idra from "public/images/IDRA-trans.png";
 import Nextgen from "public/images/eu-nextgen.png";
 import GobEs from "public/images/gob-es.png";
 import GenCat from "public/images/gencat.png";

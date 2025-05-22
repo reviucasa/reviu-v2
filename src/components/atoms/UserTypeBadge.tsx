@@ -1,4 +1,4 @@
-import { UserStatus, UserType } from "@/models/user";
+import { UserType } from "@/models/user";
 
 export const UserTypeBadge = ({ type }: { type: UserType }) => {
   const color =

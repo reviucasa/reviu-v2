@@ -6,7 +6,7 @@ import { capitalize } from "lodash";
 import { BounceLoader } from "react-spinners";
 
 export async function generateMetadata({
-  params: { locale, province, municipality, type, street, number, reviewId },
+  params: { locale, province, municipality, street, number, reviewId },
 }: {
   params: {
     locale: string;

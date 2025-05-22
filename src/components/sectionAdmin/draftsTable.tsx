@@ -1,6 +1,6 @@
 "use client";
 import { BiChevronRight } from "react-icons/bi";
-import { Review, getDraftsCount, getDraftsWithUser } from "@/models/review";
+import { Review, getDraftsWithUser } from "@/models/review";
 import { useQuery } from "@tanstack/react-query";
 import { BounceLoader } from "react-spinners";
 import { useState } from "react";

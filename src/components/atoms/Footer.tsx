@@ -6,9 +6,7 @@ import Twitter from "public/images/IconTwitter.svg";
 import Idra from "public/images/IDRA-trans.png";
 import LogoWhite from "public/images/reviuLogoWhite.svg";
 import { DropDownLanguages } from "./DropDownLanguages";
-import { getTranslations } from "next-intl/server";
 import { Link } from "@/navigation";
-import { useTransition } from "react";
 import { useTranslations } from "next-intl";
 
 export function Footer() {

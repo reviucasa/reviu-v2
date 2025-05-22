@@ -16,7 +16,6 @@ export function Card({
   text,
   background,
 }: SectionCardsProps) {
-  const t = useTranslations();
 
   return (
     <div

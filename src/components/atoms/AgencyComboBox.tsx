@@ -34,7 +34,6 @@ export const AgencyComboBox = ({
   const [agenciesList, setAgenciesList] = useState<RealStateAgency[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchRealStateAgencyList = useCallback(
     debounce(async (query: string) => {
       setLoading(true);

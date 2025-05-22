@@ -1,5 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
 
 import {
   Coordinates,
@@ -26,13 +25,11 @@ export default function ExplorePage({
   reviews: initialReviews,
   loading,
   coordinates,
-  fromCoordinates,
 }: {
   title: string;
   reviews: Review[];
   loading: boolean;
   coordinates: Coordinates;
-  fromCoordinates: boolean;
 }) {
   const t = useTranslations();
   const [reviews, setReviews] = useState<Review[]>(initialReviews);

@@ -225,7 +225,7 @@ export const PostForm = () => {
                               if (reader.result) {
                                 onChange(reader.result);
 
-                                const target = e.target as FileReader;
+                                //const target = e.target as FileReader;
 
                                 const previewElement = document.getElementById(
                                   "image"

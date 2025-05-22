@@ -3,10 +3,9 @@ import {
   DialogPanel,
   DialogTitle,
   Dialog as HeadlessUIDialog,
-  Transition,
   TransitionChild,
 } from "@headlessui/react";
-import { Fragment, ReactNode, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { AiOutlineClose } from "react-icons/ai";
 
 export const DialogDrawer = ({

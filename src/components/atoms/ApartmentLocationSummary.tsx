@@ -1,7 +1,7 @@
 import { Review } from "@/models/review";
 import dayjs from "dayjs";
 import { useTranslations } from "next-intl";
-import { PiCalendarBlank, PiKey, PiMoneyLight } from "react-icons/pi";
+import { PiCalendarBlank, PiMoneyLight } from "react-icons/pi";
 
 export const ApartmentLocationSummary = ({
   className,
@@ -13,7 +13,7 @@ export const ApartmentLocationSummary = ({
   const ActualYear = dayjs().year();
   const EndYear = Number(review?.data?.stay?.endYear);
   const StartYear = Number(review?.data?.stay?.startYear);
-  const diffYear = EndYear ? EndYear - StartYear : ActualYear - StartYear;
+  // const diffYear = EndYear ? EndYear - StartYear : ActualYear - StartYear;
 
   const startPrice = Number(review?.data?.stay?.startPrice);
   const endPrice = Number(review?.data?.stay?.endPrice);

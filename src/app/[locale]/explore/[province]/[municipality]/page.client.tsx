@@ -75,7 +75,6 @@ export default function MunicipalityExplorePageClient({
       loading={loading}
       reviews={reviews}
       coordinates={coordinates!}
-      fromCoordinates={false}
     />
   );
 }
