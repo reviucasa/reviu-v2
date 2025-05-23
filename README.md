@@ -2,6 +2,10 @@
 
 **ReviuCasa** is an open source homes review platform mainly for tenants who are searching for honest reviews about rental flats. It helps tenants in Spain discover trustworthy agencies and rental properties through community-shared experiences.
 
+By opening the project’s source code, we aim to foster a development community aligned with our values of social justice, transparency, and mutual support. Therefore, we will only accept contributions that reinforce these principles and help improve the experience for tenants and responsible landlords committed to doing things right.
+
+We reserve the right to reject contributions that do not respect these values or that may compromise Reviu’s mission to make the housing market fairer and more transparent.
+
 This project is licensed under the **GPL v3** and built and powered by [IDRA](https://idrabcn.com/), the Barcelona Urban Research Institute.
 
 ## ✨ Features
