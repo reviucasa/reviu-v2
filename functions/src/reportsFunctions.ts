@@ -8,11 +8,9 @@ import * as admin from "firebase-admin";
  *
  * It performs the following steps:
  *
- * 1. Fetches the reviewer data from the `users` collection based on the
+ * 1. Fetches the owner data from the `users` collection based on the
  * `userId` from the associated review.
- * 2. Updates the newly created report document with the reviewer's details
- * (email, ID, full name).
- * 3. Constructs and sends an email notification to the Reviucasa support
+ * 2. Constructs and sends an email notification to the Reviucasa support
  * team with the report details.
  *
  * @function
@@ -27,26 +25,28 @@ export const onReportCreated = functions
     const reportData = snapshot.data();
 
     try {
-      const reviewerSnapshot = await admin
+      const ownerSnapshot = await admin
         .firestore()
         .collection("users")
         .doc(reportData.review.userId)
         .get();
 
-      if (!reviewerSnapshot.exists) {
-        console.error("Reviewer not found in the users collection");
+      let ownerData = null;
+
+      if (!ownerSnapshot.exists) {
+        console.error("Owner not found in the users collection");
         return;
+      } else {
+        ownerData = ownerSnapshot.data();
+
+        await snapshot.ref.update({
+          ownerƒ: {
+            email: ownerData?.email,
+            id: ownerSnapshot.id,
+            name: `${ownerData?.name} ${ownerSnapshot?.lastname}`,
+          },
+        });
       }
-
-      const reviewerData = reviewerSnapshot.data();
-
-      await snapshot.ref.update({
-        reviewer: {
-          email: reviewerData?.email,
-          id: reviewerSnapshot.id,
-          name: `${reviewerData?.name} ${reviewerData?.lastname}`,
-        },
-      });
 
       const location = reportData.review.location;
       const reviewLink = [
@@ -140,10 +140,12 @@ export const onReportCreated = functions
         <p><strong>Review Address:</strong> ${reportData.review.address}</p>
 
         <br />
-        <p><strong>Reviewer Email:</strong> ${reviewerData?.email}</p>
+        <p><strong>Reviewer Email:</strong> ${
+          ownerData?.email ?? "Deleted user"
+        }</p>
         <p>
-          <strong>Reviewer Name:</strong> 
-          ${reviewerData?.name + " " + reviewerData?.lastname} 
+          <strong>Owner Name:</strong> 
+          ${ownerData?.name && ownerData?.name + " " + ownerData?.lastname} 
         </p>
         
       </div>
