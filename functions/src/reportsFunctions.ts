@@ -43,7 +43,7 @@ export const onReportCreated = functions
           ownerƒ: {
             email: ownerData?.email,
             id: ownerSnapshot.id,
-            name: `${ownerData?.name} ${ownerSnapshot?.lastname}`,
+            name: `${ownerData?.name} ${ownerData?.lastname}`,
           },
         });
       }
