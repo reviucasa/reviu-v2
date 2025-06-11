@@ -196,12 +196,18 @@ export const AddressComboBox = ({
 
       // Create a bounding box with sides away from the center point
       const center = { lat: 41.40855, lng: 2.17114 };
-      /* const bounds = {
+      const bounds = {
         north: center.lat + 0.08,
         south: center.lat - 0.05,
         east: center.lng + 0.075,
         west: center.lng - 0.075,
-      }; */
+      };
+      const cataloniaBounds = {
+        north: 42.753,
+        south: 40.341,
+        east: 3.384,
+        west: 0.073,
+      };
 
       const request: google.maps.places.AutocompletionRequest = {
         input: query,
@@ -213,7 +219,7 @@ export const AddressComboBox = ({
         //fields: ["name", "formatted_address"], //"address_components",
         types: ["address"],
         locationBias: "IP_BIAS",
-        // locationRestriction: bounds,
+        locationRestriction: cataloniaBounds,
         //strictBounds: true,
       };
 
