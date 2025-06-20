@@ -3,21 +3,19 @@ import { DropDownShare } from "@/components/atoms/DropDownShare";
 import { BannerOpinion } from "@/components/molecules/BannerOpinion";
 import { HeaderAddressComboBox } from "@/components/molecules/HeaderAddressComboBox";
 import BuildingView from "@/components/organism/BuildingView";
-import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
-import { getReviewsByCatastroRef, Review } from "@/models/review";
-import { toPlainObject } from "lodash";
 import dynamic from "next/dynamic";
 import { BounceLoader } from "react-spinners";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
-import { CatastroResponse } from "@/models/catastro";
-import {
-  getCatastroDataFromAddressElements,
-  getCoordinatesFromCatastroRef,
-} from "@/helpers/catastroFunctions";
+
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import { decodeReadableURI, toTitleCase } from "@/helpers/stringHelpers";
 import { Analysis } from "@/models/analysis";
+import { Building, Coordinates, Location } from "@/models/building";
+import { loader } from "@/helpers/getMunicipalityCoordinates";
+import { getReviewsByPlaceId, Review } from "@/models/review";
+import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
+import { toPlainObject } from "lodash";
 
 // Dynamically import the MainLayout component
 const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
@@ -37,9 +35,8 @@ export default function BuildingPageClient({
   };
 }) {
   const [loading, setLoading] = useState(true);
-  const [building, setBuilding] = useState<CatastroResponse | undefined>(
-    undefined
-  );
+  const [placeId, setPlaceId] = useState<string>();
+  const [building, setBuilding] = useState<Building | undefined>(undefined);
   const [analysis, setAnalysis] = useState<Analysis | undefined>(undefined);
 
   const t = useTranslations();
@@ -50,64 +47,90 @@ export default function BuildingPageClient({
 
   useEffect(() => {
     const fetchData = async () => {
-      /* console.log("address elements:", {
-        locale,
-        province,
-        municipality,
-        type,
-        address,
-        number,
-      }); */
-
       try {
-        const catastroData = await getCatastroDataFromAddressElements({
-          province: decodeReadableURI(province),
-          municipality: decodeReadableURI(municipality),
-          type,
-          street: decodeReadableURI(address),
-          number,
-        });
+        loader.importLibrary("places").then(async () => {
+          const { Place } = (await google.maps.importLibrary(
+            "places"
+          )) as google.maps.PlacesLibrary;
 
-        if (!catastroData) {
-          console.error("Building not found in catastro");
-          setLoading(false);
-          return;
-        }
-
-        const catastroRef = catastroData.response.bico
-          ? catastroData.response.bico.identificacionBienInmueble
-              .referenciaCatastral.edificio
-          : catastroData.response.listaRegistroCatastral
-          ? catastroData.response.listaRegistroCatastral.registros[0]
-              .referenciaCatastral.edificio
-          : null;
-
-
-        if (!catastroRef) {
-          console.error("No catastro ref in data");
-          setLoading(false);
-          return;
-        }
-
-        const coordinates = await getCoordinatesFromCatastroRef(catastroRef);
-        const reviews: Review[] = await getReviewsByCatastroRef(catastroRef);
-
-        if (catastroData && addr) {
-          const neighbourhood = computeReviewsSummary(reviews);
-
-          const analysisData = new Analysis({
-            buildingId: catastroRef!,
-            address: reviews.length > 0 ? reviews[0].address : addr,
-            reviews: reviews.map((r) => toPlainObject(r)),
-            latitude: coordinates!.coordinates[0].latitude,
-            longitude: coordinates!.coordinates[0].longitude,
-            neighbourhood,
+          const res = await Place.searchByText({
+            textQuery: [type, address, number, municipality, province].join(
+              " "
+            ),
+            fields: ["id"],
           });
 
-          setAnalysis(analysisData);
-        }
+          const placeId = res.places[0].id;
 
-        setBuilding(catastroData);
+          setPlaceId(placeId);
+
+          // Use place ID to create a new Place instance.
+          const place = new Place({
+            id: placeId,
+            requestedLanguage: "ca",
+          });
+
+          // Call fetchFields, passing the desired data fields.
+          await place.fetchFields({
+            fields: ["location", "addressComponents"],
+          });
+
+          let district = "";
+          let postalCode = place.addressComponents![6].longText ?? "";
+
+          if (
+            ["Barcelona", "Madrid", "Valencia"].includes(
+              place.addressComponents![3].longText!
+            )
+          ) {
+            district = place.addressComponents![2].longText ?? "";
+            postalCode = place.addressComponents![7].longText ?? "";
+          }
+
+          const location: Location = {
+            coordinates: {
+              latitude: place.location?.lat(),
+              longitude: place.location?.lng(),
+            } as Coordinates,
+            municipality,
+            number: parseInt(place.addressComponents![0].longText ?? "0"),
+            district,
+            province,
+            street: place.addressComponents![1].longText ?? "",
+            type: "",
+          };
+
+          const building: Building = {
+            address: place.formattedAddress!,
+            location,
+            postalCode,
+          };
+
+
+          setBuilding(building);
+
+
+          const coordinates = {
+            latitude: place.location?.lat(),
+            longitude: place.location?.lng(),
+          } as Coordinates;
+
+          const reviews: Review[] = await getReviewsByPlaceId(placeId);
+
+          if (placeId && addr) {
+            const neighbourhood = computeReviewsSummary(reviews);
+
+            const analysisData = new Analysis({
+              buildingId: placeId,
+              address: reviews.length > 0 ? reviews[0].address : addr,
+              reviews: reviews.map((r) => toPlainObject(r)),
+              latitude: coordinates!.latitude,
+              longitude: coordinates!.longitude,
+              neighbourhood,
+            });
+            setAnalysis(analysisData);
+          }
+        });
       } catch (error) {
         console.log("error fetching catastro data", error);
       }
@@ -117,59 +140,6 @@ export default function BuildingPageClient({
 
     fetchData();
   }, [addr, locale, municipality, number, province, address, type]);
-  /* 
-  const building = await getBuildingByAddress(street, params.number);
-
-  // const reviews = await getReviewsByBuidingId(params.buildingId);
-  let reviews: Review[] = [];
-
-  if (building?.id) {
-    reviews = await getReviewsByBuidingId(building.id);
-  }
-
-  // Redirect if there's an error fetching the building
-  if (!building) {
-    console.error("Building not found");
-  }
-
-  // Construct the Analysis object once we have all the required data
-  let analysis;
-
-  if (building && reviews) {
-    const neighbourhood = computeReviewsSummary(reviews);
-
-    analysis = {
-      buildingId: building.id,
-      address: [
-        building.address,
-        building.number,
-        capitalize(params.city),
-      ].join(", "),
-      reviews: reviews.map((review) => convertTimestampToPlainObject(review)),
-      latitude: building.latitude,
-      longitude: building.longitude,
-      neighbourhood,
-    };
-  }
-
-  if (!analysis) {
-    return !building ? (
-      <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
-        <span className="text-[10px] leading-[14px] font-bold tracking-[1px] mb-2 uppercase">
-          {t("common.searchError")}
-        </span>
-        <h3>{t("common.buildingNotFound")}</h3>
-        <HeaderAddressComboBox />
-      </div>
-    ) : (
-      <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">
-        <BounceLoader color="#d8b4fe" size={140} />
-      </div>
-    );
-  }
-
-  const notOpinions = analysis.reviews.length === 0;
- */
 
   if (loading) {
     return (
@@ -181,7 +151,7 @@ export default function BuildingPageClient({
     );
   }
 
-  if (!building || !analysis) {
+  if (!analysis) {
     return !loading ? (
       <MainLayout>
         <div className="lg:px-16 px-8 pt-20 pb-40 bg-white text-center md:text-start">
@@ -211,17 +181,8 @@ export default function BuildingPageClient({
               {analysis.address.replace(", Espanya", "")}
             </h1>
             <p className="text-sm tracking-widest">
-              {/* 0{building?.postalCode} /{" "} */}
-              {building?.response.bico
-                ? building.response.bico.localizacion.ubicacion.codigoPostal
-                : building?.response.listaRegistroCatastral!.registros[0]
-                    .localizacion.ubicacion.codigoPostal.length < 5
-                ? "0" +
-                  building?.response.listaRegistroCatastral?.registros[0]
-                    .localizacion.ubicacion.codigoPostal
-                : building?.response.listaRegistroCatastral?.registros[0]
-                    .localizacion.ubicacion.codigoPostal}{" "}
-              {/* {building?.neighbourhood.toLocaleUpperCase()} */}
+              {building?.postalCode} /{" "}
+              {building?.location.district?.toLocaleUpperCase() ?? ""}
             </p>
           </div>
           <DropDownShare />

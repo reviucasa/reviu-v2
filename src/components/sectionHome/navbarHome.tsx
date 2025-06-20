@@ -26,10 +26,10 @@ import { RealStateAgency } from "@/models/agency";
 import { classNames } from "@/helpers/classNames";
 import { Link } from "@/navigation";
 import { useSearchParams } from "next/navigation";
-import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
 import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
 import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
+import { cleanAddress } from "@/helpers/addressFunctions";
 
 export function NavbarHome({ search = true }: { search?: boolean }) {
   const t = useTranslations();
@@ -115,76 +115,39 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
         }
       }
 
-      const res = await getCatastroDataFromAddress(address);
-      if (res) {
-        const ubi = res.response.bico
-          ? res.response.bico?.localizacion.ubicacion
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .ubicacion
-          : null;
 
-        const municipality = res.response.bico
-          ? res.response.bico?.localizacion.municipio
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .municipio
-          : null;
+      const addressRegex = /^(.*?),\s*(\d+)/;
+      const match = address.match(addressRegex);
+      if (!match) {
+        setError(t("common.missingStreetNumber"));
+      } else {
+        try {
+          if (!address) {
+            throw "Error - No address";
+          }
 
-        const province = res.response.bico
-          ? res.response.bico?.localizacion.provincia
-          : res.response.listaRegistroCatastral
-          ? res.response.listaRegistroCatastral.registros[0].localizacion
-              .provincia
-          : null;
+          const addr = cleanAddress(address, { forUri: true });
 
-        const err = res.response.errores;
-        if (ubi && municipality && province) {
           const link = encodeForReadableURI(
             [
-              province,
-              municipality,
-              ubi.direccion.siglas,
-              ubi.direccion.nombre,
-              ubi.direccion.numero,
+              addr?.province,
+              addr?.municipality,
+              addr?.type,
+              addr?.street,
+              addr?.number,
             ].join("/")
           );
+
           router.push(`/building/${link}`);
-        } else if (err) {
-          console.log(err[0].desc, address);
-          const num = res.response.numerero;
-          if (num) {
-            console.log(
-              "Options: ",
-              num.map((n) => n.numero)
-            );
-            setError(
-              t("common.noSeEncontroDirección") +
-                `. Options: ${num.map((n) => n.numero).toString()}`
-            );
-          } else {
-            setError(err[0].desc);
-          }
-        } else {
-          console.log("error fetching:", address);
-        }
-      } else {
-        console.log("catastro data not found");
-        const addressRegex = /^(.*?),\s*(\d+)/;
-        const match = address.match(addressRegex);
-        if (!match) {
-          setError(t("common.missingStreetNumber"));
-        } else {
+        } catch (e) {
+          console.log(e);
           setError(t("common.noSeEncontroDirección"));
         }
       }
-      /* } else {
-        console.log("error cleaning address");
-        setError(t("common.noSeEncontroDirección") + ": municipality error");
-      } */
-
-      setLoading(false);
+    } else {
+      setError(t("common.noSeEncontroDirección"));
     }
+    setLoading(false);
   };
 
   const onSelectRealStateAgency = async (agency: RealStateAgency) => {
@@ -198,6 +161,12 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     }
   };
 
+  const setSelectedAddressForm = (s: string) => {
+    const address = s.split("//")[1];
+
+    setSelectedAddress(address);
+    onSelectAddress(address);
+  };
   return (
     <Suspense>
       {loading && (
@@ -229,7 +198,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
                   placeholder={t("common.buscar")}
                   className="flex-1 mx-10 hidden md:block"
                   selectedAddress={selectedAddress}
-                  setSelectedAddress={onSelectAddress}
+                  setSelectedAddress={setSelectedAddressForm}
                   selectedAddressLoading={loading}
                 />
               ) : (

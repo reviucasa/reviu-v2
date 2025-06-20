@@ -5,7 +5,7 @@ import { AcceptDialog } from "@/components/dialogs/AcceptDialog";
 import { ReviewFormLayout } from "@/components/layouts/ReviewFormLayout";
 import Message from "public/images/message.png";
 import HappyHouse from "public/images/happyHouse.png";
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
 import { useRouter, usePathname } from "@/navigation";
@@ -18,24 +18,19 @@ import {
 import {
   createDraft,
   getReviewsFromUser,
-  Location,
   ReviewStatus,
   updateDraft,
 } from "@/models/review";
 import { auth } from "@/firebase/config";
 import { useDraft } from "@/hooks/swr/useDraft";
 import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
-import { Timestamp } from "firebase/firestore";
-import { CatastroResponse, Unidad } from "@/models/catastro";
-import {
-  getCatastroDataFromAddress,
-  getCatastroDataFromReference,
-  getCoordinatesFromCatastroRef,
-} from "@/helpers/catastroFunctions";
+
 import { replaceUndefinedWithNull } from "@/helpers/replaceUndefinedWithNull";
+import { Building, Apartment, Location, Coordinates } from "@/models/building";
+import { Timestamp } from "firebase/firestore";
 
 export const AddressForm = () => {
-  const { draft } = useDraft();
+  const { draft, refreshDraft } = useDraft();
   const router = useRouter();
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
@@ -59,12 +54,17 @@ export const AddressForm = () => {
     </div>
   );
   const [selectedAddress, setSelectedAddress] = useState<string>("");
-  const [building, setBuilding] = useState<CatastroResponse>();
-  const [catastroRef, setCatastroRef] = useState<string>();
-  const [unitsList, setUnitsList] = useState<Unidad[]>([]);
+  const [building, setBuilding] = useState<Building>();
+  const [placeId, setPlaceId] = useState<string>();
+
   const [error, setError] = useState<string>();
-  const [selectedStair, setSelectedStair] = useState<string>();
-  const [selectedUnit, setSelectedUnit] = useState<Unidad>();
+
+  const [apartment, setApartment] = useState<Apartment>({
+    door: "",
+    floor: "",
+    stair: "",
+  });
+
   const [isOpenReviewAuthenticityAlert, setIsOpenReviewAuthenticityAlert] =
     useState(false);
   const [isOpenExistingReviewAlert, setIsOpenExistingReviewAlert] =
@@ -75,114 +75,172 @@ export const AddressForm = () => {
     useState(false);
 
   useEffect(() => {
-    const fetchBuilding = async (catRef: string) => {
-      const b = await getCatastroDataFromReference(catRef);
-      if (b) {
-        setBuilding(b);
-        setUnitsList(
-          b.response.bico?.listaConstrucciones.map(
-            (c) => c.detallesUbicacion.localizacionUrbana.unidad
-          ) ??
-            b.response.listaRegistroCatastral?.registros.map(
-              (r) => r.localizacion.ubicacion.unidad
-            ) ??
-            []
-        );
+    const fetchBuilding = async (placeId: string) => {
+      const { Place } = (await google.maps.importLibrary(
+        "places"
+      )) as google.maps.PlacesLibrary;
+
+      // Use place ID to create a new Place instance.
+      const place = new Place({
+        id: placeId,
+        requestedLanguage: "ca",
+      });
+
+      // Call fetchFields, passing the desired data fields.
+      await place.fetchFields({
+        fields: [
+          "displayName",
+          "formattedAddress",
+          "location",
+          "addressComponents",
+        ],
+      });
+
+      let district = "";
+      let municipality = place.addressComponents![2].longText ?? "";
+      let province = place.addressComponents![3].longText ?? "";
+      let postalCode = place.addressComponents![6].longText ?? "";
+
+      if (
+        ["Barcelona", "Madrid", "Valencia"].includes(
+          place.addressComponents![3].longText!
+        )
+      ) {
+        district = place.addressComponents![2].longText ?? "";
+        municipality = place.addressComponents![3].longText ?? "";
+        province = place.addressComponents![4].longText ?? "";
+        postalCode = place.addressComponents![7].longText ?? "";
       }
+
+      const location: Location = {
+        coordinates: {
+          latitude: place.location?.lat(),
+          longitude: place.location?.lng(),
+        } as Coordinates,
+        municipality,
+        number: parseInt(place.addressComponents![0].longText ?? "0"),
+        district,
+        province,
+        street: place.addressComponents![1].longText ?? "",
+        type: "",
+      };
+
+      const building: Building = {
+        address: place.formattedAddress!,
+        location,
+        postalCode,
+      };
+
+
+      setBuilding(building);
     };
 
     const acceptedTerms = localStorage.getItem("acceptedReviewTerms");
+
     // Check if the terms have not been accepted yet
     if (acceptedTerms == null) {
       setIsOpenReviewAuthenticityAlert(true);
     }
 
     if (draft?.address) {
-      setCatastroRef(draft.catastroRef);
+      setPlaceId(draft.placeId);
       setSelectedAddress(draft.address);
+
       if (draft?.apartment) {
-        setSelectedStair(draft.apartment.stair);
-        setSelectedUnit(draft.apartment);
-        fetchBuilding(draft.catastroRef);
+        setApartment(draft.apartment);
       }
+
+      fetchBuilding(draft.placeId);
     }
   }, [draft]);
 
   const onSelectAddress = useCallback(async () => {
     setBuilding(undefined);
+    /* if (draft?.address != selectedAddress) {
+      setApartment({
+        door: "",
+        floor: "",
+        stair: "",
+      });
+    } */
     setError(undefined);
 
-    if (selectedAddress) {
-      const res = await getCatastroDataFromAddress(selectedAddress);
-      if (res) {
-        const units =
-          res.response.bico?.listaConstrucciones.map(
-            (c) => c.detallesUbicacion.localizacionUrbana.unidad
-          ) ??
-          res.response.listaRegistroCatastral?.registros.map(
-            (r) => r.localizacion.ubicacion.unidad
-          );
-        const err = res.response.errores;
-        if (units) {
-          setCatastroRef(
-            res.response.listaRegistroCatastral?.registros[0]
-              .referenciaCatastral.edificio ??
-              res.response.bico?.identificacionBienInmueble.referenciaCatastral
-                .edificio
-          );
-          setBuilding(res);
-          setUnitsList(units);
-          setSelectedStair(undefined);
-          setSelectedUnit(undefined);
-        } else if (err) {
-          const num = res.response.numerero;
-          if (num) {
-            setError(
-              t("common.noSeEncontroDirección") +
-                `. Options: ${num.map((n) => n.numero).toString()}`
-            );
-          } else {
-            setError(err[0].desc);
-          }
-        } else {
-          console.log("error fetching:", selectedAddress);
+
+    const addressRegex = /^(.*?),\s*(\d+)/;
+    const match = selectedAddress.match(addressRegex);
+    if (!match) {
+      setError(t("common.missingStreetNumber"));
+    } else {
+      try {
+        if (!placeId) {
+          throw "Error - No placeId";
         }
-      } else {
-        console.log("catastro data not found");
-        const addressRegex = /^(.*?),\s*(\d+)/;
-        const match = selectedAddress.match(addressRegex);
-        if (!match) {
-          setError(t("common.missingStreetNumber"));
-        } else {
-          setError(t("common.noSeEncontroDirección"));
+        if (!selectedAddress) {
+          throw "Error - No address";
         }
+        const { Place } = (await google.maps.importLibrary(
+          "places"
+        )) as google.maps.PlacesLibrary;
+
+        // Use place ID to create a new Place instance.
+        const place = new Place({
+          id: placeId,
+          requestedLanguage: "ca",
+        });
+
+        // Call fetchFields, passing the desired data fields.
+        await place.fetchFields({
+          fields: [
+            "displayName",
+            "formattedAddress",
+            "location",
+            "addressComponents",
+          ],
+        });
+
+        let district = "";
+        let municipality = place.addressComponents![2].longText ?? "";
+        let province = place.addressComponents![3].longText ?? "";
+        let postalCode = place.addressComponents![6].longText ?? "";
+
+        if (
+          ["Barcelona", "Madrid", "Valencia"].includes(
+            place.addressComponents![3].longText!
+          )
+        ) {
+          district = place.addressComponents![2].longText ?? "";
+          municipality = place.addressComponents![3].longText ?? "";
+          province = place.addressComponents![4].longText ?? "";
+          postalCode = place.addressComponents![7].longText ?? "";
+        }
+
+        const location: Location = {
+          coordinates: {
+            latitude: place.location?.lat(),
+            longitude: place.location?.lng(),
+          } as Coordinates,
+          district,
+          municipality,
+          number: parseInt(place.addressComponents![0].longText ?? "0"),
+          province,
+          street: place.addressComponents![1].longText ?? "",
+          type: "",
+        };
+        // const postalCode = place.address_components;
+
+        const building: Building = {
+          address: place.formattedAddress!,
+          location,
+          postalCode,
+        };
+
+        setBuilding(building);
+      } catch (e) {
+        console.log(e);
+        setError(t("common.noSeEncontroDirección"));
       }
     }
   }, [selectedAddress, t]);
-
-  const onSelectStair = useCallback((stair: string) => {
-    setSelectedStair(stair);
-    // setUnitsList(unitsList.filter((a) => a.stair == stair) || []);
-  }, []);
-
-  const onSelectWholeAddress = async (
-    event: ChangeEvent<HTMLSelectElement>
-  ) => {
-    const unit = unitsList[Number(event.currentTarget.value)];
-
-    const reviews = await getReviewsFromUser(auth.currentUser!.uid);
-    if (reviews.filter((r) => r.apartment?.id == unit?.id).length == 2) {
-      setIsOpenExistingTwoReviewsAlert(true);
-    } else if (
-      reviews.filter((r) => r.apartment?.id == unit?.id).length == 1 &&
-      reviews.find((r) => r.apartment?.id == unit?.id)?.status ==
-        ReviewStatus.Published
-    ) {
-      setIsOpenExistingReviewAlert(true);
-    } else {
-      setSelectedUnit(replaceUndefinedWithNull(unit));
-    }
-  };
 
   const currentUrlPosition = getPositionUrlReview(
     removeLocaleFromPath(pathname)
@@ -196,42 +254,44 @@ export const AddressForm = () => {
   const onSubmit = async () => {
     setLoading(true);
     try {
-      if (building && selectedUnit) {
-        const locationData =
-          building.response.listaRegistroCatastral?.registros[0].localizacion ??
-          building.response.bico?.localizacion!;
+      if (building) {
+        const reviews = await getReviewsFromUser(auth.currentUser!.uid);
 
-        const coordinates = await getCoordinatesFromCatastroRef(catastroRef!);
+        if (reviews.filter((r) => r.apartment == apartment).length == 2) {
+          setIsOpenExistingTwoReviewsAlert(true);
+        } else if (
+          reviews.filter((r) => r.apartment == apartment).length == 1 &&
+          reviews.find((r) => r.apartment == apartment)?.status ==
+            ReviewStatus.Published
+        ) {
+          setIsOpenExistingReviewAlert(true);
+        } else {
+          setApartment(replaceUndefinedWithNull(apartment));
+        }
 
-        const location: Location = {
-          type: locationData.ubicacion.direccion.siglas.toLowerCase(),
-          street: locationData.ubicacion.direccion.nombre.toLowerCase(),
-          number: Number(locationData.ubicacion.direccion.numero),
-          municipality: locationData.municipio.toLowerCase(),
-          province: locationData.provincia.toLowerCase(),
-          coordinates: {
-            latitude: coordinates!.coordinates[0].latitude,
-            longitude: coordinates!.coordinates[0].longitude,
-          },
-        };
+        const location = building.location;
+
 
         if (draft?.address) {
           await updateDraft(auth.currentUser!.uid, {
             address: selectedAddress,
-            apartment: selectedUnit,
-            catastroRef,
+            apartment,
+            placeId,
+            catastroRef: "", // TODO: fetch catastro in case we can finde ref number
             location,
           });
         } else {
           await createDraft(auth.currentUser!.uid, {
             address: selectedAddress,
-            apartment: selectedUnit,
-            catastroRef,
+            apartment,
+            placeId,
+            catastroRef: "", // TODO: fetch catastro in case we can finde ref number
             location,
             data: { step: stepReview },
             timeCreated: Timestamp.now(),
           });
         }
+        refreshDraft();
         router.push(getUrlReview(stepReview));
       }
     } catch (error) {
@@ -242,15 +302,16 @@ export const AddressForm = () => {
   };
 
   useEffect(() => {
-    if (selectedAddress) onSelectAddress();
-  }, [onSelectAddress, selectedAddress]);
+    onSelectAddress();
+  }, [selectedAddress]);
 
-  useEffect(() => {
-    //If there is only one stair, select it
-    if (building && unitsList.map((u) => u.stair).length === 1) {
-      onSelectStair(unitsList[0].stair!);
-    }
-  }, [building, onSelectStair, unitsList]);
+  const setSelectedAddressForm = (s: string) => {
+    const placeId = s.split("//")[0];
+    const address = s.split("//")[1];
+
+    setPlaceId(placeId);
+    setSelectedAddress(address);
+  };
 
   return (
     <ReviewFormLayout
@@ -263,7 +324,7 @@ export const AddressForm = () => {
         <label htmlFor="address">{t("addressReview.calleYNúmero")}</label>
         <AddressComboBox
           selectedAddress={selectedAddress}
-          setSelectedAddress={setSelectedAddress}
+          setSelectedAddress={setSelectedAddressForm}
           areaOptions={false}
         />
         <FieldError>{error}</FieldError>
@@ -273,69 +334,42 @@ export const AddressForm = () => {
         />
         {building && (
           <div className="flex gap-3 mt-5">
-            {Array.from(new Set(unitsList.map((u) => u.stair))).length > 1 && (
-              <div className="w-full">
-                <label>{t("addressReview.escalera")}</label>
-                <select
-                  className="w-full"
-                  value={
-                    selectedStair == "" ||
-                    selectedStair == undefined ||
-                    selectedStair == null
-                      ? t("addressReview.main")
-                      : selectedStair
-                  }
-                  onChange={(ev) => onSelectStair(ev.target.value)}
-                >
-                  <option value={selectedStair}>
-                    {selectedStair ?? t("addressReview.escalera")}
-                  </option>
-                  {Array.from(new Set(unitsList.map((u) => u.stair))).map(
-                    (stair, i) => (
-                      <option key={i} value={stair}>
-                        {stair == "" || stair == undefined || stair == null
-                          ? t("addressReview.main")
-                          : stair}
-                      </option>
-                    )
-                  )}
-                </select>
-              </div>
-            )}
             <div className="w-full">
-              <label>{t("addressReview.pisoYPuerta")}</label>
-              <select
-                className="w-full"
-                value={
-                  selectedUnit &&
-                  unitsList
-                    .map((u) => replaceUndefinedWithNull(u))
-                    .findIndex(
-                      (a) =>
-                        a.stair == selectedUnit.stair &&
-                        a.floor == selectedUnit.floor &&
-                        a.door == selectedUnit.door
-                    )
+              <label>{t("addressReview.escalera")}</label>
+              <input
+                type="string"
+                className="w-full px-4 focus:outline-none"
+                placeholder={t("addressReview.escalera")}
+                value={apartment?.stair ?? ""}
+                onChange={(e) =>
+                  setApartment((prev) => ({ ...prev, stair: e.target.value }))
                 }
-                onChange={onSelectWholeAddress}
-              >
-                <option
-                  value={
-                    selectedUnit == undefined
-                      ? t("addressReview.pisoYPuerta")
-                      : `${selectedUnit.floor ?? ""}/${selectedUnit.door ?? ""}`
-                  }
-                >
-                  {t("addressReview.pisoYPuerta")}
-                </option>
-                {unitsList
-                  .filter((u) => (u.stair ? u.stair == selectedStair : true))
-                  .map((unit, i) => (
-                    <option key={i} value={unitsList.indexOf(unit)}>{`${
-                      unit.floor ?? ""
-                    }/${unit.door ?? ""}`}</option>
-                  ))}
-              </select>
+              />
+            </div>
+
+            <div className="w-full">
+              <label>{t("addressReview.piso")}</label>
+              <input
+                type="string"
+                className="w-full px-4 focus:outline-none"
+                placeholder={t("addressReview.piso")}
+                value={apartment?.floor ?? ""}
+                onChange={(e) =>
+                  setApartment((prev) => ({ ...prev, floor: e.target.value }))
+                }
+              />
+            </div>
+            <div className="w-full">
+              <label>{t("addressReview.puerta")}</label>
+              <input
+                type="string"
+                className="w-full px-4 focus:outline-none"
+                placeholder={t("addressReview.puerta")}
+                value={apartment?.door ?? ""}
+                onChange={(e) =>
+                  setApartment((prev) => ({ ...prev, door: e.target.value }))
+                }
+              />
             </div>
           </div>
         )}
@@ -348,7 +382,7 @@ export const AddressForm = () => {
         {building && (
           <Button
             buttonClassName="btn-primary-500"
-            disabled={!selectedUnit}
+            disabled={!selectedAddress}
             onClick={onSubmit}
             loading={loading}
           >

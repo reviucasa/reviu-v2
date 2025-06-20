@@ -1,10 +1,10 @@
-import { Unidad } from "@/models/catastro";
+import { Apartment } from "@/models/building";
 
-export function replaceUndefinedWithNull(unit: Unidad): Unidad {
+export function replaceUndefinedWithNull(apartment: Apartment): Apartment {
   return Object.fromEntries(
-    Object.entries(unit).map(([key, value]) => [
+    Object.entries(apartment).map(([key, value]) => [
       key,
       value === undefined ? null : value,
     ])
-  ) as Unidad;
+  ) as Apartment;
 }

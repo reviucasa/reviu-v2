@@ -4,10 +4,10 @@ import { useRouter } from "@/navigation";
 import { useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { FieldError } from "../atoms/FieldError";
-import { getCatastroDataFromAddress } from "@/helpers/catastroFunctions";
 import { encodeForReadableURI } from "@/helpers/stringHelpers";
 import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
 import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
+import { cleanAddress } from "@/helpers/addressFunctions";
 
 export function HeaderAddressComboBox({ className }: { className?: string }) {
   const t = useTranslations();
@@ -80,78 +80,44 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
           }
         }
       }
-      
-      const res = await getCatastroDataFromAddress(address);
-      if (res) {
-        const ubi =
-          res.response.bico?.localizacion.ubicacion ??
-          res.response.listaRegistroCatastral?.registros[0].localizacion
-            .ubicacion ??
-          null;
 
-        const municipality =
-          res.response.bico?.localizacion.municipio ??
-          res.response.listaRegistroCatastral?.registros[0].localizacion
-            .municipio ??
-          null;
-
-        const province =
-          res.response.bico?.localizacion.municipio ??
-          res.response.listaRegistroCatastral?.registros[0].localizacion
-            .provincia ??
-          null;
-
-        const err = res.response.errores;
-        if (ubi && municipality && province) {
-          const link = encodeForReadableURI(
-            [
-              province,
-              municipality,
-              ubi.direccion.siglas,
-              ubi.direccion.nombre,
-              ubi.direccion.numero,
-            ].join("/")
-          );
-          router.push(`/building/${link}`);
-        } else if (err) {
-          console.log(err[0].desc, address);
-          const num = res.response.numerero;
-          if (num) {
-            console.log(
-              "Options: ",
-              num.map((n) => n.numero)
-            );
-            setError(
-              t("common.noSeEncontroDirección") +
-                `. Options: ${num.map((n) => n.numero).toString()}`
-            );
-          } else {
-            setError(err[0].desc);
-          }
-        } else {
-          console.log("error fetching:", address);
-        }
-      } else {
-        console.log("catastro data not found");
-        const addressRegex = /^(.*?),\s*(\d+)/;
-        const match = address.match(addressRegex);
-        if (!match) {
-          setError(t("common.missingStreetNumber"));
-        } else {
-          setError(t("common.noSeEncontroDirección"));
-        }
-      }
-    } else {
-      console.log("catastro data not found");
       const addressRegex = /^(.*?),\s*(\d+)/;
       const match = address.match(addressRegex);
       if (!match) {
         setError(t("common.missingStreetNumber"));
       } else {
-        setError(t("common.noSeEncontroDirección"));
+        try {
+          if (!address) {
+            throw "Error - No address";
+          }
+
+          const addr = cleanAddress(address, { forUri: true });
+
+          const link = encodeForReadableURI(
+            [
+              addr?.province,
+              addr?.municipality,
+              addr?.type,
+              addr?.street,
+              addr?.number,
+            ].join("/")
+          );
+          router.push(`/building/${link}`);
+        } catch (e) {
+          console.log(e);
+          setError(t("common.noSeEncontroDirección"));
+        }
       }
+    } else {
+      setError(t("common.noSeEncontroDirección"));
     }
     setLoading(false);
+  };
+
+  const setSelectedAddressForm = (s: string) => {
+    const address = s.split("//")[1];
+
+    onSelectAddress(address);
   };
 
   return (
@@ -160,7 +126,7 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
         placeholder={t("common.buscar")}
         className={className ?? "lg:w-3/4 w-full"}
         selectedAddress={selectedAddress}
-        setSelectedAddress={onSelectAddress}
+        setSelectedAddress={setSelectedAddressForm}
         selectedAddressLoading={loading}
       />
       <div className="flex lg:w-3/4 w-full">

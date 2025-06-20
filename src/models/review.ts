@@ -22,13 +22,8 @@ import {
 } from "firebase/firestore";
 import { User, getUsersById } from "./user";
 import { shuffleArray } from "@/helpers/shuffleArray";
-import { Unidad } from "./catastro";
 import { getBoundingBox } from "@/helpers/getBoundingBox";
-
-export type Coordinates = {
-  latitude: number;
-  longitude: number;
-};
+import { Apartment, Coordinates } from "./building";
 
 export enum ReviewStatus {
   Suspended = "suspended",
@@ -51,10 +46,11 @@ export type Review = {
   timeCreated: Timestamp;
   timeUpdated: Timestamp;
   status: ReviewStatus;
-  apartment?: Unidad;
+  apartment?: Apartment;
   data: Partial<ReviewData>;
   buildingId: string;
   catastroRef: string;
+  placeId: string;
   location: Location | undefined;
   userId: string;
 };
@@ -132,7 +128,7 @@ export type Valuation = {
 
 const reviewConverter: FirestoreDataConverter<Review> = {
   toFirestore(r: Review): DocumentData {
-    const { id, ...review } = r;
+    const { id: _, ...review } = r;
     return review;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Review {
@@ -146,7 +142,7 @@ const reviewConverter: FirestoreDataConverter<Review> = {
 
 const draftConverter: FirestoreDataConverter<Review> = {
   toFirestore(r: Review): DocumentData {
-    const { id, ...review } = r;
+    const { id: _, ...review } = r;
     return review;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): Review {
@@ -449,6 +445,18 @@ const getReviewsByCatastroRef = async (
   return snapshot.docs.map((e) => e.data());
 };
 
+// Retrieve building reviews
+const getReviewsByPlaceId = async (placeId: string): Promise<Review[]> => {
+  const ref = collection(db, "reviews").withConverter(reviewConverter);
+  const q = query(
+    ref,
+    where("placeId", "==", placeId),
+    where("status", "==", ReviewStatus.Published)
+  );
+  const snapshot = await getDocs(q);
+  return snapshot.docs.map((e) => e.data());
+};
+
 // Retrieve user reviews
 const getReviewsFromUser = async (uid: string): Promise<Review[]> => {
   const ref = collection(db, "reviews").withConverter(reviewConverter);
@@ -553,6 +561,7 @@ export {
   getReviewsByBuidingId,
   getReviewsByAgencyId,
   getReviewsByCatastroRef,
+  getReviewsByPlaceId,
   getReviewsFromUser,
   reviewConverter,
   getDraftsWithUser,

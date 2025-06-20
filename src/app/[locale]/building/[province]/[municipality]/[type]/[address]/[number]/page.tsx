@@ -1,12 +1,12 @@
 import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
-import { CatastroAddressElements } from "@/helpers/catastroFunctions";
 import { decodeReadableURI, toTitleCase } from "@/helpers/stringHelpers";
 import BuildingPageClient from "./page.client";
+import { AddressElements } from "@/helpers/addressElements";
 
 export interface URLAddressParams {
   locale: string;
-  elements: CatastroAddressElements;
+  elements: AddressElements;
 }
 
 export function generateStaticParams() {

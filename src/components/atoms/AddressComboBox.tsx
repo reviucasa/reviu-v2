@@ -11,7 +11,6 @@ import debounce from "lodash.debounce";
 import { useTranslations } from "next-intl";
 import Image from "next/image";
 import { Fragment, useCallback, useEffect, useState } from "react";
-import { Loader } from "@googlemaps/js-api-loader";
 import ReactLoading from "react-loading";
 import lupa from "public/images/lupa.png";
 import map from "public/images/maskGroup.png";
@@ -19,6 +18,7 @@ import { SelectAreaModal } from "./SelectAreaModal";
 import NearbySearchButton from "./NearbySearchButton";
 import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
 import { toTitleCase } from "@/helpers/stringHelpers";
+import { loader } from "@/helpers/getMunicipalityCoordinates";
 
 type AddressComboBoxProps = {
   placeholder?: string;
@@ -83,11 +83,6 @@ export const AddressComboBox = ({
 
   useEffect(() => {
     // Load the Google Maps API only on the client side
-    const loader = new Loader({
-      apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
-      version: "weekly",
-      libraries: ["places"],
-    });
 
     loader.importLibrary("places").then((places) => {
       setService(new places.AutocompleteService());
@@ -108,8 +103,7 @@ export const AddressComboBox = ({
             string: prediction.description,
           },
         };
-      }); // TODO: modificar per municipi
-      /* .filter((e) => e.address.string.includes("Barcelona")) */
+      });
 
       setSearchResult({
         autocompleteSuggestions: autocompleteSuggestions,
@@ -122,6 +116,59 @@ export const AddressComboBox = ({
       });
     }
   }
+
+  const fetchAddressList = useCallback(
+    debounce(async (query: string) => {
+      setLoading(true);
+
+      if (query === "" || query.length < 2) {
+        setSearchResult({
+          autocompleteSuggestions: [],
+          status: "",
+        });
+        setLoading(false);
+
+        return;
+      }
+
+      if (!service || !sessionToken) return;
+
+      // Create a bounding box with sides away from the center point
+      /* const center = { lat: 41.40855, lng: 2.17114 };
+      
+      const bounds = {
+        north: center.lat + 0.08,
+        south: center.lat - 0.05,
+        east: center.lng + 0.075,
+        west: center.lng - 0.075,
+      }; */
+
+      const cataloniaBounds = {
+        north: 42.753,
+        south: 40.341,
+        east: 3.384,
+        west: 0.073,
+      };
+
+      const request: google.maps.places.AutocompletionRequest = {
+        input: query,
+        sessionToken: sessionToken,
+        language: "ca",
+        componentRestrictions: {
+          country: "es",
+        },
+        types: ["address"],
+        locationBias: "IP_BIAS",
+        locationRestriction: cataloniaBounds,
+      };
+
+      // getQueryPredictions()
+      service.getPlacePredictions(request, handlePredictions);
+
+      setLoading(false);
+    }, 300),
+    [service, sessionToken]
+  );
 
   const fetchMunicipalitiesList = useCallback((query: string) => {
     if (!query || query.length < 3) return;
@@ -177,59 +224,6 @@ export const AddressComboBox = ({
 
     setNeighbourhoodsResults(matchedNeighbourhoods);
   }, []);
-
-  const fetchAddressList = useCallback(
-    debounce(async (query: string) => {
-      setLoading(true);
-
-      if (query === "" || query.length < 2) {
-        setSearchResult({
-          autocompleteSuggestions: [],
-          status: "",
-        });
-        setLoading(false);
-
-        return;
-      }
-
-      if (!service || !sessionToken) return;
-
-      // Create a bounding box with sides away from the center point
-      const center = { lat: 41.40855, lng: 2.17114 };
-      const bounds = {
-        north: center.lat + 0.08,
-        south: center.lat - 0.05,
-        east: center.lng + 0.075,
-        west: center.lng - 0.075,
-      };
-      const cataloniaBounds = {
-        north: 42.753,
-        south: 40.341,
-        east: 3.384,
-        west: 0.073,
-      };
-
-      const request: google.maps.places.AutocompletionRequest = {
-        input: query,
-        sessionToken: sessionToken,
-        language: "ca",
-        componentRestrictions: {
-          country: "es",
-        },
-        //fields: ["name", "formatted_address"], //"address_components",
-        types: ["address"],
-        locationBias: "IP_BIAS",
-        locationRestriction: cataloniaBounds,
-        //strictBounds: true,
-      };
-
-      // getQueryPredictions()
-      service.getPlacePredictions(request, handlePredictions);
-
-      setLoading(false);
-    }, 300),
-    [service, sessionToken]
-  );
 
   const t = useTranslations();
 
@@ -358,7 +352,7 @@ export const AddressComboBox = ({
                     <ComboboxOption
                       className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
                       key={e.id}
-                      value={e.address.string}
+                      value={`${e.id}//${e.address.string}`}
                     >
                       {e.address.string}
                     </ComboboxOption>

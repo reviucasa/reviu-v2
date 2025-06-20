@@ -1,6 +1,6 @@
 import { Loader } from "@googlemaps/js-api-loader";
 
-const loader = new Loader({
+export const loader = new Loader({
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
   version: "weekly",
   libraries: ["places"],
