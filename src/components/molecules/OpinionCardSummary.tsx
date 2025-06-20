@@ -7,7 +7,6 @@ import thumbUp from "public/images/thumbUp.svg";
 import { ModalInfo } from "./ModalInfo";
 import { useTranslations } from "next-intl";
 import { Review } from "@/models/review";
-import { useRouter } from "next/navigation";
 import { ApartmentLocationSummary } from "../atoms/ApartmentLocationSummary";
 import { getReviewUri } from "@/helpers/getReviewUri";
 

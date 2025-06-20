@@ -1,4 +1,3 @@
-import { useTranslations } from "next-intl";
 import Image, { StaticImageData } from "next/image";
 
 type SectionCardsProps = {

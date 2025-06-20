@@ -4,7 +4,6 @@ import { Button } from "../atoms/Button";
 import { Dialog } from "../atoms/Dialog";
 import { deleteReview, suspendReview } from "@/models/review";
 import { BiBlock, BiTrash } from "react-icons/bi";
-import { useRouter } from "@/navigation";
 
 export const DialogDelete = ({
   isOpen,

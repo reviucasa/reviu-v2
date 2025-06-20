@@ -1,7 +1,7 @@
 "use client";
 
 import {
-  Coordinates,
+  
   getReviewsFromCoordinates,
   Review,
 } from "@/models/review";
@@ -12,6 +12,7 @@ import { useCallback, useEffect, useState } from "react";
 
 import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
+import { Coordinates } from "@/models/building";
 
 const OpenStreetMapMultiple = dynamic(
   () => import("@/components/molecules/OpenStreetMapMultiple"),

@@ -10,8 +10,9 @@ import {
   useMapEvent,
 } from "react-leaflet";
 import { OpinionCardSummary } from "./OpinionCardSummary";
-import { Coordinates, Review } from "@/models/review";
 import { useEffect, useState } from "react";
+import { Coordinates } from "@/models/building";
+import { Review } from "@/models/review";
 
 type IconSize = "sm" | "md" | "lg";
 
