@@ -1,6 +1,5 @@
 "use client";
 import {
-  Coordinates,
   getReviewsFromMunicipality,
   Review,
 } from "@/models/review";
@@ -9,6 +8,7 @@ import ExplorePage from "../../pages/ExplorePage";
 import { toTitleCase } from "@/helpers/stringHelpers";
 import { getMunicipalityCoordinates } from "@/helpers/getMunicipalityCoordinates";
 import { useTranslations } from "next-intl";
+import { Coordinates } from "@/models/building";
 
 export default function MunicipalityExplorePageClient({
   params: { province, municipality },

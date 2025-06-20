@@ -132,7 +132,7 @@ export default function BuildingPageClient({
           }
         });
       } catch (error) {
-        console.log("error fetching catastro data", error);
+        console.log("error fetching places data", error);
       }
 
       setLoading(false);

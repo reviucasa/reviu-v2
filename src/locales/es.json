@@ -50,7 +50,7 @@
     "redaccionIncorrecta": "Redacción incorrecta",
     "revisaErrores": "Revisa que no haya errores en la dirección que has escrito en el buscador.",
     "noHayViviendas": "No hay viviendas registradas en la dirección",
-    "baseDatosInmuebles": "La base de datos de inmuebles es la del catastro. Si no aparece el inmueble que buscas es posible que no esté registrado.",
+    "baseDatosInmuebles": "La base de datos de inmuebles utiliza el registro Places de Google. Si no aparece el inmueble que buscas es posible que no esté registrado.",
     "formaCorrecta": "Forma correcta de introducir la dirección",
     "direccionCorrecta": "C/Provenza, 192, 08015",
     "ayuda": "Ayuda",
