@@ -9,6 +9,7 @@ import { mainKeywords } from "@/staticData";
 import { locales } from "@/config";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/react";
+import CookiesManager from "@/components/atoms/CookiesManager";
 
 const space_grotesk = Space_Grotesk({ subsets: ["latin"] });
 
@@ -96,6 +97,8 @@ export default async function RootLayout({
             <Providers>{children}</Providers>
           </Suspense>
         </NextIntlClientProvider>
+        <CookiesManager />
+
         <Analytics />
         <Script id="facebook-pixel" strategy="afterInteractive">
           {`
