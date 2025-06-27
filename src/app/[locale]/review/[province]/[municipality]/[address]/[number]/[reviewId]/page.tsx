@@ -12,7 +12,6 @@ export async function generateMetadata({
     locale: string;
     province: string;
     municipality: string;
-    type: string;
     street: string;
     number: string;
     reviewId: string;
@@ -93,11 +92,13 @@ export default async function ReviewDetails({
     reviewId: string;
   };
 }) {
+
+  console.log(reviewId);
   const review = await getReview(reviewId);
 
   // Redirect if there's an error fetching the building
   if (!review) {
-    console.error("Building not found");
+    console.error("Review not found");
     /* router.push("/"); */
   }
 
