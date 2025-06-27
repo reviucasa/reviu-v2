@@ -29,7 +29,6 @@ export default function BuildingPageClient({
     locale: string;
     province: string;
     municipality: string;
-    type: string;
     address: string;
     number: string;
   };

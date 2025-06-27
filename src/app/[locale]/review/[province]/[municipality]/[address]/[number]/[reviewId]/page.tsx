@@ -92,9 +92,9 @@ export default async function ReviewDetails({
     reviewId: string;
   };
 }) {
-
   console.log(reviewId);
   const review = await getReview(reviewId);
+  console.log(review);
 
   // Redirect if there's an error fetching the building
   if (!review) {

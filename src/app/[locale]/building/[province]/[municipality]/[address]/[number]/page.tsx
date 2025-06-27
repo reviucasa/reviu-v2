@@ -20,7 +20,6 @@ export async function generateMetadata({
     locale: string;
     province: string;
     municipality: string;
-    type: string;
     address: string;
     number: string;
     reviewId: string;
@@ -65,7 +64,6 @@ export default function BuildingPage({
     locale: string;
     province: string;
     municipality: string;
-    type: string;
     address: string;
     number: string;
     reviewId: string;
