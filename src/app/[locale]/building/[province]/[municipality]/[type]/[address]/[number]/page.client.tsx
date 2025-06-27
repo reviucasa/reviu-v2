@@ -23,7 +23,7 @@ const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
 });
 
 export default function BuildingPageClient({
-  params: { locale, province, municipality, type, address, number },
+  params: { locale, province, municipality, address, number },
 }: {
   params: {
     locale: string;
@@ -54,9 +54,7 @@ export default function BuildingPageClient({
           )) as google.maps.PlacesLibrary;
 
           const res = await Place.searchByText({
-            textQuery: [type, address, number, municipality, province].join(
-              " "
-            ),
+            textQuery: [address, number, municipality, province].join(" "),
             fields: ["id"],
           });
 
@@ -106,9 +104,7 @@ export default function BuildingPageClient({
             postalCode,
           };
 
-
           setBuilding(building);
-
 
           const coordinates = {
             latitude: place.location?.lat(),
@@ -139,7 +135,7 @@ export default function BuildingPageClient({
     };
 
     fetchData();
-  }, [addr, locale, municipality, number, province, address, type]);
+  }, [addr, locale, municipality, number, province, address]);
 
   if (loading) {
     return (
