@@ -131,7 +131,6 @@ export const AddressForm = () => {
         postalCode,
       };
 
-
       setBuilding(building);
     };
 
@@ -164,7 +163,6 @@ export const AddressForm = () => {
       });
     } */
     setError(undefined);
-
 
     const addressRegex = /^(.*?),\s*(\d+)/;
     const match = selectedAddress.match(addressRegex);
@@ -271,7 +269,6 @@ export const AddressForm = () => {
 
         const location = building.location;
 
-
         if (draft?.address) {
           await updateDraft(auth.currentUser!.uid, {
             address: selectedAddress,
@@ -306,11 +303,15 @@ export const AddressForm = () => {
   }, [selectedAddress]);
 
   const setSelectedAddressForm = (s: string) => {
-    const placeId = s.split("//")[0];
-    const address = s.split("//")[1];
+    try {
+      const placeId = s.split("//")[0];
+      const address = s.split("//")[1];
 
-    setPlaceId(placeId);
-    setSelectedAddress(address);
+      setPlaceId(placeId);
+      setSelectedAddress(address);
+    } catch (error) {
+      console.log("Address not selected", error);
+    }
   };
 
   return (

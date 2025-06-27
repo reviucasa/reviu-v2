@@ -23,7 +23,7 @@ const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
 });
 
 export default function BuildingPageClient({
-  params: { locale, province, municipality, address, number },
+  params: { province, municipality, address, number },
 }: {
   params: {
     locale: string;
@@ -42,7 +42,7 @@ export default function BuildingPageClient({
   const t = useTranslations();
 
   const addr = toTitleCase(
-    decodeReadableURI([address, number, municipality].join(", "))
+    decodeReadableURI([address, number, municipality, province].join(", "))
   );
 
   useEffect(() => {
@@ -54,7 +54,7 @@ export default function BuildingPageClient({
           )) as google.maps.PlacesLibrary;
 
           const res = await Place.searchByText({
-            textQuery: [address, number, municipality, province].join(" "),
+            textQuery: addr,
             fields: ["id"],
           });
 
@@ -131,13 +131,18 @@ export default function BuildingPageClient({
         console.log("error fetching places data", error);
       }
 
-      setLoading(false);
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 500);
+
+      return () => clearTimeout(timeout);
     };
 
     fetchData();
-  }, [addr, locale, municipality, number, province, address]);
+  }, []);
 
   if (loading) {
+    console.log("loading");
     return (
       <MainLayout>
         <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">

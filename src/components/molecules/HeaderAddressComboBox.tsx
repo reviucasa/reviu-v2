@@ -97,7 +97,6 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
             [
               addr?.province,
               addr?.municipality,
-              addr?.type,
               addr?.street,
               addr?.number,
             ].join("/")
@@ -115,9 +114,13 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   };
 
   const setSelectedAddressForm = (s: string) => {
-    const address = s.split("//")[1];
+    try {
+      const address = s.split("//")[1];
 
-    onSelectAddress(address);
+      onSelectAddress(address);
+    } catch (error) {
+      console.log("Address not selected", error);
+    }
   };
 
   return (

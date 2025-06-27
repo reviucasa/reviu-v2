@@ -53,7 +53,6 @@ export const onReportCreated = functions
         "https://reviucasa.com/review",
         location.province,
         location.municipality,
-        location.type,
         location.street,
         location.number,
         reportData.review.id,

@@ -115,7 +115,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
         }
       }
 
-
       const addressRegex = /^(.*?),\s*(\d+)/;
       const match = address.match(addressRegex);
       if (!match) {
@@ -132,7 +131,6 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             [
               addr?.province,
               addr?.municipality,
-              addr?.type,
               addr?.street,
               addr?.number,
             ].join("/")
@@ -162,10 +160,14 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   };
 
   const setSelectedAddressForm = (s: string) => {
-    const address = s.split("//")[1];
+    try {
+      const address = s.split("//")[1];
 
-    setSelectedAddress(address);
-    onSelectAddress(address);
+      setSelectedAddress(address);
+      onSelectAddress(address);
+    } catch (error) {
+      console.log("Address not selected", error);
+    }
   };
   return (
     <Suspense>
