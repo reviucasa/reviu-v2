@@ -160,11 +160,12 @@ export const cleanAddress = (
   const regex = new RegExp(
     `(${locationTypes.join(
       "|"
-    )})\\s+(d'en(?=\\s)|d'(?=\\s)|del|de la|de les|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*(\\d+)`,
+    )})\\s+(d'en(?=\\s)|d'(?=\\s)|dels|del|de la|de les|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*(\\d+)`,
     "i"
   );
 
   const match = address.match(regex);
+
 
   if (Object.keys(addressExceptions).includes(address.split(",")[0])) {
     console.log(
@@ -184,6 +185,7 @@ export const cleanAddress = (
           match[3]
             .replace(/^d'/i, "")
             .replace(/^de\s+/i, "")
+            .replace(/^dels\s+/i, "")
             .replace(/^del\s+/i, "")
             .replace(/^de la\s+/i, "")
             .replace(/^de les\s+/i, "")
