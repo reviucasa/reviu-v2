@@ -9,6 +9,21 @@ import { steps } from "@/staticData";
 import { DialogDrawer } from "../atoms/DialogDrawer";
 import CopyToClipboard from "../atoms/CopyToClipboard";
 import { formatFirebaseTimestamp } from "@/helpers/formatTimestamp";
+import { Button } from "../atoms/Button";
+import { convertReviewsToCSV } from "@/helpers/convertReviewToCSV";
+
+function downloadCSV(data: Review[], users: User[]) {
+  const csv = convertReviewsToCSV(data, users);
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+  link.href = url;
+  link.setAttribute("download", `drafts_${new Date().toISOString()}.csv`);
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
 
 export default function DraftsTable() {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -19,12 +34,14 @@ export default function DraftsTable() {
 
   const [startAfterDocId, setStartAfterDocId] = useState<string | null>(null);
 
+  const [searchTerm, setSearchTerm] = useState("");
+
   const { data, isFetching } = useQuery<
     { drafts: Review[]; users: User[]; count: number } | undefined,
     Error
   >({
     queryKey: ["draftsWithUser", startAfterDocId],
-    queryFn: () => getDraftsWithUser({ count: 20, startAfterDocId }),
+    queryFn: () => getDraftsWithUser({ count: 250, startAfterDocId }),
   });
 
   // Handlers to go to the next or previous page
@@ -60,8 +77,33 @@ export default function DraftsTable() {
             A list of all the review drafts.
           </p>
         </div>
+        <div className="sm:flex-auto justify-items-end">
+          <Button
+            className="btn-primary-500"
+            disabled={!data?.drafts}
+            onClick={async () => {
+              const { drafts, users } = await getDraftsWithUser({
+                count: 1000,
+                startAfterDocId,
+              });
+              return drafts && downloadCSV(drafts, users);
+            }}
+          >
+            Download CSV
+          </Button>
+        </div>
       </div>
+
       <div className="mt-6 flow-root">
+        <div className="mb-2">
+          <input
+            type="text"
+            placeholder="Search draft by ID or user email..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-1 focus:ring-primary-500 focus:border-primary-500 text-sm"
+          />
+        </div>
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="overflow-hidden border border-gray-200 sm:rounded-lg">
@@ -122,53 +164,63 @@ export default function DraftsTable() {
                       </td>
                     </tr>
                   ) : (
-                    data.drafts.map((d) => {
-                      const user = data.users.find((u) => u.id == d.userId);
+                    data.drafts
+                      .filter((d) => {
+                        const term = searchTerm.toLowerCase().trim();
+                        const user = data.users.find((u) => u.id === d.userId);
 
-                      return (
-                        <tr key={d.id}>
-                          <td className="whitespace-nowrap px-4 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden">
-                            <CopyToClipboard textToCopy={d.id}>
-                              {`${d.id.slice(0, 3)}...${d.id.slice(-3)}`}
-                            </CopyToClipboard>
-                          </td>
-                          <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
-                            {d.address?.split(",")[0]}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
-                            {d.address?.split(",")[1]}
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 ">
-                            <CopyToClipboard
-                              textToCopy={user ? user.email : d.userId}
-                            >
-                              {user ? user.email : d.userId}
-                            </CopyToClipboard>
-                          </td>
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                            {d!.data!.step!}. {steps[d!.data!.step!].label}
-                          </td>
+                        return (
+                          d.id.toLowerCase().includes(term) ||
+                          (user?.email?.toLowerCase().includes(term) ?? false)
+                        );
+                      })
+                      .map((d) => {
+                        const user = data.users.find((u) => u.id == d.userId);
 
-                          <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
-                            {d.timeCreated
-                              ? formatFirebaseTimestamp(d.timeCreated, "en")
-                              : ""}
-                          </td>
+                        return (
+                          <tr key={d.id}>
+                            <td className="whitespace-nowrap px-4 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden">
+                              <CopyToClipboard textToCopy={d.id}>
+                                {`${d.id.slice(0, 3)}...${d.id.slice(-3)}`}
+                              </CopyToClipboard>
+                            </td>
+                            <td className="whitespace-nowrap py-2.5 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
+                              {d.address?.split(",")[0]}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500">
+                              {d.address?.split(",")[1]}
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 ">
+                              <CopyToClipboard
+                                textToCopy={user ? user.email : d.userId}
+                              >
+                                {user ? user.email : d.userId}
+                              </CopyToClipboard>
+                            </td>
+                            <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                              {d!.data!.step!}. {steps[d!.data!.step!].label}
+                            </td>
 
-                          <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                            <div
-                              onClick={() => {
-                                setSelectedReview(d);
-                                setOpenMoreInfo(!openMoreInfo);
-                              }}
-                              className="text-secondary-500 cursor-pointer hover:text-secondary-300"
-                            >
-                              <BiChevronRight className="h-6 w-6" />
-                            </div>
-                          </td>
-                        </tr>
-                      );
-                    })
+                            <td className="whitespace-nowrap px-3 py-2.5 text-sm text-gray-500 max-w-52 overflow-x-hidden text-ellipsis">
+                              {d.timeCreated
+                                ? formatFirebaseTimestamp(d.timeCreated, "en")
+                                : ""}
+                            </td>
+
+                            <td className="relative whitespace-nowrap py-2.5 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
+                              <div
+                                onClick={() => {
+                                  setSelectedReview(d);
+                                  setOpenMoreInfo(!openMoreInfo);
+                                }}
+                                className="text-secondary-500 cursor-pointer hover:text-secondary-300"
+                              >
+                                <BiChevronRight className="h-6 w-6" />
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })
                   )}
                 </tbody>
               </table>
