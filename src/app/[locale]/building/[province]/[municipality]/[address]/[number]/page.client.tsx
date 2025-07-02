@@ -34,7 +34,6 @@ export default function BuildingPageClient({
   };
 }) {
   const [loading, setLoading] = useState(true);
-  const [placeId, setPlaceId] = useState<string>();
   const [building, setBuilding] = useState<Building | undefined>(undefined);
   const [analysis, setAnalysis] = useState<Analysis | undefined>(undefined);
 
@@ -52,18 +51,13 @@ export default function BuildingPageClient({
             "places"
           )) as google.maps.PlacesLibrary;
 
-          console.log(addr);
-
           const res = await Place.searchByText({
             textQuery: addr,
             fields: ["id", "addressComponents"],
           });
 
-          console.log(res.places);
 
           const placeId = res.places[0].id;
-
-          setPlaceId(placeId);
 
           // Use place ID to create a new Place instance.
           const place = new Place({

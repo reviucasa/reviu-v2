@@ -303,9 +303,7 @@ export const AddressForm = () => {
   }, [selectedAddress]);
 
   const setSelectedAddressForm = async (s: string) => {
-    console.log(s);
     try {
-      const pid = s.split("//")[0];
       const address = s.split("//")[1];
 
       const { Place } = (await google.maps.importLibrary(
@@ -319,7 +317,6 @@ export const AddressForm = () => {
 
       const placeId = res.places[0].id;
 
-      console.log(placeId);
       setPlaceId(placeId);
       setSelectedAddress(address);
     } catch (error) {

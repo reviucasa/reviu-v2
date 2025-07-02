@@ -91,32 +91,6 @@ export const AddressComboBox = ({
     });
   }, []);
 
-  function handlePredictions(
-    predictions: google.maps.places.QueryAutocompletePrediction[] | null,
-    status: google.maps.places.PlacesServiceStatus
-  ) {
-    if (status === "OK") {
-      // handle autocomplete suggestions
-      const autocompleteSuggestions = predictions!.map((prediction) => {
-        return {
-          id: prediction.place_id,
-          address: {
-            string: prediction.description,
-          },
-        };
-      });
-
-      setSearchResult({
-        autocompleteSuggestions: autocompleteSuggestions,
-        //status: "OK",
-      });
-    } else {
-      setSearchResult({
-        autocompleteSuggestions: [],
-        //status: status,
-      });
-    }
-  }
 
   const fetchAddressList = useCallback(
     debounce(async (query: string) => {
