@@ -114,6 +114,7 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   };
 
   const setSelectedAddressForm = (s: string) => {
+    console.log(s);
     try {
       const address = s.split("//")[1];
 

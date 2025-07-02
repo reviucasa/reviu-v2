@@ -8,9 +8,9 @@ import {
   Transition,
 } from "@headlessui/react";
 import debounce from "lodash.debounce";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { Fragment, useCallback, useEffect, useState } from "react";
+import { Fragment, useCallback, useState, useEffect } from "react";
 import ReactLoading from "react-loading";
 import lupa from "public/images/lupa.png";
 import map from "public/images/maskGroup.png";
@@ -18,7 +18,13 @@ import { SelectAreaModal } from "./SelectAreaModal";
 import NearbySearchButton from "./NearbySearchButton";
 import { mainCitiesNeighbourhoods, provincesData } from "@/staticData";
 import { toTitleCase } from "@/helpers/stringHelpers";
-import { loader } from "@/helpers/getMunicipalityCoordinates";
+import { Loader } from "@googlemaps/js-api-loader";
+
+export const loader = new Loader({
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
+  version: "weekly",
+  libraries: ["places"],
+});
 
 type AddressComboBoxProps = {
   placeholder?: string;
@@ -47,12 +53,11 @@ export const AddressComboBox = ({
   placeholder,
   areaOptions = true,
 }: AddressComboBoxProps) => {
+  const locale = useLocale();
   const [searchResult, setSearchResult] = useState<{
     autocompleteSuggestions: Address[];
-    status: string;
   }>({
     autocompleteSuggestions: [],
-    status: "",
   });
 
   const [municipalitiesResults, setMunicipalitiesResults] = useState<
@@ -76,16 +81,12 @@ export const AddressComboBox = ({
   const [isOpenSelectArea, setIsOpenSelectArea] = useState(false);
 
   // Initialize state for Google services to null
-  const [service, setService] =
-    useState<google.maps.places.AutocompleteService | null>(null);
   const [sessionToken, setSessionToken] =
     useState<google.maps.places.AutocompleteSessionToken | null>(null);
 
+  // Initialize sessionToken in useEffect
   useEffect(() => {
-    // Load the Google Maps API only on the client side
-
     loader.importLibrary("places").then((places) => {
-      setService(new places.AutocompleteService());
       setSessionToken(new places.AutocompleteSessionToken());
     });
   }, []);
@@ -107,12 +108,12 @@ export const AddressComboBox = ({
 
       setSearchResult({
         autocompleteSuggestions: autocompleteSuggestions,
-        status: "OK",
+        //status: "OK",
       });
     } else {
       setSearchResult({
         autocompleteSuggestions: [],
-        status: status,
+        //status: status,
       });
     }
   }
@@ -124,14 +125,11 @@ export const AddressComboBox = ({
       if (query === "" || query.length < 2) {
         setSearchResult({
           autocompleteSuggestions: [],
-          status: "",
         });
         setLoading(false);
 
         return;
       }
-
-      if (!service || !sessionToken) return;
 
       // Create a bounding box with sides away from the center point
       /* const center = { lat: 41.40855, lng: 2.17114 };
@@ -150,24 +148,44 @@ export const AddressComboBox = ({
         west: 0.073,
       };
 
-      const request: google.maps.places.AutocompletionRequest = {
+      const request: google.maps.places.AutocompleteRequest = {
         input: query,
-        sessionToken: sessionToken,
-        language: "ca",
-        componentRestrictions: {
-          country: "es",
-        },
-        types: ["address"],
-        locationBias: "IP_BIAS",
+        includedPrimaryTypes: ["street_address"],
+        sessionToken: sessionToken!,
+        language: locale,
+        includedRegionCodes: ["es"],
+        //locationBias: "IP_BIAS",
         locationRestriction: cataloniaBounds,
       };
 
-      // getQueryPredictions()
-      service.getPlacePredictions(request, handlePredictions);
+      const { suggestions } =
+        await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(
+          request
+        );
+
+      if (suggestions.length > 0) {
+        // handle autocomplete suggestions
+        const autocompleteSuggestions = suggestions!.map((suggestion) => {
+          return {
+            id: suggestion.placePrediction?.placeId ?? "",
+            address: {
+              string: suggestion.placePrediction?.text.text ?? "",
+            },
+          };
+        });
+
+        setSearchResult({
+          autocompleteSuggestions: autocompleteSuggestions,
+        });
+      } else {
+        setSearchResult({
+          autocompleteSuggestions: [],
+        });
+      }
 
       setLoading(false);
     }, 300),
-    [service, sessionToken]
+    []
   );
 
   const fetchMunicipalitiesList = useCallback((query: string) => {

@@ -160,6 +160,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   };
 
   const setSelectedAddressForm = (s: string) => {
+    console.log(s);
     try {
       const address = s.split("//")[1];
 

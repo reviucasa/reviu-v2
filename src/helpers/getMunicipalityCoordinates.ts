@@ -1,10 +1,4 @@
-import { Loader } from "@googlemaps/js-api-loader";
-
-export const loader = new Loader({
-  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY!,
-  version: "weekly",
-  libraries: ["places"],
-});
+import { loader } from "@/components/atoms/AddressComboBox";
 
 export const getMunicipalityCoordinates = async (
   municipality: string,

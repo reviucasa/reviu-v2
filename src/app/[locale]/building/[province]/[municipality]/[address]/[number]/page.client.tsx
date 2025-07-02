@@ -12,10 +12,10 @@ import cardBannerImage from "public/images/leave-review-banner.jpg";
 import { decodeReadableURI, toTitleCase } from "@/helpers/stringHelpers";
 import { Analysis } from "@/models/analysis";
 import { Building, Coordinates, Location } from "@/models/building";
-import { loader } from "@/helpers/getMunicipalityCoordinates";
 import { getReviewsByPlaceId, Review } from "@/models/review";
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { toPlainObject } from "lodash";
+import { loader } from "@/components/atoms/AddressComboBox";
 
 // Dynamically import the MainLayout component
 const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
@@ -52,10 +52,14 @@ export default function BuildingPageClient({
             "places"
           )) as google.maps.PlacesLibrary;
 
+          console.log(addr);
+
           const res = await Place.searchByText({
             textQuery: addr,
-            fields: ["id"],
+            fields: ["id", "addressComponents"],
           });
+
+          console.log(res.places);
 
           const placeId = res.places[0].id;
 
@@ -141,7 +145,6 @@ export default function BuildingPageClient({
   }, []);
 
   if (loading) {
-    console.log("loading");
     return (
       <MainLayout>
         <div className="top-0 left-0 flex justify-center items-center w-full h-[60vh] z-50 bg-white opacity-90">

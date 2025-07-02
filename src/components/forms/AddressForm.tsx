@@ -302,11 +302,24 @@ export const AddressForm = () => {
     onSelectAddress();
   }, [selectedAddress]);
 
-  const setSelectedAddressForm = (s: string) => {
+  const setSelectedAddressForm = async (s: string) => {
+    console.log(s);
     try {
-      const placeId = s.split("//")[0];
+      const pid = s.split("//")[0];
       const address = s.split("//")[1];
 
+      const { Place } = (await google.maps.importLibrary(
+        "places"
+      )) as google.maps.PlacesLibrary;
+
+      const res = await Place.searchByText({
+        textQuery: address,
+        fields: ["id", "addressComponents"],
+      });
+
+      const placeId = res.places[0].id;
+
+      console.log(placeId);
       setPlaceId(placeId);
       setSelectedAddress(address);
     } catch (error) {

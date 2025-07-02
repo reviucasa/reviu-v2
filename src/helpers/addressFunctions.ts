@@ -144,9 +144,7 @@ export const cleanAddress = (
   // If so, make "calle" the address type for normalization purposes
   if (/^via|vía/i.test(address.split(" ")[0])) {
     address = `calle ${address}`;
-  } /* else if (/^cami|camí|camino/i.test(address.split(" ")[0])) {
-    address = `calle ${address}`;
-  } */
+  }
 
   // Flatten the abbreviations object to get all unique location types (both in Spanish and Catalan)
   const locationTypes = Object.entries(abbreviations).flatMap(
@@ -156,16 +154,15 @@ export const cleanAddress = (
     ]
   );
 
-  // Regex to match the address components
+  // Regex to match the address components, allowing for alphanumeric numbers (e.g., 16b, 12A, 7-9)
   const regex = new RegExp(
     `(${locationTypes.join(
       "|"
-    )})\\s+(d'en(?=\\s)|d'(?=\\s)|dels|del|de la|de les|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*(\\d+)`,
+    )})\\s+(d'en(?=\\s)|d'(?=\\s)|dels|del|de la|de les|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*([\\d]+[a-zA-Z\\-]*)`,
     "i"
   );
 
   const match = address.match(regex);
-
 
   if (Object.keys(addressExceptions).includes(address.split(",")[0])) {
     console.log(
