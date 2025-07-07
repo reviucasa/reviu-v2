@@ -1,4 +1,5 @@
 import { provincesData } from "@/staticData";
+import { removeAccents2 } from "./removeAccents";
 
 export function getProvinceAndMunicipality(
   municipality: string
@@ -9,7 +10,8 @@ export function getProvinceAndMunicipality(
     // Check for exact match
     const exactMatch = municipalities.find(
       (recordedMunicipality) =>
-        recordedMunicipality.toLowerCase() === municipality.toLowerCase()
+        recordedMunicipality.toLowerCase() ===
+        removeAccents2(municipality.toLowerCase())
     );
 
     if (exactMatch) {

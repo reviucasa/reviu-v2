@@ -56,7 +56,6 @@ export default function BuildingPageClient({
             fields: ["id", "addressComponents"],
           });
 
-
           const placeId = res.places[0].id;
 
           // Use place ID to create a new Place instance.
@@ -76,6 +75,9 @@ export default function BuildingPageClient({
           if (
             ["Barcelona", "Madrid", "Valencia"].includes(
               place.addressComponents![3].longText!
+            ) &&
+            ["Barcelona", "Madrid", "Valencia"].includes(
+              place.addressComponents![4].longText!
             )
           ) {
             district = place.addressComponents![2].longText ?? "";

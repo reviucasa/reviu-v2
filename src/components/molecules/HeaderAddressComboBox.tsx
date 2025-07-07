@@ -101,6 +101,7 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
               addr?.number,
             ].join("/")
           );
+
           router.push(`/building/${link}`);
         } catch (e) {
           console.log(e);
