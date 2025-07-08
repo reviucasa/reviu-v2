@@ -104,6 +104,9 @@ export const AddressForm = () => {
       if (
         ["Barcelona", "Madrid", "Valencia"].includes(
           place.addressComponents![3].longText!
+        ) &&
+        ["Barcelona", "Madrid", "Valencia"].includes(
+          place.addressComponents![4].longText!
         )
       ) {
         district = place.addressComponents![2].longText ?? "";
@@ -204,6 +207,9 @@ export const AddressForm = () => {
         if (
           ["Barcelona", "Madrid", "Valencia"].includes(
             place.addressComponents![3].longText!
+          ) &&
+          ["Barcelona", "Madrid", "Valencia"].includes(
+            place.addressComponents![4].longText!
           )
         ) {
           district = place.addressComponents![2].longText ?? "";
