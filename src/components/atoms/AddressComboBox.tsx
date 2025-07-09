@@ -124,7 +124,7 @@ export const AddressComboBox = ({
 
       const request: google.maps.places.AutocompleteRequest = {
         input: query,
-        includedPrimaryTypes: ["street_address"],
+        includedPrimaryTypes: ["street_address", "route"],
         sessionToken: sessionToken!,
         language: locale,
         includedRegionCodes: ["es"],
@@ -136,6 +136,8 @@ export const AddressComboBox = ({
         await google.maps.places.AutocompleteSuggestion.fetchAutocompleteSuggestions(
           request
         );
+
+      
 
       if (suggestions.length > 0) {
         // handle autocomplete suggestions
