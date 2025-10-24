@@ -1,5 +1,4 @@
 import { db } from "@/firebase/config";
-import { slugify } from "@/helpers/slugify";
 import {
   DocumentData,
   FirestoreDataConverter,
@@ -134,13 +133,18 @@ async function searchAgenciesByName(text: string) {
   const q = query(
     ref,
     orderBy("lowercase"),
-    startAt(slugify(text)), // '\uf8ff' is a high code point in the Unicode range, used to match anything that starts with 'prefix'
-    endAt(slugify(text) + "\uf8ff")
+    startAt(text.toLocaleLowerCase()), // '\uf8ff' is a high code point in the Unicode range, used to match anything that starts with 'prefix'
+    endAt(text + "\uf8ff"),
+    limit(10)
   );
 
   const querySnapshot = await getDocs(q);
   /* const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
   return matchingAgencies; */
+
+  const agncs = querySnapshot.docs.map((doc) => doc.data());
+
+  console.log(agncs);
 
   const allAgencies = querySnapshot.docs.map(
     (doc) => doc.data() as RealStateAgency

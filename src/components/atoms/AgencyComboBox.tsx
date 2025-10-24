@@ -115,7 +115,7 @@ export const AgencyComboBox = ({
               agenciesList?.map((agency) => (
                 <ComboboxOption
                   className="cursor-pointer p-1 rounded-md hover:bg-secondary-300"
-                  key={agency.id}
+                  key={agency.documentId}
                   value={agency}
                 >
                   <div className="flex flex-row w-full justify-between">

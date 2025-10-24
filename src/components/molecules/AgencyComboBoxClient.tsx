@@ -21,7 +21,7 @@ export function AgencyComboBoxClient({ className }: { className?: string }) {
     if (agency) {
       setLoading(true);
       router.push(
-        `/agency/${encodeURIComponent(agency.lowercase.replaceAll(" ", "-"))}`
+        `/agency/${encodeURIComponent(agency.lowercase)}`
       );
     } else {
       setError(t("common.noSeEncontroLaInmobiliaria"));

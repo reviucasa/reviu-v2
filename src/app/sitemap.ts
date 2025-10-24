@@ -46,7 +46,7 @@ const generateAgenciesSitemapObjects = async () => {
         locales.map((locale) => [
           locale,
           getUrl(
-            `/agency/${encodeURIComponent(a.lowercase.replaceAll(" ", "-"))}`,
+            `/agency/${encodeURIComponent(a.lowercase)}`,
             locale
           ),
         ])

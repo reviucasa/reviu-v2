@@ -61,9 +61,7 @@ export default async function Agency({
   const t = await getTranslations();
   const config = await getTranslations("config");
 
-  const agency = await getAgencyByName(
-    decodeURIComponent(params.agency)
-  );
+  const agency = await getAgencyByName(decodeURIComponent(params.agency));
 
   // const reviews = await getReviewsByAgencyId(agency?.id);
   // If agency exists, fetch the reviews based on the agency's ID

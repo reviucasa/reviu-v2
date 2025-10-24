@@ -152,7 +152,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
     setSelectedRealStateAgency(agency);
     if (agency) {
       router.push(
-        `/agency/${encodeURIComponent(agency.lowercase.replaceAll(" ", "-"))}`
+        `/agency/${encodeURIComponent(agency.lowercase)}`
       );
     } else {
       setError(t("common.noSeEncontroLaInmobiliaria"));
