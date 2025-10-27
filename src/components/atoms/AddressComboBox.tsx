@@ -137,8 +137,6 @@ export const AddressComboBox = ({
           request
         );
 
-      
-
       if (suggestions.length > 0) {
         // handle autocomplete suggestions
         const autocompleteSuggestions = suggestions!.map((suggestion) => {

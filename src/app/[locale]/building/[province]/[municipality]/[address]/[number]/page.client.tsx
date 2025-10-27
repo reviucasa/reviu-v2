@@ -11,11 +11,12 @@ import { useEffect, useState } from "react";
 import cardBannerImage from "public/images/leave-review-banner.jpg";
 import { decodeReadableURI, toTitleCase } from "@/helpers/stringHelpers";
 import { Analysis } from "@/models/analysis";
-import { Building, Coordinates, Location } from "@/models/building";
+import { Building, Coordinates } from "@/models/building";
 import { getReviewsByPlaceId, Review } from "@/models/review";
 import { computeReviewsSummary } from "@/helpers/computeReviewsSummary";
 import { toPlainObject } from "lodash";
 import { loader } from "@/components/atoms/AddressComboBox";
+import { getBuildingDataFromPlace } from "@/helpers/getBuildingDataFromPlace";
 
 // Dynamically import the MainLayout component
 const MainLayout = dynamic(() => import("@/components/layouts/MainLayout"), {
@@ -64,44 +65,7 @@ export default function BuildingPageClient({
             requestedLanguage: "ca",
           });
 
-          // Call fetchFields, passing the desired data fields.
-          await place.fetchFields({
-            fields: ["location", "addressComponents"],
-          });
-
-          let district = "";
-          let postalCode = place.addressComponents![6].longText ?? "";
-
-          if (
-            ["Barcelona", "Madrid", "Valencia"].includes(
-              place.addressComponents![3].longText!
-            ) &&
-            ["Barcelona", "Madrid", "Valencia"].includes(
-              place.addressComponents![4].longText!
-            )
-          ) {
-            district = place.addressComponents![2].longText ?? "";
-            postalCode = place.addressComponents![7].longText ?? "";
-          }
-
-          const location: Location = {
-            coordinates: {
-              latitude: place.location?.lat(),
-              longitude: place.location?.lng(),
-            } as Coordinates,
-            municipality,
-            number: parseInt(place.addressComponents![0].longText ?? "0"),
-            district,
-            province,
-            street: place.addressComponents![1].longText ?? "",
-            type: "",
-          };
-
-          const building: Building = {
-            address: place.formattedAddress!,
-            location,
-            postalCode,
-          };
+          const building = await getBuildingDataFromPlace(place);
 
           setBuilding(building);
 

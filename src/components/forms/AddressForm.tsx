@@ -9,7 +9,7 @@ import { useCallback, useEffect, useState } from "react";
 import { AddressComboBox } from "../atoms/AddressComboBox";
 import { Dialog } from "../atoms/Dialog";
 import { useRouter, usePathname } from "@/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   getNextStepReview,
   getPositionUrlReview,
@@ -26,8 +26,9 @@ import { useDraft } from "@/hooks/swr/useDraft";
 import { removeLocaleFromPath } from "../atoms/DropDownLanguages";
 
 import { replaceUndefinedWithNull } from "@/helpers/replaceUndefinedWithNull";
-import { Building, Apartment, Location, Coordinates } from "@/models/building";
+import { Building, Apartment } from "@/models/building";
 import { Timestamp } from "firebase/firestore";
+import { getBuildingDataFromPlace } from "@/helpers/getBuildingDataFromPlace";
 
 export const AddressForm = () => {
   const { draft, refreshDraft } = useDraft();
@@ -35,6 +36,7 @@ export const AddressForm = () => {
   const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const t = useTranslations();
+  const locale = useLocale();
 
   const AddressNotFoundHelp = ({
     className,
@@ -83,56 +85,10 @@ export const AddressForm = () => {
       // Use place ID to create a new Place instance.
       const place = new Place({
         id: placeId,
-        requestedLanguage: "ca",
+        requestedLanguage: locale,
       });
 
-      // Call fetchFields, passing the desired data fields.
-      await place.fetchFields({
-        fields: [
-          "displayName",
-          "formattedAddress",
-          "location",
-          "addressComponents",
-        ],
-      });
-
-      let district = "";
-      let municipality = place.addressComponents![2].longText ?? "";
-      let province = place.addressComponents![3].longText ?? "";
-      let postalCode = place.addressComponents![6].longText ?? "";
-
-      if (
-        ["Barcelona", "Madrid", "Valencia"].includes(
-          place.addressComponents![3].longText!
-        ) &&
-        ["Barcelona", "Madrid", "Valencia"].includes(
-          place.addressComponents![4].longText!
-        )
-      ) {
-        district = place.addressComponents![2].longText ?? "";
-        municipality = place.addressComponents![3].longText ?? "";
-        province = place.addressComponents![4].longText ?? "";
-        postalCode = place.addressComponents![7].longText ?? "";
-      }
-
-      const location: Location = {
-        coordinates: {
-          latitude: place.location?.lat(),
-          longitude: place.location?.lng(),
-        } as Coordinates,
-        municipality,
-        number: parseInt(place.addressComponents![0].longText ?? "0"),
-        district,
-        province,
-        street: place.addressComponents![1].longText ?? "",
-        type: "",
-      };
-
-      const building: Building = {
-        address: place.formattedAddress!,
-        location,
-        postalCode,
-      };
+      const building = await getBuildingDataFromPlace(place);
 
       setBuilding(building);
     };
@@ -179,6 +135,7 @@ export const AddressForm = () => {
         if (!selectedAddress) {
           throw "Error - No address";
         }
+
         const { Place } = (await google.maps.importLibrary(
           "places"
         )) as google.maps.PlacesLibrary;
@@ -189,54 +146,7 @@ export const AddressForm = () => {
           requestedLanguage: "ca",
         });
 
-        // Call fetchFields, passing the desired data fields.
-        await place.fetchFields({
-          fields: [
-            "displayName",
-            "formattedAddress",
-            "location",
-            "addressComponents",
-          ],
-        });
-
-        let district = "";
-        let municipality = place.addressComponents![2].longText ?? "";
-        let province = place.addressComponents![3].longText ?? "";
-        let postalCode = place.addressComponents![6].longText ?? "";
-
-        if (
-          ["Barcelona", "Madrid", "Valencia"].includes(
-            place.addressComponents![3].longText!
-          ) &&
-          ["Barcelona", "Madrid", "Valencia"].includes(
-            place.addressComponents![4].longText!
-          )
-        ) {
-          district = place.addressComponents![2].longText ?? "";
-          municipality = place.addressComponents![3].longText ?? "";
-          province = place.addressComponents![4].longText ?? "";
-          postalCode = place.addressComponents![7].longText ?? "";
-        }
-
-        const location: Location = {
-          coordinates: {
-            latitude: place.location?.lat(),
-            longitude: place.location?.lng(),
-          } as Coordinates,
-          district,
-          municipality,
-          number: parseInt(place.addressComponents![0].longText ?? "0"),
-          province,
-          street: place.addressComponents![1].longText ?? "",
-          type: "",
-        };
-        // const postalCode = place.address_components;
-
-        const building: Building = {
-          address: place.formattedAddress!,
-          location,
-          postalCode,
-        };
+        const building = await getBuildingDataFromPlace(place);
 
         setBuilding(building);
       } catch (e) {

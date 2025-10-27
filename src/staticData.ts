@@ -6424,6 +6424,7 @@ export const provincesData: Record<string, string[]> = {
     "CASERES",
     "CASTELLVELL DEL CAMP",
     "COLLDEJOU",
+    "COMA-RUGA",
     "CONESA",
     "CONSTANTI",
     "CORBERA D'EBRE",

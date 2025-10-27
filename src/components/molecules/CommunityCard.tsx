@@ -60,38 +60,54 @@ export const CommunityCard = ({
         </div>
         <div className="flex-1 grid grid-cols-2 gap-8">
           <Label title={t("common.tipologiaResidentes")}>
-            {review.data?.community?.buildingNeighborhood
+            { review.data?.community?.buildingNeighborhood ? review.data?.community?.buildingNeighborhood?.length > 0 ? review.data?.community?.buildingNeighborhood
               ?.map((type: string) =>
                 config(`neighbors.buildingNeighborhood.${type}`)
               )
-              .join(", ")}
+              .join(", ")
+              : "-"
+            : "-"}
           </Label>
 
           <Label title={t("common.pisosTuristicos")}>
-            {config(
-              `neighbors.touristicApartments.${review.data?.community?.touristicApartments}`
-            )}
+            {review?.data?.community?.touristicApartments
+              ? config(
+                  `neighbors.touristicApartments.${review.data?.community?.touristicApartments}`
+                )
+              : "-"}
           </Label>
           <Label title={t("common.relacionVecinal")}>
-            {config(
-              `neighbors.neighborsRelationship.${review.data?.community?.neighborsRelationship}`
-            )}
+            {review?.data?.community?.neighborsRelationship
+              ? config(
+                  `neighbors.neighborsRelationship.${review.data?.community?.neighborsRelationship}`
+                )
+              : "-"}
           </Label>
 
           <Label title={t("common.estadoYMantenimiento")}>
-            {config(
-              `neighbors.buildingMaintenance.${review.data?.community?.buildingMaintenance}`
-            )}
+            {review?.data?.community?.buildingMaintenance
+              ? config(
+                  `neighbors.buildingMaintenance.${review.data?.community?.buildingMaintenance}`
+                )
+              : "-"}
           </Label>
           <Label title={t("common.limpieza")}>
-            {config(
-              `neighbors.buildingCleaning.${review.data?.community?.buildingCleaning}`
-            )}
+            {review?.data?.community?.buildingCleaning
+              ? config(
+                  `neighbors.buildingCleaning.${review.data?.community?.buildingCleaning}`
+                )
+              : "-"}
           </Label>
           <Label title={t("common.services")}>
             {review.data?.community?.services
-              ?.map((type: string) => config(`neighbors.services.${type}`))
-              .join(", ")}
+              ? review.data?.community?.services?.length > 0
+                ? review.data?.community?.services
+                    ?.map((type: string) =>
+                      config(`neighbors.services.${type}`)
+                    )
+                    .join(", ")
+                : "-"
+              : "-"}
           </Label>
 
           <div className="grid col-span-2">

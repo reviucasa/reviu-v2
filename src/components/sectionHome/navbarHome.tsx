@@ -151,9 +151,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   const onSelectRealStateAgency = async (agency: RealStateAgency) => {
     setSelectedRealStateAgency(agency);
     if (agency) {
-      router.push(
-        `/agency/${encodeURIComponent(agency.lowercase)}`
-      );
+      router.push(`/agency/${encodeURIComponent(agency.lowercase)}`);
     } else {
       setError(t("common.noSeEncontroLaInmobiliaria"));
     }
@@ -161,7 +159,12 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
 
   const setSelectedAddressForm = (s: string) => {
     try {
-      const address = s.split("//")[1];
+      let address = "";
+      if (s.includes("//")) {
+        address = s.split("//")[1];
+      } else {
+        address = s;
+      }
 
       setSelectedAddress(address);
       onSelectAddress(address);
@@ -169,6 +172,7 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
       console.log("Address not selected", error);
     }
   };
+
   return (
     <Suspense>
       {loading && (

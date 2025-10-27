@@ -142,10 +142,6 @@ async function searchAgenciesByName(text: string) {
   /* const matchingAgencies = querySnapshot.docs.map((doc) => doc.data());
   return matchingAgencies; */
 
-  const agncs = querySnapshot.docs.map((doc) => doc.data());
-
-  console.log(agncs);
-
   const allAgencies = querySnapshot.docs.map(
     (doc) => doc.data() as RealStateAgency
   );

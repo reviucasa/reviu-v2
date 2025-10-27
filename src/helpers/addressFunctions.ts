@@ -158,7 +158,7 @@ export const cleanAddress = (
   const regex = new RegExp(
     `(${locationTypes.join(
       "|"
-    )})\\s+(d'en(?=\\s)|d'(?=\\s)|dels|del|de la|de les|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*([\\d]+[a-zA-Z\\-]*)`,
+    )})\\s+(d'en(?=\\s)|d'(?=\\s)|dels|del|de la|de les|de l'|de los|de|l'(?=\\s)|les)?\\s*([^,]+)\\s*,\\s*([\\d]+[a-zA-Z\\-]*)`,
     "i"
   );
 
@@ -184,6 +184,7 @@ export const cleanAddress = (
             .replace(/^de\s+/i, "")
             .replace(/^dels\s+/i, "")
             .replace(/^del\s+/i, "")
+            .replace(/^de l'\s+/i, "")
             .replace(/^de la\s+/i, "")
             .replace(/^de les\s+/i, "")
             .replace(/^la\s+/i, "")

@@ -16,12 +16,15 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
-  const onSelectAddress = async (address: string) => {
+  const onSelectAddress = async (
+    placeId: string | undefined,
+    address: string
+  ) => {
     setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-      if (address.includes(" - ")) {
+      if (address.includes(" - ") && !placeId) {
         if (
           Object.keys(provincesData).includes(
             address.split(" - ")[1].toUpperCase()
@@ -115,11 +118,17 @@ export function HeaderAddressComboBox({ className }: { className?: string }) {
   };
 
   const setSelectedAddressForm = (s: string) => {
-    console.log(s);
     try {
-      const address = s.split("//")[1];
+      let placeId: string | undefined;
+      let address: string = "";
+      if (s.includes("//")) {
+        placeId = s.split("//")[0];
+        address = s.split("//")[1];
+      } else {
+        address = s;
+      }
 
-      onSelectAddress(address);
+      onSelectAddress(placeId, address);
     } catch (error) {
       console.log("Address not selected", error);
     }
