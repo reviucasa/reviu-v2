@@ -50,12 +50,15 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string>();
 
-  const onSelectAddress = async (address: string) => {
+  const onSelectAddress = async (
+    placeId: string | undefined,
+    address: string
+  ) => {
     setError(undefined);
     setSelectedAddress(address);
     if (address && address != "") {
       setLoading(true);
-      if (address.includes(" - ")) {
+      if (address.includes(" - ") && !placeId) {
         if (
           Object.keys(provincesData).includes(
             address.split(" - ")[1].toUpperCase()
@@ -78,6 +81,8 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
             return;
           }
         }
+
+        console.log("address: ", address);
 
         if (
           Object.keys(mainCitiesNeighbourhoods).includes(
@@ -159,15 +164,16 @@ export function NavbarHome({ search = true }: { search?: boolean }) {
 
   const setSelectedAddressForm = (s: string) => {
     try {
-      let address = "";
+      let placeId: string | undefined;
+      let address: string = "";
       if (s.includes("//")) {
+        placeId = s.split("//")[0];
         address = s.split("//")[1];
       } else {
         address = s;
       }
 
-      setSelectedAddress(address);
-      onSelectAddress(address);
+      onSelectAddress(placeId, address);
     } catch (error) {
       console.log("Address not selected", error);
     }
