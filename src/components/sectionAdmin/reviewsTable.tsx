@@ -12,6 +12,7 @@ import { ModalInfo } from "../molecules/ModalInfo";
 import { Timestamp } from "firebase/firestore";
 import { User } from "@/models/user";
 import CopyToClipboard from "../atoms/CopyToClipboard";
+import { downloadCSV } from "@/helpers/downloadReviewsCSV";
 
 export default function ReviewsTable() {
   const [openMoreInfo, setOpenMoreInfo] = useState<boolean>(false);
@@ -71,9 +72,23 @@ export default function ReviewsTable() {
           <h1 className="text-base font-semibold leading-6 text-gray-900">
             Reviews {data?.count && " - " + data.count}
           </h1>
-          <p className="mt-2 text-sm text-gray-700">
-            A list of all the reviews registered in the app.
-          </p>
+          <div className="flex justify-between items-center">
+            <p className="mt-2 text-sm text-gray-700">
+              A list of all the reviews registered in the app.
+            </p>
+            <button
+              className="btn-secondary-500 text-sm px-4 py-2 h-min w-min"
+              onClick={async () => {
+                const { reviews, users } = await getReviewsWithUser({
+                  count: undefined,
+                  startAfterTime: undefined,
+                });
+                return reviews && downloadCSV(reviews, users);
+              }}
+            >
+              Download
+            </button>
+          </div>
         </div>
       </div>
       <div className="mt-6 flow-root">

@@ -366,7 +366,7 @@ const getReviewsWithUser = async ({
   count,
   startAfterTime,
 }: {
-  count: number;
+  count: number | undefined;
   startAfterTime: Timestamp | undefined;
 }): Promise<{ reviews: Review[]; users: User[]; count: number }> => {
   const docsCount = await getReviewsCount(ReviewStatus.Published);

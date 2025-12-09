@@ -47,56 +47,10 @@ export type User = {
   timeCreated: Timestamp;
 };
 
-/* class User {
-  acceptedTerms: boolean;
-  birthday: string;
-  country: string;
-  dateAcceptedTerms: string;
-  email: string;
-  gender: string;
-  id: string;
-  lastname: string;
-  name: string;
-  subscribedToNewsletter: boolean;
-
-  constructor({
-    acceptedTerms,
-    birthday,
-    country,
-    dateAcceptedTerms,
-    email,
-    gender,
-    id,
-    lastname,
-    name,
-    subscribedToNewsletter,
-  }: UserData) {
-    this.acceptedTerms = acceptedTerms;
-    this.birthday = birthday;
-    this.country = country;
-    this.dateAcceptedTerms = dateAcceptedTerms;
-    this.email = email;
-    this.gender = gender;
-    this.id = id;
-    this.lastname = lastname;
-    this.name = name;
-    this.subscribedToNewsletter = subscribedToNewsletter;
-  }
-} */
-
 const userConverter: FirestoreDataConverter<User> = {
   toFirestore(u: User): DocumentData {
     const { id, ...user } = u;
-    return user /* {
-      name: user.name,
-      lastname: user.lastname,
-      country: user.country ?? null,
-      gender: user.gender ?? null,
-      birthday: user.birthday,
-      acceptedTerms: user.acceptedTerms,
-      dateAcceptedTerms: user.dateAcceptedTerms ?? null,
-      subscribedToNewsletter: user.subscribedToNewsletter,
-    } */;
+    return user;
   },
   fromFirestore(snapshot: QueryDocumentSnapshot): User {
     const data = snapshot.data();
