@@ -26,7 +26,7 @@ const escapeCSV = (value: any): string => {
 
   // Escape special characters (quotes, commas, newlines)
   if (
-    stringValue.includes(",") ||
+    stringValue.includes(";") ||
     stringValue.includes("\n") ||
     stringValue.includes('"')
   ) {
@@ -246,13 +246,15 @@ export const downloadCSV = (reviews: Review[], users: User[]) => {
       val?.services?.join(" | "),
     ]
       .map(escapeCSV)
-      .join(",");
+      .join(";");
   });
 
   // 4. Combine & Download
-  const csvContent = [headers.join(","), ...rows].join("\n");
+  const csvContent = [headers.join(";"), ...rows].join("\n");
 
-  const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+  const blob = new Blob(["\uFEFF" + csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
 
